@@ -152,7 +152,7 @@ create table PHIEUNHAPHANG (
 	NgayLapPhieu date default current_date, -- This date must be happened after NgayTiepNhan
 	TongTien decimal(12, 4) not null, -- constraint '(TongTien >= 0)' will be checked in frontend
 	TienDaThanhToan decimal(12, 4) default 0,
-	TrinhTrang varchar(100) default 'Còn nợ',
+	TrinhTrang varchar(50) default 'Còn nợ',
 	constraint pk_phieunhaphang primary key(MaPhieuNhap),
 	constraint fk_phieunhaphang_to_daily foreign key(MaDaiLy) references DAILY(MaDaiLy) on delete cascade
 );
