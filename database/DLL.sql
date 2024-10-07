@@ -152,6 +152,7 @@ create table PHIEUNHAPHANG (
 	NgayLapPhieu date default current_date, -- This date must be happened after NgayTiepNhan
 	TongTien decimal(12, 4) not null, -- constraint '(TongTien >= 0)' will be checked in frontend
 	TienDaThanhToan decimal(12, 4) default 0,
+	TrinhTrang varchar(100) default 'Còn nợ',
 	constraint pk_phieunhaphang primary key(MaPhieuNhap),
 	constraint fk_phieunhaphang_to_daily foreign key(MaDaiLy) references DAILY(MaDaiLy) on delete cascade
 );
@@ -210,6 +211,7 @@ create table BAOCAODOANHSO (
 	TongGiaTriXuat decimal(12, 4) default 0, -- check (TongGiaTriXuat >= 0) - it will be checked in frontend
 	SoPhieuNhap smallint default 0, -- The same with SoPhieuXuat
 	TongGiaTriNhap decimal(12, 4) default 0, -- check (TongGiaTriNhap >= 0)  - it will be checked in frontend
+	ChiPhiBaoTri decimal(12, 4) default 0,
 	NgayLapBaoCao date default current_date,
 	constraint pk_baocaodoanhso primary key(Thang, MaDaiLy),
 	constraint fk_baocaodoanhso_to_daily foreign key(MaDaiLy) references DAILY(MaDaiLy) on delete cascade
@@ -223,6 +225,7 @@ create table BAOTRIDAILY (
 	ThoiDiemKetThuc timestamp default current_timestamp,
 	MoTa text,
 	ChiPhiDuKien decimal(12, 4) default 0, -- check (ChiPhiDuKien >= 0) will be checked in frontend
+	ChiPhiBaoTri decimal(12, 4) default 0,
 	constraint pk_baotridaily primary key(MaBaoTri),
 	constraint fk_baotridaily_to_daily foreign key(MaDaiLy) references DAILY(MaDaiLy) on delete cascade,
 	constraint ck_thoidiembatdau_thoidiemketthuc check ( ThoiDiemKetThuc >= ThoiDiemBatDau)
