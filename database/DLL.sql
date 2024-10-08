@@ -225,7 +225,7 @@ create table BAOTRIDAILY (
 	ThoiDiemKetThuc timestamp default current_timestamp,
 	MoTa text,
 	ChiPhiDuKien decimal(12, 4) default 0, -- check (ChiPhiDuKien >= 0) will be checked in frontend
-	ChiPhiBaoTri decimal(12, 4) default 0,
+	ChiPhiBaoTri decimal(12, 4) not null,
 	constraint pk_baotridaily primary key(MaBaoTri),
 	constraint fk_baotridaily_to_daily foreign key(MaDaiLy) references DAILY(MaDaiLy) on delete cascade,
 	constraint ck_thoidiembatdau_thoidiemketthuc check ( ThoiDiemKetThuc >= ThoiDiemBatDau)
