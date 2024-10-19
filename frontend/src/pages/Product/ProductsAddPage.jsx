@@ -1,4 +1,4 @@
-import Header from "../components/content/Header";
+import Header from "../../components/content/Header";
 
 function ProductsAddPage() {
   return (
