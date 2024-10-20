@@ -30,7 +30,7 @@ import StaffManagementEditPage from "./pages/Staff/StaffEditPage";
 import PositionAddPage from "./pages/Staff/PositionAddPage";
 import PositionEditPage from "./pages/Staff/PositionEditPage";
 
-// import Rule from "./pages/Rule/Rule";
+import Rule from "./pages/Rule/Rule";
 // import RuleAddPage from "./pages/Rule/RuleAddPage";
 // import RuleEditPage from "./pages/Rule/RuleEditPage";
 
@@ -173,24 +173,16 @@ function App() {
                         ></Route>
 
                         {/* Routes for rules */}
-                        {/* <Route
+                        <Route
                           path="/rule-management"
                           element={<Rule />}
                         ></Route>
-                        <Route
-                          path="/rule-management/rule-add-page"
-                          element={<RuleAddPage />}
-                        ></Route>
-                        <Route
-                          path="/rule-management/rule-edit-page/:ruleId"
-                          element={<RuleEditPage />}
-                        ></Route> */}
 
                         {/* Routes for Report */}
                         {/* <Route
                           path="/admin-report"
                           element={<AdminReport />}
-                        ></Route> */}
+                        ></Route>
 
                         {/* Routes for Customer */}
                         <Route path="/customer" element={<Customer />}></Route>
