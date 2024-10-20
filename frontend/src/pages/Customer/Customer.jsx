@@ -54,11 +54,9 @@ function Customer() {
     if (searchTerm.trim() !== "") {
       const results = data.filter((item) => {
         if (selectedOption === "Tên khách hàng") {
-          return item.tenkhachhang
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase());
+          return item.tenkhachhang.toLowerCase().includes(searchTerm.toLowerCase());
         } else if (selectedOption === "Số điện thoại") {
-          return item.sodienthoai.includes(searchTerm);
+          return item.sodienthoai.toLowerCase().includes(searchTerm.toLowerCase());
         }
         return false;
       });
@@ -105,13 +103,13 @@ function Customer() {
         ))}
       </div>
       <div className="m-5 p-5 bg-white shadow-lg">
-        <div className="flex justify-between">
-          <div className="flex gap-5 items-center justify-start">
+        <div className="flex flex-wrap gap-3 justify-between">
+          <div className="flex flex-wrap gap-5 items-center justify-start">
             <p className="font-bold whitespace-nowrap">Tìm kiếm theo:</p>
             <select
               value={selectedOption}
               onChange={handleOptionChange}
-              className="font-semibold text-lg py-0.5 px-3 rounded-md border border-black"
+              className="font-semibold text-lg py-3 px-3 rounded-md "
             >
               <option value="Tên khách hàng">Tên khách hàng</option>
               <option value="Số điện thoại">Số điện thoại</option>
@@ -130,12 +128,12 @@ function Customer() {
         </div>
         <table className="w-full mt-5 text-center">
           <thead className="border-b-4 border-red-500">
-            <tr className="text-md">
+            <tr className="text-md text-gray-500">
               <th scope="col"></th>
-              <th scope="col" className="py-5 text-lg border-r-2">
+              <th scope="col" className="py-5 border-r-2">
                 Tên khách hàng
               </th>
-              <th scope="col" className="py-5 text-lg">
+              <th scope="col" className="py-5 border-r-2">
                 Số điện thoại
               </th>
               <th scope="col"></th>
@@ -151,21 +149,21 @@ function Customer() {
                   <td className="py-5 pl-3">
                     <input type="checkbox" />
                   </td>
-                  <td scope="row" className="py-5 text-lg border-r-2">
+                  <td scope="row" className="py-5 border-r-2">
                     {list.tenkhachhang}
                   </td>
-                  <td scope="row" className="py-5 text-lg">
+                  <td scope="row" className="py-5 border-r-2">
                     {list.sodienthoai}
                   </td>
                   <td scope="row">
-                    <div className="flex justify-center gap-20 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
+                    <div className="flex flex-wrap justify-center gap-20 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
                       <NavLink to="customer-edit-page">
                         <button>
                           <div className="flex gap-2 bg-green-500 py-2 px-4 rounded-lg items-center">
+                            <img src={EditIcon} alt="Icon chỉnh sửa" />
                             <p className="font-bold text-white hidden sm:hidden md:hidden lg:inline-block">
                               Chỉnh sửa
-                            </p>
-                            <img src={EditIcon} alt="Icon chỉnh sửa" />
+                            </p>                            
                           </div>
                         </button>
                       </NavLink>
@@ -174,10 +172,10 @@ function Customer() {
                           className="flex gap-2 bg-amber-400 py-2 px-4 rounded-lg items-center"
                           onClick={() => deleteItem(list.makhachhang)}
                         >
+                          <img src={TrashIcon} alt="Icon thùng rác" />
                           <p className="font-bold text-white hidden sm:hidden md:hidden lg:inline-block">
                             Xóa
-                          </p>
-                          <img src={TrashIcon} alt="Icon thùng rác" />
+                          </p>                          
                         </div>
                       </button>
                     </div>

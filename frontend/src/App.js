@@ -20,9 +20,9 @@ import ProductCategorysEditPage from "./pages/ProductCategory/ProductCategoryEdi
 import ProductAdminAddPage from "./pages/ProductCategory/ProductsAddPage";
 import ProductAdminEditPage from "./pages/ProductCategory/ProductsEditPage";
 
-import Products from "./pages/Products";
-import ProductsEditPage from "./pages/ProductsEditPage";
-import ProductsAddPage from "./pages/ProductsAddPage";
+// import Products from "./pages/Products";
+// import ProductsEditPage from "./pages/ProductsEditPage";
+// import ProductsAddPage from "./pages/ProductsAddPage";
 
 import Staff from "./pages/Staff/Staff";
 import StaffManagementAddPage from "./pages/Staff/StaffAddPage";
@@ -30,15 +30,15 @@ import StaffManagementEditPage from "./pages/Staff/StaffEditPage";
 import PositionAddPage from "./pages/Staff/PositionAddPage";
 import PositionEditPage from "./pages/Staff/PositionEditPage";
 
-import Rule from "./pages/Rule/Rule";
-import RuleAddPage from "./pages/Rule/RuleAddPage";
-import RuleEditPage from "./pages/Rule/RuleEditPage";
+// import Rule from "./pages/Rule/Rule";
+// import RuleAddPage from "./pages/Rule/RuleAddPage";
+// import RuleEditPage from "./pages/Rule/RuleEditPage";
 
-import AdminReport from "./pages/AdminReport/AdminReport";
+// import AdminReport from "./pages/AdminReport/AdminReport";
 
 import Customer from "./pages/Customer/Customer";
 
-import Management from "./pages/Management";
+// import Management from "./pages/Management";
 import Sidebar from "./components/Sidebar";
 import MyAccount from "./pages/MyAccount";
 
@@ -93,7 +93,9 @@ function App() {
                         ></Route>
 
                         {/* Routes for store */}
-                        <Route path="/stores" element={<Stores />} />
+                        <Route 
+                          path="/stores" element={<Stores />} 
+                        />
                         <Route
                           path="/stores/store-add-page"
                           element={<StoreAddPage />}
@@ -134,7 +136,7 @@ function App() {
                         ></Route>
 
                         {/* Routes for product */}
-                        <Route path="/products" element={<Products />} />
+                        {/* <Route path="/products" element={<Products />} />
                         <Route
                           path="/products/products-edit-page"
                           element={<ProductsEditPage />}
@@ -142,7 +144,7 @@ function App() {
                         <Route
                           path="/products/products-add-page"
                           element={<ProductsAddPage />}
-                        />
+                        /> */}
 
                         {/* Routes for staff */}
                         <Route
@@ -167,7 +169,7 @@ function App() {
                         ></Route>
 
                         {/* Routes for rules */}
-                        <Route
+                        {/* <Route
                           path="/rule-management"
                           element={<Rule />}
                         ></Route>
@@ -178,13 +180,13 @@ function App() {
                         <Route
                           path="/rule-management/rule-edit-page/:ruleId"
                           element={<RuleEditPage />}
-                        ></Route>
+                        ></Route> */}
 
                         {/* Routes for Report */}
-                        <Route
+                        {/* <Route
                           path="/admin-report"
                           element={<AdminReport />}
-                        ></Route>
+                        ></Route> */}
 
                         {/* Routes for Customer */}
                         <Route path="/customer" element={<Customer />}></Route>
@@ -197,7 +199,7 @@ function App() {
                           element={<CustomerEditPage />}
                         ></Route>
 
-                        <Route path="/management" element={<Management />} />
+                        {/* <Route path="/management" element={<Management />} /> */}
                       </Routes>
                     </div>
                   </div>
