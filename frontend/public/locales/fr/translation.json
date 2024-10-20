@@ -1,0 +1,107 @@
+{
+  "Sidebar": {
+    "Districts": "District",
+    "Stores": "Agent",
+    "ProductCategories": "Article",
+    "Staffs": "Employé",
+    "Rules": "Règles",
+    "Reports": "Rapport",
+    "Products": "Produit",
+    "Warehouses": "Gestion des stocks",
+    "Customers": "Client",
+    "LogOut_Btn": "Déconnexion"
+  },
+  "Header": {
+    "Title": {
+      "Districts": "Liste des districts",
+      "Stores": "Liste des agents",
+      "StoreCategories": "Liste des types d'agents",
+      "Customers": "Liste des clients"
+    },
+    "LanguageOptions": {
+      "Chinese": "Chinois",
+      "English": "Anglais",
+      "French": "Français",
+      "German": "Allemand",
+      "Japanese": "Japonais",
+      "Vietnamese": "Vietnamien"
+    },
+    "Notification": {}
+  },
+  "DataCard": {
+    "DC_Districts": {
+      "First": "Nombre de districts en activité",
+      "Second": "Nombre total de villes"
+    },
+    "DC_Stores": {
+      "First": "Nombre total d'agents",
+      "Second": "Total des dettes des agents",
+      "Third": "Coût total des importations"
+    },
+    "DC_Customers": {
+      "First": "Nombre total de clients",
+      "Second": "Revenus totaux d'exportation",
+      "Third": "Nombre de districts ayant des clients"
+    }
+  },
+  "TabView": {
+    "Store": "Agent",
+    "StoreCategory": "Type d'agent"
+  },
+  "SearchFilter": {
+    "SearchBy": "Rechercher par:",
+    "SF_Districts": {
+      "Columns": {
+        "Col1": "Nom du district",
+        "Col2": "Ville",
+        "Col3": "Nombre total d'agents dans le district"
+      },
+      "Placeholders": {
+        "Text1": "Rechercher par nom du district...",
+        "Text2": "Rechercher par ville...",
+        "Text3": "Rechercher par nombre total d'agents..."
+      }
+    },
+    "SF_Stores": {
+      "Columns": {
+        "Col1": "Nom de l'agent",
+        "Col2": "Type d'agent",
+        "Col3": "Date d'acquisition",
+        "Col4": "Numéro de téléphone",
+        "Col5": "Adresse"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par nom d'agent ...",
+        "Text2": "Recherche par type d'agent ...",
+        "Text3": "Recherche par date d'acquisition ...",
+        "Text4": "Recherche par numéro de téléphone ...",
+        "Text5": "Recherche par adresse ..."
+      }
+    },
+    "SF_StoreCategories": {
+      "Columns": {
+        "Col1": "Nom du type d'agent",
+        "Col2": "Montant maximal de la dette"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par nom du type d'agent ...",
+        "Text2": "Recherche par montant maximal de la dette ..."
+      }
+    },
+    "SF_Customers": {
+      "Columns": {
+        "Col1": "Nom du client",
+        "Col2": "Numéro de téléphone"
+      },
+      "Placeholders": {
+        "Text1": "Rechercher par nom du client...",
+        "Text2": "Rechercher par numéro de téléphone..."
+      }
+    }
+  },
+  "Buttons": {
+    "Add": "Ajouter",
+    "Edit": "Modifier",
+    "Delete": "Supprimer"
+  }
+}

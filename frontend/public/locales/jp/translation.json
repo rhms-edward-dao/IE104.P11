@@ -1,0 +1,107 @@
+{
+  "Sidebar": {
+    "Districts": "地区",
+    "Stores": "エージェント",
+    "ProductCategories": "アイテム",
+    "Staffs": "従業員",
+    "Rules": "ルール",
+    "Reports": "レポート",
+    "Products": "製品",
+    "Warehouses": "在庫管理",
+    "Customers": "顧客",
+    "LogOut_Btn": "ログアウト"
+  },
+  "Header": {
+    "Title": {
+      "Districts": "地区リスト",
+      "Stores": "エージェントリスト",
+      "StoreCategories": "エージェント タイプのリスト",
+      "Customers": "顧客リスト"
+    },
+    "LanguageOptions": {
+      "Chinese": "中国語",
+      "English": "英語",
+      "French": "フランス語",
+      "German": "ドイツ語",
+      "Japanese": "日本語",
+      "Vietnamese": "ベトナム語"
+    },
+    "Notification": {}
+  },
+  "DataCard": {
+    "DC_Districts": {
+      "First": "営業中の地区の数",
+      "Second": "都市の総数"
+    },
+    "DC_Stores": {
+      "First": "エージェントの総数",
+      "Second": "エージェントの総負債",
+      "Third": "輸入コストの合計"
+    },
+    "DC_Customers": {
+      "First": "顧客の総数",
+      "Second": "輸出収入の合計",
+      "Third": "顧客がいる地区の数"
+    }
+  },
+  "TabView": {
+    "Store": "エージェント",
+    "StoreCategory": "エージェントタイプ"
+  },
+  "SearchFilter": {
+    "SearchBy": "検索条件:",
+    "SF_Districts": {
+      "Columns": {
+        "Col1": "地区名",
+        "Col2": "市",
+        "Col3": "地区内のエージェント総数"
+      },
+      "Placeholders": {
+        "Text1": "地区名で検索...",
+        "Text2": "市で検索...",
+        "Text3": "エージェント総数で検索..."
+      }
+    },
+    "SF_Stores": {
+      "Columns": {
+        "Col1": "エージェント名",
+        "Col2": "エージェントタイプ",
+        "Col3": "買収日",
+        "Col4": "電話番号",
+        "Col5": "住所"
+      },
+      "Placeholders": {
+        "Text1": "エージェント名で検索...",
+        "Text2": "エージェントタイプで検索...",
+        "Text3": "買収日で検索...",
+        "Text4": "電話番号で検索...",
+        "Text5": "住所で検索..."
+      }
+    },
+    "SF_StoreCategories": {
+      "Columns": {
+        "Col1": "エージェントタイプ名",
+        "Col2": "最大負債額"
+      },
+      "Placeholders": {
+        "Text1": "エージェントタイプ名で検索...",
+        "Text2": "最大負債額で検索..."
+      }
+    },
+    "SF_Customers": {
+      "Columns": {
+        "Col1": "顧客名",
+        "Col2": "電話番号"
+      },
+      "Placeholders": {
+        "Text1": "顧客名で検索...",
+        "Text2": "電話番号で検索..."
+      }
+    }
+  },
+  "Buttons": {
+    "Add": "追加",
+    "Edit": "編集",
+    "Delete": "削除"
+  }
+}
