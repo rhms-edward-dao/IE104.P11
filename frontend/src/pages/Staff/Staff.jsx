@@ -15,6 +15,7 @@ import { getAllStaff, deleteStaff, getAllPosition } from '../../assets/StaffData
 import { deletePosition } from '../../assets/StaffData';
 import { useStoreTab } from '../../StoreTabState';
 import { useModal } from '../../ModalState';
+import { useDetailPopup } from '../../StaffDetailState';
 
 function Staff() {
     // Variabls for staff category here
@@ -33,11 +34,16 @@ function Staff() {
         activateStaffTab,
         deactivateStaffTab
     } = useStoreTab();
+
     const { 
         openModal,
         setLng,
         setLat
     } = useModal();
+
+    const {
+        openPopup
+    } = useDetailPopup();
 
     // Pagination states
     const [currentPageStaff, setCurrentPageStaff] = useState(0);
@@ -95,11 +101,16 @@ function Staff() {
         fetchData();
     }, []);
     // Function for open modal
-    const handleOpenModal = (kinhdo, vido) => {
+    const handleOpenMapModal = (kinhdo, vido) => {
         setLng(kinhdo);
         setLat(vido);
         openModal();
     };
+    
+    const handleOpenDetailModal = (id) => {
+        openPopup(id);
+    }
+
     //  Function for deleteing item
     const deleteData = async (id) => {
         const response = await deleteStaff(id);
@@ -162,8 +173,8 @@ function Staff() {
     const offsetPos = currentPagePos * itemsPerPage;
     const currentPosItems = position_items.length > 0 ? position_items.slice(offsetPos, offsetPos + itemsPerPage): [];
     const pageCountPos = position_items.length > 0 ? Math.ceil(parseFloat(position_items.length / itemsPerPage)) : 0;
-
-        // Return here
+    
+    // Return here
         return (
             <div>
                 <div>
@@ -240,7 +251,7 @@ function Staff() {
                                 onChange={(e) => setStaffSearchTerm(e.target.value)}
                             />
                         </div>
-                        <NavLink to="/stores/store-category-add-page">
+                        <NavLink to="/staff-management/staff-management-add-page">
                             <Button />
                         </NavLink>
                     </div>
@@ -281,7 +292,7 @@ function Staff() {
                                             <td scope='row' className='py-5 border-r-2'>{list.tendaily}</td>
                                             <td scope='row' className='py-5 border-r-2'>{list.tenchucvu}</td>
                                             <td scope='row' className='py-5 border-r-2'>
-                                                <button onClick={() => handleOpenModal(list.kinhdo, list.vido)}>
+                                                <button onClick={() => handleOpenMapModal(list.kinhdo, list.vido)}>
                                                     <p className='line-clamp-1 hover:underline'>
                                                         {list.diachi}
                                                     </p>                                                    
@@ -289,23 +300,13 @@ function Staff() {
                                             </td>
                                             <td scope="row">                                
                                                 <div className='flex flex-wrap m-2 gap-3'>
-                                                    <NavLink    
-                                                        to={`staff-management-edit-page/${list.Nhanvien.manhanvien}`}
+                                                    <NavLink
+                                                        onClick={() => handleOpenDetailModal(list.Nhanvien.manhanvien)}
                                                     >
                                                         <button>
                                                             <div className='flex gap-2 bg-cyan-500 p-2 rounded-md'>
                                                                 <img src={DetailIcon} alt="Icon xem chi tiết" />
                                                                 <p className='font-bold text-white hidden lg:block'>Chi tiết</p>
-                                                            </div>
-                                                        </button>
-                                                    </NavLink>
-                                                    <NavLink 
-                                                        to={`staff-management-edit-page/${list.Nhanvien.manhanvien}`}
-                                                    >
-                                                        <button>
-                                                            <div className='flex gap-2 bg-green-500 p-2 rounded-md'>
-                                                                <img src={EditIcon} alt="Icon chỉnh sửa" />
-                                                                <p className='font-bold text-white hidden lg:block'>Chỉnh sửa</p>
                                                             </div>
                                                         </button>
                                                     </NavLink>
@@ -354,7 +355,7 @@ function Staff() {
                                 onChange={(e) => setPositionSearchTerm(e.target.value)}
                             />
                         </div>
-                        <NavLink to="/stores/store-category-add-page">
+                        <NavLink to="/staff-management/position-add-page">
                             <Button />
                         </NavLink>
                     </div>
@@ -389,7 +390,7 @@ function Staff() {
                                             <td scope="row" className='py-5 border-r-2'>{list.ngaytao}</td>
                                             <td scope="row" className='py-5 border-r-2'>{list.ngaycapnhat}</td>
                                             <td scope="row">                                
-                                                <div className='flex flex-wrap justify-between m-2 gap-3'>
+                                                <div className='flex flex-wrap justify-center m-2 gap-3'>
                                                     <NavLink 
                                                         to={`position-edit-page/${list.machucvu}`}
                                                     >

@@ -43,11 +43,14 @@ import Sidebar from "./components/Sidebar";
 import MyAccount from "./pages/MyAccount";
 
 import MapModal from "./components/UI/MapModal";
+import StaffDetail from "./components/UI/StaffDetail";
 
 import { ActiveButtonProvider } from "./ActiveButton";
 import { AuthProvider } from "./AuthContext";
 import { StoreTabProvider } from "./StoreTabState";
 import { ModalProvider } from "./ModalState";
+import { PopupProvider } from './StaffDetailState';
+
 import MyAccountEditPage from "./pages/MyAccount/MyAccountEditPage";
 import CustomerEditPage from "./pages/Customer/CustomerEditPage";
 import CustomerAddPage from "./pages/Customer/CustomerAddPage";
@@ -59,6 +62,7 @@ function App() {
         <AuthProvider>
           <ActiveButtonProvider>
             <StoreTabProvider>
+              <PopupProvider>
               <ModalProvider>
                 <div className="w-screen">
                   <div className="flex gap-10">
@@ -205,7 +209,9 @@ function App() {
                   </div>
                 </div>
                 <MapModal></MapModal>
+                <StaffDetail></StaffDetail>
               </ModalProvider>
+              </PopupProvider>
             </StoreTabProvider>
           </ActiveButtonProvider>
         </AuthProvider>

@@ -21,6 +21,17 @@ export const getStaffById = async(id) => {
     }
 };
 
+export const getStaffDetail = async (id) => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/nhanvien/chitiet/${id}`);
+        const data = await response.json();
+        return data;
+    }
+    catch(error) {
+        console.error("Fetch error: ", error);
+    }
+}
+
 export const addStaff = async(item) => {
     try {
         // Prepare data before sending to server
