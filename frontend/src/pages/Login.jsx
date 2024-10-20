@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../AuthContext";
-import { ActiveButton } from "../ActiveButton";
+import { useAuth } from "../contexts/AuthContext";
+import { ActiveButton } from "../contexts/ActiveButton";
 
 function Login() {
   // Variables here

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/content/Header";
+import Header from "../../components/Header";
 
 const MyAccountEditPage = () => {
   const pass = "No string";
