@@ -9,8 +9,8 @@ import {
   updateStaff,
   getStaffById,
   getAllPositionName,
-} from "../../assets/StaffData";
-import { getAllStoreName } from "../../assets/StoreData";
+} from "../../assets/Staffs/StaffData";
+import { getAllStoreName } from "../../assets/Stores/StoreData";
 function StaffManagementEditPage() {
   // Variable for adding here
   const [staffName, setStaffName] = useState("");

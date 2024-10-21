@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import ReturnIcon from "../../images/icons/return-button.png";
@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 
 import { addProduct } from "../../assets/AdminProduct";
 import { getAllCategoryName } from "../../assets/TypeOfProduct";
-import { getAllStoreName } from "../../assets/StoreData";
+import { getAllStoreName } from "../../assets/Stores/StoreData";
 
 const ProductAdminAddPage = () => {
   // Variables here

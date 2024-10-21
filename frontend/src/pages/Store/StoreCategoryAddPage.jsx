@@ -4,7 +4,7 @@ import { useState } from "react";
 import Header from "../../components/Header";
 import ReturnIcon from "../../images/icons/return-button.png";
 
-import { addStoreCategory } from "../../assets/StoreCategoryData";
+import { addStoreCategory } from "../../assets/Stores/StoreCategoryData";
 function StoreAddPage() {
   // Variables here
   const [storeCateName, setStoreCateName] = useState("");

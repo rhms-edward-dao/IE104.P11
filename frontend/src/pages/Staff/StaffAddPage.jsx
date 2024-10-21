@@ -5,8 +5,8 @@ import ReturnIcon from "../../images/icons/return-button.png";
 import Header from "../../components/Header";
 
 import { getAllCityName, getAllDistrictName } from "../../assets/StoreDistrict";
-import { addStaff, getAllPositionName } from "../../assets/StaffData";
-import { getAllStoreName } from "../../assets/StoreData";
+import { addStaff, getAllPositionName } from "../../assets/Staffs/StaffData";
+import { getAllStoreName } from "../../assets/Stores/StoreData";
 function StaffManagementAddPage() {
   // Variable for adding here
   const [staffName, setStaffName] = useState("");

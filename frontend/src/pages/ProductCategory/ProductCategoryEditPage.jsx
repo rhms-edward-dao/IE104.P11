@@ -67,7 +67,7 @@ function WarehousesEditPage() {
             </div>
             <div className="w-1/2 flex justify-end mr-5">
               <button
-                className="px-2 py-3 bg-red-500 rounded rounded-xl"
+                className="px-2 py-3 bg-red-500 rounded-xl"
                 onClick={() => updateData(categoryId, productCategoryName)}
               >
                 <p className="font-bold text-white text-lg">Cập nhật</p>

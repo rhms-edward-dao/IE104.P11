@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import ReturnIcon from "../../images/icons/return-button.png";
 import Header from "../../components/Header";
 
-import { addPosition } from "../../assets/StaffData";
+import { addPosition } from "../../assets/Staffs/StaffData";
 
 function PositionAddPage() {
   // Variables here

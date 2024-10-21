@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import ReturnIcon from "../../images/icons/return-button.png";
@@ -57,7 +57,7 @@ function ProductCategorysAddPage() {
             </div>
             <div className="w-1/2 flex justify-end mr-5">
               <button
-                className="px-2 py-3 bg-red-500 rounded rounded-xl"
+                className="px-2 py-3 bg-red-500 rounded-xl"
                 onClick={() => addData(productCategoryName)}
               >
                 <p className="font-bold text-white text-lg">Thêm</p>

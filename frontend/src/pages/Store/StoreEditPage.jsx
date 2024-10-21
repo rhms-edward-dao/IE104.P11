@@ -4,7 +4,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import ReturnIcon from "../../images/icons/return-button.png";
 import Header from "../../components/Header";
 
-import { getStoreById, updateStore } from "../../assets/StoreData";
+import { getStoreById, updateStore } from "../../assets/Stores/StoreData";
 
 function StoreCategoryAddPage() {
   //  Variables here

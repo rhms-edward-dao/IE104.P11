@@ -16,7 +16,7 @@ import { CustomerDataCard } from "../../assets/Customers/CustomerDataCard";
 import Header from "../../components/Header";
 import Card from "../../components/content/Card";
 import Button from "../../components/UI/Button";
-import PaginationButtons from "../../components/UI/PaginationButton";
+import PaginationButtons from "../../components/UI/PaginationButtons";
 
 // Import Icons Here
 import EditIcon from "../../images/icons/button/Edit.svg";

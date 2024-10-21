@@ -5,8 +5,8 @@ import ReturnIcon from "../../images/icons/return-button.png";
 import Header from "../../components/Header";
 
 import { getAllCityName, getAllDistrictName } from "../../assets/StoreDistrict";
-import { getAllStoreName } from "../../assets/StoreCategoryData";
-import { addStore } from "../../assets/StoreData";
+import { getAllStoreName } from "../../assets/Stores/StoreCategoryData";
+import { addStore } from "../../assets/Stores/StoreData";
 
 function StoreCategoryAddPage() {
   //  Variables here

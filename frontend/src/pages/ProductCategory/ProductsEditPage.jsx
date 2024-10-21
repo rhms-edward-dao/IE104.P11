@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 
 import { updateProduct, getProductById } from "../../assets/AdminProduct";
 import { getAllCategoryName } from "../../assets/TypeOfProduct";
-import { getAllStoreName } from "../../assets/StoreData";
+import { getAllStoreName } from "../../assets/Stores/StoreData";
 
 const ProductAdminAddPage = () => {
   // Variables here

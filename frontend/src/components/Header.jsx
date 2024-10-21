@@ -59,7 +59,7 @@ const Header = (props) => {
   useEffect(() => {
     const fetchData = async (id) => {
       const userData = await getStaffById(id);
-      setImage(userData.Nhanvien.hinhanh);
+      setAvatar(userData.Nhanvien.hinhanh);
     };
     fetchData(userInfo.userID);
   }, []);

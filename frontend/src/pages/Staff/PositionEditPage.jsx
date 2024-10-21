@@ -4,7 +4,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import ReturnIcon from "../../images/icons/return-button.png";
 import Header from "../../components/Header";
 
-import { updatePosition, getPositionById } from "../../assets/StaffData";
+import { updatePosition, getPositionById } from "../../assets/Staffs/StaffData";
 
 function PositionEditPage() {
   // Variables here

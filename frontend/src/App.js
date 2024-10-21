@@ -68,13 +68,13 @@ function App() {
                 <StoreTabProvider>
                   <PopupProvider>
                     <ModalProvider>
-                      <div className="w-screen">
+                      <div className="w-screen bg-gray-200 transition-colors duration-300 dark:bg-[#0d1117]">
                         <div className="flex gap-10">
                           <div className="fixed left-0 w-1/3 md:w-1/6 h-screen">
                             <Sidebar></Sidebar>
                           </div>
 
-                          <div className="absolute right-0 w-4/6 md:w-5/6 h-screen bg-gray-100">
+                          <div className="absolute right-0 w-4/6 md:w-5/6 h-screen">
                             <Routes>
                               <Route path="/" element={<Login />} />
                               <Route path="/login" element={<Login />} />

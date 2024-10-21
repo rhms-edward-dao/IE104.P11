@@ -15,8 +15,8 @@ import {
   getAllStaff,
   deleteStaff,
   getAllPosition,
-} from "../../assets/StaffData";
-import { deletePosition } from "../../assets/StaffData";
+} from "../../assets//Staffs/StaffData";
+import { deletePosition } from "../../assets/Staffs/StaffData";
 import { useStoreTab } from "../../contexts/StoreTabState";
 import { useModal } from "../../contexts/ModalState";
 import { useDetailPopup } from "../../contexts/StaffDetailState";

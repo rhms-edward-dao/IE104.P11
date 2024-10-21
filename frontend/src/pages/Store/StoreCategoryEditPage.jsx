@@ -6,7 +6,7 @@ import ReturnIcon from "../../images/icons/return-button.png";
 import {
   getStoreCategoryById,
   updateStoreCategory,
-} from "../../assets/StoreCategoryData";
+} from "../../assets/Stores/StoreCategoryData";
 
 function StoreCategoryEditPage() {
   // Variables here
