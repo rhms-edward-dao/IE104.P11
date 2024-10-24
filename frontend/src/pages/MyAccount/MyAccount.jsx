@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Header from "../components/content/Header";
-import EditIcon from "../images/icons/edit.png";
+import Header from "../../components/Header";
+import EditIcon from "../../images/icons/edit.png";
 
 function MyAccount() {
   // Variables here

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 // Import Icons Here
-import DevicesIcon from "../../images/icons/max_devices.svg";
-import StoresIcon from "../../images/icons/max_stores_district.svg";
-import RatioIcon from "../../images/icons/sale_price_ratio.svg";
-import EditIcon from "../../images/icons/Edit.svg";
+import DevicesIcon from "../../images/icons/rule/max_devices.svg";
+import StoresIcon from "../../images/icons/rule/max_stores_district.svg";
+import RatioIcon from "../../images/icons/rule/sale_price_ratio.svg";
+import EditIcon from "../../images/icons/button/Edit.svg";
 
 import { getAllRule, updateRule } from "../../assets/RuleData";
 function Rule() {
@@ -20,7 +20,7 @@ function Rule() {
     const handleClickOutside = async (event) => {
       inputRefs.current.forEach((input, index) => {
         if (input && !input.contains(event.target)) {
-          setEditableInputId(null); // Disable all input fields when clicking outside       
+          setEditableInputId(null); // Disable all input fields when clicking outside
         }
       });
     };
@@ -32,14 +32,14 @@ function Rule() {
   }, []);
   // Get existed rules
   useEffect(() => {
-    const fetchData = async() => {        
-        const existedRule = await getAllRule();
-        setValues({
-            1: existedRule.sothietbitoidataikhoan,            
-            2: existedRule.sodailytoidamoiquan,
-            3: existedRule.tiledongiaban,
-        });
-    }
+    const fetchData = async () => {
+      const existedRule = await getAllRule();
+      setValues({
+        1: existedRule.sothietbitoidataikhoan,
+        2: existedRule.sodailytoidamoiquan,
+        3: existedRule.tiledongiaban,
+      });
+    };
     fetchData();
   }, []);
 
@@ -48,7 +48,6 @@ function Rule() {
     setTimeout(() => {
       inputRefs.current[id]?.focus(); // Focus the input field for easier editing
     }, 0);
-    
   };
 
   const handleInputChange = (id, value) => {
@@ -60,15 +59,15 @@ function Rule() {
 
   const handleUpdateSubmit = async () => {
     if (values[1] === "" || values[2] === "" || values[3] === "") {
-        alert("Không được có giá trị rỗng ở các trường");
+      alert("Không được có giá trị rỗng ở các trường");
+    } else {
+      const response = await updateRule(values[1], values[2], values[3]);
+      if (response.message === "Cập nhật thành công") {
+        alert("Cập nhật thành công");
       } else {
-        const response = await updateRule(values[1], values[2], values[3]);
-        if (response.message === "Cập nhật thành công") {
-          alert("Cập nhật thành công");
-        } else {
-          alert("Cập nhật thất bại");
-        }
+        alert("Cập nhật thất bại");
       }
+    }
   };
 
   const rulesData = [
@@ -114,9 +113,7 @@ function Rule() {
                 <h2 className="text-xl font-bold">{rule.title}</h2>
                 <p className="text-base text-gray-600">{rule.description}</p>
                 <div className="flex items-center justify-between">
-                  <p className="text-lg font-semibold">
-                    Giá trị hiện tại:
-                  </p>
+                  <p className="text-lg font-semibold">Giá trị hiện tại:</p>
                   <input
                     ref={(el) => (inputRefs.current[rule.id] = el)} // Assign each input a ref
                     type="text"
@@ -147,17 +144,17 @@ function Rule() {
             </div>
           ))}
           <div className="flex justify-end items-center">
-            <button 
-                onClick={() => handleUpdateSubmit()}
-                className="w-[100px] h-[40px] bg-red-500 mr-5 mt-2"
+            <button
+              onClick={() => handleUpdateSubmit()}
+              className="w-[100px] h-[40px] bg-red-500 mr-5 mt-2"
             >
-                <p className="text-white font-semibold">Cập nhật</p>
+              <p className="text-white font-semibold">Cập nhật</p>
             </button>
           </div>
-        </div>  
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Rule;

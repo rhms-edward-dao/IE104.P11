@@ -1,0 +1,107 @@
+{
+  "Sidebar": {
+    "Districts": "區",
+    "Stores": "代理人",
+    "ProductCategories": "物品",
+    "Staffs": "員工",
+    "Rules": "規則",
+    "Reports": "報告",
+    "Products": "產品",
+    "Warehouses": "庫存管理",
+    "Customers": "顧客",
+    "LogOut_Btn": "註銷"
+  },
+  "Header": {
+    "Title": {
+      "Districts": "區名單",
+      "Stores": "代理名單",
+      "StoreCategories": "代理類型列表",
+      "Customers": "客戶名單"
+    },
+    "LanguageOptions": {
+      "Chinese": "中國人",
+      "English": "英語",
+      "French": "法語",
+      "German": "德語",
+      "Japanese": "日本人",
+      "Vietnamese": "越南語"
+    },
+    "Notification": {}
+  },
+  "DataCard": {
+    "DC_Districts": {
+      "First": "商業區數量",
+      "Second": "城市總數"
+    },
+    "DC_Stores": {
+      "First": "代理總數",
+      "Second": "代理人的債務總額",
+      "Third": "進口總成本"
+    },
+    "DC_Customers": {
+      "First": "客戶總數",
+      "Second": "出口總收入",
+      "Third": "多個地區擁有客戶"
+    }
+  },
+  "TabView": {
+    "Store": "代理人",
+    "StoreCategory": "代理類型"
+  },
+  "SearchFilter": {
+    "SearchBy": "搜尋方式：",
+    "SF_Districts": {
+      "Columns": {
+        "Col1": "地區名稱",
+        "Col2": "城市",
+        "Col3": "地區代理總數"
+      },
+      "Placeholders": {
+        "Text1": "按地區名稱搜尋...",
+        "Text2": "按城市搜尋...",
+        "Text3": "按代理商總數搜尋..."
+      }
+    },
+    "SF_Stores": {
+      "Columns": {
+        "Col1": "代理名稱",
+        "Col2": "代理類型",
+        "Col3": "收購日期",
+        "Col4": "電話號碼",
+        "Col5": "地址"
+      },
+      "Placeholders": {
+        "Text1": "按代理名稱搜尋...",
+        "Text2": "依代理類型搜尋...",
+        "Text3": "按購買日期搜尋...",
+        "Text4": "按電話號碼搜尋...",
+        "Text5": "按地址搜尋..."
+      }
+    },
+    "SF_StoreCategories": {
+      "Columns": {
+        "Col1": "代理類型名稱",
+        "Col2": "最大債務金額"
+      },
+      "Placeholders": {
+        "Text1": "按代理類型名稱搜尋...",
+        "Text2": "以最高債務金額搜尋..."
+      }
+    },
+    "SF_Customers": {
+      "Columns": {
+        "Col1": "客戶名稱",
+        "Col2": "電話號碼"
+      },
+      "Placeholders": {
+        "Text1": "按客戶名稱搜尋...",
+        "Text2": "按電話號碼搜尋..."
+      }
+    }
+  },
+  "Buttons": {
+    "Add": "添加",
+    "Edit": "編輯",
+    "Delete": "刪除"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "Sidebar": {
+    "Districts": "Bezirk",
+    "Stores": "Agent",
+    "ProductCategories": "Artikel",
+    "Staffs": "Mitarbeiter",
+    "Rules": "Regeln",
+    "Reports": "Bericht",
+    "Products": "Produkt",
+    "Warehouses": "Bestandsverwaltung",
+    "Customers": "Kunde",
+    "LogOut_Btn": "Abmelden"
+  },
+  "Header": {
+    "Title": {
+      "Districts": "Bezirksliste",
+      "Stores": "Agentenliste",
+      "StoreCategories": "Liste der Agententypen",
+      "Customers": "Kundenliste"
+    },
+    "LanguageOptions": {
+      "Chinese": "Chinesisch",
+      "English": "Englisch",
+      "French": "Französisch",
+      "German": "Deutsch",
+      "Japanese": "Japanisch",
+      "Vietnamese": "Vietnamesisch"
+    },
+    "Notification": {}
+  },
+
+  "DataCard": {
+    "DC_Districts": {
+      "First": "Anzahl der Geschäftsbezirke",
+      "Second": "Gesamtzahl der Städte"
+    },
+    "DC_Stores": {
+      "First": "Gesamtzahl der Agenten",
+      "Second": "Gesamtschulden der Agenten",
+      "Third": "Gesamtimportkosten"
+    },
+    "DC_Customers": {
+      "First": "Gesamtzahl der Kunden",
+      "Second": "Gesamtumsatz Export",
+      "Third": "Anzahl der Bezirke mit Kunden"
+    }
+  },
+  "TabView": {
+    "Store": "Agent",
+    "StoreCategory": "Agententyp"
+  },
+  "SearchFilter": {
+    "SearchBy": "Suche nach:",
+    "SF_Districts": {
+      "Columns": {
+        "Col1": "Bezirksname",
+        "Col2": "Stadt",
+        "Col3": "Gesamtzahl der Agenten im Bezirk"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Bezirksname ...",
+        "Text2": "Suche nach Stadt ...",
+        "Text3": "Suche nach Gesamtzahl der Agenten ..."
+      }
+    },
+    "SF_Stores": {
+      "Columns": {
+        "Col1": "Name des Agenten",
+        "Col2": "Agententyp",
+        "Col3": "Erwerbsdatum",
+        "Col4": "Telefonnummer",
+        "Col5": "Adresse"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Agentennamen ...",
+        "Text2": "Suche nach Agententyp ...",
+        "Text3": "Suche nach Erwerbsdatum ...",
+        "Text4": "Suche nach Telefonnummer ...",
+        "Text5": "Suche nach Adresse ..."
+      }
+    },
+    "SF_StoreCategories": {
+      "Columns": {
+        "Col1": "Name des Agententyps",
+        "Col2": "Maximaler Schuldenbetrag"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Agententypnamen ...",
+        "Text2": "Suche nach maximalem Schuldenbetrag ..."
+      }
+    },
+    "SF_Customers": {
+      "Columns": {
+        "Col1": "Kundenname",
+        "Col2": "Telefonnummer"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Kundenname ...",
+        "Text2": "Suche nach Telefonnummer ..."
+      }
+    }
+  },
+  "Buttons": {
+    "Add": "Hinzufügen",
+    "Edit": "Bearbeiten",
+    "Delete": "Löschen"
+  }
+}

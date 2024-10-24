@@ -1,5 +1,3 @@
-import React from "react";
-
 import ReactPaginate from "react-paginate";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 

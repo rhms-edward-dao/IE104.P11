@@ -1,19 +1,41 @@
+// import { NavLink } from "react-router-dom";
+// import StoreIcon from "../images/icons/warehouse.png";
+// import ProductIcon from "../images/icons/product.png";
+// import ImExIcon from "../images/icons/import-export.png";
+// import ReportIcon from "../images/icons/report.png";
+// import RuleIcon from "../images/icons/rule.png";
+// import CustomerIcon from "../images/icons/customer.png";
+// import RegulationIcon from "../images/icons/regulation.png";
+// import DistrictMapIcon from "../images/icons/map_district.png";
+// import LogoIcon from "../images/icons/logo.png";
+// import Logout from "../images/icons/logout.png";
+
+// import { useEffect, useState } from "react";
+
+// import { useAuth } from "../contexts/AuthContext";
+// import { ActiveButton } from "../contexts/ActiveButton";
+
 import { NavLink } from "react-router-dom";
-import StoreIcon from "../images/icons/warehouse.png";
-import ProductIcon from "../images/icons/product.png";
-import ImExIcon from "../images/icons/import-export.png";
-import ReportIcon from "../images/icons/report.png";
-import RuleIcon from "../images/icons/rule.png";
-import CustomerIcon from "../images/icons/customer.png";
-import RegulationIcon from "../images/icons/regulation.png";
-import DistrictMapIcon from "../images/icons/map_district.png";
-import LogoIcon from "../images/icons/logo.png";
-import Logout from "../images/icons/logout.png";
+import { useTranslation } from "react-i18next";
 
-import { useEffect, useState } from "react";
+// Import Context Here
+import { useAuth } from "../contexts/AuthContext";
+import { ActiveButton } from "../contexts/ActiveButton";
 
-import { useAuth } from "../AuthContext";
-import { ActiveButton } from "../ActiveButton";
+// Import Icons Here
+// Admin Sidebar Icons
+import DistrictsIcon from "../images/icons/sidebar/Districts.svg";
+import StoresIcon from "../images/icons/sidebar/Stores.svg";
+import StaffsIcon from "../images/icons/sidebar/Staffs.svg";
+import RulesIcon from "../images/icons/sidebar/Rules.svg";
+// Staff Sidebar Icons
+import WarehousesIcon from "../images/icons/sidebar/Warehouses.svg";
+// Both Admin & Staff Sidebar Icons
+import LogoIcon from "../images/icons/sidebar/Logo.svg";
+import LogoutIcon from "../images/icons/sidebar/Logout.svg";
+import ProductsIcon from "../images/icons/sidebar/Products.svg";
+import CustomersIcon from "../images/icons/sidebar/Customers.svg";
+import ReportsIcon from "../images/icons/sidebar/Reports.svg";
 
 function Sidebar() {
   // Variables here
@@ -42,6 +64,20 @@ function Sidebar() {
     activateBaocaoStaff,
   } = ActiveButton();
 
+  const { t } = useTranslation();
+  const {
+    Districts,
+    Stores,
+    ProductCategories,
+    Staffs,
+    Rules,
+    Reports,
+    Products,
+    Warehouses,
+    Customers,
+    LogOut_Btn,
+  } = t("Sidebar");
+
   // Functions here
   // Function for logout
   const handleLogout = () => {
@@ -64,8 +100,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/districts">
                 <div className="flex gap-3 items-center">
-                  <img src={DistrictMapIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Quận</p>
+                  <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Districts}</p>
                 </div>
               </NavLink>
             </div>
@@ -76,8 +112,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateQuan()}
                 >
-                  <img src={DistrictMapIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Quận</p>
+                  <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Districts}</p>
                 </button>
               </NavLink>
             </div>
@@ -94,8 +130,8 @@ function Sidebar() {
               <div className="my-4 py-4 bg-red-500">
                 <NavLink to="/stores">
                   <div className="flex gap-3 items-center">
-                    <img src={StoreIcon} alt="" className="ml-1 " />
-                    <p className="text-white font-bold">Đại lý</p>
+                    <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
+                    <p className="text-white font-bold">{Stores}</p>
                   </div>
                 </NavLink>
               </div>
@@ -107,8 +143,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateDaily()}
                 >
-                  <img src={StoreIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Đại lý</p>
+                  <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Stores}</p>
                 </button>
               </NavLink>
             </div>
@@ -124,8 +160,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/product-categorys">
                 <div className="flex gap-3 items-center">
-                  <img src={ProductIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Mặt hàng</p>
+                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{ProductCategories}</p>
                 </div>
               </NavLink>
             </div>
@@ -136,8 +172,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateMathang()}
                 >
-                  <img src={ProductIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Mặt hàng</p>
+                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{ProductCategories}</p>
                 </button>
               </NavLink>
             </div>
@@ -153,8 +189,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/staff-management">
                 <div className="flex gap-3 items-center">
-                  <img src={RegulationIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Nhân viên</p>
+                  <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Staffs}</p>
                 </div>
               </NavLink>
             </div>
@@ -165,8 +201,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateNhanvien()}
                 >
-                  <img src={RegulationIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Nhân viên</p>
+                  <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Staffs}</p>
                 </button>
               </NavLink>
             </div>
@@ -182,8 +218,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/rule-management">
                 <div className="flex gap-3 items-center">
-                  <img src={RuleIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Qui tắc</p>
+                  <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Rules}</p>
                 </div>
               </NavLink>
             </div>
@@ -194,8 +230,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateQuitac()}
                 >
-                  <img src={RuleIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Qui tắc</p>
+                  <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Rules}</p>
                 </button>
               </NavLink>
             </div>
@@ -211,8 +247,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/customer">
                 <div className="flex gap-3 items-center">
-                  <img src={CustomerIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Khách hàng</p>
+                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Customers}</p>
                 </div>
               </NavLink>
             </div>
@@ -223,8 +259,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateKhachhang()}
                 >
-                  <img src={CustomerIcon} alt="" className="ml-1" />
-                  <p className="text-white font-bold">Khách hàng</p>
+                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Customers}</p>
                 </button>
               </NavLink>
             </div>
@@ -240,8 +276,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/admin-report">
                 <div className="flex gap-3 items-center">
-                  <img src={ReportIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Báo cáo</p>
+                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Reports}</p>
                 </div>
               </NavLink>
             </div>
@@ -252,8 +288,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateBaocao()}
                 >
-                  <img src={ReportIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Báo cáo</p>
+                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Reports}</p>
                 </button>
               </NavLink>
             </div>
@@ -270,8 +306,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/products">
                 <div className="flex gap-3 items-center">
-                  <img src={ProductIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Sản phẩm</p>
+                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Products}</p>
                 </div>
               </NavLink>
             </div>
@@ -282,8 +318,8 @@ function Sidebar() {
                   className="w-full flex gap-3items-center"
                   onClick={() => activateSanpham()}
                 >
-                  <img src={ProductIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Sản phẩm</p>
+                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Products}</p>
                 </button>
               </NavLink>
             </div>
@@ -299,8 +335,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink tp="store-transaction">
                 <div className="flex gap-3 items-center">
-                  <img src={ImExIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Quản lý kho</p>
+                  <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Warehouses}</p>
                 </div>
               </NavLink>
             </div>
@@ -311,8 +347,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateQuanlykho()}
                 >
-                  <img src={ImExIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Quản lý kho</p>
+                  <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Warehouses}</p>
                 </button>
               </NavLink>
             </div>
@@ -327,8 +363,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/customer">
                 <div className="flex gap-3 items-center">
-                  <img src={CustomerIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Khách hàng</p>
+                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Customers}</p>
                 </div>
               </NavLink>
             </div>
@@ -339,8 +375,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateKhachhang()}
                 >
-                  <img src={CustomerIcon} alt="" className="ml-1" />
-                  <p className="text-white font-bold">Khách hàng</p>
+                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Customers}</p>
                 </button>
               </NavLink>
             </div>
@@ -356,8 +392,8 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/store-report">
                 <div className="flex gap-3 items-center">
-                  <img src={ReportIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Báo cáo</p>
+                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Reports}</p>
                 </div>
               </NavLink>
             </div>
@@ -368,8 +404,8 @@ function Sidebar() {
                   className="w-full flex gap-3 items-center"
                   onClick={() => activateBaocaoStaff()}
                 >
-                  <img src={ReportIcon} alt="" className="ml-1 " />
-                  <p className="text-white font-bold">Báo cáo</p>
+                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold">{Reports}</p>
                 </button>
               </NavLink>
             </div>
@@ -384,8 +420,8 @@ function Sidebar() {
         <div className="my-4 py-4 hover:bg-red-500">
           <NavLink to="/login" onClick={() => handleLogout()}>
             <div className="flex gap-3 items-center">
-              <img src={Logout} alt="" className="ml-1 " />
-              <p className="text-white font-bold">Đăng xuất</p>
+              <img src={LogoutIcon} alt="" className="mx-5 h-10 w-10" />
+              <p className="text-white font-bold">{LogOut_Btn}</p>
             </div>
           </NavLink>
         </div>

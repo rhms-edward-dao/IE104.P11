@@ -1,0 +1,107 @@
+{
+  "Sidebar": {
+    "Districts": "District",
+    "Stores": "Agent",
+    "ProductCategories": "Item",
+    "Staffs": "Employee",
+    "Rules": "Rules",
+    "Reports": "Report",
+    "Products": "Product",
+    "Warehouses": "Inventory Management",
+    "Customers": "Customer",
+    "LogOut_Btn": "Logout"
+  },
+  "Header": {
+    "Title": {
+      "Districts": "District list",
+      "Stores": "Agent list",
+      "StoreCategories": "List of agent types",
+      "Customers": "Customer list"
+    },
+    "LanguageOptions": {
+      "Chinese": "Chinese",
+      "English": "English",
+      "French": "French",
+      "German": "German",
+      "Japanese": "Japanese",
+      "Vietnamese": "Vietnamese"
+    },
+    "Notification": {}
+  },
+  "DataCard": {
+    "DC_Districts": {
+      "First": "Number of districts in business",
+      "Second": "Total number of cities"
+    },
+    "DC_Stores": {
+      "First": "Total number of agents",
+      "Second": "Total debts of agents",
+      "Third": "Total import cost"
+    },
+    "DC_Customers": {
+      "First": "Total number of customers",
+      "Second": "Total export revenue",
+      "Third": "Number of districts has customers"
+    }
+  },
+  "TabView": {
+    "Store": "Agent",
+    "StoreCategory": "Agent type"
+  },
+  "SearchFilter": {
+    "SearchBy": "Search by:",
+    "SF_Districts": {
+      "Columns": {
+        "Col1": "District Name",
+        "Col2": "City",
+        "Col3": "Total Agents in District"
+      },
+      "Placeholders": {
+        "Text1": "Search by District Name ...",
+        "Text2": "Search by City ...",
+        "Text3": "Search by Total Agents ..."
+      }
+    },
+    "SF_Stores": {
+      "Columns": {
+        "Col1": "Agent Name",
+        "Col2": "Agent Type",
+        "Col3": "Date of Acquisition",
+        "Col4": "Phone Number",
+        "Col5": "Address"
+      },
+      "Placeholders": {
+        "Text1": "Search by Agent Name ...",
+        "Text2": "Search by Agent Type ...",
+        "Text3": "Search by Date of Acquisition ...",
+        "Text4": "Search by Phone Number ...",
+        "Text5": "Search by Address ..."
+      }
+    },
+    "SF_StoreCategories": {
+      "Columns": {
+        "Col1": "Agent Type Name",
+        "Col2": "Maximum Debt Amount"
+      },
+      "Placeholders": {
+        "Text1": "Search by Agent Type Name ...",
+        "Text2": "Search by Maximum Debt Amount ..."
+      }
+    },
+    "SF_Customers": {
+      "Columns": {
+        "Col1": "Customer Name",
+        "Col2": "Phone Number"
+      },
+      "Placeholders": {
+        "Text1": "Search by Customer Name ...",
+        "Text2": "Search by Phone Number ..."
+      }
+    }
+  },
+  "Buttons": {
+    "Add": "Add",
+    "Edit": "Edit",
+    "Delete": "Delete"
+  }
+}

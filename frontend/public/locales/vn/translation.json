@@ -1,0 +1,123 @@
+{
+  "LogIn": {
+    "Chinese": "Tiếng Trung Quốc",
+    "English": "Tiếng Anh",
+    "French": "Tiếng Pháp",
+    "German": "Tiếng Đức",
+    "Japanese": "Tiếng Nhật",
+    "Vietnamese": "Tiếng Việt"
+  },
+  "SignUp": {
+    "Chinese": "Tiếng Trung Quốc",
+    "English": "Tiếng Anh",
+    "French": "Tiếng Pháp",
+    "German": "Tiếng Đức",
+    "Japanese": "Tiếng Nhật",
+    "Vietnamese": "Tiếng Việt"
+  },
+  "Sidebar": {
+    "Districts": "Quận",
+    "Stores": "Đại lý",
+    "ProductCategories": "Mặt hàng",
+    "Staffs": "Nhân viên",
+    "Rules": "Quy tắc",
+    "Reports": "Báo cáo",
+    "Products": "Sản Phẩm",
+    "Warehouses": "Quản lý kho",
+    "Customers": "Khách hàng",
+    "LogOut_Btn": "Đăng xuất"
+  },
+  "Header": {
+    "Title": {
+      "Districts": "Danh sách quận",
+      "Stores": "Danh sách đại lý",
+      "StoreCategories": "Danh sách loại đại lý",
+      "Customers": "Danh sách khách hàng"
+    },
+    "LanguageOptions": {
+      "Chinese": "Tiếng Trung Quốc",
+      "English": "Tiếng Anh",
+      "French": "Tiếng Pháp",
+      "German": "Tiếng Đức",
+      "Japanese": "Tiếng Nhật",
+      "Vietnamese": "Tiếng Việt"
+    },
+    "Notification": {}
+  },
+  "DataCard": {
+    "DC_Districts": {
+      "First": "Số quận đang kinh doanh",
+      "Second": "Tổng số thành phố"
+    },
+    "DC_Stores": {
+      "First": "Tổng số đại lý",
+      "Second": "Tổng nợ các đại lý",
+      "Third": "Tổng chi phí nhập hàng"
+    },
+    "DC_Customers": {
+      "First": "Tổng số khách hàng",
+      "Second": "Tổng doanh thu xuất hàng",
+      "Third": "Số quận có khách hàng"
+    }
+  },
+  "TabView": {
+    "Store": "Đại lý",
+    "StoreCategory": "Loại đại lý"
+  },
+  "SearchFilter": {
+    "SearchBy": "Tìm kiếm theo:",
+    "SF_Districts": {
+      "Columns": {
+        "Col1": "Tên quận",
+        "Col2": "Thành phố",
+        "Col3": "Tổng số đại lý trong quận"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên quận ...",
+        "Text2": "Tìm kiếm theo thành phố ...",
+        "Text3": "Tìm kiếm theo tổng số đại lý ..."
+      }
+    },
+    "SF_Stores": {
+      "Columns": {
+        "Col1": "Tên đại lý",
+        "Col2": "Loại đại lý",
+        "Col3": "Ngày tiếp nhận",
+        "Col4": "Số điện thoại",
+        "Col5": "Địa chỉ"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên đại lý ...",
+        "Text2": "Tìm kiếm theo loại đại lý ...",
+        "Text3": "Tìm kiếm theo ngày tiếp nhận ...",
+        "Text4": "Tìm kiếm theo số điện thoại ...",
+        "Text5": "Tìm kiếm theo địa chỉ ..."
+      }
+    },
+    "SF_StoreCategories": {
+      "Columns": {
+        "Col1": "Tên loại đại lý",
+        "Col2": "Số tiền nợ tối đa"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên loại đại lý ...",
+        "Text2": "Tìm kiếm theo số tiền nợ tối đa ..."
+      }
+    },
+    "SF_Customers": {
+      "Columns": {
+        "Col1": "Tên khách hàng",
+        "Col2": "Số điện thoại"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên khách hàng ...",
+        "Text2": "Tìm kiếm theo số điện thoại ..."
+      }
+    }
+  },
+  "Buttons": {
+    "Add": "Thêm",
+    "Edit": "Chỉnh sửa",
+    "Delete": "Xóa"
+  }
+}
