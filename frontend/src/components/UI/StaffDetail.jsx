@@ -120,7 +120,7 @@ const StaffDetail = () => {
                   </div>
                   <div className="flex justify-end">
                     <NavLink
-                      className="w-[100px] h-[40px] flex justify-center items-center bg-red-500"
+                      className="w-[100px] h-[40px] flex justify-center items-center bg-green-500"
                       onClick={closePopup}
                       to={`staff-management/staff-management-edit-page/${staffData}`}
                     >
