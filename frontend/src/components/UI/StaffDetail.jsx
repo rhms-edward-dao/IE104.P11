@@ -59,8 +59,8 @@ const StaffDetail = () => {
                         ) : (
                             <div className="flex justify-between">
                                 <div className="w-1/2 mx-5">
-                                    <p className="text-center font-bold text-xl mt-5 mb-8">Thông tin cá nhân</p>
-                                    <div className="flex justify-between items-center lg:mx-14 my-5">
+                                    <h2 className="text-center font-bold text-xl mt-5 mb-8">Thông tin cá nhân</h2>
+                                    <div className="flex justify-between items-center lg:mx-14 my-10">
                                         <p className="font-bold">Ảnh đại diện:</p>                                    
                                         <img 
                                             width="60px"
@@ -68,56 +68,56 @@ const StaffDetail = () => {
                                             alt="Ảnh đại diện" 
                                         />
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Họ tên: </p>
                                         <p>{staffDataDetail.info.hoten}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Ngày sinh: </p>
                                         <p>{staffDataDetail.info.ngaysinh}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Số điện thoại: </p>
                                         <p>{staffDataDetail.info.sodienthoai}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Email: </p>
                                         <p>{staffDataDetail.info.email}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Địa chỉ: </p>
                                         <p>{staffDataDetail.info.diachi}</p>
                                     </div>
                                 </div>
                                 <div className="w-1/2 mx-5">
-                                    <p className="text-center text-xl font-bold mt-5 mb-8">Thông tin công việc</p>
-                                    <div className="flex justify-between lg:mx-14 my-12">
+                                    <h2 className="text-center text-xl font-bold mt-5 mb-8">Thông tin công việc</h2>
+                                    <div className="flex justify-between lg:mx-14">
                                         <p className="font-bold">Đại lý:</p>
                                         <p>{staffDataDetail.info.tendaily}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Chức vụ:</p>
                                         <p>{staffDataDetail.info.tenchucvu}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Cấp độ:</p>
                                         <p>{staffDataDetail.info.capdo}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Lương:</p>
                                         <p>{staffDataDetail.info.luong}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Ngày bắt đầu:</p>
                                         <p>{staffDataDetail.info.ngaybatdau}</p>
                                     </div>
-                                    <div className="flex justify-between lg:mx-14 my-5">
+                                    <div className="flex justify-between lg:mx-14 my-8">
                                         <p className="font-bold">Thời hạn:</p>
                                         <p>{staffDataDetail.info.thoihan}</p>
                                     </div>
                                     <div className="flex justify-end">
                                         <NavLink 
-                                            className="w-[100px] h-[40px] flex justify-center items-center bg-red-500"
+                                            className="w-[100px] h-[40px] flex justify-center items-center bg-green-500"
                                             onClick={closePopup}
                                             to={`staff-management/staff-management-edit-page/${staffData}`}
                                         >
