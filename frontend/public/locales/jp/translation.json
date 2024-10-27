@@ -16,6 +16,8 @@
       "Districts": "地区リスト",
       "Stores": "エージェントリスト",
       "StoreCategories": "エージェント タイプのリスト",
+      "Products": "製品のリスト",
+      "ProductCategories": "製品タイプのリスト",
       "Customers": "顧客リスト"
     },
     "LanguageOptions": {
@@ -38,6 +40,11 @@
       "Second": "エージェントの総負債",
       "Third": "輸入コストの合計"
     },
+    "DC_Products": {
+      "First": "製品の合計数",
+      "Second": "合計金額",
+      "Third": "在庫切れの合計"
+    },
     "DC_Customers": {
       "First": "顧客の総数",
       "Second": "輸出収入の合計",
@@ -46,7 +53,9 @@
   },
   "TabView": {
     "Store": "エージェント",
-    "StoreCategory": "エージェントタイプ"
+    "StoreCategory": "エージェントタイプ",
+    "Product": "製品",
+    "ProductCategory": "製品タイプ"
   },
   "SearchFilter": {
     "SearchBy": "検索条件:",
@@ -88,6 +97,32 @@
         "Text2": "最大負債額で検索..."
       }
     },
+    "SF_Products": {
+      "Columns": {
+        "Col1": "製品名",
+        "Col2": "単価",
+        "Col3": "在庫数量",
+        "Col4": "ユニット名",
+        "Col5": "製品タイプ名",
+        "Col6": "エージェント名"
+      },
+      "Placeholders": {
+        "Text1": "製品名で検索...",
+        "Text2": "単価で検索...",
+        "Text3": "在庫数量で検索...",
+        "Text4": "ユニットで検索...",
+        "Text5": "製品タイプ名で検索...",
+        "Text6": "エージェント名で検索..."
+      }
+    },
+    "SF_ProductCategories": {
+      "Columns": {
+        "Col1": "製品タイプ名"
+      },
+      "Placeholders": {
+        "Text1": "製品タイプ名で検索..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "顧客名",
@@ -102,6 +137,44 @@
   "Buttons": {
     "Add": "追加",
     "Edit": "編集",
-    "Delete": "削除"
+    "Delete": "削除",
+    "Update": "アップデート"
+  },
+  "AddPage": {
+    "AP_Districts": {
+      "Title": "地区を追加します"
+    },
+    "AP_Stores": {
+      "Title": "エージェントを追加します",
+      "Col5Note": " (区まで)",
+      "Col5Placeholder": "例: 番地、通り名、区",
+      "UploadImage": "画像をアップロードします"
+    },
+    "AP_StoreCategories": {
+      "Title": "エージェントの種類を追加します"
+    },
+    "AP_Products": {
+      "Title": "製品を追加します"
+    },
+    "AP_ProductCategories": {
+      "Title": "製品タイプを追加します"
+    }
+  },
+  "EditPage": {
+    "EP_Districts": {
+      "Title": "地区を編集します"
+    },
+    "EP_Stores": {
+      "Titile": "エージェントを編集します"
+    },
+    "EP_StoreCategories": {
+      "Title": "エージェントの種類を編集します"
+    },
+    "EP_Products": {
+      "Titile": "製品を編集します"
+    },
+    "EP_ProductCategories": {
+      "Title": "製品タイプを編集します"
+    }
   }
 }

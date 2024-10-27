@@ -112,7 +112,7 @@ const Header = (props) => {
       <div className="flex w-1/4 items-center justify-end gap-10">
         <NavLink to="/my-account">
           <img
-            className="w-16 rounded-full"
+            className="w-16 rounded-full text-black transition-colors duration-300 dark:text-white"
             src={`data:images/jpeg;base64, ${avatar}`}
             alt="Avatar"
           />

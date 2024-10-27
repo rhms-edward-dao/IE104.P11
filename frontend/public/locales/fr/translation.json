@@ -16,6 +16,8 @@
       "Districts": "Liste des districts",
       "Stores": "Liste des agents",
       "StoreCategories": "Liste des types d'agents",
+      "Products": "Liste des produits",
+      "ProductCategories": "Liste des types de produits",
       "Customers": "Liste des clients"
     },
     "LanguageOptions": {
@@ -38,6 +40,11 @@
       "Second": "Total des dettes des agents",
       "Third": "Coût total des importations"
     },
+    "DC_Products": {
+      "First": "Nombre total de produits",
+      "Second": "Valeur totale",
+      "Third": "Total en rupture de stock"
+    },
     "DC_Customers": {
       "First": "Nombre total de clients",
       "Second": "Revenus totaux d'exportation",
@@ -46,7 +53,9 @@
   },
   "TabView": {
     "Store": "Agent",
-    "StoreCategory": "Type d'agent"
+    "StoreCategory": "Type d'agent",
+    "Product": "Produit",
+    "ProductCategory": "Type de produit"
   },
   "SearchFilter": {
     "SearchBy": "Rechercher par:",
@@ -88,6 +97,32 @@
         "Text2": "Recherche par montant maximal de la dette ..."
       }
     },
+    "SF_Products": {
+      "Columns": {
+        "Col1": "Nom du produit",
+        "Col2": "Prix unitaire",
+        "Col3": "Quantité en stock",
+        "Col4": "Nom de l'unité",
+        "Col5": "Nom du type de produit",
+        "Col6": "Nom de l'agent"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par nom de produit ...",
+        "Text2": "Recherche par prix unitaire ...",
+        "Text3": "Recherche par quantité en stock ...",
+        "Text4": "Recherche par unité ...",
+        "Text5": "Recherche par nom de type de produit ...",
+        "Text6": "Recherche par nom d'agent ..."
+      }
+    },
+    "SF_ProductCategories": {
+      "Columns": {
+        "Col1": "Nom du type de produit"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par nom de type de produit ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Nom du client",
@@ -102,6 +137,44 @@
   "Buttons": {
     "Add": "Ajouter",
     "Edit": "Modifier",
-    "Delete": "Supprimer"
+    "Delete": "Supprimer",
+    "Update": "Mise à jour"
+  },
+  "AddPage": {
+    "AP_Districts": {
+      "Title": "Ajouter un quartier"
+    },
+    "AP_Stores": {
+      "Title": "Ajouter un agent",
+      "Col5Note": " (jusqu'au quartier)",
+      "Col5Placeholder": "Par exemple: numéro de maison, nom de rue, quartier",
+      "UploadImage": "Télécharger l'image"
+    },
+    "AP_StoreCategories": {
+      "Title": "Ajouter un type d'agent"
+    },
+    "AP_Products": {
+      "Title": "Ajouter un produit"
+    },
+    "AP_ProductCategories": {
+      "Title": "Ajouter un type de produit"
+    }
+  },
+  "EditPage": {
+    "EP_Districts": {
+      "Title": "Modifier le quartier"
+    },
+    "EP_Stores": {
+      "Titile": "Modifier un agent"
+    },
+    "EP_StoreCategories": {
+      "Title": "Modifier un type d'agent"
+    },
+    "EP_Products": {
+      "Titile": "Modifier le produit"
+    },
+    "EP_ProductCategories": {
+      "Title": "Modifier le type de produit"
+    }
   }
 }

@@ -1,16 +1,16 @@
 const Card = (props) => {
   return (
-    <div className="p-5 flex gap-5 bg-white shadow-xl">
-      <div className="flex flex-col justify-between w-2/3">
-        <p className="font-bold text-xl whitespace-nowrap mt-3">
+    <div className="flex gap-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
+      <div className="flex w-2/3 flex-col justify-between">
+        <h3 className="mt-3 whitespace-nowrap text-xl font-bold text-black transition-colors duration-300 dark:text-white">
           {props.description}
-        </p>
-        <p className="font-bold text-4xl text-red-500 whitespace-nowrap mb-3">
+        </h3>
+        <h2 className="mb-3 whitespace-nowrap text-4xl font-bold text-red-500">
           {props.value}
-        </p>
+        </h2>
       </div>
-      <div className="w-1/3 flex justify-center items-center bg-gray-100 rounded-lg">
-        <img src={props.image} alt="Hình chờ" className="m-5" />
+      <div className="flex w-1/3 items-center justify-center rounded-lg bg-gray-200 transition-colors duration-300 dark:bg-[#0d1117]">
+        <img className="m-5 h-14 w-14" src={props.image} alt="Hình chờ" />
       </div>
     </div>
   );

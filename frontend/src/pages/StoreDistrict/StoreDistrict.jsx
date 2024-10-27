@@ -34,36 +34,40 @@ import DeleteIcon from "../../images/icons/button/Delete.svg";
 // import { getAllDistrict, deleteDistrict } from "../../assets/StoreDistrict";
 
 function Districts() {
-  // Variabls here
-  // // For Theme Mode and Multi-Language
+  // Variables here
+  // // For Theme Mode
   const { theme } = useTheme();
+  // // For Multi-Language
   const { t } = useTranslation();
   const { Title } = t("Header");
   const { DC_Districts } = t("DataCard");
   const { SearchBy, SF_Districts } = t("SearchFilter");
   const { Add, Edit, Delete } = t("Buttons");
   // // For fetching data
-  const [data, setData] = useState([]);
+  const [districtData, setDistrictData] = useState([]);
   // // For searching
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-  // Varibles for pagination
+  // // For pagination
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
-
   // // For tracking the search-filter option and placeholder text
-  const [selectedOption, setSelectedOption] = useState("Tên quận");
+  const [selectedOption, setSelectedOption] = useState(
+    SF_Districts.Columns.Col1
+  );
 
   // Use Effect here
-
   // Get data from server here - data must be fetched before this page has been loaded
   // // For getting all existing districts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllDistrict();
-        setData(data);
+        const existedDistrict = await getAllDistrict();
+        if (existedDistrict.length === 0) {
+          setDistrictData([]);
+        } else {
+          setDistrictData(existedDistrict);
+        }
       } catch (error) {
         console.error("Error while fetching: ", error);
       }
@@ -86,7 +90,7 @@ function Districts() {
   // // For searching
   useEffect(() => {
     if (searchTerm.trim() !== "") {
-      const results = data.filter((item) => {
+      const results = districtData.filter((item) => {
         if (selectedOption === SF_Districts.Columns.Col1) {
           return item.tenquan.toLowerCase().includes(searchTerm.toLowerCase());
         } else if (selectedOption === SF_Districts.Columns.Col2) {
@@ -102,9 +106,9 @@ function Districts() {
       });
       setSearchResults(results);
     } else {
-      setSearchResults(data);
+      setSearchResults(districtData);
     }
-  }, [searchTerm, data, selectedOption]);
+  }, [searchTerm, districtData, selectedOption]);
 
   // Functions here
   // // For deleting one district
@@ -113,7 +117,7 @@ function Districts() {
     const response = await deleteDistrict(id);
     if (response.message === "Xóa quận thành công") {
       alert("Xóa quận thành công");
-      setData(data.filter((item) => item.maquan !== id));
+      setDistrictData(districtData.filter((item) => item.maquan !== id));
     } else {
       alert("Xóa quận thất bại");
     }
@@ -141,7 +145,7 @@ function Districts() {
   };
 
   // Items for render
-  const items = searchTerm ? searchResults : data;
+  const items = searchTerm ? searchResults : districtData;
 
   // Calculate offset
   const offset = currentPage * itemsPerPage;
@@ -156,8 +160,7 @@ function Districts() {
       <div>
         <Header headerTitle={Title.Districts}></Header>
       </div>
-
-      <div className="flex flex-wrap gap-5 xl:gap-16 2xl:gap-44 justify-center m-5">
+      <div className="m-5 flex flex-wrap justify-center gap-5 xl:gap-16 2xl:gap-44">
         {DistrictDataCard(theme, DC_Districts).map((card, index) => (
           <Card
             key={index}
@@ -167,15 +170,16 @@ function Districts() {
           />
         ))}
       </div>
-
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex flex-wrap gap-3 justify-between">
-          <div className="flex flex-wrap gap-5 items-center justify-start text-black dark:text-white">
-            <p className="font-bold whitespace-nowrap">{SearchBy}</p>
+        <div className="flex justify-between">
+          <div className="flex items-center justify-start gap-5">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+              {SearchBy}
+            </p>
             <select
+              className="rounded-md border border-black bg-white px-3 py-0.5 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
               value={selectedOption}
               onChange={handleOptionChange}
-              className="rounded-md border border-black bg-white px-3 py-0.5 text-lg font-semibold transition-colors duration-300 dark:border-white dark:bg-[#363636]"
             >
               <option value={SF_Districts.Columns.Col1}>
                 {SF_Districts.Columns.Col1}
@@ -188,9 +192,9 @@ function Districts() {
               </option>
             </select>
             <input
+              className="w-24 rounded-md border border-black bg-white px-2 py-0.5 text-lg text-gray-500 transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-gray-100 lg:w-72 xl:w-96"
               type="text"
               placeholder={getPlaceholderText()}
-              className="rounded-md border border-black bg-white px-2 py-0.5 text-lg text-gray-500 transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-gray-100 w-24 lg:w-72 xl:w-96"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -199,18 +203,17 @@ function Districts() {
             <Button />
           </NavLink>
         </div>
-
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
-            <tr className="text-md text-gray-500">
+            <tr className="text-md">
               <th scope="col"></th>
-              <th scope="col" className="border-r-2 py-5 text-lg">
+              <th className="border-r-2 py-5 text-lg" scope="col">
                 {SF_Districts.Columns.Col1}
               </th>
-              <th scope="col" className="border-r-2 py-5 text-lg">
+              <th className="border-r-2 py-5 text-lg" scope="col">
                 {SF_Districts.Columns.Col2}
               </th>
-              <th scope="col" className="py-5 text-lg">
+              <th className="py-5 text-lg" scope="col">
                 {SF_Districts.Columns.Col3}
               </th>
               <th scope="col"></th>
@@ -218,49 +221,47 @@ function Districts() {
           </thead>
           <tbody>
             {currentItems.length > 0 ? (
-              <>
-                {currentItems.map((list, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
-                  >
-                    <td className="py-5 pl-3">
-                      <input type="checkbox" />
-                    </td>
-                    <td scope="row" className="border-r-2 py-5 text-lg">
-                      {list.tenquan}
-                    </td>
-                    <td scope="row" className="border-r-2 py-5 text-lg">
-                      {list.tenthanhpho}
-                    </td>
-                    <td scope="row" className="py-5 text-lg">
-                      {list.tong_so_daily}
-                    </td>
-                    <td scope="row">
-                      <div className="flex flex-wrap justify-center gap-3">
-                        <NavLink
-                          className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
-                          to={`/districts/district-edit-page/${list.maquan}`}
-                        >
-                          <img src={EditIcon} alt="Icon chỉnh sửa" />
-                          <p className="hidden sm:hidden md:hidden lg:inline-block">
-                            {Edit}
-                          </p>
-                        </NavLink>
-                        <button
-                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
-                          onClick={() => deleteItem(list.maquan)}
-                        >
-                          <img src={DeleteIcon} alt="Icon thùng rác" />
-                          <p className="hidden sm:hidden md:hidden lg:inline-block">
-                            {Delete}
-                          </p>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </>
+              currentItems.map((list, index) => (
+                <tr
+                  className="border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                  key={index}
+                >
+                  <td className="py-5 pl-3">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="border-r-2 py-5 text-lg" scope="row">
+                    {list.tenquan}
+                  </td>
+                  <td className="border-r-2 py-5 text-lg" scope="row">
+                    {list.tenthanhpho}
+                  </td>
+                  <td className="py-5 text-lg" scope="row">
+                    {list.tong_so_daily}
+                  </td>
+                  <td scope="row">
+                    <div className="flex justify-center gap-20">
+                      <NavLink
+                        className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                        to={`district-edit-page/${list.id}`}
+                      >
+                        <p className="hidden sm:hidden md:hidden lg:inline-block">
+                          {Edit}
+                        </p>
+                        <img src={EditIcon} alt="Icon chỉnh sửa" />
+                      </NavLink>
+                      <button
+                        className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                        onClick={() => deleteItem(list.id)}
+                      >
+                        <p className="hidden sm:hidden md:hidden lg:inline-block">
+                          {Delete}
+                        </p>
+                        <img src={DeleteIcon} alt="Icon thùng rác" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
             ) : (
               <></>
             )}
@@ -270,7 +271,7 @@ function Districts() {
           pageCount={pageCount}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-        ></PaginationButtons>
+        />
       </div>
     </div>
   );

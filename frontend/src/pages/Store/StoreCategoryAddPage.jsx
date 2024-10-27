@@ -1,14 +1,33 @@
-import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-import Header from "../../components/Header";
-import ReturnIcon from "../../images/icons/return-button.png";
+// Import Context Here
+import { useTheme } from "../../contexts/ThemeContext";
 
+// Import Assets Here
 import { addStoreCategory } from "../../assets/Stores/StoreCategoryData";
-function StoreAddPage() {
-  // Variables here
-  const [storeCateName, setStoreCateName] = useState("");
-  const [maxDebt, setMaxDebt] = useState(0);
+
+// Import Components Here
+import Header from "../../components/Header";
+
+// Import Icons Here
+import GoBackIcon from "../../images/icons/button/GoBack.svg";
+import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
+
+const StoreCategoryAddPage = () => {
+  // Variable here
+  // // For Theme Mode
+  const { theme } = useTheme();
+  // // For Multi-Language
+  const { t } = useTranslation();
+  const { AP_StoreCategories } = t("AddPage");
+  const { SF_StoreCategories } = t("SearchFilter");
+  const { Add } = t("Buttons");
+  // // For adding store category
+  const [newStoreCategoryName, setNewStoreCategoryName] = useState("");
+  const [newMaxDebt, setNewMaxDebt] = useState(0);
+  // // For navigating
   const navigate = useNavigate();
 
   // Functions here
@@ -42,75 +61,200 @@ function StoreAddPage() {
       }
     }
   };
+
   // Return render here
   return (
     <div>
       <div>
         <Header></Header>
       </div>
-      <hr />
-      <div>
-        <div>
-          <div className="flex items-center gap-40">
-            <NavLink to={"/stores"}>
-              <button>
-                <img
-                  src={ReturnIcon}
-                  alt="Icon trở lại"
-                  className="w-15 h-12"
-                />
-              </button>
-            </NavLink>
-          </div>
-          <div className="flex mt-5">
-            <div className="w-1/2">
-              <p className="text-xl font-bold italic">{"Thêm loại đại lý"}</p>
-            </div>
-            <div className="w-1/2 flex justify-end mr-5">
-              <button
-                className="px-2 py-3 bg-red-500 rounded rounded-xl"
-                onClick={() => addData(storeCateName, maxDebt)}
-              >
-                <p className="font-bold text-white text-lg">Thêm</p>
-              </button>
-            </div>
-          </div>
+      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
+        <div className="flex items-center gap-40">
+          <NavLink to={"/stores"}>
+            <button>
+              <img
+                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
+                alt="Icon trở lại"
+                className="h-12 w-12"
+              />
+            </button>
+          </NavLink>
         </div>
-      </div>
-      <div className="m-5">
-        <div className="block">
-          <label htmlFor="store-name-edit" className="font-bold text-lg">
-            Tên loại đại lý
-          </label>
-          <br />
-          <input
-            id="store-name-edit"
-            name="store-name-edit"
-            type="text"
-            className="w-full py-2 text-lg border border-black rounded-lg"
-            placeholder="   Tên loại đại lý..."
-            value={storeCateName}
-            onChange={(e) => setStoreCateName(e.target.value)}
-          />
+        <div className="my-5 flex flex-wrap items-center justify-between">
+          <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
+            {AP_StoreCategories.Title}
+          </p>
+          <button
+            className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+            onClick={() => addData(newStoreCategoryName, newMaxDebt)}
+          >
+            {Add}
+          </button>
         </div>
-        <div className="block py-5">
-          <label htmlFor="max-debt-edit" className="font-bold text-lg">
-            Số tiền nợ tối đa
-          </label>
-          <br />
-          <input
-            id="max-debt-edit"
-            name="max-debt-edit"
-            type="number"
-            className="w-full py-2 text-lg border border-black rounded-lg"
-            placeholder="   Số tiền nợ tối đa..."
-            value={maxDebt}
-            onChange={(e) => setMaxDebt(e.target.value)}
-          />
+        <div className="space-y-10">
+          {/* Type store category name */}
+          <div className="space-y-4">
+            <label
+              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+              htmlFor="store-category-name-add"
+            >
+              {SF_StoreCategories.Columns.Col1}
+            </label>
+            <input
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+              id="store-category-name-add"
+              name="store-category-name-add"
+              type="text"
+              placeholder={`${SF_StoreCategories.Columns.Col1} ...`}
+              values={newStoreCategoryName}
+              onChange={(e) => setNewStoreCategoryName(e.target.value)}
+              required
+            />
+          </div>
+          {/* Type max debt */}
+          <div className="space-y-4">
+            <label
+              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+              htmlFor="max-debt-add"
+            >
+              {SF_StoreCategories.Columns.Col2}
+            </label>
+            <input
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+              id="max-debt-add"
+              name="max-debt-add"
+              type="number"
+              placeholder={`${SF_StoreCategories.Columns.Col2} ...`}
+              values={newMaxDebt}
+              onChange={(e) => setNewMaxDebt(e.target.value)}
+              required
+            />
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default StoreAddPage;
+export default StoreCategoryAddPage;
+
+//
+//
+// -------------------------------------------- OLD VERSION BACKUP --------------------------------------------
+//
+// import { NavLink, useNavigate } from "react-router-dom";
+// import { useState } from "react";
+
+// import Header from "../../components/Header";
+// import ReturnIcon from "../../images/icons/return-button.png";
+
+// import { addStoreCategory } from "../../assets/Stores/StoreCategoryData";
+// function StoreAddPage() {
+//   // Variables here
+//   const [storeCateName, setStoreCateName] = useState("");
+//   const [maxDebt, setMaxDebt] = useState(0);
+//   const navigate = useNavigate();
+
+//   // Functions here
+//   const addData = async (tenloaidaily, sotiennotoida) => {
+//     // Variables here for condition to call addStoreApi
+//     let checkName = true;
+
+//     // Functions for checking string format tenloaidaily + sotiennotoida
+//     const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
+
+//     // Check tenloaidaily: non-special-letter, length in [1, 100]
+//     if (tenloaidaily.length < 1 || tenloaidaily.length > 100) {
+//       alert(
+//         "Độ dài tên loại đại lý không hợp lệ. Tên loại đại lý không được rỗng và không dài quá 100 ký tự"
+//       );
+//       checkName = false;
+//     } else if (isSpecicalLetter(tenloaidaily)) {
+//       alert("Tên loại đại lý không được chứa các ký tự đặc biệt");
+//       checkName = false;
+//     }
+
+//     if (checkName === true) {
+//       const data = await addStoreCategory(tenloaidaily, sotiennotoida);
+//       if (
+//         data.message === "Thêm loại đại lý thất bại do loại đại lý đã tồn tại"
+//       ) {
+//         alert("Thêm loại đại lý thất bại do loại đại lý đã tồn tại");
+//       } else {
+//         alert("Thêm loại đại lý thành công");
+//         navigate("/stores");
+//       }
+//     }
+//   };
+//   // Return render here
+//   return (
+//     <div>
+//       <div>
+//         <Header></Header>
+//       </div>
+//       <hr />
+//       <div>
+//         <div>
+//           <div className="flex items-center gap-40">
+//             <NavLink to={"/stores"}>
+//               <button>
+//                 <img
+//                   src={ReturnIcon}
+//                   alt="Icon trở lại"
+//                   className="w-15 h-12"
+//                 />
+//               </button>
+//             </NavLink>
+//           </div>
+//           <div className="flex mt-5">
+//             <div className="w-1/2">
+//               <p className="text-xl font-bold italic">{"Thêm loại đại lý"}</p>
+//             </div>
+//             <div className="w-1/2 flex justify-end mr-5">
+//               <button
+//                 className="px-2 py-3 bg-red-500 rounded rounded-xl"
+//                 onClick={() => addData(storeCateName, maxDebt)}
+//               >
+//                 <p className="font-bold text-white text-lg">Thêm</p>
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//       <div className="m-5">
+//         <div className="block">
+//           <label htmlFor="store-name-edit" className="font-bold text-lg">
+//             Tên loại đại lý
+//           </label>
+//           <br />
+//           <input
+//             id="store-name-edit"
+//             name="store-name-edit"
+//             type="text"
+//             className="w-full py-2 text-lg border border-black rounded-lg"
+//             placeholder="   Tên loại đại lý..."
+//             value={storeCateName}
+//             onChange={(e) => setStoreCateName(e.target.value)}
+//           />
+//         </div>
+//         <div className="block py-5">
+//           <label htmlFor="max-debt-edit" className="font-bold text-lg">
+//             Số tiền nợ tối đa
+//           </label>
+//           <br />
+//           <input
+//             id="max-debt-edit"
+//             name="max-debt-edit"
+//             type="number"
+//             className="w-full py-2 text-lg border border-black rounded-lg"
+//             placeholder="   Số tiền nợ tối đa..."
+//             value={maxDebt}
+//             onChange={(e) => setMaxDebt(e.target.value)}
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default StoreAddPage;

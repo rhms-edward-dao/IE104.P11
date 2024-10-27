@@ -1,30 +1,53 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-import ReturnIcon from "../../images/icons/return-button.png";
+// Import Context Here
+import { useTheme } from "../../contexts/ThemeContext";
+
+// Import Assets Here
+import {
+  getAllCityName,
+  addDistrict,
+} from "../../assets/Districts/DistrictData";
+
+// Import Components Here
 import Header from "../../components/Header";
 
-import { getAllCityName, addDistrict } from "../../assets/StoreDistrict";
+// Import Icons Here
+import GoBackIcon from "../../images/icons/button/GoBack.svg";
+import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
 
-function StoreDistrictAddPage() {
-  // Variable for adding here
-  const [districtName, setDistrictName] = useState("");
-  const [cityName, setCityName] = useState("");
-  const [cityData, setCityData] = useState([]);
-
-  // Variables here
+const StoreDistrictAddPage = () => {
+  // Variable here
+  // // For Theme Mode
+  const { theme } = useTheme();
+  // // For Multi-Language
+  const { t } = useTranslation();
+  const { AP_Districts } = t("AddPage");
+  const { SF_Districts } = t("SearchFilter");
+  const { Add } = t("Buttons");
+  // // For adding dsitrict
+  const [newDistrictName, setNewDistrictName] = useState("");
+  const [newCityName, setNewCityName] = useState("");
+  const [existedCityName, setExistedCityNamed] = useState([]);
+  // // For navigating
   const navigate = useNavigate();
 
-  // Function for adding here
+  // Use Effect here
+  // // For getting all distinct existed city name
   useEffect(() => {
     const fetchAllCityName = async () => {
       const data = await getAllCityName();
-      setCityData(data);
-      setCityName(data[0]);
+      setExistedCityNamed(data);
+      // Set initial value for the dropdown-selected box
+      setNewCityName(data[0]);
     };
     fetchAllCityName();
   }, []);
 
+  // Function here
+  // // For adding new district
   const addData = async (tenquan, tenthanhpho) => {
     if (tenquan.length < 1) {
       alert("Tên quận không được để trống");
@@ -45,68 +68,64 @@ function StoreDistrictAddPage() {
       <div>
         <Header></Header>
       </div>
-      <hr />
-
-      <div>
-        <div>
-          <div className="flex items-center gap-40">
-            <NavLink to={"/districts"}>
-              <button>
-                <img
-                  src={ReturnIcon}
-                  alt="Icon trở lại"
-                  className="w-15 h-12"
-                />
-              </button>
-            </NavLink>
-          </div>
-          <div className="flex mt-5">
-            <div className="w-1/2">
-              <p className="text-xl font-bold italic">{"Thêm quận"}</p>
-            </div>
-            <div className="w-1/2 flex justify-end mr-5">
-              <button
-                className="px-2 py-3 bg-red-500 rounded rounded-xl"
-                onClick={() => addData(districtName, cityName)}
-              >
-                <p className="font-bold text-white text-lg">Thêm</p>
-              </button>
-            </div>
-          </div>
+      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
+        <div className="flex items-center gap-40">
+          <NavLink to={"/districts"}>
+            <button>
+              <img
+                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
+                alt="Icon trở lại"
+                className="h-12 w-12"
+              />
+            </button>
+          </NavLink>
         </div>
-      </div>
-      <div className="m-5">
-        <div className="block space-y-8">
+        <div className="my-5 flex flex-wrap items-center justify-between">
+          <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
+            {AP_Districts.Title}
+          </p>
+          <button
+            className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+            onClick={() => addData(newDistrictName, newCityName)}
+          >
+            {Add}
+          </button>
+        </div>
+        <div className="space-y-10">
           <div className="space-y-4">
-            <label htmlFor="district-name-add" className="font-bold text-lg">
-              Tên quận
+            <label
+              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+              htmlFor="district-name-add"
+            >
+              {SF_Districts.Columns.Col1}
             </label>
-            <br />
             <input
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
               id="district-name-add"
               name="district-name-add"
               type="text"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Tên quận..."
-              values={districtName}
-              onChange={(e) => setDistrictName(e.target.value)}
+              placeholder={`${SF_Districts.Columns.Col1} ...`}
+              values={newDistrictName}
+              onChange={(e) => setNewDistrictName(e.target.value)}
               required
             />
           </div>
           <div className="space-y-4">
-            <label htmlFor="city-name-add" className="font-bold text-lg">
-              Tên thành phố
+            <label
+              className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+              htmlFor="city-name-add"
+            >
+              {SF_Districts.Columns.Col2}
             </label>
-            <br />
             {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
             <select
+              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
               id="city-name-add"
               name="city-name-add"
-              className="px-5 py-3 rounded bg-stone-300"
-              value={cityName}
-              onChange={(e) => setCityName(e.target.value)}
+              value={newCityName}
+              onChange={(e) => setNewCityName(e.target.value)}
             >
-              {cityData.map((item) => (
+              {existedCityName.map((item) => (
                 <>
                   <option key={item} value={item}>
                     {item}
@@ -119,6 +138,6 @@ function StoreDistrictAddPage() {
       </div>
     </div>
   );
-}
+};
 
 export default StoreDistrictAddPage;

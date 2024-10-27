@@ -10,7 +10,9 @@ const PaginationButtons = ({ pageCount, currentPage, setCurrentPage }) => {
   return (
     <div>
       {pageCount === 0 ? (
-        <p className="my-10 text-center font-light text-md">Danh sách rỗng</p>
+        <p className="text-md my-10 text-center font-light text-black transition-colors duration-300 dark:text-white">
+          Danh sách rỗng
+        </p>
       ) : (
         <ReactPaginate
           breakLabel={<span className="mx-4">...</span>}

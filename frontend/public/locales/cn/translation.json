@@ -38,6 +38,11 @@
       "Second": "代理人的債務總額",
       "Third": "進口總成本"
     },
+    "DC_Products": {
+      "First": "產品總數",
+      "Second": "總價值",
+      "Third": "完全缺貨"
+    },
     "DC_Customers": {
       "First": "客戶總數",
       "Second": "出口總收入",
@@ -46,7 +51,9 @@
   },
   "TabView": {
     "Store": "代理人",
-    "StoreCategory": "代理類型"
+    "StoreCategory": "代理類型",
+    "Product": "產品",
+    "ProductCategory": "產品類型"
   },
   "SearchFilter": {
     "SearchBy": "搜尋方式：",
@@ -88,6 +95,32 @@
         "Text2": "以最高債務金額搜尋..."
       }
     },
+    "SF_Products": {
+      "Columns": {
+        "Col1": "產品名稱",
+        "Col2": "單價",
+        "Col3": "庫存數量",
+        "Col4": "單位名稱",
+        "Col5": "產品類型名稱",
+        "Col6": "代理名稱"
+      },
+      "Placeholders": {
+        "Text1": "按產品名稱搜尋...",
+        "Text2": "以單價搜尋...",
+        "Text3": "依庫存數量搜尋...",
+        "Text4": "按單位搜尋...",
+        "Text5": "按產品類型名稱搜尋...",
+        "Text6": "按代理名稱搜尋..."
+      }
+    },
+    "SF_ProductCategories": {
+      "Columns": {
+        "Col1": "產品類型名稱"
+      },
+      "Placeholders": {
+        "Text1": "按產品類型名稱搜尋..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "客戶名稱",
@@ -102,6 +135,44 @@
   "Buttons": {
     "Add": "添加",
     "Edit": "編輯",
-    "Delete": "刪除"
+    "Delete": "刪除",
+    "Update": "更新"
+  },
+  "AddPage": {
+    "AP_Districts": {
+      "Title": "新增區"
+    },
+    "AP_Stores": {
+      "Title": "新增代理",
+      "Col5Note": " （至病房）",
+      "Col5Placeholder": "例如：門牌號碼、街道名稱、區號",
+      "UploadImage": "上傳圖片"
+    },
+    "AP_StoreCategories": {
+      "Title": "新增代理類型"
+    },
+    "AP_Products": {
+      "Title": "添加產品"
+    },
+    "AP_ProductCategories": {
+      "Title": "新增產品類型"
+    }
+  },
+  "EditPage": {
+    "EP_Districts": {
+      "Title": "編輯區"
+    },
+    "EP_Stores": {
+      "Titile": "編輯代理"
+    },
+    "EP_StoreCategories": {
+      "Title": "編輯代理類型"
+    },
+    "EP_Products": {
+      "Titile": "編輯產品"
+    },
+    "EP_ProductCategories": {
+      "Title": "編輯產品類型"
+    }
   }
 }

@@ -16,6 +16,8 @@
       "Districts": "Bezirksliste",
       "Stores": "Agentenliste",
       "StoreCategories": "Liste der Agententypen",
+      "Products": "Produktliste",
+      "ProductCategories": "Produkttypenliste",
       "Customers": "Kundenliste"
     },
     "LanguageOptions": {
@@ -39,6 +41,11 @@
       "Second": "Gesamtschulden der Agenten",
       "Third": "Gesamtimportkosten"
     },
+    "DC_Products": {
+      "First": "Gesamtanzahl der Produkte",
+      "Second": "Gesamtwert",
+      "Third": "Gesamtbestand nicht vorrätig"
+    },
     "DC_Customers": {
       "First": "Gesamtzahl der Kunden",
       "Second": "Gesamtumsatz Export",
@@ -47,7 +54,9 @@
   },
   "TabView": {
     "Store": "Agent",
-    "StoreCategory": "Agententyp"
+    "StoreCategory": "Agententyp",
+    "Product": "Produkt",
+    "ProductCategory": "Produkttyp"
   },
   "SearchFilter": {
     "SearchBy": "Suche nach:",
@@ -89,6 +98,32 @@
         "Text2": "Suche nach maximalem Schuldenbetrag ..."
       }
     },
+    "SF_Products": {
+      "Columns": {
+        "Col1": "Produktname",
+        "Col2": "Stückpreis",
+        "Col3": "Lagermenge",
+        "Col4": "Einheitenname",
+        "Col5": "Produkttypname",
+        "Col6": "Agentenname"
+      },
+      "Placeholders": {
+        "Text1": "Nach Produktnamen suchen ...",
+        "Text2": "Nach Stückpreis suchen ...",
+        "Text3": "Nach Lagermenge suchen ...",
+        "Text4": "Nach Einheit suchen ...",
+        "Text5": "Nach Produkttypnamen suchen ...",
+        "Text6": "Nach Agentennamen suchen ..."
+      }
+    },
+    "SF_ProductCategories": {
+      "Columns": {
+        "Col1": "Produkttypname"
+      },
+      "Placeholders": {
+        "Text1": "Nach Produkttypnamen suchen ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Kundenname",
@@ -103,6 +138,44 @@
   "Buttons": {
     "Add": "Hinzufügen",
     "Edit": "Bearbeiten",
-    "Delete": "Löschen"
+    "Delete": "Löschen",
+    "Update": "Aktualisieren"
+  },
+  "AddPage": {
+    "AP_Districts": {
+      "Title": "Bezirk hinzufügen"
+    },
+    "AP_Stores": {
+      "Title": "Agent hinzufügen",
+      "Col5Note": " (bis zum Bezirk)",
+      "Col5Placeholder": "Beispiel: Hausnummer, Straßenname, Bezirk",
+      "UploadImage": "Bild hochladen"
+    },
+    "AP_StoreCategories": {
+      "Title": "Agententyp hinzufügen"
+    },
+    "AP_Products": {
+      "Title": "Produkt hinzufügen"
+    },
+    "AP_ProductCategories": {
+      "Title": "Produkttyp hinzufügen"
+    }
+  },
+  "EditPage": {
+    "EP_Districts": {
+      "Title": "Bezirk bearbeiten"
+    },
+    "EP_Stores": {
+      "Titile": "Agent bearbeiten"
+    },
+    "EP_StoreCategories": {
+      "Title": "Agententyp bearbeiten"
+    },
+    "EP_Products": {
+      "Titile": "Produkt bearbeiten"
+    },
+    "EP_ProductCategories": {
+      "Title": "Produkttyp bearbeiten"
+    }
   }
 }

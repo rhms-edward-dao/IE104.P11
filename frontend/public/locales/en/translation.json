@@ -16,6 +16,8 @@
       "Districts": "District list",
       "Stores": "Agent list",
       "StoreCategories": "List of agent types",
+      "Products": "List of products",
+      "ProductCategories": "List of product types",
       "Customers": "Customer list"
     },
     "LanguageOptions": {
@@ -38,6 +40,11 @@
       "Second": "Total debts of agents",
       "Third": "Total import cost"
     },
+    "DC_Products": {
+      "First": "Total number of products",
+      "Second": "Total value",
+      "Third": "Total out of stock"
+    },
     "DC_Customers": {
       "First": "Total number of customers",
       "Second": "Total export revenue",
@@ -46,7 +53,9 @@
   },
   "TabView": {
     "Store": "Agent",
-    "StoreCategory": "Agent type"
+    "StoreCategory": "Agent type",
+    "Product": "Product",
+    "ProductCategory": "Product type"
   },
   "SearchFilter": {
     "SearchBy": "Search by:",
@@ -88,6 +97,32 @@
         "Text2": "Search by Maximum Debt Amount ..."
       }
     },
+    "SF_Products": {
+      "Columns": {
+        "Col1": "Product name",
+        "Col2": "Unit price",
+        "Col3": "Stock quantity",
+        "Col4": "Unit name",
+        "Col5": "Product type name",
+        "Col6": "Agent name"
+      },
+      "Placeholders": {
+        "Text1": "Search by product name ...",
+        "Text2": "Search by unit price ...",
+        "Text3": "Search by stock quantity ...",
+        "Text4": "Search by unit ...",
+        "Text5": "Search by product type name ...",
+        "Text6": "Search by agent name ..."
+      }
+    },
+    "SF_ProductCategories": {
+      "Columns": {
+        "Col1": "Product type name"
+      },
+      "Placeholders": {
+        "Text1": "Search by product type name ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Customer Name",
@@ -102,6 +137,44 @@
   "Buttons": {
     "Add": "Add",
     "Edit": "Edit",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "Update": "Update"
+  },
+  "AddPage": {
+    "AP_Districts": {
+      "Title": "Add district"
+    },
+    "AP_Stores": {
+      "Title": "Add agent",
+      "Col5Note": " (upto ward)",
+      "Col5Placeholder": "For example: house number, street name, ward",
+      "UploadImage": "Upload image"
+    },
+    "AP_StoreCategories": {
+      "Title": "Add agent type"
+    },
+    "AP_Products": {
+      "Title": "Add product"
+    },
+    "AP_ProductCategories": {
+      "Title": "Add product type"
+    }
+  },
+  "EditPage": {
+    "EP_Districts": {
+      "Title": "Edit district"
+    },
+    "EP_Stores": {
+      "Titile": "Edit agent"
+    },
+    "EP_StoreCategories": {
+      "Title": "Edit agent type"
+    },
+    "EP_Products": {
+      "Titile": "Edit product"
+    },
+    "EP_ProductCategories": {
+      "Title": "Edit product type"
+    }
   }
 }

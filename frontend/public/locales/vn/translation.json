@@ -32,6 +32,8 @@
       "Districts": "Danh sách quận",
       "Stores": "Danh sách đại lý",
       "StoreCategories": "Danh sách loại đại lý",
+      "Products": "Danh sách mặt hàng",
+      "ProductCategories": "Danh sách loại mặt hàng",
       "Customers": "Danh sách khách hàng"
     },
     "LanguageOptions": {
@@ -54,6 +56,11 @@
       "Second": "Tổng nợ các đại lý",
       "Third": "Tổng chi phí nhập hàng"
     },
+    "DC_Products": {
+      "First": "Tổng số sản phẩm",
+      "Second": "Tổng giá trị",
+      "Third": "Tổng số hết hàng"
+    },
     "DC_Customers": {
       "First": "Tổng số khách hàng",
       "Second": "Tổng doanh thu xuất hàng",
@@ -62,7 +69,9 @@
   },
   "TabView": {
     "Store": "Đại lý",
-    "StoreCategory": "Loại đại lý"
+    "StoreCategory": "Loại đại lý",
+    "Product": "Mặt hàng",
+    "ProductCategory": "Loại mặt hàng"
   },
   "SearchFilter": {
     "SearchBy": "Tìm kiếm theo:",
@@ -104,6 +113,32 @@
         "Text2": "Tìm kiếm theo số tiền nợ tối đa ..."
       }
     },
+    "SF_Products": {
+      "Columns": {
+        "Col1": "Tên mặt hàng",
+        "Col2": "Đơn giá",
+        "Col3": "Số lượng tồn",
+        "Col4": "Tên DVT",
+        "Col5": "Tên loại mặt hàng",
+        "Col6": "Tên đại lý"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên mặt hàng ...",
+        "Text2": "Tìm kiếm theo đơn giá ...",
+        "Text3": "Tìm kiếm theo số lượng tồn ...",
+        "Text4": "Tìm kiếm theo đơn vị tính ...",
+        "Text5": "Tìm kiếm theo tên loại mặt hàng ...",
+        "Text6": "Tìm kiếm theo tên đại lý ..."
+      }
+    },
+    "SF_ProductCategories": {
+      "Columns": {
+        "Col1": "Tên loại mặt hàng"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên loại mặt hàng ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Tên khách hàng",
@@ -118,6 +153,44 @@
   "Buttons": {
     "Add": "Thêm",
     "Edit": "Chỉnh sửa",
-    "Delete": "Xóa"
+    "Delete": "Xóa",
+    "Update": "Cập nhật"
+  },
+  "AddPage": {
+    "AP_Districts": {
+      "Title": "Thêm quận"
+    },
+    "AP_Stores": {
+      "Title": "Thêm đại lý",
+      "Col5Note": " (tới phường)",
+      "Col5Placeholder": "Ví dụ: số nhà, tên đường, phường",
+      "UploadImage": "Tải hình lên"
+    },
+    "AP_StoreCategories": {
+      "Title": "Thêm loại đại lý"
+    },
+    "AP_Products": {
+      "Title": "Thêm mặt hàng"
+    },
+    "AP_ProductCategories": {
+      "Title": "Thêm loại mặt hàng"
+    }
+  },
+  "EditPage": {
+    "EP_Districts": {
+      "Title": "Chỉnh sửa quận"
+    },
+    "EP_Stores": {
+      "Titile": "Chỉnh sửa đại lý"
+    },
+    "EP_StoreCategories": {
+      "Title": "Chỉnh sửa loại đại lý"
+    },
+    "EP_Products": {
+      "Titile": "Chỉnh sửa mặt hàng"
+    },
+    "EP_ProductCategories": {
+      "Title": "Chỉnh sửa loại mặt hàng"
+    }
   }
 }
