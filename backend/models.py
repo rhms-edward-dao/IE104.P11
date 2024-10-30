@@ -86,7 +86,7 @@ class Daily(Base):
     sodienthoai = Column(String(20), nullable=False, unique=True)
     ngaytiepnhan = Column(Date, server_default=text("CURRENT_DATE"))
     sotienno = Column(Numeric(12, 4), server_default=text("0"))
-    hinhanh = Column(String(100))
+    hinhanh = Column(String(200))
 
     loaidaily = relationship('Loaidaily')
 
@@ -195,7 +195,7 @@ class Nhanvien(Base):
     ngaysinh = Column(Date, server_default=text("CURRENT_DATE"))
     sodienthoai = Column(String(20), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
-    hinhanh = Column(String(100), server_default=text("NULL::character varying"))
+    hinhanh = Column(String(200), server_default=text("NULL::character varying"))
 
     daily = relationship('Daily')
     taikhoan = relationship('Taikhoan', secondary='taikhoan_nhavien')
