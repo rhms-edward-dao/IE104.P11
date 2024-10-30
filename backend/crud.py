@@ -47,8 +47,8 @@ def get_taikhoan_by_tentaikhoan_and_matkhau(
 def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
     try:
         get_manhanvien = (
-            db.query(models.TaikhoanNhanvien.c.manhanvien)
-            .filter(models.TaikhoanNhanvien.c.mataikhoan == pMaTaiKhoan)
+            db.query(models.t_taikhoan_nhavien.c.manhanvien)
+            .filter(models.t_taikhoan_nhavien.c.mataikhoan == pMaTaiKhoan)
             .first()[0]
         )
 
