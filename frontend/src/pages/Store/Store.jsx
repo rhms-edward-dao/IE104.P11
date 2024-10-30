@@ -162,7 +162,7 @@ function Stores() {
       alert(storeResponse.message);
     } else {
       alert(storeResponse.message);
-      setStoreData(storeData.filter((item) => item.madaily !== id));
+      setStoreData(storeData.filter((item) => item.Daily.madaily !== id));
     }
   };
   // // For deleting one loaidaily
