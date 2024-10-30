@@ -1,10 +1,3 @@
-// import { Link } from "react-router-dom";
-// import BellIcon from "../../images/icons/bell.png";
-
-// import { useAuth } from "../contexts/AuthContext";
-// import { useEffect, useState } from "react";
-// import { getStaffById } from "../assets/StaffData";
-
 import { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -79,37 +72,11 @@ const Header = (props) => {
 
   // Return here
   return (
-    // <div className="flex justify-between bg-white p-2">
-    //   <p className="w-3/4 lg:w-5/6 text-3xl font-bold m-2">
-    //     {props.headerTitle}
-    //   </p>
-    //   <div className="w-1/4 lg:w-1/6 flex flex-wrap">
-    //     <div className="w-1/2 flex items-center justify-center">
-    //       <Link to="/my-account">
-    //         <img
-    //           width={"75px"}
-    //           src={`data:images/jpeg;base64, ${image}`}
-    //           alt="Icon avatar"
-    //           className="rounded-full"
-    //         />
-    //       </Link>
-    //     </div>
-    //     <div className="w-1/2 flex items-center justify-center">
-    //       <Link to="">
-    //         <img
-    //           src={BellIcon}
-    //           alt="Icon chuông thông báo"
-    //           className="w-7 h-7"
-    //         />
-    //       </Link>
-    //     </div>
-    //   </div>
-    // </div>
-    <div className="flex items-center justify-between bg-white p-5 transition-colors duration-300 dark:bg-[#363636]">
-      <h1 className="m-2 w-3/4 text-3xl font-bold text-black transition-colors duration-300 dark:text-white">
+    <div className="flex flex-wrap items-center justify-between bg-white p-5 transition-colors duration-300 dark:bg-[#363636]">
+      <h1 className="m-2 text-3xl font-bold text-black transition-colors duration-300 dark:text-white">
         {props.headerTitle}
       </h1>
-      <div className="flex w-1/4 items-center justify-end gap-10">
+      <div className="flex items-center justify-end gap-10">
         <NavLink to="/my-account">
           <img
             className="w-16 rounded-full text-black transition-colors duration-300 dark:text-white"
