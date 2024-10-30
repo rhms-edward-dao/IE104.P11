@@ -14,7 +14,7 @@ create table DAILY (
 	SoDienThoai character varying(20) unique not null, -- Store's phone number
 	NgayTiepNhan date default current_date, -- The date the store was registerd, just date and not included time
 	SoTienNo decimal(12, 4) default 0, -- A mount of deb for each store, constraint 'SoTienNo >= 0' will be checked in frontend
-	HinhAnh character varying(100), -- used for store link of images
+	HinhAnh character varying(200), -- used for store link of images
 	constraint pk_daily primary key(MaDaiLy),
 	constraint fk_daily_to_loaidaily foreign key(MaLoaiDaiLy) references LOAIDAILY(MaLoaiDaiLy) on delete set null
 );
@@ -49,7 +49,7 @@ create table NHANVIEN (
 	NgaySinh date default current_date, -- Age of staff must bigger than 18 (because wwe dont need to hire a smaller 18 years old young boy)
 	SoDienThoai character varying(20) unique not null,
 	Email character varying(100) unique not null,  -- Used company's email
-	Hinhanh character varying(100) default null,
+	Hinhanh character varying(200) default null,
 	constraint pk_nhanvien primary key(MaNhanVien),
 	constraint fk_nhanvien_to_daily foreign key(MaDaiLy) references DAILY(MaDaiLy) on delete set null
 );
