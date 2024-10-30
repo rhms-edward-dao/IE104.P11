@@ -64,7 +64,7 @@ const StoreDistrictAddPage = () => {
 
   // Return render here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header></Header>
       </div>
@@ -105,7 +105,7 @@ const StoreDistrictAddPage = () => {
               name="district-name-add"
               type="text"
               placeholder={`${SF_Districts.Columns.Col1} ...`}
-              values={newDistrictName}
+              value={newDistrictName}
               onChange={(e) => setNewDistrictName(e.target.value)}
               required
             />

@@ -71,7 +71,7 @@ const StoreDistrictEditPage = () => {
 
   // Return render here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header></Header>
       </div>
@@ -113,8 +113,7 @@ const StoreDistrictEditPage = () => {
               id="district-name-edit"
               name="district-name-edit"
               type="text"
-              placeholder={currentDistrictName}
-              values={currentDistrictName}
+              value={currentDistrictName}
               onChange={(e) => setCurrentDistrictName(e.target.value)}
               required
             />

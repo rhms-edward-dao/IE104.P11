@@ -245,7 +245,7 @@ function Districts() {
                     <div className="flex flex-wrap justify-center gap-5 my-5">
                       <NavLink
                         className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
-                        to={`district-edit-page/${list.id}`}
+                        to={`district-edit-page/${list.maquan}`}
                       >
                         <p className="hidden sm:hidden md:hidden lg:inline-block">
                           {Edit}
@@ -254,7 +254,7 @@ function Districts() {
                       </NavLink>
                       <button
                         className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
-                        onClick={() => deleteItem(list.id)}
+                        onClick={() => deleteItem(list.maquan)}
                       >
                         <p className="hidden sm:hidden md:hidden lg:inline-block">
                           {Delete}
