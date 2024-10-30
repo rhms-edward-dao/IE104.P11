@@ -1,20 +1,3 @@
-// import { NavLink } from "react-router-dom";
-// import StoreIcon from "../images/icons/warehouse.png";
-// import ProductIcon from "../images/icons/product.png";
-// import ImExIcon from "../images/icons/import-export.png";
-// import ReportIcon from "../images/icons/report.png";
-// import RuleIcon from "../images/icons/rule.png";
-// import CustomerIcon from "../images/icons/customer.png";
-// import RegulationIcon from "../images/icons/regulation.png";
-// import DistrictMapIcon from "../images/icons/map_district.png";
-// import LogoIcon from "../images/icons/logo.png";
-// import Logout from "../images/icons/logout.png";
-
-// import { useEffect, useState } from "react";
-
-// import { useAuth } from "../contexts/AuthContext";
-// import { ActiveButton } from "../contexts/ActiveButton";
-
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
