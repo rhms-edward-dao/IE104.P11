@@ -407,7 +407,7 @@ function Stores() {
                       <>
                         <td scope="row" className="border-r-2 py-5">
                           <img
-                            width="150px"
+                            width="250px"
                             src={`data:image/jpeg;base64, ${list.Daily.hinhanh}`}
                             alt="Hình đại lý"
                             className="rounded 2xl:h-20 2xl:w-20"

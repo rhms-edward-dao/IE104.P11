@@ -14,7 +14,7 @@ from pprint import pprint
 import re, os, base64
 
 # IMAGEDIR = "/home/kui/Documents/backend_projects/Inventory_management/backend/inventory-app/images/"
-IMAGEDIR = r"D:\Studying Documents\CV Project Applied\Inventory_management_Backup\backend\inventory-app\images"
+IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
 
 # from security import validate_token
 app = FastAPI()
@@ -661,7 +661,7 @@ async def update_daily(
     diachi: str = Form(...),
     hinhanh: Union[UploadFile, str]= File(...), 
     db: Session = Depends(get_db)
-):
+):    
     try:       
         # Get longtitude and latitude
         key = 'dd56554106174942acce0b3bd660a32a'
@@ -673,21 +673,19 @@ async def update_daily(
 
         # Solve problem with image
         if hinhanh == 'null':
-            hinhanh_dir = ''
-
-        else:
+            hinhanh_dir = ''            
+        else:            
             # Save Image data in local - in real job, this mean the image will be saved on server machine
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}stores/{hinhanh.filename}", "wb") as file:
                 file.write(contents)
-
             hinhanh_dir = f"{IMAGEDIR}stores/{hinhanh.filename}"
             # Check if existed data is the same with new data -> no need to check, this task will be check in database postgresql        
 
         # Update Daily
         pmaloaidaily = crud.get_maloaidaily_by_tenloaidaily(db, tenloaidaily)
 
-        # Prepare data and add new daily && updaload image
+        # Prepare data and add new daily && updaload image        
         param_list = {
             "tendaily": tendaily,
             "maloaidaily": pmaloaidaily,
