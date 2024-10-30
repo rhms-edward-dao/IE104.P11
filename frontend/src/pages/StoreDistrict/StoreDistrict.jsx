@@ -171,9 +171,9 @@ function Districts() {
         ))}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex justify-between">
-          <div className="flex items-center justify-start gap-5">
-            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+        <div className="flex flex-wrap justify-between">
+          <div className="flex flex-wrap items-center justify-start gap-5 my-5">
+            <p className="text-lg whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -187,9 +187,9 @@ function Districts() {
               <option value={SF_Districts.Columns.Col2}>
                 {SF_Districts.Columns.Col2}
               </option>
-              <option value={SF_Districts.Columns.Col3}>
+              {/* <option value={SF_Districts.Columns.Col3}>
                 {SF_Districts.Columns.Col3}
-              </option>
+              </option> */}
             </select>
             <input
               className="w-24 rounded-md border border-black bg-white px-2 py-0.5 text-lg text-gray-500 transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-gray-100 lg:w-72 xl:w-96"
@@ -199,21 +199,24 @@ function Districts() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <NavLink to="district-add-page">
+          <NavLink 
+            to="district-add-page"
+            className="my-5"
+          >
             <Button />
           </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
-            <tr className="text-md">
+            <tr className="text-lg">
               <th scope="col"></th>
-              <th className="border-r-2 py-5 text-lg" scope="col">
+              <th className="border-r-2 py-5" scope="col">
                 {SF_Districts.Columns.Col1}
               </th>
-              <th className="border-r-2 py-5 text-lg" scope="col">
+              <th className="border-r-2 py-5" scope="col">
                 {SF_Districts.Columns.Col2}
               </th>
-              <th className="py-5 text-lg" scope="col">
+              <th className="border-r-2 py-5" scope="col">
                 {SF_Districts.Columns.Col3}
               </th>
               <th scope="col"></th>
@@ -223,23 +226,23 @@ function Districts() {
             {currentItems.length > 0 ? (
               currentItems.map((list, index) => (
                 <tr
-                  className="border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                  className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                   key={index}
                 >
                   <td className="py-5 pl-3">
                     <input type="checkbox" />
                   </td>
-                  <td className="border-r-2 py-5 text-lg" scope="row">
+                  <td className="border-r-2 py-5" scope="row">
                     {list.tenquan}
                   </td>
-                  <td className="border-r-2 py-5 text-lg" scope="row">
+                  <td className="border-r-2 py-5" scope="row">
                     {list.tenthanhpho}
                   </td>
-                  <td className="py-5 text-lg" scope="row">
+                  <td className="border-r-2 py-5" scope="row">
                     {list.tong_so_daily}
                   </td>
                   <td scope="row">
-                    <div className="flex justify-center gap-20">
+                    <div className="flex flex-wrap justify-center gap-5 my-5">
                       <NavLink
                         className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                         to={`district-edit-page/${list.id}`}
