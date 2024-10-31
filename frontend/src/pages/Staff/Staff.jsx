@@ -76,8 +76,6 @@ function Staff() {
         return "Tìm kiếm theo tên chức vụ ...";
       case "Cấp độ":
         return "Tìm kiếm theo cấp độ ...";
-      case "Thời hạn":
-        return "Tìm kiếm theo thời hạn ...";
       default:
         return "Tìm kiếm ...";
     }
@@ -274,14 +272,17 @@ function Staff() {
                   onChange={(e) => setStaffSearchTerm(e.target.value)}
                 />
               </div>
-              <NavLink to="/staff-management/staff-management-add-page">
+              <NavLink 
+                className="my-5"
+                to="/staff-management/staff-management-add-page"
+              >
                 <Button />
               </NavLink>
             </div>
 
             <table className="w-full mt-5 text-center">
               <thead className="border-b-4 border-red-500">
-                <tr className="text-md text-gray-500">
+                <tr className="text-md">
                   <th scope="col"></th>
                   <th scope="col" className="py-5 border-r-2"></th>
                   <th scope="col" className="py-5 border-r-2">
@@ -357,7 +358,7 @@ function Staff() {
                                     src={DetailIcon}
                                     alt="Icon xem chi tiết"
                                   />
-                                  <p className="font-bold text-white hidden lg:block">
+                                  <p className="font-bold text-white hidden lg:inline-block">
                                     Chi tiết
                                   </p>
                                 </div>
@@ -370,7 +371,7 @@ function Staff() {
                             >
                               <div className="flex gap-2 bg-amber-400 p-2 rounded-md">
                                 <img src={TrashIcon} alt="Icon thùng rác" />
-                                <p className="font-bold text-white hidden lg:block">
+                                <p className="font-bold text-white hidden lg:inline-block">
                                   Xóa
                                 </p>
                               </div>
@@ -403,7 +404,6 @@ function Staff() {
                 >
                   <option value="Tên chức vụ">Tên chức vụ</option>
                   <option value="Cấp độ">Cấp độ</option>
-                  <option value="Thời hạn">Thời hạn</option>
                 </select>
                 <input
                   type="text"
@@ -413,7 +413,10 @@ function Staff() {
                   onChange={(e) => setPositionSearchTerm(e.target.value)}
                 />
               </div>
-              <NavLink to="/staff-management/position-add-page">
+              <NavLink 
+                className="my-5"
+                to="/staff-management/position-add-page"
+              >
                 <Button />
               </NavLink>
             </div>
@@ -430,9 +433,6 @@ function Staff() {
                   </th>
                   <th scope="col" className="py-5 border-r-2">
                     Lương
-                  </th>
-                  <th scope="col" className="py-5 border-r-2">
-                    Thời hạn
                   </th>
                   <th scope="col" className="py-5 border-r-2">
                     Ngày tạo
@@ -464,9 +464,6 @@ function Staff() {
                           {list.luong}
                         </td>
                         <td scope="row" className="py-5 border-r-2">
-                          {list.thoihan}
-                        </td>
-                        <td scope="row" className="py-5 border-r-2">
                           {list.ngaytao}
                         </td>
                         <td scope="row" className="py-5 border-r-2">
@@ -478,7 +475,7 @@ function Staff() {
                               <button>
                                 <div className="flex gap-2 bg-green-500 p-2 rounded-md">
                                   <img src={EditIcon} alt="Icon chỉnh sửa" />
-                                  <p className="font-bold text-white hidden sm:block">
+                                  <p className="font-bold text-white hidden lg:block">
                                     Chỉnh sửa
                                   </p>
                                 </div>
@@ -489,7 +486,7 @@ function Staff() {
                             >
                               <div className="flex gap-2 bg-amber-400 p-2 rounded-md">
                                 <img src={TrashIcon} alt="Icon thùng rác" />
-                                <p className="font-bold text-white hidden sm:block">
+                                <p className="font-bold text-white hidden lg:inline-block">
                                   Xóa
                                 </p>
                               </div>

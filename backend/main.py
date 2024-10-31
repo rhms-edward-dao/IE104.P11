@@ -278,9 +278,7 @@ def get_all_tenloaimathang(db: Session = Depends(get_db)):
     return {"message": "Danh sách mặt hàng rỗng"}
 
 
-@app.get(
-    "/loaimathang/maloaimathang/{maloaimathang}", response_model=schemas.LOAIMATHANG
-)
+@app.get("/loaimathang/maloaimathang/{maloaimathang}")
 def get_loaimathang_by_maloaimathang(maloaimathang: int, db: Session = Depends(get_db)):
     return api_operations.get_one_parameter(
         db,
@@ -325,7 +323,6 @@ def delete_loaimathang(maloaimathang: int, db: Session = Depends(get_db)):
         maloaimathang,
         "loại mặt hàng",
     )
-
 
 # MATHANG manipulating
 @app.get("/mathang")
@@ -385,7 +382,7 @@ async def add_new_mathang(
             "soluongton": soluongton,
             "dongia": dongia,
             "tendvt": tendvt,
-            "hinhanh": f"{IMAGEDIR}products/{hinhanh.filename}",
+            "hinhanh": f"{IMAGEDIR}/products/{hinhanh.filename}",
             "madaily": pmadaily,
             "maloaimathang": pmaloaimathang,
         }
@@ -413,7 +410,7 @@ async def update_mathang(
     hinhanh: Union[UploadFile, str] = File(...),
     db: Session = Depends(get_db),
 ):
-    try:
+    try:    
         # Getting maloaimathang by tenloaimathang
         pmaloaimathang = crud.get_maloaimathang_by_tenloaimathang(db, tenloaimathang)
 
@@ -423,6 +420,7 @@ async def update_mathang(
         # Solving image
         image_dir = ""
         if hinhanh != "null":
+            
             image_dir = f"{IMAGEDIR}products/{hinhanh.filename}"
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
@@ -1001,14 +999,12 @@ def add_new_chucvu(
     tenchucvu: str = Form(...),
     capdo: int = Form(...),
     luong: Decimal = Form(...),
-    thoihan: Decimal = Form(...),
     db: Session = Depends(get_db)
 ):
     param_list = {
         "tenchucvu": tenchucvu,
         "luong": luong,
-        "capdo": capdo,
-        "thoihan": thoihan
+        "capdo": capdo
     }
     result = api_operations.add(db, models.Chucvu, 'chức vụ', **param_list)
     if result["message"] == "Thêm chức vụ thất bại do chức vụ đã tồn tại":
@@ -1032,7 +1028,6 @@ def update_chucvu(
     tenchucvu: str = Form(...),
     capdo: int = Form(...),
     luong: Decimal = Form(...),
-    thoihan: Decimal = Form(...),
     db: Session = Depends(get_db)
 ):
     try:
@@ -1040,7 +1035,6 @@ def update_chucvu(
             "tenchucvu": tenchucvu,
             "luong": luong,
             "capdo": capdo,
-            "thoihan": thoihan,
             "ngaycapnhat": datetime.today().strftime('%Y-%m-%d'),
         }
         crud.update_chucvu(machucvu, **param_list)

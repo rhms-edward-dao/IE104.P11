@@ -178,7 +178,7 @@ class Mathang(Base):
     soluongton = Column(Integer, server_default=text("0"))
     dongia = Column(Numeric(12, 4), nullable=False)
     tendvt = Column(String(50), nullable=False)
-    hinhanh = Column(String(100))
+    hinhanh = Column(String(200))
     madaily = Column(ForeignKey('daily.madaily', ondelete='CASCADE'), nullable=False)
     maloaimathang = Column(ForeignKey('loaimathang.maloaimathang', ondelete='CASCADE'), nullable=False)
 

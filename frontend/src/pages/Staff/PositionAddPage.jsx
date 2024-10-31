@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import ReturnIcon from "../../images/icons/return-button.png";
+import ReturnIcon from "../../images/icons/button/GoBack.svg";
 import Header from "../../components/Header";
 
 import { addPosition } from "../../assets/Staffs/StaffData";
@@ -11,15 +11,14 @@ function PositionAddPage() {
   const [positionName, setPositionName] = useState("");
   const [level, setLevel] = useState(1);
   const [salary, setSalary] = useState(0);
-  const [time, setTime] = useState(1);
 
   const navigate = useNavigate();
   // Functions here
-  const addData = async (tenchucvu, capdo, luong, thoihan) => {
+  const addData = async (tenchucvu, capdo, luong) => {
     let check_tenchucvu = true;
     let check_capdo = true;
     let check_luong = true;
-    let check_thoihan = true;
+
     // if - else condition here
     // Check tenchucvu
     if (tenchucvu.length < 2) {
@@ -35,25 +34,17 @@ function PositionAddPage() {
       check_capdo = false;
     }
     // Check luong
-    if (luong < 0) {
-      alert("Lương không được âm");
+    if (luong < 3000000) {
+      alert("Lương tối thiểu là 3000000");
       check_luong = false;
     }
-    // Check thoihan
-    if (thoihan < 1) {
-      alert("Thời hạn làm việc ít nhất 1 năm");
-      check_thoihan = false;
-    } else if (thoihan > 5) {
-      alert("Thời hạn tối đa là 5 năm");
-      check_thoihan = false;
-    }
+
     // Send data to server here
-    if (check_tenchucvu && check_capdo && check_luong && check_thoihan) {
+    if (check_tenchucvu && check_capdo && check_luong) {
       let item = {
         tenchucvu: tenchucvu,
         capdo: capdo,
         luong: luong,
-        thoihan: thoihan,
       };
       const response = await addPosition(item);
       if (response.message === "Thêm chức vụ thất bại do chức vụ đã tồn tại") {
@@ -73,99 +64,82 @@ function PositionAddPage() {
         <Header></Header>
       </div>
       <hr />
-
-      <div>
+      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div>
-          <div className="flex items-center gap-40">
-            <NavLink to={"/staff-management"}>
-              <button>
-                <img
-                  src={ReturnIcon}
-                  alt="Icon trở lại"
-                  className="w-15 h-12"
-                />
-              </button>
-            </NavLink>
-          </div>
-          <div className="flex mt-5">
-            <div className="w-1/2">
-              <p className="text-xl font-bold italic">{"Thêm chức vụ"}</p>
+          <div>
+            <div className="flex items-center gap-40">
+              <NavLink to={"/staff-management"}>
+                <button>
+                  <img
+                    src={ReturnIcon}
+                    alt="Icon trở lại"
+                    className="w-15 h-12"
+                  />
+                </button>
+              </NavLink>
             </div>
-            <div className="w-1/2 flex justify-end mr-5">
-              <button
-                className="px-2 py-3 bg-red-500 rounded rounded-xl"
-                onClick={() => addData(positionName, level, salary, time)}
-              >
-                <p className="font-bold text-white text-lg">Thêm</p>
-              </button>
+            <div className="my-5 flex flex-wrap items-center justify-between">
+              <p className="text-2xl font-bold italic">{"Thêm chức vụ"}</p>          
+              <div className="flex justify-end">
+                <button
+                  className="px-2 py-3 bg-red-500 rounded rounded-xl"
+                  onClick={() => addData(positionName, level, salary)}
+                >
+                  <p className="font-bold text-white text-lg">Thêm</p>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="m-5">
-        <div className="block space-y-8">
-          <div className="space-y-4">
-            <label htmlFor="district-name-add" className="font-bold text-lg">
-              Tên quận
-            </label>
-            <br />
-            <input
-              id="district-name-add"
-              name="district-name-add"
-              type="text"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Tên quận..."
-              value={positionName}
-              onChange={(e) => setPositionName(e.target.value)}
-            />
-          </div>
+        <div>
+          <div className="block space-y-8">
+            <div className="space-y-4">
+              <label htmlFor="district-name-add" className="font-bold text-lg">
+                Tên chức vụ
+              </label>
+              <br />
+              <input
+                id="district-name-add"
+                name="district-name-add"
+                type="text"
+                className="w-full py-2 text-lg border border-black rounded-lg"
+                placeholder="   Tên chức vụ..."
+                value={positionName}
+                onChange={(e) => setPositionName(e.target.value)}
+              />
+            </div>
 
-          <div className="space-y-4">
-            <label htmlFor="level-add" className="font-bold text-lg">
-              Cấp độ
-            </label>
-            <br />
-            <input
-              id="level-add"
-              name="level-add"
-              type="number"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="  Cấp độ..."
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-            />
-          </div>
+            <div className="space-y-4">
+              <label htmlFor="level-add" className="font-bold text-lg">
+                Cấp độ
+              </label>
+              <br />
+              <input
+                id="level-add"
+                name="level-add"
+                type="number"
+                className="w-full py-2 text-lg border border-black rounded-lg"
+                placeholder="  Cấp độ..."
+                value={level}
+                onChange={(e) => setLevel(e.target.value)}
+              />
+            </div>
 
-          <div className="space-y-4">
-            <label htmlFor="salary-add" className="font-bold text-lg">
-              Lương
-            </label>
-            <br />
-            <input
-              id="salary-add"
-              name="salary-add"
-              type="number"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Lương..."
-              value={salary}
-              onChange={(e) => setSalary(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="time-add" className="font-bold text-lg">
-              Thời hạn
-            </label>
-            <br />
-            <input
-              id="time-add"
-              name="time-add"
-              type="number"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Thời hạn..."
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            />
+            <div className="space-y-4">
+              <label htmlFor="salary-add" className="font-bold text-lg">
+                Lương
+              </label>
+              <br />
+              <input
+                id="salary-add"
+                name="salary-add"
+                type="number"
+                className="w-full py-2 text-lg border border-black rounded-lg"
+                placeholder="   Lương..."
+                value={salary}
+                onChange={(e) => setSalary(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>

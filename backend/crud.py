@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from database import engine
-import models
+import models, schemas
 
 
 # Crud Operation class for the same crud tasks
@@ -17,7 +17,7 @@ class crud_operations:
             db.commit()
             db.refresh(new_db_item)
             return new_db_item
-        except:
+        except Exception as e:
             return None
 
     def delete(db, model_name, model_param, param):
@@ -26,7 +26,7 @@ class crud_operations:
             db.delete(get_db)
             db.commit()
             return {"message": "Đã xóa"}
-        except:
+        except Exception as e:
             return {"message": "Xóa thất bại"}
 
 
@@ -51,7 +51,7 @@ def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
             .filter(models.t_taikhoan_nhavien.c.mataikhoan == pMaTaiKhoan)
             .first()[0]
         )
-
+    
         get_tennhanvien = (
             db.query(models.Nhanvien.hoten)
             .filter(models.Nhanvien.manhanvien == get_manhanvien)
@@ -194,6 +194,8 @@ def get_mathang_by_mamathang(db: Session, pMaMatHang: int):
 
 # Add New MATHANG
 def add_new_mathang(**param_list):
+    print(param_list)
+    print("Hello")
     with engine.connect().execution_options(autocommit=True) as connection:
         connection.execute(
             """
@@ -359,7 +361,6 @@ def add_daily(**param_list):
         param_list["hinhanh"])
 
 def update_daily(**param_list):
-    print(param_list)
     if param_list["hinhanh"] == '':
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute("""
@@ -525,14 +526,12 @@ def update_chucvu(machucvu: int, **param_list):
                            tenchucvu = (%s),
                            capdo = (%s),
                            luong = (%s),
-                           thoihan = (%s),
                            ngaycapnhat = (%s)
             WHERE machucvu = (%s);
         """,
         param_list["tenchucvu"],
         param_list["capdo"],
         param_list["luong"],
-        param_list["thoihan"],
         param_list["ngaycapnhat"],
         machucvu)
 # For Import and Export
