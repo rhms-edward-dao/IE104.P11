@@ -15,12 +15,12 @@ export const ProductDataCard = (theme, trans) => {
     {
       value: 150000000,
       img: `${theme === "light" ? ProfitIcon : ProfitDarkIcon}`,
-      description: trans.Third,
+      description: trans.Second,
     },
     {
       value: 2,
       img: `${theme === "light" ? OutOfStockIcon : OutOfStockDarkIcon}`,
-      description: trans.Second,
+      description: trans.Third,
     },
   ];
   return DataCard;

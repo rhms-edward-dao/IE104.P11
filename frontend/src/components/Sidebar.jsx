@@ -34,6 +34,8 @@ function Sidebar() {
     isCustomer,
     isSanpham,
     isQuanlykho,
+    isKhachhang,
+    isQuanlydaily,
     isBaocaoStaff,
     activateQuan,
     activateDaily,
@@ -44,6 +46,8 @@ function Sidebar() {
     activateKhachhang,
     activateSanpham,
     activateQuanlykho,
+    activateKhachhangStaff,
+    activateQuanlydaily,
     activateBaocaoStaff,
   } = ActiveButton();
 
@@ -77,20 +81,22 @@ function Sidebar() {
       </div>
 
       {/* isAdmin */}
-      {isLoggedIn == true && isAdmin == true ? (
+      {isLoggedIn === true && isAdmin === true ? (
         <>
           {isQuan ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/districts">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Districts}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Districts}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink           
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/districts"
               >
@@ -99,7 +105,9 @@ function Sidebar() {
                   onClick={() => activateQuan()}
                 >
                   <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Districts}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Districts}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -109,7 +117,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == true ? (
+      {isLoggedIn === true && isAdmin === true ? (
         <>
           {isDaily ? (
             <>
@@ -117,14 +125,16 @@ function Sidebar() {
                 <NavLink to="/stores">
                   <div className="flex gap-3 items-center justify-center lg:justify-start">
                     <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                    <p className="text-white font-bold hidden lg:block">{Stores}</p>
+                    <p className="text-white font-bold hidden lg:block">
+                      {Stores}
+                    </p>
                   </div>
                 </NavLink>
               </div>
             </>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/stores"
               >
@@ -133,7 +143,9 @@ function Sidebar() {
                   onClick={() => activateDaily()}
                 >
                   <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Stores}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Stores}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -143,20 +155,22 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == true ? (
+      {isLoggedIn === true && isAdmin === true ? (
         <>
           {isMathang ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/product-categorys">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{ProductCategories}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {ProductCategories}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/product-categorys"
               >
@@ -165,7 +179,9 @@ function Sidebar() {
                   onClick={() => activateMathang()}
                 >
                   <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{ProductCategories}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {ProductCategories}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -175,20 +191,22 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == true ? (
+      {isLoggedIn === true && isAdmin === true ? (
         <>
           {isNhanvien ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/staff-management">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Staffs}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Staffs}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/staff-management"
               >
@@ -197,7 +215,9 @@ function Sidebar() {
                   onClick={() => activateNhanvien()}
                 >
                   <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Staffs}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Staffs}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -207,20 +227,22 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == true ? (
+      {isLoggedIn === true && isAdmin === true ? (
         <>
           {isQuitac ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/rule-management">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Rules}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Rules}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/rule-management"
               >
@@ -229,7 +251,9 @@ function Sidebar() {
                   onClick={() => activateQuitac()}
                 >
                   <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Rules}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Rules}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -239,20 +263,22 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == true ? (
+      {isLoggedIn === true && isAdmin === true ? (
         <>
           {isCustomer ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/customer">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Customers}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Customers}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/customer"
               >
@@ -261,7 +287,9 @@ function Sidebar() {
                   onClick={() => activateKhachhang()}
                 >
                   <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Customers}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Customers}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -271,20 +299,22 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == true ? (
+      {isLoggedIn === true && isAdmin === true ? (
         <>
           {isBaocao ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/admin-report">
                 <div className="flex gap-3 items-center justify-center lg:justify-center">
                   <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Reports}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Reports}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/admin-report"
               >
@@ -293,7 +323,9 @@ function Sidebar() {
                   onClick={() => activateBaocao()}
                 >
                   <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Reports}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Reports}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -304,14 +336,16 @@ function Sidebar() {
       )}
 
       {/* !isAdmin */}
-      {isLoggedIn == true && isAdmin == false ? (
+      {isLoggedIn === true && isAdmin === false ? (
         <>
           {isSanpham ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/products">
                 <div className="flex gap-3 items-center justify-center lg:justify-center">
                   <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Products}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Products}
+                  </p>
                 </div>
               </NavLink>
             </div>
@@ -322,11 +356,13 @@ function Sidebar() {
                 to="/products"
               >
                 <button
-                  className="flex gap-3items-center"
+                  className="flex gap-3 items-center"
                   onClick={() => activateSanpham()}
                 >
                   <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Products}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Products}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -336,29 +372,33 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == false ? (
+      {isLoggedIn === true && isAdmin === false ? (
         <>
           {isQuanlykho ? (
             <div className="my-4 py-4 bg-red-500">
-              <NavLink tp="store-transaction">
+              <NavLink to="/warehouse">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Warehouses}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Warehouses}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
-                to="/store-transaction"              
+                to="/warehouse"
               >
                 <button
                   className="flex gap-3 items-center"
                   onClick={() => activateQuanlykho()}
                 >
                   <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Warehouses}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Warehouses}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -367,29 +407,33 @@ function Sidebar() {
       ) : (
         <></>
       )}
-      {isLoggedIn == true && isAdmin == false ? (
+      {isLoggedIn === true && isAdmin === false ? (
         <>
-          {isCustomer ? (
+          {isKhachhang ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/customer">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Customers}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Customers}
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/customer"
               >
                 <button
                   className="flex gap-3 items-center"
-                  onClick={() => activateKhachhang()}
+                  onClick={() => activateKhachhangStaff()}
                 >
                   <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Customers}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Customers}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -399,29 +443,69 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn == true && isAdmin == false ? (
+      {isLoggedIn === true && isAdmin === false ? (
         <>
-          {isBaocaoStaff ? (
+          {isQuanlydaily ? (
             <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/store-report">
+              <NavLink to="/store-management">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Reports}</p>
+                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold hidden lg:block">
+                    Quản lý đại lý
+                  </p>
                 </div>
               </NavLink>
             </div>
           ) : (
             <div className="my-4 py-4 hover:bg-red-500">
-              <NavLink 
+              <NavLink
                 className="flex justify-center lg:justify-start"
-                to="/store-report"
+                to="/store-management"
+              >
+                <button
+                  className="flex gap-3 items-center"
+                  onClick={() => activateQuanlydaily()}
+                >
+                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold hidden lg:block">
+                    Quản lý đại lý
+                  </p>
+                </button>
+              </NavLink>
+            </div>
+          )}
+        </>
+      ) : (
+        <></>
+      )}
+
+      {isLoggedIn === true && isAdmin === false ? (
+        <>
+          {isBaocaoStaff ? (
+            <div className="my-4 py-4 bg-red-500">
+              <NavLink to="/staff-report">
+                <div className="flex gap-3 items-center justify-center lg:justify-start">
+                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
+                  <p className="text-white font-bold hidden lg:block">
+                    {Reports}
+                  </p>
+                </div>
+              </NavLink>
+            </div>
+          ) : (
+            <div className="my-4 py-4 hover:bg-red-500">
+              <NavLink
+                className="flex justify-center lg:justify-start"
+                to="/staff-report"
               >
                 <button
                   className="flex gap-3 items-center"
                   onClick={() => activateBaocaoStaff()}
                 >
                   <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">{Reports}</p>
+                  <p className="text-white font-bold hidden lg:block">
+                    {Reports}
+                  </p>
                 </button>
               </NavLink>
             </div>
@@ -437,7 +521,9 @@ function Sidebar() {
           <NavLink to="/login" onClick={() => handleLogout()}>
             <div className="flex gap-3 items-center justify-center lg:justify-start">
               <img src={LogoutIcon} alt="" className="mx-5 h-10 w-10" />
-              <p className="text-white font-bold hidden lg:block">{LogOut_Btn}</p>
+              <p className="text-white font-bold hidden lg:block">
+                {LogOut_Btn}
+              </p>
             </div>
           </NavLink>
         </div>

@@ -59,6 +59,14 @@ import CustomerEditPage from "./pages/Customer/CustomerEditPage";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import MyAccountEditPage from "./pages/MyAccount/MyAccountEditPage";
 
+import Warehouse from "./pages/Warehouse/Warehouse";
+import WarehouseImportPage from "./pages/Warehouse/WarehouseImportPage";
+import WarehouseExportPage from "./pages/Warehouse/WarehouseExportPage";
+
+import StoreManagement from "./pages/StoreManagement/StoreManagement";
+
+import StaffReport from "./pages/Report/StaffReport";
+
 function App() {
   return (
     <div>
@@ -184,9 +192,13 @@ function App() {
                             {/* <Route
                           path="/admin-report"
                           element={<AdminReport />}
-                        ></Route>
+                        ></Route>*/}
+                            <Route
+                              path="/staff-report"
+                              element={<StaffReport />}
+                            />
 
-                        {/* Routes for Customer */}
+                            {/* Routes for Customer */}
                             <Route
                               path="/customer"
                               element={<Customer />}
@@ -201,6 +213,23 @@ function App() {
                             ></Route>
 
                             {/* <Route path="/management" element={<Management />} /> */}
+
+                            {/* Routes for Warehouse */}
+                            <Route path="/warehouse" element={<Warehouse />} />
+                            <Route
+                              path="/warehouse/warehoue-import-page"
+                              element={<WarehouseImportPage />}
+                            />
+                            <Route
+                              path="/warehouse/warehouse-export-page"
+                              element={<WarehouseExportPage />}
+                            />
+
+                            {/* Routes for Store Management */}
+                            <Route
+                              path="/store-management"
+                              element={<StoreManagement />}
+                            />
                           </Routes>
                         </div>
                       </div>

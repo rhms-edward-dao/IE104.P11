@@ -72,6 +72,7 @@ function Stores() {
       try {
         // Get Exsisted Stores
         const existedStore = await getAllStore();
+        console.log(existedStore);
         if (existedStore.length === 0) {
           setStoreData([]);
         } else {
@@ -197,14 +198,8 @@ function Stores() {
             ? SF_Stores.Placeholders.Text1
             : SF_StoreCategories.Placeholders.Text1
         }`;
-      case `${
-        isStoreTab ? SF_Stores.Columns.Col2 : ""
-      }`:
-        return `${
-          isStoreTab
-            ? SF_Stores.Placeholders.Text2
-            : ""
-        }`;
+      case `${isStoreTab ? SF_Stores.Columns.Col2 : ""}`:
+        return `${isStoreTab ? SF_Stores.Placeholders.Text2 : ""}`;
       case SF_Stores.Columns.Col4:
         return SF_Stores.Placeholders.Text4;
       case SF_Stores.Columns.Col5:
@@ -247,7 +242,7 @@ function Stores() {
     storeCategoryItems.length > 0
       ? Math.ceil(parseFloat(storeCategoryItems.length / itemsPerPage))
       : 0;
-  console.log(currentStoreCategoryItems);
+
   // Return here
   return (
     <div>
@@ -355,7 +350,7 @@ function Stores() {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>              
+              <th scope="col"></th>
               {isStoreTab ? (
                 <>
                   <th className="border-r-2 py-5" scope="col"></th>
@@ -457,9 +452,7 @@ function Stores() {
                               : `store-category-edit-page/${list.maloaidaily}`
                           }
                         >
-                          <p className="hidden lg:inline-block">
-                            {Edit}
-                          </p>
+                          <p className="hidden lg:inline-block">{Edit}</p>
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
@@ -470,9 +463,7 @@ function Stores() {
                               : deleteAStoreCategory(list.maloaidaily)
                           }
                         >
-                          <p className="hidden lg:inline-block">
-                            {Delete}
-                          </p>
+                          <p className="hidden lg:inline-block">{Delete}</p>
                           <img src={DeleteIcon} alt="Icon thùng rác" />
                         </button>
                       </div>
