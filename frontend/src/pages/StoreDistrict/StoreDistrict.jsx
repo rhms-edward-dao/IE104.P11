@@ -22,17 +22,6 @@ import PaginationButtons from "../../components/UI/PaginationButtons";
 import EditIcon from "../../images/icons/button/Edit.svg";
 import DeleteIcon from "../../images/icons/button/Delete.svg";
 
-// import Card from "../../components/content/Card";
-// import Header from "../../components/Header";
-// import PaginationButtons from "../../components/UI/PaginationButtons";
-// import DWCardData from "../../assets/WarehouseCardData";
-
-// import TrashIcon from "../../images/icons/trash.png";
-// import EditIcon from "../../images/icons/edit.png";
-// import Button from "../../components/UI/Button";
-
-// import { getAllDistrict, deleteDistrict } from "../../assets/StoreDistrict";
-
 function Districts() {
   // Variables here
   // // For Theme Mode
@@ -199,10 +188,7 @@ function Districts() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <NavLink 
-            to="district-add-page"
-            className="my-5"
-          >
+          <NavLink to="district-add-page" className="my-5">
             <Button />
           </NavLink>
         </div>

@@ -34,9 +34,11 @@ import ProductCategorysEditPage from "./pages/ProductCategory/ProductCategoryEdi
 import ProductAdminAddPage from "./pages/ProductCategory/ProductsAddPage";
 import ProductAdminEditPage from "./pages/ProductCategory/ProductsEditPage";
 
-// import Products from "./pages/Products";
-// import ProductsEditPage from "./pages/ProductsEditPage";
-// import ProductsAddPage from "./pages/ProductsAddPage";
+import Products from "./pages/Product/Products";
+import ProductStaffAddPage from "./pages/Product/ProductAddPage";
+import ProductStaffEditPage from "./pages/Product/ProductEditPage";
+import ProductCategoriesAddPage from "./pages/Product/ProductCategoriesAddPage";
+import ProductCategoriesEditPage from "./pages/Product/ProductCategoriesEditPage";
 
 import Staff from "./pages/Staff/Staff";
 import StaffManagementAddPage from "./pages/Staff/StaffAddPage";
@@ -49,6 +51,7 @@ import Rule from "./pages/Rule/Rule";
 // import RuleEditPage from "./pages/Rule/RuleEditPage";
 
 // import AdminReport from "./pages/AdminReport/AdminReport";
+import StaffReport from "./pages/Report/StaffReport";
 
 import Customer from "./pages/Customer/Customer";
 import CustomerEditPage from "./pages/Customer/CustomerEditPage";
@@ -63,8 +66,8 @@ import WarehouseImportPage from "./pages/Warehouse/WarehouseImportPage";
 import WarehouseExportPage from "./pages/Warehouse/WarehouseExportPage";
 
 import StoreManagement from "./pages/StoreManagement/StoreManagement";
-
-import StaffReport from "./pages/Report/StaffReport";
+import StoreManagementEditPage from "./pages/StoreManagement/StoreManagementEditPage";
+import StoreManagementMaintainPage from "./pages/StoreManagement/StoreManagementMaintainPage";
 
 function App() {
   return (
@@ -149,15 +152,23 @@ function App() {
                             ></Route>
 
                             {/* Routes for product */}
-                            {/* <Route path="/products" element={<Products />} />
-                        <Route
-                          path="/products/products-edit-page"
-                          element={<ProductsEditPage />}
-                        />
-                        <Route
-                          path="/products/products-add-page"
-                          element={<ProductsAddPage />}
-                        /> */}
+                            <Route path="/products" element={<Products />} />
+                            <Route
+                              path="/products/products-add-page"
+                              element={<ProductStaffAddPage />}
+                            />
+                            <Route
+                              path="/products/products-edit-page"
+                              element={<ProductStaffEditPage />}
+                            />
+                            <Route
+                              path="/product-categories/product-categorys-add-page"
+                              element={<ProductCategoriesAddPage />}
+                            ></Route>
+                            <Route
+                              path="/product-categories/product-categorys-edit-page/:productCategoryId"
+                              element={<ProductCategoriesEditPage />}
+                            ></Route>
 
                             {/* Routes for staff */}
                             <Route
@@ -222,6 +233,14 @@ function App() {
                             <Route
                               path="/store-management"
                               element={<StoreManagement />}
+                            />
+                            <Route
+                              path="/store-management/store-management-edit-page"
+                              element={<StoreManagementEditPage />}
+                            />
+                            <Route
+                              path="/store-management/store-management-maintain-page"
+                              element={<StoreManagementMaintainPage />}
                             />
                           </Routes>
                         </div>
