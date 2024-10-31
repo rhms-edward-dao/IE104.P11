@@ -304,7 +304,7 @@ function Sidebar() {
           {isBaocao ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/admin-report">
-                <div className="flex gap-3 items-center justify-center lg:justify-center">
+                <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
                   <p className="text-white font-bold hidden lg:block">
                     {Reports}

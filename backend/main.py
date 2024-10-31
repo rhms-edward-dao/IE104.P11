@@ -459,6 +459,7 @@ def delete_mathang(mamathang: int, db: Session = Depends(get_db)):
 @app.get("/quitac")
 def get_all_quitac(db: Session = Depends(get_db)):
     get_db = crud.get_all_quitac(db)
+    print(get_db)
     if get_db:
         return get_db
     return {
@@ -479,8 +480,22 @@ def update_all_quitac(pItems: schemas.QUITACupdate, db: Session = Depends(get_db
 @app.get("/khachhang")
 def get_all_khachhang(db: Session = Depends(get_db)):
     return api_operations.get_all(db, models.Khachhang, "khách hàng")
+@app.get("/khachhang/{makhachhang}")
+def get_khachhang_by_makhachhang(makhachhang: int, db: Session = Depends(get_db)):
+    return api_operations.get_one_parameter(db, models.Khachhang, models.Khachhang.makhachhang, makhachhang, 'khách hàng')
+@app.put("/khachhang/capnhat/{makhachhang}")
+def update_khachhang(makhachhang: int, tenkhachhang: str = Body(..., embed=True), sodienthoai: str = Body(..., embed=True), db: Session = Depends(get_db)):
+    try:
+        update_db = crud.update_khachhang(db, makhachhang, tenkhachhang, sodienthoai)
+    except Exception as e:
+        match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
+        detail = match.group(0).strip()
 
-
+        if detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(
+            sodienthoai
+        ):
+            return {"message": "Số điện thoại đã tồn tại"}
+    return {"message": "Cập nhật khách hàng thành công"}
 @app.delete("/khachhang/xoa/{makhachhang}")
 def delete_khachhang(makhachhang: int, db: Session = Depends(get_db)):
     return api_operations.delete(
@@ -781,16 +796,21 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
 @app.get("/nhanvien/chitiet/{manhanvien}")
 def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
     get_db = crud.get_nhanvien_chitiet_by_manhanvien(db, manhanvien)
-    response_data = {}
+    response_data = {}    
     if get_db:
         if get_db.hinhanh:
             with open(get_db.hinhanh, "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
-        response_data = {
-            "info": get_db,
-            "avatar": data_to_base64
-        }    
+            response_data = {
+                "info": get_db,
+                "avatar": data_to_base64
+            } 
+        else:
+            response_data = {
+                "info": get_db,
+                "avatar": None
+            } 
         return response_data
     return {
         "message": "Không tim thấy nhân viên"

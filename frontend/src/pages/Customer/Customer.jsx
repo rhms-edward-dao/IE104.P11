@@ -15,23 +15,11 @@ import { CustomerDataCard } from "../../assets/Customers/CustomerDataCard";
 // Import Components Here
 import Header from "../../components/Header";
 import Card from "../../components/content/Card";
-import Button from "../../components/UI/Button";
 import PaginationButtons from "../../components/UI/PaginationButtons";
 
 // Import Icons Here
 import EditIcon from "../../images/icons/button/Edit.svg";
 import DeleteIcon from "../../images/icons/button/Delete.svg";
-
-// import Card from "../../components/content/Card";
-// import Header from "../../components/Header";
-// import PaginationButtons from "../../components/UI/PaginationButtons";
-// import DWCardData from "../../assets/WarehouseCardData";
-
-// import TrashIcon from "../../images/icons/trash.png";
-// import EditIcon from "../../images/icons/edit.png";
-// import Button from "../../components/UI/Button";
-
-// import { getAllCustomer, deleteCustomer } from "../../assets/CustomerData";
 
 function Customer() {
   // Variables here
@@ -169,18 +157,15 @@ function Customer() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <NavLink to="customer-add-page">
-            <Button />
-          </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
-            <tr className="text-md text-gray-500">
+            <tr className="text-lg">
               <th scope="col"></th>
-              <th scope="col" className="border-r-2 py-5 text-lg">
+              <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col1}
               </th>
-              <th scope="col" className="py-5 text-lg">
+              <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col2}
               </th>
               <th scope="col"></th>
@@ -196,20 +181,20 @@ function Customer() {
                   <td className="py-5 pl-3">
                     <input type="checkbox" />
                   </td>
-                  <td scope="row" className="border-r-2 py-5 text-lg">
+                  <td scope="row" className="border-r-2 py-5">
                     {list.tenkhachhang}
                   </td>
-                  <td scope="row" className="py-5 text-lg">
+                  <td scope="row" className="border-r-2 py-5">
                     {list.sodienthoai}
                   </td>
                   <td scope="row">
-                    <div className="flex flex-wrap justify-center gap-20 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
+                    <div className="flex flex-wrap justify-center gap-5 my-5 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
                       <NavLink
                         className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
-                        to="customer-edit-page"
+                        to={`/customer/customer-edit-page/${list.makhachhang}`}
                       >
                         <img src={EditIcon} alt="Icon chỉnh sửa" />
-                        <p className="hidden sm:hidden md:hidden lg:inline-block">
+                        <p className="hidden lg:inline-block">
                           {Edit}
                         </p>
                       </NavLink>
@@ -218,7 +203,7 @@ function Customer() {
                         onClick={() => deleteItem(list.makhachhang)}
                       >
                         <img src={DeleteIcon} alt="Icon thùng rác" />
-                        <p className="hidden sm:hidden md:hidden lg:inline-block">
+                        <p className="hidden lg:inline-block">
                           {Delete}
                         </p>
                       </button>
