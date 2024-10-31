@@ -72,7 +72,6 @@ function Stores() {
       try {
         // Get Exsisted Stores
         const existedStore = await getAllStore();
-        console.log(existedStore);
         if (existedStore.length === 0) {
           setStoreData([]);
         } else {

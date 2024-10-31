@@ -51,7 +51,6 @@ import Rule from "./pages/Rule/Rule";
 // import AdminReport from "./pages/AdminReport/AdminReport";
 
 import Customer from "./pages/Customer/Customer";
-import CustomerAddPage from "./pages/Customer/CustomerAddPage";
 import CustomerEditPage from "./pages/Customer/CustomerEditPage";
 
 // import Management from "./pages/Management";
@@ -204,15 +203,9 @@ function App() {
                               element={<Customer />}
                             ></Route>
                             <Route
-                              path="/customer/customer-add-page"
-                              element={<CustomerAddPage />}
-                            ></Route>
-                            <Route
                               path="/customer/customer-edit-page/:customerId"
                               element={<CustomerEditPage />}
                             ></Route>
-
-                            {/* <Route path="/management" element={<Management />} /> */}
 
                             {/* Routes for Warehouse */}
                             <Route path="/warehouse" element={<Warehouse />} />

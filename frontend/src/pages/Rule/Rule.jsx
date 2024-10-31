@@ -42,7 +42,6 @@ function Rule() {
     };
     fetchData();
   }, []);
-
   const handleUpdateClick = (id) => {
     setEditableInputId(id); // Enable the clicked input field
     setTimeout(() => {

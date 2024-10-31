@@ -270,7 +270,7 @@ def update_mathang(**param_list):
 
 # QUITAC
 def get_all_quitac(db: Session):
-    return db.query(models.Quitac.sodailytoidamoiquan, models.Quitac.tiledongiaban, models.Quitac.sothietbitoidataikhoan).first()
+    return db.query(models.t_quitac.c.sodailytoidamoiquan, models.t_quitac.c.tiledongiaban, models.t_quitac.c.sothietbitoidataikhoan).first()
 def update_quitac(db: Session, pItems: schemas.QUITACupdate):
     try:
         with engine.connect().execution_options(autocommit=True) as connection:
@@ -534,4 +534,17 @@ def update_chucvu(machucvu: int, **param_list):
         param_list["luong"],
         param_list["ngaycapnhat"],
         machucvu)
+# Khachhang
+def update_khachhang(db: Session, makhachhang: int, tenkhachhang: str, sodienthoai: str):
+    with engine.connect().execution_options(autocommit=True) as connection:
+        connection.execute("""
+            UPDATE KHACHHANG
+                        SET
+                        tenkhachhang = (%s),
+                        sodienthoai= (%s)
+            WHERE makhachhang = (%s);
+        """,
+        tenkhachhang,
+        sodienthoai,
+        makhachhang)    
 # For Import and Export
