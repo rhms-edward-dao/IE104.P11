@@ -34,7 +34,7 @@ const PaginationButtons = ({ pageCount, currentPage, setCurrentPage }) => {
           }
           renderOnZeroPageCount={null}
           containerClassName="flex items-center justify-center mt-8 mb-4"
-          pageClassName="block border- border-solid border-gray-200 hover:bg-gray-200 w-10 h-10 flex items-center justify-center rounded-md"
+          pageClassName="block border-solid border-gray-200 hover:bg-gray-200 w-10 h-10 flex items-center justify-center rounded-md text-black dark:text-white dark:hover:text-black"
           activeClassName="bg-red-500 text-white"
         />
       )}

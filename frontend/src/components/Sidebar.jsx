@@ -61,6 +61,7 @@ function Sidebar() {
     Reports,
     Products,
     Warehouses,
+    StoreManagement,
     Customers,
     LogOut_Btn,
   } = t("Sidebar");
@@ -341,7 +342,7 @@ function Sidebar() {
           {isSanpham ? (
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/products">
-                <div className="flex gap-3 items-center justify-center lg:justify-center">
+                <div className="flex gap-3 items-center justify-center lg:justify-start">
                   <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
                   <p className="text-white font-bold hidden lg:block">
                     {Products}
@@ -449,9 +450,9 @@ function Sidebar() {
             <div className="my-4 py-4 bg-red-500">
               <NavLink to="/store-management">
                 <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
                   <p className="text-white font-bold hidden lg:block">
-                    Quản lý đại lý
+                    {StoreManagement}
                   </p>
                 </div>
               </NavLink>
@@ -466,9 +467,9 @@ function Sidebar() {
                   className="flex gap-3 items-center"
                   onClick={() => activateQuanlydaily()}
                 >
-                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                  <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
                   <p className="text-white font-bold hidden lg:block">
-                    Quản lý đại lý
+                    {StoreManagement}
                   </p>
                 </button>
               </NavLink>
