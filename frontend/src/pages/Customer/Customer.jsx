@@ -134,13 +134,15 @@ function Customer() {
         ))}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex flex-wrap gap-3 justify-between">
-          <div className="flex flex-wrap gap-5 items-center justify-start text-black dark:text-white">
-            <p className="font-bold whitespace-nowrap">{SearchBy}</p>
+        <div className="flex flex-wrap justify-between">
+          <div className="flex flex-wrap items-center justify-start gap-5 my-5">
+            <p className="text-lg whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+              {SearchBy}
+            </p>
             <select
               value={selectedOption}
               onChange={handleOptionChange}
-              className="rounded-md border border-black bg-white px-3 py-0.5 text-lg font-semibold transition-colors duration-300 dark:border-white dark:bg-[#363636]"
+              className="rounded-md border border-black bg-white px-3 py-0.5 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
             >
               <option value={SF_Customers.Columns.Col1}>
                 {SF_Customers.Columns.Col1}
@@ -152,7 +154,7 @@ function Customer() {
             <input
               type="text"
               placeholder={getPlaceholderText()}
-              className="rounded-md border border-black bg-white px-2 py-0.5 text-lg text-gray-500 transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-gray-100 w-24 lg:w-72 xl:w-96"
+              className="w-24 rounded-md border border-black bg-white px-2 py-0.5 text-lg text-gray-500 transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-gray-100 lg:w-72 xl:w-96"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -165,7 +167,7 @@ function Customer() {
               <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col1}
               </th>
-              <th scope="col" className="border-r-2 py-5">
+              <th scope="col" className="py-5">
                 {SF_Customers.Columns.Col2}
               </th>
               <th scope="col"></th>
@@ -176,7 +178,7 @@ function Customer() {
               currentItems.map((list, index) => (
                 <tr
                   key={index}
-                  className="border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                  className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                 >
                   <td className="py-5 pl-3">
                     <input type="checkbox" />
@@ -184,7 +186,7 @@ function Customer() {
                   <td scope="row" className="border-r-2 py-5">
                     {list.tenkhachhang}
                   </td>
-                  <td scope="row" className="border-r-2 py-5">
+                  <td scope="row" className="py-5">
                     {list.sodienthoai}
                   </td>
                   <td scope="row">
@@ -194,18 +196,14 @@ function Customer() {
                         to={`/customer/customer-edit-page/${list.makhachhang}`}
                       >
                         <img src={EditIcon} alt="Icon chỉnh sửa" />
-                        <p className="hidden lg:inline-block">
-                          {Edit}
-                        </p>
+                        <p className="hidden lg:inline-block">{Edit}</p>
                       </NavLink>
                       <button
                         className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
                         onClick={() => deleteItem(list.makhachhang)}
                       >
                         <img src={DeleteIcon} alt="Icon thùng rác" />
-                        <p className="hidden lg:inline-block">
-                          {Delete}
-                        </p>
+                        <p className="hidden lg:inline-block">{Delete}</p>
                       </button>
                     </div>
                   </td>
