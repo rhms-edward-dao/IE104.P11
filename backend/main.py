@@ -796,16 +796,21 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
 @app.get("/nhanvien/chitiet/{manhanvien}")
 def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
     get_db = crud.get_nhanvien_chitiet_by_manhanvien(db, manhanvien)
-    response_data = {}
+    response_data = {}    
     if get_db:
         if get_db.hinhanh:
             with open(get_db.hinhanh, "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
-        response_data = {
-            "info": get_db,
-            "avatar": data_to_base64
-        }    
+            response_data = {
+                "info": get_db,
+                "avatar": data_to_base64
+            } 
+        else:
+            response_data = {
+                "info": get_db,
+                "avatar": None
+            } 
         return response_data
     return {
         "message": "Không tim thấy nhân viên"
