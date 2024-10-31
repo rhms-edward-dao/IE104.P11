@@ -1,159 +1,472 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-import Button from "../../components/UI/Button";
+// Import Contexts Here
+import { useTheme } from "../../contexts/ThemeContext";
+import { useStoreTab } from "../../contexts/StoreTabState";
+
+// Import Assets Here
+import {
+  getAllProducts,
+  deleteProduct,
+} from "../../assets/Products/ProductData";
+import {
+  getAllTypeOfProduct,
+  deleteOneCategory,
+} from "../../assets/Products/ProductCategoryData";
+import { ProductDataCard } from "../../assets/Products/ProductDataCard";
+
+// Import Components Here
+import Header from "../../components/Header";
 import Card from "../../components/content/Card";
-import PCardData from "../../assets/ProductCardData";
-import PListData from "../../assets/ProductListData";
-import EditIcon from "../../images/icons/edit.png";
-import TrashIcon from "../../images/icons/trash.png";
+import Button from "../../components/UI/Button";
+import PaginationButtons from "../../components/UI/PaginationButtons";
 
-function Products() {
-  const [selectedOption, setSelectedOption] = useState("Tên mặt hàng");
-  const [searchTerm, setSearchTerm] = useState("");
+// Import Icons Here
+import EditIcon from "../../images/icons/button/Edit.svg";
+import DeleteIcon from "../../images/icons/button/Delete.svg";
 
-  // Handle dropdown option change
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
+const Products = () => {
+  // Variables here
+  // // For Theme Mode and Switch Tab
+  const { theme } = useTheme();
+  // // For Multi-Language
+  const { t } = useTranslation();
+  const { Title } = t("Header");
+  const { DC_Products } = t("DataCard");
+  const { Product, ProductCategory } = t("TabView");
+  const { SearchBy, SF_Products, SF_ProductCategories } = t("SearchFilter");
+  const { Add, Edit, Delete } = t("Buttons");
+  // // For tab state here
+  const { isProductTab, activateProductTab, deactivateProductTab } =
+    useStoreTab();
+  // // For fetching products & product category data
+  const [productData, setProductData] = useState([]);
+  const [productCategoryData, setProductCategoryData] = useState([]);
+  // // For searching products & product category
+  const [productSearchTerm, setProductSearchTerm] = useState("");
+  const [productCategorySearchTerm, setProductCategorySearchTerm] =
+    useState("");
+  const [productSearchResults, setProductSearchResults] = useState([]);
+  const [productCategorySearchResults, setProductCategorySearchResults] =
+    useState([]);
+  // // For pagination products & product category
+  const [currentProductPage, setCurrentProductPage] = useState(0);
+  const [currentProductCategoryPage, setCurrentProductCategoryPage] =
+    useState(0);
+  const itemsPerPage = 5;
+  // // For tracking the search-filter option and placeholder text on products & product category
+  const [productFilterOption, setProductFilterOption] = useState(
+    SF_Products.Columns.Col1
+  );
+  const [productCategoryFilterOption, setProductCategoryFilterOption] =
+    useState(SF_ProductCategories.Columns.Col1);
+
+  // Use Effect here
+  // // For getting all existing products and product categories
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Get Exsisted Products
+        const existedProduct = await getAllProducts();
+        if (existedProduct.length === 0) {
+          setProductData([]);
+        } else {
+          setProductData(existedProduct);
+        }
+        // Get Exsisted Product Categories
+        const existedProductCategory = await getAllTypeOfProduct();
+        if (existedProductCategory.length === 0) {
+          setProductCategoryData([]);
+        } else {
+          setProductCategoryData(existedProductCategory);
+        }
+      } catch (error) {
+        console.error("Error while fetching: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+  // // For searching
+  useEffect(() => {
+    // Filtering products base on filter option and input text
+    if (productSearchTerm.trim() !== "") {
+      const results = productData.filter((item) => {
+        if (productFilterOption === SF_Products.Columns.Col1) {
+          return item.Mathang.tenmathang
+            .toLowerCase()
+            .includes(productSearchTerm.toLowerCase());
+        } else if (productFilterOption === SF_Products.Columns.Col2) {
+          return item.Mathang.dongia
+            .toString()
+            .toLowerCase()
+            .includes(productSearchTerm.toLowerCase());
+        } else if (productFilterOption === SF_Products.Columns.Col3) {
+          return item.Mathang.soluongton
+            .toLowerCase()
+            .includes(productSearchTerm.toLowerCase());
+        } else if (productFilterOption === SF_Products.Columns.Col5) {
+          return item.tenloaimathang
+            .toLowerCase()
+            .includes(productSearchTerm.toLowerCase());
+        } else if (productFilterOption === SF_Products.Columns.Col6) {
+          return item.tendaily
+            .toLowerCase()
+            .includes(productSearchTerm.toLowerCase());
+        }
+        return false;
+      });
+      setProductSearchResults(results);
+    } else {
+      setProductSearchResults(productData);
+    }
+    // Filtering products category base on filter option and input text
+    if (productCategorySearchTerm.trim() !== "") {
+      const results = productCategoryData.filter((item) => {
+        if (productCategoryFilterOption === SF_ProductCategories.Columns.Col1) {
+          return item.tenloaimathang
+            .toLowerCase()
+            .includes(productCategorySearchTerm.toLowerCase());
+        }
+        return false;
+      });
+      setProductCategorySearchResults(results);
+    } else {
+      setProductCategorySearchResults(productCategoryData);
+    }
+  }, [
+    productSearchTerm,
+    productCategorySearchTerm,
+    productData,
+    productCategoryData,
+    productFilterOption,
+    productCategoryFilterOption,
+  ]);
+
+  // Functions here
+  // // For deleting one product
+  const deleteAProduct = async (id) => {
+    const productResponse = await deleteProduct(id);
+
+    if (productResponse.message === "Xóa mặt hàng thất bại") {
+      alert(productResponse.message);
+    } else {
+      alert(productResponse.message);
+      setProductData(
+        productData.filter((item) => item.Mathang.mamathang !== id)
+      );
+    }
+  };
+  // // For deleting one product category
+  const deleteAProductCategory = async (id) => {
+    const productCategoryResponse = await deleteOneCategory(id);
+
+    if (productCategoryResponse.message === "Xóa loại mặt hàng thất bại") {
+      alert(productCategoryResponse.message);
+    } else {
+      alert(productCategoryResponse.message);
+      setProductCategoryData(
+        productCategoryData.filter((item) => item.maloaimathang !== id)
+      );
+    }
   };
 
-  // Handle input text change
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Placeholder text based on the selected option
+  // // For changing placeholder text base on the selected search-filter option
   const getPlaceholderText = () => {
-    switch (selectedOption) {
-      case "Tên mặt hàng":
-        return "Tìm kiếm loại mặt hàng ...";
-      case "Số lượng tồn":
-        return "Tìm kiếm số lượng tồn của mặt hàng ...";
-      case "Đơn vị tính":
-        return "Tìm kiếm đơn vị tính của mặt hàng ...";
+    switch (isProductTab ? productFilterOption : productCategoryFilterOption) {
+      case `${
+        isProductTab
+          ? SF_Products.Columns.Col1
+          : SF_ProductCategories.Columns.Col1
+      }`:
+        return `${
+          isProductTab
+            ? SF_Products.Placeholders.Text1
+            : SF_ProductCategories.Placeholders.Text1
+        }`;
+      case SF_Products.Columns.Col2:
+        return SF_Products.Placeholders.Text2;
+      case SF_Products.Columns.Col3:
+        return SF_Products.Placeholders.Text3;
+      case SF_Products.Columns.Col5:
+        return SF_Products.Placeholders.Text5;
       default:
-        return "Tìm kiếm ...";
+        return `${
+          isProductTab
+            ? SF_Products.Placeholders.Text1
+            : SF_ProductCategories.Placeholders.Text1
+        }`;
     }
   };
 
-  // Filter the table data based on the selected filter type and search term
-  const filteredData = PListData.filter((list) => {
-    if (selectedOption === "Tên mặt hàng") {
-      return list.productName.toLowerCase().includes(searchTerm.toLowerCase());
-    } else if (selectedOption === "Số lượng tồn") {
-      return list.amountLeft.toString().includes(searchTerm);
-    } else if (selectedOption === "Đơn vị tính") {
-      return list.unit.toLowerCase().includes(searchTerm.toLowerCase());
-    }
-    return list;
-  });
+  // Items for render
+  const productItems = productSearchTerm ? productSearchResults : productData;
+  const productCategoryItems = productCategorySearchTerm
+    ? productCategorySearchResults
+    : productCategoryData;
 
+  // Calculate offset for products
+  const productOffset = currentProductPage * itemsPerPage;
+  const currentProductItems =
+    productItems.length > 0
+      ? productItems.slice(productOffset, productOffset + itemsPerPage)
+      : [];
+  const productPageCount =
+    productItems.length > 0
+      ? Math.ceil(parseFloat(productItems.length / itemsPerPage))
+      : 0;
+  // Calculate offset for product categories
+  const productCategoryOffset = currentProductCategoryPage * itemsPerPage;
+  const currentProductCategoryItems =
+    productCategoryItems.length > 0
+      ? productCategoryItems.slice(
+          productCategoryOffset,
+          productCategoryOffset + itemsPerPage
+        )
+      : [];
+  const productCategoryPageCount =
+    productCategoryItems.length > 0
+      ? Math.ceil(parseFloat(productCategoryItems.length / itemsPerPage))
+      : 0;
+
+  // Return here
   return (
     <div>
-      <div className="flex flex-wrap gap-5 md:gap-8 lg:gap-10 xl:gap-12 2xl:gap-24 justify-center m-10">
-        {PCardData.map((card, index) => (
+      <div>
+        <Header
+          headerTitle={isProductTab ? Title.Products : Title.ProductCategories}
+        ></Header>
+      </div>
+      <div className="m-5 flex flex-wrap justify-center gap-5">
+        {ProductDataCard(theme, DC_Products).map((card, index) => (
           <Card
             key={index}
             image={card.img}
             description={card.description}
             value={card.value}
-          ></Card>
+          />
         ))}
       </div>
-      <div className="m-5 p-5 bg-white shadow-lg">
-        <div className="flex justify-between">
-          <div className="flex gap-5 items-center justify-start">
-            <p className="font-bold whitespace-nowrap">Tìm kiếm theo:</p>
+      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
+        {/* Tab for changing what to show */}
+        <div className="text-md mb-6 text-center font-bold text-gray-500 dark:text-gray-200">
+          <ul className="-mb-px flex flex-wrap">
+            <li className="me-2">
+              <button
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                  isProductTab
+                    ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                    : "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
+                }`}
+                onClick={() => (isProductTab ? <></> : activateProductTab())}
+              >
+                {Product}
+              </button>
+            </li>
+            <li className="me-2">
+              <button
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                  isProductTab
+                    ? "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
+                    : "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
+                }`}
+                onClick={() => (isProductTab ? deactivateProductTab() : <></>)}
+              >
+                {ProductCategory}
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div className="flex flex-wrap justify-between">
+          <div className="flex flex-wrap items-center justify-start gap-5">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+              {SearchBy}
+            </p>
             <select
-              value={selectedOption}
-              onChange={handleOptionChange}
-              className="font-semibold text-lg py-0.5 px-3 rounded-md border border-black"
+              className="rounded-md border border-black bg-white px-3 py-0.5 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+              value={
+                isProductTab ? productFilterOption : productCategoryFilterOption
+              }
+              onChange={(e) =>
+                isProductTab
+                  ? setProductFilterOption(e.target.value)
+                  : setProductCategoryFilterOption(e.target.value)
+              }
             >
-              <option value="Tên mặt hàng">Tên mặt hàng</option>
-              <option value="Số lượng tồn">Số lượng tồn</option>
-              <option value="Đơn vị tính">Đơn vị tính</option>
+              {isProductTab ? (
+                <>
+                  <option value={SF_Products.Columns.Col1}>
+                    {SF_Products.Columns.Col1}
+                  </option>
+                  <option value={SF_Products.Columns.Col2}>
+                    {SF_Products.Columns.Col2}
+                  </option>
+                  <option value={SF_Products.Columns.Col3}>
+                    {SF_Products.Columns.Col3}
+                  </option>
+                  <option value={SF_Products.Columns.Col5}>
+                    {SF_Products.Columns.Col5}
+                  </option>
+                </>
+              ) : (
+                <>
+                  <option value={SF_ProductCategories.Columns.Col1}>
+                    {SF_ProductCategories.Columns.Col1}
+                  </option>
+                </>
+              )}
             </select>
             <input
+              className="w-96 rounded-md border border-black bg-white px-2 py-0.5 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
               type="text"
-              value={searchTerm}
-              onChange={handleInputChange}
               placeholder={getPlaceholderText()}
-              className="border border-black rounded-md py-0.5 px-2 text-lg w-[350px] xl:w-96"
+              value={
+                isProductTab ? productSearchTerm : productCategorySearchTerm
+              }
+              onChange={(e) =>
+                isProductTab
+                  ? setProductSearchTerm(e.target.value)
+                  : setProductCategorySearchTerm(e.target.value)
+              }
             />
           </div>
-          <NavLink to="products-add-page">
+          <NavLink
+            className="my-5"
+            to={
+              isProductTab ? "product-add-page" : "product-categorys-add-page"
+            }
+          >
             <Button />
           </NavLink>
         </div>
-
-        {/* Render table */}
-        <table className="w-full mt-5 text-center">
+        <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
-            <tr className="text-md">
-              <th></th>
-              <th></th>
-              <th scope="col" className="py-5">
-                Tên mặt hàng
-              </th>
-              <th scope="col" className="py-5">
-                Số lượng tồn
-              </th>
-              <th scope="col" className="py-5">
-                Đơn vị tính
-              </th>
+            <tr className="text-lg">
+              <th scope="col"></th>
+              {isProductTab ? (
+                <>
+                  <th scop="col" className="border-r-2 py-5"></th>
+                  <th className="border-r-2 py-5" scope="col">
+                    {SF_Products.Columns.Col1}
+                  </th>
+                  <th className="border-r-2 py-5" scope="col">
+                    {SF_Products.Columns.Col2}
+                  </th>
+                  <th className="border-r-2 py-5" scope="col">
+                    {SF_Products.Columns.Col3}
+                  </th>
+                  <th className="border-r-2 py-5" scope="col">
+                    {SF_Products.Columns.Col4}
+                  </th>
+                  <th className="border-r-2 py-5" scope="col">
+                    {SF_Products.Columns.Col5}
+                  </th>
+                </>
+              ) : (
+                <>
+                  <th className="border-r-2 py-5 text-lg" scope="col">
+                    {SF_ProductCategories.Columns.Col1}
+                  </th>
+                </>
+              )}
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((list, index) => (
-              <tr
-                key={index}
-                className="border-b border-slate-300 hover:bg-slate-200"
-              >
-                <td className="py-3 pl-3">
-                  <input type="checkbox" />
-                </td>
-                <td scope="row" className="py-3 border-x-2">
-                  <img src={list.img} alt="Hình đại lý" />
-                </td>
-                <td scope="row" className="py-3">
-                  {list.productName}
-                </td>
-                <td scope="row" className="py-3 border-x-2">
-                  {list.amountLeft}
-                </td>
-                <td scope="row" className="py-3">
-                  {list.unit}
-                </td>
-                <td scope="row">
-                  <div className="flex justify-center gap-20 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
-                    <NavLink to="products-edit-page">
-                      <button>
-                        <div className="flex gap-2 bg-green-500 py-2 px-4 rounded-lg items-center">
-                          <p className="font-bold text-white hidden sm:hidden md:hidden lg:inline-block">
-                            Chỉnh sửa
-                          </p>
+            {(isProductTab ? currentProductItems : currentProductCategoryItems)
+              .length >= 1 ? (
+              <>
+                {(isProductTab
+                  ? currentProductItems
+                  : currentProductCategoryItems
+                ).map((list, index) => (
+                  <tr
+                    className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                    key={index}
+                  >
+                    <td className="py-5 pl-3">
+                      <input type="checkbox" />
+                    </td>
+                    {isProductTab ? (
+                      <>
+                        <td scope="row" className="border-r-2 py-5">
+                          <img
+                            width="250px"
+                            src={`data:image/jpeg;base64, ${list.Mathang.hinhanh}`}
+                            alt="Hình đại lý"
+                            className="rounded 2xl:h-20 2xl:w-20"
+                          />
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Mathang.tenmathang}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Mathang.dongia}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Mathang.soluongton}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Mathang.tendvt}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.tenloaimathang}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.tenloaimathang}
+                        </td>
+                      </>
+                    )}
+                    <td scope="row">
+                      <div className="flex flex-wrap justify-center gap-5 my-5">
+                        <NavLink
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          to={
+                            isProductTab
+                              ? `product-edit-page/${list.Mathang.mamathang}`
+                              : `product-categorys-edit-page/${list.maloaimathang}`
+                          }
+                        >
+                          <p className="hidden lg:inline-block">{Edit}</p>
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
-                        </div>
-                      </button>
-                    </NavLink>
-                    <button>
-                      <div className="flex gap-2 bg-amber-400 py-2 px-4 rounded-lg items-center">
-                        <p className="font-bold text-white hidden sm:hidden md:hidden lg:inline-block">
-                          Xóa
-                        </p>
-                        <img src={TrashIcon} alt="Icon thùng rác" />
+                        </NavLink>
+                        <button
+                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                          onClick={() =>
+                            isProductTab
+                              ? deleteAProduct(list.Mathang.mamathang)
+                              : deleteAProductCategory(list.maloaimathang)
+                          }
+                        >
+                          <p className="hidden lg:inline-block">{Delete}</p>
+                          <img src={DeleteIcon} alt="Icon thùng rác" />
+                        </button>
                       </div>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ) : (
+              <></>
+            )}
           </tbody>
         </table>
+        <PaginationButtons
+          pageCount={isProductTab ? productPageCount : productCategoryPageCount}
+          currentPage={
+            isProductTab ? currentProductPage : currentProductCategoryPage
+          }
+          setCurrentPage={
+            isProductTab ? setCurrentProductPage : setCurrentProductCategoryPage
+          }
+        />
       </div>
     </div>
   );
-}
+};
 
 export default Products;
