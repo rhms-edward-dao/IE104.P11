@@ -16,7 +16,6 @@ import PaginationButtons from "../../components/UI/PaginationButtons";
 
 // Import Icons Here
 import EditIcon from "../../images/icons/button/Edit.svg";
-import DeleteIcon from "../../images/icons/button/Delete.svg";
 
 function Warehouse() {
   // Variables here
@@ -24,8 +23,8 @@ function Warehouse() {
   const { theme } = useTheme();
   // // For Multi-Language
   const { t } = useTranslation();
-  const { Title } = t("Header");
-  const { DC_Products } = t("DataCard");
+  const { Warehouses } = t("Sidebar");
+  const { DC_Warehouses } = t("DataCard");
   const { SearchBy, SF_Products } = t("SearchFilter");
   const { Add, Edit, Delete } = t("Buttons");
   // // For fetching products data of the warehouse
@@ -146,10 +145,10 @@ function Warehouse() {
   return (
     <div>
       <div>
-        <Header headerTitle="Quản lý kho"></Header>
+        <Header headerTitle={Warehouses}></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5 xl:gap-16 2xl:gap-44">
-        {WarehouseDataCard(theme, DC_Products).map((card, index) => (
+        {WarehouseDataCard(theme, DC_Warehouses).map((card, index) => (
           <Card
             key={index}
             image={card.img}

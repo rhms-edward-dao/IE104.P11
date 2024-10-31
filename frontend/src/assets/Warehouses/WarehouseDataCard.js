@@ -6,12 +6,12 @@ export const WarehouseDataCard = (theme, trans) => {
     {
       value: 10000000,
       img: `${theme === "light" ? ProfitIcon : ProfitDarkIcon}`,
-      description: "Tổng giá trị nhập",
+      description: trans.First,
     },
     {
       value: 20000000,
       img: `${theme === "light" ? ProfitIcon : ProfitDarkIcon}`,
-      description: "Tổng giá trị xuất",
+      description: trans.Second,
     },
   ];
   return DataCard;
