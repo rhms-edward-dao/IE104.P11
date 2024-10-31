@@ -7,7 +7,8 @@
     "Rules": "Rules",
     "Reports": "Report",
     "Products": "Product",
-    "Warehouses": "Inventory Management",
+    "Warehouses": "Inventory management",
+    "StoreManagement": "Store management",
     "Customers": "Customer",
     "LogOut_Btn": "Logout"
   },
@@ -49,6 +50,10 @@
       "First": "Total number of customers",
       "Second": "Total export revenue",
       "Third": "Number of districts has customers"
+    },
+    "DC_Warehouses": {
+      "First": "Total value of imports",
+      "Second": "Total value of exports"
     }
   },
   "TabView": {
@@ -138,7 +143,8 @@
     "Add": "Add",
     "Edit": "Edit",
     "Delete": "Delete",
-    "Update": "Update"
+    "Update": "Update",
+    "Maintain": "Store maintenance"
   },
   "AddPage": {
     "AP_Districts": {

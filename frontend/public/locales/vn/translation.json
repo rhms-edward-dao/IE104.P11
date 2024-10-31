@@ -24,6 +24,7 @@
     "Reports": "Báo cáo",
     "Products": "Sản Phẩm",
     "Warehouses": "Quản lý kho",
+    "StoreManagement": "Quản lý đại lý",
     "Customers": "Khách hàng",
     "LogOut_Btn": "Đăng xuất"
   },
@@ -65,6 +66,10 @@
       "First": "Tổng số khách hàng",
       "Second": "Tổng doanh thu xuất hàng",
       "Third": "Số quận có khách hàng"
+    },
+    "DC_Warehouses": {
+      "First": "Tổng giá trị nhập hàng",
+      "Second": "Tổng giá trị xuất hàng"
     }
   },
   "TabView": {
@@ -154,7 +159,8 @@
     "Add": "Thêm",
     "Edit": "Chỉnh sửa",
     "Delete": "Xóa",
-    "Update": "Cập nhật"
+    "Update": "Cập nhật",
+    "Maintain": "Bảo trì đại lý"
   },
   "AddPage": {
     "AP_Districts": {

@@ -8,6 +8,7 @@
     "Reports": "レポート",
     "Products": "製品",
     "Warehouses": "在庫管理",
+    "StoreManagement": "店舗管理",
     "Customers": "顧客",
     "LogOut_Btn": "ログアウト"
   },
@@ -49,6 +50,10 @@
       "First": "顧客の総数",
       "Second": "輸出収入の合計",
       "Third": "顧客がいる地区の数"
+    },
+    "DC_Warehouses": {
+      "First": "輸入総額",
+      "Second": "輸出総額"
     }
   },
   "TabView": {
@@ -138,7 +143,8 @@
     "Add": "追加",
     "Edit": "編集",
     "Delete": "削除",
-    "Update": "アップデート"
+    "Update": "アップデート",
+    "Maintain": "店舗メンテナンス"
   },
   "AddPage": {
     "AP_Districts": {

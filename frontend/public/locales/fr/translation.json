@@ -8,6 +8,7 @@
     "Reports": "Rapport",
     "Products": "Produit",
     "Warehouses": "Gestion des stocks",
+    "StoreManagement": "Gestion de magasin",
     "Customers": "Client",
     "LogOut_Btn": "Déconnexion"
   },
@@ -49,6 +50,10 @@
       "First": "Nombre total de clients",
       "Second": "Revenus totaux d'exportation",
       "Third": "Nombre de districts ayant des clients"
+    },
+    "DC_Warehouses": {
+      "First": "Valeur totale des importations",
+      "Second": "Valeur totale des exportations"
     }
   },
   "TabView": {
@@ -138,7 +143,8 @@
     "Add": "Ajouter",
     "Edit": "Modifier",
     "Delete": "Supprimer",
-    "Update": "Mise à jour"
+    "Update": "Mise à jour",
+    "Maintain": "Entretien du magasin"
   },
   "AddPage": {
     "AP_Districts": {

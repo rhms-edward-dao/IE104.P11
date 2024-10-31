@@ -8,6 +8,7 @@
     "Reports": "報告",
     "Products": "產品",
     "Warehouses": "庫存管理",
+    "StoreManagement": "店舖管理",
     "Customers": "顧客",
     "LogOut_Btn": "註銷"
   },
@@ -47,6 +48,10 @@
       "First": "客戶總數",
       "Second": "出口總收入",
       "Third": "多個地區擁有客戶"
+    },
+    "DC_Warehouses": {
+      "First": "進口總值",
+      "Second": "出口總值"
     }
   },
   "TabView": {
@@ -136,7 +141,8 @@
     "Add": "添加",
     "Edit": "編輯",
     "Delete": "刪除",
-    "Update": "更新"
+    "Update": "更新",
+    "Maintain": "店鋪維護"
   },
   "AddPage": {
     "AP_Districts": {

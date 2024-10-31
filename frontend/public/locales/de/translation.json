@@ -8,6 +8,7 @@
     "Reports": "Bericht",
     "Products": "Produkt",
     "Warehouses": "Bestandsverwaltung",
+    "StoreManagement": "Filialleitung",
     "Customers": "Kunde",
     "LogOut_Btn": "Abmelden"
   },
@@ -50,6 +51,10 @@
       "First": "Gesamtzahl der Kunden",
       "Second": "Gesamtumsatz Export",
       "Third": "Anzahl der Bezirke mit Kunden"
+    },
+    "DC_Warehouses": {
+      "First": "Gesamtwert der Importe",
+      "Second": "Gesamtwert der Exporte"
     }
   },
   "TabView": {
@@ -139,7 +144,8 @@
     "Add": "Hinzufügen",
     "Edit": "Bearbeiten",
     "Delete": "Löschen",
-    "Update": "Aktualisieren"
+    "Update": "Aktualisieren",
+    "Maintain": "Wartung des Shops"
   },
   "AddPage": {
     "AP_Districts": {
