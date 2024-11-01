@@ -443,7 +443,7 @@ function Stores() {
                       </>
                     )}
                     <td scope="row">
-                      <div className="flex flex-wrap justify-center gap-5 my-3">
+                      <div className="flex flex-wrap gap-5 m-3">
                         { isStoreTab && (
                           <NavLink
                             className="flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 font-bold text-white"
