@@ -216,7 +216,7 @@ function Staff() {
           <div className="mt-6 text-md font-bold text-center text-gray-500">
             <ul className="flex flex-wrap -mb-px">
               <li className="me-2">
-                <button className="inline-block p-4 border-b-2 rounded-t-lg text-blue-600 border-b border-blue-600">
+                <button className="inline-block p-4 border-b-2 rounded-t-lg text-blue-600 border-blue-600">
                   Nhân viên
                 </button>
               </li>
@@ -242,7 +242,7 @@ function Staff() {
                 </button>
               </li>
               <li className="me-2">
-                <button className="inline-block p-4 border-b-2 rounded-t-lg text-blue-600 border-b border-blue-600">
+                <button className="inline-block p-4 border-b-2 rounded-t-lg text-blue-600 border-blue-600">
                   Chức vụ
                 </button>
               </li>
@@ -272,7 +272,7 @@ function Staff() {
                   onChange={(e) => setStaffSearchTerm(e.target.value)}
                 />
               </div>
-              <NavLink 
+              <NavLink
                 className="my-5"
                 to="/staff-management/staff-management-add-page"
               >
@@ -413,7 +413,7 @@ function Staff() {
                   onChange={(e) => setPositionSearchTerm(e.target.value)}
                 />
               </div>
-              <NavLink 
+              <NavLink
                 className="my-5"
                 to="/staff-management/position-add-page"
               >
