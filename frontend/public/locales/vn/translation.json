@@ -35,7 +35,8 @@
       "StoreCategories": "Danh sách loại đại lý",
       "Products": "Danh sách mặt hàng",
       "ProductCategories": "Danh sách loại mặt hàng",
-      "Customers": "Danh sách khách hàng"
+      "Customers": "Danh sách khách hàng",
+      "Account": "Tài khoản"
     },
     "LanguageOptions": {
       "Chinese": "Tiếng Trung Quốc",
@@ -160,7 +161,9 @@
     "Edit": "Chỉnh sửa",
     "Delete": "Xóa",
     "Update": "Cập nhật",
-    "Maintain": "Bảo trì đại lý"
+    "Save": "Lưu thay đổi",
+    "Maintain": "Bảo trì đại lý",
+    "UploadImage": "Tải ảnh lên"
   },
   "AddPage": {
     "AP_Districts": {
@@ -197,6 +200,28 @@
     },
     "EP_ProductCategories": {
       "Title": "Chỉnh sửa loại mặt hàng"
+    },
+    "EP_Account": {
+      "Title": "Chỉnh sửa thông tin cá nhân"
+    }
+  },
+  "AccountPage": {
+    "Section1": {
+      "Title": "Thông tin cá nhân",
+      "Label1": "Ảnh đại diện",
+      "Label2": "Họ tên",
+      "Label3": "Ngày sinh",
+      "Label4": "Số điện thoại",
+      "Label5": "Email",
+      "Label6": "Địa chỉ"
+    },
+    "Section2": {
+      "Title": "Thông tin công việc",
+      "Label1": "Chức vụ",
+      "Label2": "Cấp độ",
+      "Label3": "Lương",
+      "Label4": "Ngày bắt đầu",
+      "Label5": "Thời hạn"
     }
   }
 }

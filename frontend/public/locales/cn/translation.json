@@ -17,7 +17,8 @@
       "Districts": "區名單",
       "Stores": "代理名單",
       "StoreCategories": "代理類型列表",
-      "Customers": "客戶名單"
+      "Customers": "客戶名單",
+      "Account": "帳戶"
     },
     "LanguageOptions": {
       "Chinese": "中國人",
@@ -142,7 +143,9 @@
     "Edit": "編輯",
     "Delete": "刪除",
     "Update": "更新",
-    "Maintain": "店鋪維護"
+    "Save": "儲存更改",
+    "Maintain": "店鋪維護",
+    "UploadImage": "上傳照片"
   },
   "AddPage": {
     "AP_Districts": {
@@ -179,6 +182,28 @@
     },
     "EP_ProductCategories": {
       "Title": "編輯產品類型"
+    },
+    "EP_Account": {
+      "Title": "編輯個人資訊"
+    }
+  },
+  "AccountPage": {
+    "Section1": {
+      "Title": "個人資訊",
+      "Label1": "阿凡達",
+      "Label2": "姓名",
+      "Label3": "出生日期",
+      "Label4": "電話號碼",
+      "Label5": "電子郵件",
+      "Label6": "地址"
+    },
+    "Section2": {
+      "Title": "職位資訊",
+      "Label1": "位置",
+      "Label2": "等級",
+      "Label3": "薪水",
+      "Label4": "開始日期",
+      "Label5": "期間"
     }
   }
 }

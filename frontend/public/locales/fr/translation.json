@@ -19,7 +19,8 @@
       "StoreCategories": "Liste des types d'agents",
       "Products": "Liste des produits",
       "ProductCategories": "Liste des types de produits",
-      "Customers": "Liste des clients"
+      "Customers": "Liste des clients",
+      "Account": "Compte"
     },
     "LanguageOptions": {
       "Chinese": "Chinois",
@@ -144,7 +145,9 @@
     "Edit": "Modifier",
     "Delete": "Supprimer",
     "Update": "Mise à jour",
-    "Maintain": "Entretien du magasin"
+    "Save": "Enregistrer les modifications",
+    "Maintain": "Entretien du magasin",
+    "UploadImage": "Télécharger une photo"
   },
   "AddPage": {
     "AP_Districts": {
@@ -181,6 +184,28 @@
     },
     "EP_ProductCategories": {
       "Title": "Modifier le type de produit"
+    },
+    "EP_Account": {
+      "Title": "Modifier les informations personnelles"
+    }
+  },
+  "AccountPage": {
+    "Section1": {
+      "Title": "Informations personnelles",
+      "Label1": "Avatar",
+      "Label2": "Nom complet",
+      "Label3": "Date de naissance",
+      "Label4": "Numéro de téléphone",
+      "Label5": "E-mail",
+      "Label6": "Adresse"
+    },
+    "Section2": {
+      "Title": "Informations sur le poste",
+      "Label1": "Poste",
+      "Label2": "Niveau",
+      "Label3": "Salaire",
+      "Label4": "Date de début",
+      "Label5": "Durée"
     }
   }
 }
