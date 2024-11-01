@@ -58,9 +58,20 @@ const StaffDetail = () => {
             ) : (
               <div className="flex justify-between">
                 <div className="w-1/2 mx-5">
-                  <h2 className="text-center font-bold text-xl mt-5 mb-8">
-                    Thông tin cá nhân
-                  </h2>
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-center font-bold text-xl mt-5 mb-8">
+                      Thông tin cá nhân
+                    </h2>
+                    <div className="flex justify-end">
+                      <NavLink
+                        className="w-[100px] h-[40px] flex justify-center items-center bg-green-500"
+                        onClick={closePopup}
+                        to={`staff-management/staff-management-edit-page/${staffData}`}
+                      >
+                        <p className="font-bold text-white">Cập nhật</p>
+                      </NavLink>
+                    </div>
+                  </div>
                   <div className="flex justify-between items-center lg:mx-14 my-10">
                     <p className="font-bold">Ảnh đại diện:</p>
                     <img
@@ -117,16 +128,7 @@ const StaffDetail = () => {
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Thời hạn:</p>
                     <p>{staffDataDetail.info.thoihan}</p>
-                  </div>
-                  <div className="flex justify-end">
-                    <NavLink
-                      className="w-[100px] h-[40px] flex justify-center items-center bg-green-500"
-                      onClick={closePopup}
-                      to={`staff-management/staff-management-edit-page/${staffData}`}
-                    >
-                      <p className="font-bold text-white">Cập nhật</p>
-                    </NavLink>
-                  </div>
+                  </div>                  
                 </div>
               </div>
             )}

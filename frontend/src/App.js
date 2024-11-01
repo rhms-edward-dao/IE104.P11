@@ -47,9 +47,8 @@ import PositionAddPage from "./pages/Staff/PositionAddPage";
 import PositionEditPage from "./pages/Staff/PositionEditPage";
 
 import Rule from "./pages/Rule/Rule";
-// import RuleAddPage from "./pages/Rule/RuleAddPage";
-// import RuleEditPage from "./pages/Rule/RuleEditPage";
 
+import StoreMaintainance from "./pages/Maintainance/StoreMaintainance";
 // import AdminReport from "./pages/AdminReport/AdminReport";
 import StaffReport from "./pages/Report/StaffReport";
 
@@ -198,6 +197,11 @@ function App() {
                               element={<Rule />}
                             ></Route>
 
+                            {/* Route for store maintainance*/}
+                            <Route
+                              path="/store-maintainance/:storeId"
+                              element={<StoreMaintainance />}
+                            ></Route>
                             {/* Routes for Report */}
                             {/* <Route
                           path="/admin-report"

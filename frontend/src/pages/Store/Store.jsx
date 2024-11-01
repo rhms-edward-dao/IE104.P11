@@ -22,6 +22,7 @@ import Button from "../../components/UI/Button";
 import PaginationButtons from "../../components/UI/PaginationButtons";
 
 // Import Icons Here
+import MaintainanceIcon from "../../images/icons/button/Maintain.svg";
 import EditIcon from "../../images/icons/button/Edit.svg";
 import DeleteIcon from "../../images/icons/button/Delete.svg";
 
@@ -443,6 +444,16 @@ function Stores() {
                     )}
                     <td scope="row">
                       <div className="flex flex-wrap justify-center gap-5 my-3">
+                        { isStoreTab && (
+                          <NavLink
+                            className="flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 font-bold text-white"
+                            to={`/store-maintainance/${list.Daily.madaily}`}
+                          >
+                            <p className="hidden lg:inline-block">Bảo trì</p>
+                            <img src={MaintainanceIcon} alt="Icon bảo trì" />
+                          </NavLink>
+                        )                          
+                        }
                         <NavLink
                           className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                           to={
