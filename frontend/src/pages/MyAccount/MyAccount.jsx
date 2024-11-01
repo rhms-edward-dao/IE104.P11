@@ -1,8 +1,13 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
+
+// Import Assets Here
+import { getStaffById } from "../../assets/Staffs/StaffData";
 
 // Import Components Here
 import Header from "../../components/Header";
@@ -16,19 +21,41 @@ function MyAccount() {
   const { theme } = useTheme();
   // // For Multi-Language
   const { t } = useTranslation();
-  const { Edit } = t("Buttons");
+  const { Title } = t("Header");
+  const { Section1, Section2 } = t("AccountPage");
+  const { Edit, UploadImage } = t("Buttons");
   // // For fetching Data
   const pass = "No String";
+  const { userInfo } = useAuth();
+  const [accountData, setAccountData] = useState({});
+
+  // Use Effect here
+  // // For getting current loged account infomation
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accoutInfo = await getStaffById(userInfo.staffID);
+        if (accoutInfo.length === 0) {
+          setAccountData([]);
+        } else {
+          setAccountData(accoutInfo);
+        }
+      } catch (error) {
+        console.error("Error while fetching: ", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   // Return render here
   return (
     <div>
-      <Header headerTitle="Tài khoản"></Header>
+      <Header headerTitle={Title.Account}></Header>
       <div className="my-8 mx-4 grid grid-cols-2 bg-white dark:bg-[#363636] transition-colors duration-300 rounded-lg shadow-lg">
         <div className="border-r-2 border-gray-200 p-4 pr-6">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <h1 className="m-2 text-2xl font-bold text-black dark:text-white transition-colors duration-300">
-              Thông tin cá nhân
+              {Section1.Title}
             </h1>
             <NavLink
               className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
@@ -42,7 +69,7 @@ function MyAccount() {
           </div>
           <div className="mx-2 my-8 flex items-center">
             <h3 className="w-1/4 text-xl font-semibold text-black dark:text-white transition-colors duration-300">
-              Ảnh đại diện:
+              {Section1.Label1}:
             </h3>
             <div className="relative w-3/4 flex justify-center">
               <div className="w-32 h-32 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center transition-colors duration-300">
@@ -58,48 +85,48 @@ function MyAccount() {
                 >
                   <img alt="Camera Icon" className="w-9 h-9 mb-4" />
 
-                  <span className="text-blue-500 hover:text-blue-700 whitespace-nowrap text-base">
-                    Tải ảnh lên
+                  <span className="text-blue-500 hover:text-blue-700 text-base max-w-24 text-center">
+                    {UploadImage}
                   </span>
                 </label>
               </div>
             </div>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Họ tên:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section1.Label2}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{accountData.hoten}</p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Ngày sinh:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section1.Label3}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{accountData.ngaysinh}</p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Số điện thoại:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section1.Label4}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{pass}</p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Email:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section1.Label5}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{pass}</p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Địa chỉ:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section1.Label6}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{accountData.diachi}</p>
           </div>
         </div>
         <div className="p-4 pl-6">
           <div className="flex justify-between">
             <h1 className="m-2 text-2xl font-bold text-black dark:text-white transition-colors duration-300">
-              Thông tin công việc
+              {Section2.Title}
             </h1>
             <NavLink
               className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
@@ -111,35 +138,37 @@ function MyAccount() {
               <img src={EditIcon} alt="Icon chỉnh sửa" />
             </NavLink>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Chức vụ:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section2.Label1}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.tenchucvu}
+            </p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Cấp độ:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section2.Label2}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{accountData.capdo}</p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Lương:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section2.Label3}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{accountData.luong}</p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Ngày bắt đầu:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section2.Label4}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{pass}</p>
           </div>
-          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300">
-            <h3 className="w-1/4 text-xl font-semibold justify-center">
-              Thời hạn:
+          <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
+            <h3 className="w-1/3 text-xl font-semibold justify-center">
+              {Section2.Label5}:
             </h3>
-            <p className="w-3/4 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">{pass}</p>
           </div>
         </div>
       </div>
