@@ -1,8 +1,13 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
+
+// Import Assets Here
+import { getStaffById } from "../../assets/Staffs/StaffData";
 
 // Import Components Here
 import Header from "../../components/Header";
@@ -18,10 +23,31 @@ const MyAccountEditPage = () => {
   const { theme } = useTheme();
   // // For Multi-Language
   const { t } = useTranslation();
-  const { EP_Products } = t("EditPage");
-  const { Update } = t("Buttons");
+  const { EP_Account } = t("EditPage");
+  const { Section1 } = t("AccountPage");
+  const { UploadImage, Save } = t("Buttons");
   // // For editing my account
   const pass = "No string";
+  const { userInfo } = useAuth();
+  const [currentAccount, setCurrentAccount] = useState({});
+
+  // Use Effect here
+  // // For getting current loged account infomation
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accoutInfo = await getStaffById(userInfo.staffID);
+        if (accoutInfo.length === 0) {
+          setCurrentAccount([]);
+        } else {
+          setCurrentAccount(accoutInfo);
+        }
+      } catch (error) {
+        console.error("Error while fetching: ", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -39,11 +65,11 @@ const MyAccountEditPage = () => {
       </div>
       <div className="mx-8 my-4 p-4 bg-white dark:bg-[#363636] transition-colors duration-300 rounded-lg shadow-lg">
         <h1 className="p-2 text-3xl font-bold text-black dark:text-white transition-colors duration-300">
-          Thay đổi thông tin cá nhân
+          {EP_Account.Title}
         </h1>
         <div className="flex p-4 items-center">
           <h3 className="w-1/6 text-xl font-semibold text-black dark:text-white transition-colors duration-300">
-            Ảnh đại diện:
+            {Section1.Label1}:
           </h3>
           <div className="relative w-5/6 flex justify-center">
             <div className="w-36 h-36 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center transition-colors duration-300">
@@ -59,8 +85,8 @@ const MyAccountEditPage = () => {
               >
                 <img alt="Camera Icon" className="w-9 h-9 mb-4" />
 
-                <span className="text-blue-500 hover:text-blue-700 whitespace-nowrap text-base">
-                  Tải ảnh lên
+                <span className="text-blue-500 hover:text-blue-700 text-base max-w-24 text-center">
+                  {UploadImage}
                 </span>
               </label>
             </div>
@@ -68,7 +94,27 @@ const MyAccountEditPage = () => {
         </div>
         <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
           <h3 className="h-1/4 text-xl font-semibold justify-center">
-            Họ tên:
+            {Section1.Label2}:
+          </h3>
+          <input
+            className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
+            type="text"
+            defaultValue={currentAccount.hoten}
+          />
+        </div>
+        <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
+          <h3 className="h-1/4 text-xl font-semibold justify-center">
+            {Section1.Label3}:
+          </h3>
+          <input
+            className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
+            type="date"
+            defaultValue={currentAccount.ngaysinh}
+          />
+        </div>
+        <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
+          <h3 className="h-1/4 text-xl font-semibold justify-center">
+            {Section1.Label4}:
           </h3>
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
@@ -79,7 +125,7 @@ const MyAccountEditPage = () => {
         </div>
         <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
           <h3 className="h-1/4 text-xl font-semibold justify-center">
-            Ngày sinh:
+            {Section1.Label5}:
           </h3>
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
@@ -90,33 +136,12 @@ const MyAccountEditPage = () => {
         </div>
         <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
           <h3 className="h-1/4 text-xl font-semibold justify-center">
-            Số điện thoại:
+            {Section1.Label6}:
           </h3>
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
             type="text"
-            defaultValue={pass}
-            disabled="true"
-          />
-        </div>
-        <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
-          <h3 className="h-1/4 text-xl font-semibold justify-center">Email:</h3>
-          <input
-            className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
-            type="text"
-            defaultValue={pass}
-            disabled="true"
-          />
-        </div>
-        <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
-          <h3 className="h-1/4 text-xl font-semibold justify-center">
-            Địa chỉ:
-          </h3>
-          <input
-            className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
-            type="text"
-            defaultValue={pass}
-            disabled="true"
+            defaultValue={currentAccount.diachi}
           />
         </div>
       </div>
@@ -125,7 +150,7 @@ const MyAccountEditPage = () => {
           <div className="flex gap-2 bg-red-500 p-2 rounded-lg items-center m-2">
             <img src={SaveIcon} alt="Icon lưu" />
             <p className="font-bold text-white hidden sm:hidden md:hidden lg:inline-block">
-              Lưu thay đổi
+              {Save}
             </p>
           </div>
         </button>
