@@ -765,6 +765,28 @@ def delete_daily(madaily: int, db: Session = Depends(get_db)):
     # Delete DAILY - this will automatically delete DAILY_DIACHI too
     return api_operations.delete(db, models.Daily, models.Daily.madaily, madaily, 'đại lý')
 
+# BAOTRIDAILY manipulating
+@app.post("/daily/baotri/them")
+def add_baotri(madaily: int = Body(..., embed=True), chiphibaotri: Decimal = Body(..., embed=True), chiphidukien: Decimal = Body(..., embed=True), mota: str = Body(..., embed=True), thoidiembatdau: datetime = Body(..., embed=True), thoidiemketthuc: datetime = Body(..., embed=True), db: Session = Depends(get_db)):    
+    param_list = {
+        "madaily": madaily,
+        "chiphibaotri": chiphibaotri,
+        "chiphidukien": chiphidukien,
+        "mota": mota,
+        "thoidiembatdau": thoidiembatdau,
+        "thoidiemketthuc": thoidiemketthuc
+    }
+                
+    return api_operations.add(db, models.Baotridaily, 'bảo trì đại lý', **param_list)
+@app.get("/daily/baotri/{madaily}")
+def get_baotri_bu_madaily(madaily: int, db: Session = Depends(get_db)):
+    get_db = crud.get_baotri_by_madaily(db, madaily)
+    if get_db:
+        return get_db 
+    return {
+        "message": "Danh sách bảo trì rỗng"
+    }
+
 # NHANVIEN manipulating
 @app.get("/nhanvien")
 def get_nhanvien_all(db: Session = Depends(get_db)):

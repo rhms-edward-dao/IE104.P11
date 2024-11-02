@@ -18,6 +18,7 @@ class crud_operations:
             db.refresh(new_db_item)
             return new_db_item
         except Exception as e:
+            print(e)
             return None
 
     def delete(db, model_name, model_param, param):
@@ -547,4 +548,8 @@ def update_khachhang(db: Session, makhachhang: int, tenkhachhang: str, sodientho
         tenkhachhang,
         sodienthoai,
         makhachhang)    
+
+# Baotri
+def get_baotri_by_madaily(db: Session, madaily: int):
+    return db.query(models.Baotridaily).filter(models.Baotridaily.madaily == madaily).all()
 # For Import and Export
