@@ -96,3 +96,39 @@ export const deleteStore = async(id) => {
         console.error("Fetch error: ", error);
     }
 };
+
+// Maintainance api
+export const addMaintainanceApi = async(item) => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/daily/baotri/them`,{
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "madaily": item.madaily,
+                "chiphidukien": item.chiphi,
+                "mota": item.mota,
+                "thoidiembatdau": item.ngaybatdau,
+                "thoidiemketthuc": item.ngayketthuc,
+                "chiphibaotri": item.chiphibaotri
+            })
+        })
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Adding error: ", error);
+    }
+};
+
+export const getMaintainanceApi = async(id) => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/daily/baotri/${id}`,{
+            method: 'GET'
+        })
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Adding error: ", error);
+    }
+};
