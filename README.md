@@ -4,9 +4,9 @@
   <br/>
   npm install --save react-date-range
   <br/>
-  npm install --save react date-fns
+  npm install --save date-fns
   <br/>
-  npm install --save react-date-fns@2.29.3
+  npm install --save date-fns@2.29.3
 - BE
   <br/>
   sqlalchemy
