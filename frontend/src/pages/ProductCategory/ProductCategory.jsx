@@ -336,14 +336,20 @@ const ProductCategorys = () => {
               }
             />
           </div>
-          <NavLink
-            className="my-5"
-            to={
-              isProductTab ? "product-add-page" : "product-categorys-add-page"
-            }
-          >
-            <Button />
-          </NavLink>
+          {
+            isProductTab ? (
+              <></>
+            ) : (
+              <NavLink
+                className="my-5"
+                to={
+                  "product-categorys-add-page"
+                }
+              >
+                <Button />
+              </NavLink>
+            )
+          }          
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">

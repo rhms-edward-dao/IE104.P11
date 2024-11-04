@@ -328,6 +328,7 @@ def delete_loaimathang(maloaimathang: int, db: Session = Depends(get_db)):
 @app.get("/mathang")
 def get_mathang_all(db: Session = Depends(get_db)):
     get_db = crud.get_all_mathang(db)
+    result = []
     # Convert from string to binary data with base64 encoded in field hinhanh
     if get_db:
         for item in get_db:
@@ -336,7 +337,13 @@ def get_mathang_all(db: Session = Depends(get_db)):
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
                 item.Mathang.hinhanh = data_to_base64
-        return get_db
+            Mathang_dict = item[0].__dict__.copy()
+            result.append({
+                "Mathang": Mathang_dict,
+                "tenloaimathang": item[1],
+                "tendaily": item[2]
+            })
+        return result
     return {"message": "Danh sách mặt hàng rỗng"}
 
 
@@ -459,7 +466,6 @@ def delete_mathang(mamathang: int, db: Session = Depends(get_db)):
 @app.get("/quitac")
 def get_all_quitac(db: Session = Depends(get_db)):
     get_db = crud.get_all_quitac(db)
-    print(get_db)
     if get_db:
         return get_db
     return {
@@ -530,16 +536,24 @@ def delete_loaidaily(maloaidaily: int, db: Session = Depends(get_db)):
 @app.get("/daily")
 def get_daily_all(db: Session = Depends(get_db)):
     get_all_daily = crud.get_all_daily(db)    
+    result = []
     # Convert from image_path to image_object that can be sent to client reactjs            
     if get_all_daily:
-        for item in get_all_daily:
+        for item in get_all_daily:            
             if item.Daily.hinhanh:
                 with open(item.Daily.hinhanh, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
-                item.Daily.hinhanh = data_to_base64
-
-        return get_all_daily
+                item.Daily.hinhanh = data_to_base64            
+            Daily_dict = item[0].__dict__.copy()
+            result.append({
+                "Daily": Daily_dict,
+                "tenloaidaily": item[1],
+                "diachi": item[2],
+                "kinhdo": item[3],
+                "vido": item[4],
+            })
+        return result
     return {
         "message": "Danh sách đại lý rỗng"
     }
@@ -791,6 +805,7 @@ def get_baotri_bu_madaily(madaily: int, db: Session = Depends(get_db)):
 @app.get("/nhanvien")
 def get_nhanvien_all(db: Session = Depends(get_db)):
     get_db = crud.get_all_nhanvien(db)
+    result = []
     if get_db:
         for item in get_db:
             if item.Nhanvien.hinhanh:
@@ -798,7 +813,16 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
                 item.Nhanvien.hinhanh = data_to_base64
-        return get_db
+            Nhanvien_dict = item[0].__dict__.copy()
+            result.append({
+                "Nhanvien": Nhanvien_dict,
+                "tenchucvu": item[1],
+                "diachi": item[2],
+                "tendaily": item[3],
+                "kinhdo": item[4],
+                "vido": item[5]
+            })
+        return result
     return {
         "message": "Danh sách nhân viên rỗng"
     }
