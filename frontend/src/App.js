@@ -49,7 +49,12 @@ import PositionEditPage from "./pages/Staff/PositionEditPage";
 import Rule from "./pages/Rule/Rule";
 
 import StoreMaintainance from "./pages/Maintainance/StoreMaintainance";
-// import AdminReport from "./pages/AdminReport/AdminReport";
+
+import AdminReport from "./pages/AdminReport/AdminReport";
+import ProfitReport from "./pages/AdminReport/ProfitReport"
+import StockReport from "./pages/AdminReport/StockReport"
+import RevenueReport from "./pages/AdminReport/RevenueReport"
+
 import StaffReport from "./pages/Report/StaffReport";
 
 import Customer from "./pages/Customer/Customer";
@@ -202,11 +207,26 @@ function App() {
                               path="/store-maintainance/:storeId"
                               element={<StoreMaintainance />}
                             ></Route>
+
                             {/* Routes for Report */}
-                            {/* <Route
-                          path="/admin-report"
-                          element={<AdminReport />}
-                        ></Route>*/}
+                            <Route
+                              path="/admin-report"
+                              element={<AdminReport />}
+                            ></Route>
+                            <Route
+                              path="/profit-report"
+                              element={<ProfitReport />}
+                            ></Route>
+                            <Route
+                              path="/stock-report"
+                              element={<StockReport />}
+                            ></Route>
+                            <Route
+                              path="/revenue-report"
+                              element={<RevenueReport />}
+                            ></Route>
+
+
                             <Route
                               path="/staff-report"
                               element={<StaffReport />}
