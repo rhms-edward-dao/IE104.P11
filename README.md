@@ -6,7 +6,7 @@
   <br/>
   npm install --save react date-fns
   <br/>
-  npm install --save react-date-fns@2.9.31
+  npm install --save react-date-fns@2.29.3
 - BE
   <br/>
   sqlalchemy
