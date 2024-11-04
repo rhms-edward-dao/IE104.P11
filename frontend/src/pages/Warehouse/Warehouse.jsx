@@ -183,9 +183,6 @@ function Warehouse() {
               <option value={SF_Products.Columns.Col5}>
                 {SF_Products.Columns.Col5}
               </option>
-              <option value={SF_Products.Columns.Col6}>
-                {SF_Products.Columns.Col6}
-              </option>
             </select>
             <input
               className="w-96 rounded-md border border-black bg-white px-2 py-0.5 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -199,6 +196,7 @@ function Warehouse() {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
+              <th scope="col"></th>
               <th scop="col" className="py-5 border-r-2">
                 Hình ảnh
               </th>
@@ -216,9 +214,6 @@ function Warehouse() {
               </th>
               <th className="border-r-2 py-5" scope="col">
                 {SF_Products.Columns.Col5}
-              </th>
-              <th className="border-r-2 py-5" scope="col">
-                {SF_Products.Columns.Col6}
               </th>
               <th scope="col"></th>
             </tr>
@@ -258,10 +253,6 @@ function Warehouse() {
                     <td scope="row" className="border-r-2 py-5 text-lg">
                       {list.tenloaimathang}
                     </td>
-                    <td scope="row" className="py-5 text-lg">
-                      {list.tendaily}
-                    </td>
-
                     <td scope="row">
                       <div className="flex justify-center gap-20">
                         <NavLink
@@ -274,7 +265,7 @@ function Warehouse() {
                           <img src={EditIcon} alt="Icon nhập hàng" />
                         </NavLink>
                         <NavLink
-                          className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
                           to={"warehouse-export-page"}
                         >
                           <p className="hidden sm:hidden md:hidden lg:inline-block">

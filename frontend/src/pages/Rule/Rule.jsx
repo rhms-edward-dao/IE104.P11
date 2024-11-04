@@ -1,12 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
+// Import Assets Here
+import { getAllRule, updateRule } from "../../assets/RuleData";
+
 // Import Icons Here
 import DevicesIcon from "../../images/icons/rule/max_devices.svg";
 import StoresIcon from "../../images/icons/rule/max_stores_district.svg";
 import RatioIcon from "../../images/icons/rule/sale_price_ratio.svg";
 import EditIcon from "../../images/icons/button/Edit.svg";
 
-import { getAllRule, updateRule } from "../../assets/RuleData";
 function Rule() {
+  // Variables here
+  // // For Multi-Language
+  const { t } = useTranslation();
+  const { Edit, Update } = t("Buttons");
+  const { Header, CurrentValue, Rule1, Rule2, Rule3 } = t("RulePage");
+  // // For getting rules value
   const [editableInputId, setEditableInputId] = useState(null); // Track which input is editable
   const [values, setValues] = useState({
     1: null,
@@ -73,30 +83,27 @@ function Rule() {
     {
       id: 1,
       icon: DevicesIcon,
-      title: "Số lượng thiết bị tối đa nhân viên",
-      description:
-        "Mỗi nhân viên chỉ có thể đăng nhập vào hệ thống thông qua số một số lượng cụ thể thiết bị",
+      title: Rule1.Title,
+      description: Rule1.Description,
     },
     {
       id: 2,
       icon: StoresIcon,
-      title: "Số lượng đại lý tối đa mỗi quận",
-      description:
-        "Mỗi quận chỉ có thể có một số lượng nhất định các đại lý được mở.",
+      title: Rule2.Title,
+      description: Rule2.Description,
     },
     {
       id: 3,
       icon: RatioIcon,
-      title: "Tỷ lệ đơn giá xuất",
-      description:
-        "Đơn giá xuất hàng sẽ được tính theo công thức: đơn giá xuất = đơn giá nhập + đơn giá nhập * tỷ lệ đơn giá xuất",
+      title: Rule3.Title,
+      description: Rule3.Description,
     },
   ];
 
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="relative max-h-screen w-full max-w-xl overflow-auto bg-white p-6">
-        <h1 className="mb-6 text-center text-3xl font-bold">Các qui tắc</h1>
+        <h1 className="mb-6 text-center text-3xl font-bold">{Header}</h1>
         <div className="space-y-4">
           {rulesData.map((rule) => (
             <div
@@ -112,7 +119,9 @@ function Rule() {
                 <h2 className="text-xl font-bold">{rule.title}</h2>
                 <p className="text-base text-gray-600">{rule.description}</p>
                 <div className="flex items-center justify-between">
-                  <p className="text-lg font-semibold">Giá trị hiện tại:</p>
+                  <p className="text-lg font-semibold">
+                    {CurrentValue}: {rule.value}
+                  </p>
                   <input
                     ref={(el) => (inputRefs.current[rule.id] = el)} // Assign each input a ref
                     type="text"
@@ -135,7 +144,7 @@ function Rule() {
                       alt="Icon quy tắc"
                     />
                     <p className="hidden text-lg sm:hidden md:hidden lg:inline-block">
-                      Chỉnh sửa
+                      {Edit}
                     </p>
                   </button>
                 </div>
@@ -147,7 +156,7 @@ function Rule() {
               onClick={() => handleUpdateSubmit()}
               className="w-[100px] h-[40px] bg-red-500 mr-5 mt-2"
             >
-              <p className="text-white font-semibold">Cập nhật</p>
+              <p className="text-white font-semibold">{Update}</p>
             </button>
           </div>
         </div>
