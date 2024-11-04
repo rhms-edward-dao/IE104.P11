@@ -7,7 +7,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
-import { getStaffById } from "../../assets/Staffs/StaffData";
+import { getStaffDetail } from "../../assets/Staffs/StaffData";
 
 // Import Components Here
 import Header from "../../components/Header";
@@ -36,7 +36,7 @@ const MyAccountEditPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const accoutInfo = await getStaffById(userInfo.staffID);
+        const accoutInfo = await getStaffDetail(userInfo.staffID);
         if (accoutInfo.length === 0) {
           setCurrentAccount([]);
         } else {
@@ -78,6 +78,7 @@ const MyAccountEditPage = () => {
                 accept=".jpeg,.jpg,.png,.gif,.raw"
                 className="hidden"
                 id="file-upload"
+                defaultValue={`data:images/jpeg;base64, ${currentAccount.avatar}`}
               />
               <label
                 htmlFor="file-upload"
@@ -99,7 +100,7 @@ const MyAccountEditPage = () => {
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
             type="text"
-            defaultValue={currentAccount.hoten}
+            defaultValue={currentAccount.info.hoten}
           />
         </div>
         <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
@@ -109,7 +110,7 @@ const MyAccountEditPage = () => {
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
             type="date"
-            defaultValue={currentAccount.ngaysinh}
+            defaultValue={currentAccount.info.ngaysinh}
           />
         </div>
         <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
@@ -119,7 +120,7 @@ const MyAccountEditPage = () => {
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
             type="text"
-            defaultValue={pass}
+            defaultValue={currentAccount.info.sodienthoai}
             disabled="true"
           />
         </div>
@@ -130,7 +131,7 @@ const MyAccountEditPage = () => {
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
             type="text"
-            defaultValue={pass}
+            defaultValue={currentAccount.info.email}
             disabled="true"
           />
         </div>
@@ -141,7 +142,7 @@ const MyAccountEditPage = () => {
           <input
             className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
             type="text"
-            defaultValue={currentAccount.diachi}
+            defaultValue={currentAccount.info.diachi}
           />
         </div>
       </div>

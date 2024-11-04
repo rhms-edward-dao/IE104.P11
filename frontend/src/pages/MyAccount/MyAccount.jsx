@@ -7,7 +7,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
-import { getStaffById } from "../../assets/Staffs/StaffData";
+import { getStaffDetail } from "../../assets/Staffs/StaffData";
 
 // Import Components Here
 import Header from "../../components/Header";
@@ -34,7 +34,7 @@ function MyAccount() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const accoutInfo = await getStaffById(userInfo.staffID);
+        const accoutInfo = await getStaffDetail(userInfo.userID);
         if (accoutInfo.length === 0) {
           setAccountData([]);
         } else {
@@ -46,7 +46,6 @@ function MyAccount() {
     };
     fetchData();
   }, []);
-
   // Return render here
   return (
     <div>
@@ -78,6 +77,7 @@ function MyAccount() {
                   accept=".jpeg,.jpg,.png,.gif,.raw"
                   className="hidden"
                   id="file-upload"
+                  defaultValue={`data:images/jpeg;base64, ${accountData.avatar}`}
                 />
                 <label
                   htmlFor="file-upload"
@@ -96,31 +96,41 @@ function MyAccount() {
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section1.Label2}:
             </h3>
-            <p className="w-2/3 italic justify-start">{accountData.hoten}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.hoten}
+            </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section1.Label3}:
             </h3>
-            <p className="w-2/3 italic justify-start">{accountData.ngaysinh}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.ngaysinh}
+            </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section1.Label4}:
             </h3>
-            <p className="w-2/3 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.sodienthoai}
+            </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section1.Label5}:
             </h3>
-            <p className="w-2/3 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.email}
+            </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section1.Label6}:
             </h3>
-            <p className="w-2/3 italic justify-start">{accountData.diachi}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.diachi}
+            </p>
           </div>
         </div>
         <div className="p-4 pl-6">
@@ -143,32 +153,40 @@ function MyAccount() {
               {Section2.Label1}:
             </h3>
             <p className="w-2/3 italic justify-start">
-              {accountData.tenchucvu}
+              {accountData.info.tenchucvu}
             </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section2.Label2}:
             </h3>
-            <p className="w-2/3 italic justify-start">{accountData.capdo}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.capdo}
+            </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section2.Label3}:
             </h3>
-            <p className="w-2/3 italic justify-start">{accountData.luong}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.luong}
+            </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section2.Label4}:
             </h3>
-            <p className="w-2/3 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.ngaybatdau}
+            </p>
           </div>
           <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
             <h3 className="w-1/3 text-xl font-semibold justify-center">
               {Section2.Label5}:
             </h3>
-            <p className="w-2/3 italic justify-start">{pass}</p>
+            <p className="w-2/3 italic justify-start">
+              {accountData.info.thoihan}
+            </p>
           </div>
         </div>
       </div>
