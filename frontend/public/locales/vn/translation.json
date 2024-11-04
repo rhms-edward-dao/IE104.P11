@@ -63,6 +63,11 @@
       "Second": "Tổng giá trị",
       "Third": "Tổng số hết hàng"
     },
+    "DC_Staffs": {
+      "First": "Tổng số nhân viên",
+      "Second": "Tổng lương",
+      "Third": "Tổng số chức vụ"
+    },
     "DC_Customers": {
       "First": "Tổng số khách hàng",
       "Second": "Tổng doanh thu xuất hàng",
@@ -222,6 +227,22 @@
       "Label3": "Lương",
       "Label4": "Ngày bắt đầu",
       "Label5": "Thời hạn"
+    }
+  },
+  "RulePage": {
+    "Header": "Các quy tắc",
+    "CurrentValue": "Giá trị hiện tại",
+    "Rule1": {
+      "Title": "Số lượng thiết bị tối đa của nhân viên",
+      "Description": "Mỗi nhân viên chỉ có thể đăng nhập vào hệ thống thông qua số một số lượng cụ thể thiết bị."
+    },
+    "Rule2": {
+      "Title": "Số lượng đại lý tối đa mỗi quận",
+      "Description": "Mỗi quận chỉ có thể có một số lượng nhất định các đại lý được mở."
+    },
+    "Rule3": {
+      "Title": "Tỷ lệ đơn giá xuất",
+      "Description": "Đơn giá xuất hàng sẽ được tính theo công thức: đơn giá xuất = đơn giá nhập + (đơn giá nhập * tỷ lệ đơn giá xuất)."
     }
   }
 }

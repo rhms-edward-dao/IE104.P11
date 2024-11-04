@@ -47,11 +47,17 @@
       "Second": "Total value",
       "Third": "Total out of stock"
     },
+    "DC_Staffs": {
+      "First": "Total number of employees",
+      "Second": "Total salary",
+      "Third": "Total number of positions"
+    },
     "DC_Customers": {
       "First": "Total number of customers",
       "Second": "Total export revenue",
       "Third": "Number of districts has customers"
     },
+
     "DC_Warehouses": {
       "First": "Total value of imports",
       "Second": "Total value of exports"
@@ -206,6 +212,22 @@
       "Label3": "Salary",
       "Label4": "Start date",
       "Label5": "Duration"
+    }
+  },
+  "RulePage": {
+    "Header": "Rules",
+    "CurrentValue": "Present value",
+    "Rule1": {
+      "Title": "Maximum number of devices for employee",
+      "Description": "Each employee can only log into the system through a specific number of devices."
+    },
+    "Rule2": {
+      "Title": "Maximum number of stores per district",
+      "Description": "Each district can only have a certain number of stores opened."
+    },
+    "Rule3": {
+      "Title": "Sale unit price ratio",
+      "Description": "The export unit price will be calculated according to the formula: export unit price = import unit price + (import unit price * export unit price ratio)."
     }
   }
 }

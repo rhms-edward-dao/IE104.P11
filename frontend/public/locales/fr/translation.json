@@ -47,6 +47,11 @@
       "Second": "Valeur totale",
       "Third": "Total en rupture de stock"
     },
+    "DC_Staffs": {
+      "First": "Nombre total d'employés",
+      "Second": "Salaire total",
+      "Third": "Nombre total de postes"
+    },
     "DC_Customers": {
       "First": "Nombre total de clients",
       "Second": "Revenus totaux d'exportation",
@@ -206,6 +211,22 @@
       "Label3": "Salaire",
       "Label4": "Date de début",
       "Label5": "Durée"
+    }
+  },
+  "RulePage": {
+    "Header": "Règles",
+    "CurrentValue": "Valeur actuelle",
+    "Rule1": {
+      "Title": "Nombre maximal d'appareils pour un employé",
+      "Description": "Chaque employé ne peut se connecter au système que via un nombre spécifique d'appareils."
+    },
+    "Rule2": {
+      "Title": "Nombre maximal de magasins par district",
+      "Description": "Chaque district ne peut avoir qu'un certain nombre de magasins ouverts."
+    },
+    "Rule3": {
+      "Title": "Ratio du prix unitaire de vente",
+      "Description": "Le prix unitaire d'exportation sera calculé selon la formule : prix unitaire d'exportation = prix unitaire d'importation + (prix unitaire d'importation * ratio du prix unitaire d'exportation)."
     }
   }
 }

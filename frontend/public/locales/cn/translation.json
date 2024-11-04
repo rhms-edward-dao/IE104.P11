@@ -45,6 +45,11 @@
       "Second": "總價值",
       "Third": "完全缺貨"
     },
+    "DC_Staffs": {
+      "First": "員工總數",
+      "Second": "工資總額",
+      "Third": "職位總數"
+    },
     "DC_Customers": {
       "First": "客戶總數",
       "Second": "出口總收入",
@@ -204,6 +209,22 @@
       "Label3": "薪水",
       "Label4": "開始日期",
       "Label5": "期間"
+    }
+  },
+  "RulePage": {
+    "Header": "規則",
+    "CurrentValue": "現值",
+    "Rule1": {
+      "Title": "S員工的最大設備數量",
+      "Description": "每位員工只能透過特定數量的設備登入系統。"
+    },
+    "Rule2": {
+      "Title": "每個地區的最大商店數量",
+      "Description": "每個地區只能開設一定數量的商店。"
+    },
+    "Rule3": {
+      "Title": "銷售單價比率",
+      "Description": "出口單價依下列公式計算：出口單價=進口單價+（進口單價*出口單價比）。"
     }
   }
 }

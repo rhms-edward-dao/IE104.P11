@@ -48,6 +48,11 @@
       "Second": "Gesamtwert",
       "Third": "Gesamtbestand nicht vorrätig"
     },
+    "DC_Staffs": {
+      "First": "Gesamtzahl der Mitarbeiter",
+      "Second": "Gesamtgehalt",
+      "Third": "Gesamtzahl der Positionen"
+    },
     "DC_Customers": {
       "First": "Gesamtzahl der Kunden",
       "Second": "Gesamtumsatz Export",
@@ -207,6 +212,22 @@
       "Label3": "Gehalt",
       "Label4": "Startdatum",
       "Label5": "Dauer"
+    }
+  },
+  "RulePage": {
+    "Header": "Regeln",
+    "CurrentValue": "Barwert",
+    "Rule1": {
+      "Title": "Maximale Anzahl von Geräten pro Mitarbeiter",
+      "Description": "Jeder Mitarbeiter kann sich nur über eine bestimmte Anzahl von Geräten in das System einloggen."
+    },
+    "Rule2": {
+      "Title": "Maximale Anzahl von Geschäften pro Bezirk",
+      "Description": "Jeder Bezirk kann nur eine bestimmte Anzahl von Geschäften geöffnet haben."
+    },
+    "Rule3": {
+      "Title": "Verkaufsstückpreisverhältnis",
+      "Description": "Der Exportstückpreis wird nach der Formel berechnet: Exportstückpreis = Importstückpreis + (Importstückpreis * Exportstückpreisverhältnis)."
     }
   }
 }
