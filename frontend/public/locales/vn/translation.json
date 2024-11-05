@@ -35,6 +35,8 @@
       "StoreCategories": "Danh sách loại đại lý",
       "Products": "Danh sách mặt hàng",
       "ProductCategories": "Danh sách loại mặt hàng",
+      "Staffs": "Danh sách nhân viên",
+      "Positions": "Danh sách chức vụ",
       "Customers": "Danh sách khách hàng",
       "Account": "Tài khoản"
     },
@@ -82,7 +84,9 @@
     "Store": "Đại lý",
     "StoreCategory": "Loại đại lý",
     "Product": "Mặt hàng",
-    "ProductCategory": "Loại mặt hàng"
+    "ProductCategory": "Loại mặt hàng",
+    "Staff": "Nhân viên",
+    "Position": "Chức vụ"
   },
   "SearchFilter": {
     "SearchBy": "Tìm kiếm theo:",
@@ -150,6 +154,38 @@
         "Text1": "Tìm kiếm theo tên loại mặt hàng ..."
       }
     },
+    "SF_Staffs": {
+      "Columns": {
+        "Col1": "Tên nhân viên",
+        "Col2": "Ngày sinh",
+        "Col3": "Tên đại lý",
+        "Col4": "Chức vụ",
+        "Col5": "Địa chỉ"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên nhân viên ...",
+        "Text2": "Tìm kiếm theo ngày sinh ...",
+        "Text3": "Tìm kiếm theo tên đại lý ...",
+        "Text4": "Tìm kiếm theo chức vụ ...",
+        "Text5": "Tìm kiếm theo địa chỉ ..."
+      }
+    },
+    "SF_Positions": {
+      "Columns": {
+        "Col1": "Tên chức vụ",
+        "Col2": "Cấp độ",
+        "Col3": "Lương",
+        "Col4": "Ngày tạo",
+        "Col5": "Ngày cập nhật"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo tên chức vụ ...",
+        "Text2": "Tìm kiếm theo cấp độ ...",
+        "Text3": "Tìm kiếm theo lương ...",
+        "Text4": "Tìm kiếm theo ngày tạo ...",
+        "Text5": "Tìm kiếm theo ngày cập nhật ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Tên khách hàng",
@@ -165,6 +201,7 @@
     "Add": "Thêm",
     "Edit": "Chỉnh sửa",
     "Delete": "Xóa",
+    "Detail": "Xem chi tiết",
     "Update": "Cập nhật",
     "Save": "Lưu thay đổi",
     "Maintain": "Bảo trì đại lý",

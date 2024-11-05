@@ -8,7 +8,7 @@
     "Reports": "報告",
     "Products": "產品",
     "Warehouses": "庫存管理",
-    "StoreManagement": "店舖管理",
+    "StoreManagement": "代理管理",
     "Customers": "顧客",
     "LogOut_Btn": "註銷"
   },
@@ -17,6 +17,8 @@
       "Districts": "區名單",
       "Stores": "代理名單",
       "StoreCategories": "代理類型列表",
+      "Staffs": "員工名單",
+      "Positions": "職位列表",
       "Customers": "客戶名單",
       "Account": "帳戶"
     },
@@ -64,7 +66,9 @@
     "Store": "代理人",
     "StoreCategory": "代理類型",
     "Product": "產品",
-    "ProductCategory": "產品類型"
+    "ProductCategory": "產品類型",
+    "Staff": "僱員",
+    "Position": "位置"
   },
   "SearchFilter": {
     "SearchBy": "搜尋方式：",
@@ -132,6 +136,38 @@
         "Text1": "按產品類型名稱搜尋..."
       }
     },
+    "SF_Staffs": {
+      "Columns": {
+        "Col1": "員工姓名",
+        "Col2": "出生日期",
+        "Col3": "代理名稱",
+        "Col4": "位置",
+        "Col5": "地址"
+      },
+      "Placeholders": {
+        "Text1": "按員工姓名搜尋...",
+        "Text2": "按出生日期搜尋...",
+        "Text3": "按代理名稱搜尋...",
+        "Text4": "按位置搜尋...",
+        "Text5": "按地址搜尋..."
+      }
+    },
+    "SF_Positions": {
+      "Columns": {
+        "Col1": "職位名稱",
+        "Col2": "等級",
+        "Col3": "薪水",
+        "Col4": "建立日期",
+        "Col5": "更新日期"
+      },
+      "Placeholders": {
+        "Text1": "按職位名稱搜尋...",
+        "Text2": "按級別搜尋...",
+        "Text3": "按薪資搜尋...",
+        "Text4": "按建立日期搜尋...",
+        "Text5": "按更新日期搜尋..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "客戶名稱",
@@ -147,9 +183,10 @@
     "Add": "添加",
     "Edit": "編輯",
     "Delete": "刪除",
+    "Detail": "查看詳情",
     "Update": "更新",
     "Save": "儲存更改",
-    "Maintain": "店鋪維護",
+    "Maintain": "代理維護",
     "UploadImage": "上傳照片"
   },
   "AddPage": {
@@ -219,8 +256,8 @@
       "Description": "每位員工只能透過特定數量的設備登入系統。"
     },
     "Rule2": {
-      "Title": "每個地區的最大商店數量",
-      "Description": "每個地區只能開設一定數量的商店。"
+      "Title": "每個地區的最大代理數量",
+      "Description": "每個區只能開設一定數量的代理。"
     },
     "Rule3": {
       "Title": "銷售單價比率",

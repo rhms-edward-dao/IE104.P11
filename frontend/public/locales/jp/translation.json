@@ -8,7 +8,7 @@
     "Reports": "レポート",
     "Products": "製品",
     "Warehouses": "在庫管理",
-    "StoreManagement": "店舗管理",
+    "StoreManagement": "エージェント管理",
     "Customers": "顧客",
     "LogOut_Btn": "ログアウト"
   },
@@ -19,6 +19,8 @@
       "StoreCategories": "エージェント タイプのリスト",
       "Products": "製品のリスト",
       "ProductCategories": "製品タイプのリスト",
+      "Staffs": "従業員リスト",
+      "Positions": "職位リスト",
       "Customers": "顧客リスト",
       "Account": "アカウント"
     },
@@ -66,7 +68,9 @@
     "Store": "エージェント",
     "StoreCategory": "エージェントタイプ",
     "Product": "製品",
-    "ProductCategory": "製品タイプ"
+    "ProductCategory": "製品タイプ",
+    "Staff": "従業員",
+    "Position": "職位"
   },
   "SearchFilter": {
     "SearchBy": "検索条件:",
@@ -134,6 +138,38 @@
         "Text1": "製品タイプ名で検索..."
       }
     },
+    "SF_Staffs": {
+      "Columns": {
+        "Col1": "従業員名",
+        "Col2": "生年月日",
+        "Col3": "エージェント名",
+        "Col4": "職位",
+        "Col5": "住所"
+      },
+      "Placeholders": {
+        "Text1": "従業員名で検索...",
+        "Text2": "生年月日で検索...",
+        "Text3": "エージェント名で検索...",
+        "Text4": "職位で検索...",
+        "Text5": "住所で検索..."
+      }
+    },
+    "SF_Positions": {
+      "Columns": {
+        "Col1": "職位名",
+        "Col2": "レベル",
+        "Col3": "給与",
+        "Col4": "作成日",
+        "Col5": "更新日"
+      },
+      "Placeholders": {
+        "Text1": "職位名で検索...",
+        "Text2": "レベルで検索...",
+        "Text3": "給与で検索...",
+        "Text4": "作成日で検索...",
+        "Text5": "更新日で検索..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "顧客名",
@@ -149,9 +185,10 @@
     "Add": "追加",
     "Edit": "編集",
     "Delete": "削除",
+    "Detail": "詳細を参照してください",
     "Update": "アップデート",
     "Save": "変更を保存します",
-    "Maintain": "店舗メンテナンス",
+    "Maintain": "エージェントのメンテナンス",
     "UploadImage": "写真をアップロードします"
   },
   "AddPage": {
@@ -221,8 +258,8 @@
       "Description": "各従業員は、特定の数のデバイスからのみシステムにログインできます。"
     },
     "Rule2": {
-      "Title": "地区ごとの店舗の最大数",
-      "Description": "各地区には、一定数の店舗しか開設できません。"
+      "Title": "地区ごとのエージェントの最大数",
+      "Description": "各地区には、一定数のエージェントしか開設できません。"
     },
     "Rule3": {
       "Title": "販売単価比率",

@@ -8,7 +8,7 @@
     "Reports": "Report",
     "Products": "Product",
     "Warehouses": "Inventory management",
-    "StoreManagement": "Store management",
+    "StoreManagement": "Agent management",
     "Customers": "Customer",
     "LogOut_Btn": "Logout"
   },
@@ -19,6 +19,8 @@
       "StoreCategories": "List of agent types",
       "Products": "List of products",
       "ProductCategories": "List of product types",
+      "Staffs": "List of employees",
+      "Positions": "List of positions",
       "Customers": "Customer list",
       "Account": "Account"
     },
@@ -67,7 +69,9 @@
     "Store": "Agent",
     "StoreCategory": "Agent type",
     "Product": "Product",
-    "ProductCategory": "Product type"
+    "ProductCategory": "Product type",
+    "Staff": "Employees",
+    "Position": "Position"
   },
   "SearchFilter": {
     "SearchBy": "Search by:",
@@ -135,6 +139,38 @@
         "Text1": "Search by product type name ..."
       }
     },
+    "SF_Staffs": {
+      "Columns": {
+        "Col1": "Employee name",
+        "Col2": "Date of birth",
+        "Col3": "Agent name",
+        "Col4": "Position",
+        "Col5": "Address"
+      },
+      "Placeholders": {
+        "Text1": "Search by employee name ...",
+        "Text2": "Search by date of birth ...",
+        "Text3": "Search by agent name ...",
+        "Text4": "Search by position ...",
+        "Text5": "Search by address ..."
+      }
+    },
+    "SF_Positions": {
+      "Columns": {
+        "Col1": "Position name",
+        "Col2": "Level",
+        "Col3": "Salary",
+        "Col4": "Date created",
+        "Col5": "Date updated"
+      },
+      "Placeholders": {
+        "Text1": "Search by position name ...",
+        "Text2": "Search by level ...",
+        "Text3": "Search by salary ...",
+        "Text4": "Search by date created ...",
+        "Text5": "Search by date updated ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Customer Name",
@@ -150,9 +186,10 @@
     "Add": "Add",
     "Edit": "Edit",
     "Delete": "Delete",
+    "Detail": "See details",
     "Update": "Update",
     "Save": "Save changes",
-    "Maintain": "Store maintenance",
+    "Maintain": "Agent maintenance",
     "UploadImage": "Upload photo"
   },
   "AddPage": {
@@ -222,8 +259,8 @@
       "Description": "Each employee can only log into the system through a specific number of devices."
     },
     "Rule2": {
-      "Title": "Maximum number of stores per district",
-      "Description": "Each district can only have a certain number of stores opened."
+      "Title": "Maximum number of agents per district",
+      "Description": "Each district can only have a certain number of agents opened."
     },
     "Rule3": {
       "Title": "Sale unit price ratio",

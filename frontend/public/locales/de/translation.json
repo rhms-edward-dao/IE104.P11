@@ -8,7 +8,7 @@
     "Reports": "Bericht",
     "Products": "Produkt",
     "Warehouses": "Bestandsverwaltung",
-    "StoreManagement": "Filialleitung",
+    "StoreManagement": "Agentenverwaltung",
     "Customers": "Kunde",
     "LogOut_Btn": "Abmelden"
   },
@@ -19,6 +19,8 @@
       "StoreCategories": "Liste der Agententypen",
       "Products": "Produktliste",
       "ProductCategories": "Produkttypenliste",
+      "Staffs": "Liste der Mitarbeiter",
+      "Positions": "Liste der Positionen",
       "Customers": "Kundenliste",
       "Account": "Konto"
     },
@@ -67,7 +69,9 @@
     "Store": "Agent",
     "StoreCategory": "Agententyp",
     "Product": "Produkt",
-    "ProductCategory": "Produkttyp"
+    "ProductCategory": "Produkttyp",
+    "Staff": "Mitarbeiter",
+    "Position": "Position"
   },
   "SearchFilter": {
     "SearchBy": "Suche nach:",
@@ -135,6 +139,38 @@
         "Text1": "Nach Produkttypnamen suchen ..."
       }
     },
+    "SF_Staffs": {
+      "Columns": {
+        "Col1": "Name des Mitarbeiters",
+        "Col2": "Geburtsdatum",
+        "Col3": "Name des Agenten",
+        "Col4": "Position",
+        "Col5": "Adresse"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Mitarbeiternamen ...",
+        "Text2": "Suche nach Geburtsdatum ...",
+        "Text3": "Suche nach Agentennamen ...",
+        "Text4": "Suche nach Position ...",
+        "Text5": "Suche nach Adresse ..."
+      }
+    },
+    "SF_Positions": {
+      "Columns": {
+        "Col1": "Positionsname",
+        "Col2": "Level",
+        "Col3": "Gehalt",
+        "Col4": "Erstellungsdatum",
+        "Col5": "Aktualisierungsdatum"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Positionsnamen ...",
+        "Text2": "Suche nach Level ...",
+        "Text3": "Suche nach Gehalt ...",
+        "Text4": "Suche nach Erstellungsdatum ...",
+        "Text5": "Suche nach Aktualisierungsdatum ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Kundenname",
@@ -150,9 +186,10 @@
     "Add": "Hinzufügen",
     "Edit": "Bearbeiten",
     "Delete": "Löschen",
+    "Detail": "Siehe Einzelheiten",
     "Update": "Aktualisieren",
     "Save": "Änderungen speichern",
-    "Maintain": "Wartung des Shops",
+    "Maintain": "Agentenwartung",
     "UploadImage": "Foto hochladen"
   },
   "AddPage": {
@@ -222,8 +259,8 @@
       "Description": "Jeder Mitarbeiter kann sich nur über eine bestimmte Anzahl von Geräten in das System einloggen."
     },
     "Rule2": {
-      "Title": "Maximale Anzahl von Geschäften pro Bezirk",
-      "Description": "Jeder Bezirk kann nur eine bestimmte Anzahl von Geschäften geöffnet haben."
+      "Title": "Maximale Anzahl Agenten pro Bezirk",
+      "Description": "Jeder Bezirk kann nur eine bestimmte Anzahl an Agenten haben."
     },
     "Rule3": {
       "Title": "Verkaufsstückpreisverhältnis",

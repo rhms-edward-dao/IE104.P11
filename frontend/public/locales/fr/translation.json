@@ -8,7 +8,7 @@
     "Reports": "Rapport",
     "Products": "Produit",
     "Warehouses": "Gestion des stocks",
-    "StoreManagement": "Gestion de magasin",
+    "StoreManagement": "Gestion des agents",
     "Customers": "Client",
     "LogOut_Btn": "Déconnexion"
   },
@@ -19,6 +19,8 @@
       "StoreCategories": "Liste des types d'agents",
       "Products": "Liste des produits",
       "ProductCategories": "Liste des types de produits",
+      "Staffs": "Liste des employés",
+      "Positions": "Liste des postes",
       "Customers": "Liste des clients",
       "Account": "Compte"
     },
@@ -66,7 +68,9 @@
     "Store": "Agent",
     "StoreCategory": "Type d'agent",
     "Product": "Produit",
-    "ProductCategory": "Type de produit"
+    "ProductCategory": "Type de produit",
+    "Staff": "Employés",
+    "Position": "Poste"
   },
   "SearchFilter": {
     "SearchBy": "Rechercher par:",
@@ -134,6 +138,38 @@
         "Text1": "Recherche par nom de type de produit ..."
       }
     },
+    "SF_Staffs": {
+      "Columns": {
+        "Col1": "Nom de l'employé",
+        "Col2": "Date de naissance",
+        "Col3": "Nom de l'agent",
+        "Col4": "Poste",
+        "Col5": "Adresse"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par nom d'employé ...",
+        "Text2": "Recherche par date de naissance ...",
+        "Text3": "Recherche par nom d'agent ...",
+        "Text4": "Recherche par poste ...",
+        "Text5": "Recherche par adresse ..."
+      }
+    },
+    "SF_Positions": {
+      "Columns": {
+        "Col1": "Nom du poste",
+        "Col2": "Niveau",
+        "Col3": "Salaire",
+        "Col4": "Date de création",
+        "Col5": "Date de mise à jour"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par nom de poste ...",
+        "Text2": "Recherche par niveau ...",
+        "Text3": "Recherche par salaire ...",
+        "Text4": "Recherche par date de création ...",
+        "Text5": "Recherche par date de mise à jour ..."
+      }
+    },
     "SF_Customers": {
       "Columns": {
         "Col1": "Nom du client",
@@ -149,9 +185,10 @@
     "Add": "Ajouter",
     "Edit": "Modifier",
     "Delete": "Supprimer",
+    "Detail": "Voir les détails",
     "Update": "Mise à jour",
     "Save": "Enregistrer les modifications",
-    "Maintain": "Entretien du magasin",
+    "Maintain": "Agent Maintenance",
     "UploadImage": "Télécharger une photo"
   },
   "AddPage": {
@@ -221,8 +258,8 @@
       "Description": "Chaque employé ne peut se connecter au système que via un nombre spécifique d'appareils."
     },
     "Rule2": {
-      "Title": "Nombre maximal de magasins par district",
-      "Description": "Chaque district ne peut avoir qu'un certain nombre de magasins ouverts."
+      "Title": "Nombre maximum d'agents par district",
+      "Description": "Chaque district ne peut avoir qu'un certain nombre d'agents ouverts."
     },
     "Rule3": {
       "Title": "Ratio du prix unitaire de vente",
