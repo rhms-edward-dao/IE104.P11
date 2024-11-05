@@ -13,8 +13,8 @@ from opencage.geocoder import OpenCageGeocode
 from pprint import pprint
 import re, os, base64
 
-# IMAGEDIR = "/home/kui/Documents/backend_projects/Inventory_management/backend/inventory-app/images/"
-IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
+IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images"
+# IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
 
 # from security import validate_token
 app = FastAPI()
@@ -324,6 +324,7 @@ def delete_loaimathang(maloaimathang: int, db: Session = Depends(get_db)):
         "loại mặt hàng",
     )
 
+
 # MATHANG manipulating
 @app.get("/mathang")
 def get_mathang_all(db: Session = Depends(get_db)):
@@ -338,11 +339,13 @@ def get_mathang_all(db: Session = Depends(get_db)):
                     data_to_base64 = base64.b64encode(data)
                 item.Mathang.hinhanh = data_to_base64
             Mathang_dict = item[0].__dict__.copy()
-            result.append({
-                "Mathang": Mathang_dict,
-                "tenloaimathang": item[1],
-                "tendaily": item[2]
-            })
+            result.append(
+                {
+                    "Mathang": Mathang_dict,
+                    "tenloaimathang": item[1],
+                    "tendaily": item[2],
+                }
+            )
         return result
     return {"message": "Danh sách mặt hàng rỗng"}
 
@@ -417,7 +420,7 @@ async def update_mathang(
     hinhanh: Union[UploadFile, str] = File(...),
     db: Session = Depends(get_db),
 ):
-    try:    
+    try:
         # Getting maloaimathang by tenloaimathang
         pmaloaimathang = crud.get_maloaimathang_by_tenloaimathang(db, tenloaimathang)
 
@@ -427,7 +430,7 @@ async def update_mathang(
         # Solving image
         image_dir = ""
         if hinhanh != "null":
-            
+
             image_dir = f"{IMAGEDIR}products/{hinhanh.filename}"
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
@@ -462,35 +465,44 @@ def delete_mathang(mamathang: int, db: Session = Depends(get_db)):
         db, models.Mathang, models.Mathang.mamathang, mamathang, "mặt hàng"
     )
 
+
 # QUITAC manipulating
 @app.get("/quitac")
 def get_all_quitac(db: Session = Depends(get_db)):
     get_db = crud.get_all_quitac(db)
     if get_db:
         return get_db
-    return {
-        "message": "Qui tắc rỗng"
-    }
+    return {"message": "Qui tắc rỗng"}
+
+
 @app.put("/quitac/capnhat")
 def update_all_quitac(pItems: schemas.QUITACupdate, db: Session = Depends(get_db)):
     update_db = crud.update_quitac(db, pItems)
     if update_db == "Cập nhật thành công":
-        return {
-            "message": "Cập nhật thành công"
-        }
-    return {
-        "message": "Cập nhật thất bại"
-    }
+        return {"message": "Cập nhật thành công"}
+    return {"message": "Cập nhật thất bại"}
+
 
 # KHACHHANG manipulating
 @app.get("/khachhang")
 def get_all_khachhang(db: Session = Depends(get_db)):
     return api_operations.get_all(db, models.Khachhang, "khách hàng")
+
+
 @app.get("/khachhang/{makhachhang}")
 def get_khachhang_by_makhachhang(makhachhang: int, db: Session = Depends(get_db)):
-    return api_operations.get_one_parameter(db, models.Khachhang, models.Khachhang.makhachhang, makhachhang, 'khách hàng')
+    return api_operations.get_one_parameter(
+        db, models.Khachhang, models.Khachhang.makhachhang, makhachhang, "khách hàng"
+    )
+
+
 @app.put("/khachhang/capnhat/{makhachhang}")
-def update_khachhang(makhachhang: int, tenkhachhang: str = Body(..., embed=True), sodienthoai: str = Body(..., embed=True), db: Session = Depends(get_db)):
+def update_khachhang(
+    makhachhang: int,
+    tenkhachhang: str = Body(..., embed=True),
+    sodienthoai: str = Body(..., embed=True),
+    db: Session = Depends(get_db),
+):
     try:
         update_db = crud.update_khachhang(db, makhachhang, tenkhachhang, sodienthoai)
     except Exception as e:
@@ -502,89 +514,126 @@ def update_khachhang(makhachhang: int, tenkhachhang: str = Body(..., embed=True)
         ):
             return {"message": "Số điện thoại đã tồn tại"}
     return {"message": "Cập nhật khách hàng thành công"}
+
+
 @app.delete("/khachhang/xoa/{makhachhang}")
 def delete_khachhang(makhachhang: int, db: Session = Depends(get_db)):
     return api_operations.delete(
         db, models.Khachhang, models.Khachhang.makhachhang, makhachhang, "khách hàng"
     )
 
+
 # LOAIDAILY manipulating
 @app.get("/loaidaily")
 def get_all_loaidaily(db: Session = Depends(get_db)):
-    return api_operations.get_all(db, models.Loaidaily, 'loại đại lý')
+    return api_operations.get_all(db, models.Loaidaily, "loại đại lý")
+
+
 @app.get("/loaidaily/maloaidaily/{maloaidaily}", response_model=schemas.LOAIDAILY)
 def get_loaidaily_by_maloaidaily(maloaidaily: int, db: Session = Depends(get_db)):
-    return api_operations.get_one_parameter(db, models.Loaidaily, models.Loaidaily.maloaidaily, maloaidaily, 'loại đại lý')    
+    return api_operations.get_one_parameter(
+        db, models.Loaidaily, models.Loaidaily.maloaidaily, maloaidaily, "loại đại lý"
+    )
+
+
 @app.get("/loaidaily/tenloaidaily/")
 def get_loaidaily_by_tenloaidaily(db: Session = Depends(get_db)):
     db_get_all_tenloaidaily = crud.get_all_tenloaidaily()
     results_list = [item[0] for item in db_get_all_tenloaidaily]
     return results_list
+
+
 @app.post("/loaidaily/them")
-def add_new_loaidaily(ptenloaidaily: str = Body(..., embed=True), psotiennotoida: Decimal = Body(..., embed=True), db: Session = Depends(get_db)):
+def add_new_loaidaily(
+    ptenloaidaily: str = Body(..., embed=True),
+    psotiennotoida: Decimal = Body(..., embed=True),
+    db: Session = Depends(get_db),
+):
     param_list = {"tenloaidaily": ptenloaidaily, "sotiennotoida": psotiennotoida}
-    return api_operations.add(db, models.Loaidaily, 'loại đại lý', **param_list)    
+    return api_operations.add(db, models.Loaidaily, "loại đại lý", **param_list)
+
+
 @app.put("/loaidaily/capnhat/{maloaidaily}")
-def update_loaidaily(maloaidaily: int, tenloaidaily: str = Body(..., embed=True), sotiennotoida: Decimal = Body(..., embed=True), db: Session = Depends(get_db)):
-    param_list = {"maloaidaily": maloaidaily, "tenloaidaily": tenloaidaily, "sotiennotoida": sotiennotoida}
-    return api_operations.update(db, models.Loaidaily, models.Loaidaily.maloaidaily, maloaidaily, 'loại đại lý', **param_list)
+def update_loaidaily(
+    maloaidaily: int,
+    tenloaidaily: str = Body(..., embed=True),
+    sotiennotoida: Decimal = Body(..., embed=True),
+    db: Session = Depends(get_db),
+):
+    param_list = {
+        "maloaidaily": maloaidaily,
+        "tenloaidaily": tenloaidaily,
+        "sotiennotoida": sotiennotoida,
+    }
+    return api_operations.update(
+        db,
+        models.Loaidaily,
+        models.Loaidaily.maloaidaily,
+        maloaidaily,
+        "loại đại lý",
+        **param_list,
+    )
+
+
 @app.delete("/loaidaily/xoa/{maloaidaily}")
 def delete_loaidaily(maloaidaily: int, db: Session = Depends(get_db)):
-    return api_operations.delete(db, models.Loaidaily, models.Loaidaily.maloaidaily, maloaidaily, 'loại đại lý')
+    return api_operations.delete(
+        db, models.Loaidaily, models.Loaidaily.maloaidaily, maloaidaily, "loại đại lý"
+    )
+
 
 # DAILY manipulating
 @app.get("/daily")
 def get_daily_all(db: Session = Depends(get_db)):
-    get_all_daily = crud.get_all_daily(db)    
+    get_all_daily = crud.get_all_daily(db)
     result = []
-    # Convert from image_path to image_object that can be sent to client reactjs            
+    # Convert from image_path to image_object that can be sent to client reactjs
     if get_all_daily:
-        for item in get_all_daily:            
+        for item in get_all_daily:
             if item.Daily.hinhanh:
                 with open(item.Daily.hinhanh, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
-                item.Daily.hinhanh = data_to_base64            
+                item.Daily.hinhanh = data_to_base64
             Daily_dict = item[0].__dict__.copy()
-            result.append({
-                "Daily": Daily_dict,
-                "tenloaidaily": item[1],
-                "diachi": item[2],
-                "kinhdo": item[3],
-                "vido": item[4],
-            })
+            result.append(
+                {
+                    "Daily": Daily_dict,
+                    "tenloaidaily": item[1],
+                    "diachi": item[2],
+                    "kinhdo": item[3],
+                    "vido": item[4],
+                }
+            )
         return result
-    return {
-        "message": "Danh sách đại lý rỗng"
-    }
+    return {"message": "Danh sách đại lý rỗng"}
+
+
 @app.get("/daily/tatca/tendaily")
 def get_all_tendaily(db: Session = Depends(get_db)):
     get_db = crud.get_all_tendaily(db)
     if get_db:
         results_list = [item[0] for item in get_db]
         return results_list
-    return {
-        "message": "Danh sách đại lý rỗng"
-    }
-@app.get("/daily/madaily/{madaily}") # Used for updating
+    return {"message": "Danh sách đại lý rỗng"}
+
+
+@app.get("/daily/madaily/{madaily}")  # Used for updating
 def get_daily_by_madaily(madaily, db: Session = Depends(get_db)):
     get_db = crud.get_daily_by_madaily(madaily)
-    
+
     if get_db != []:
         for item in get_db:
             if item[7]:
-                with open(item[7], 'rb') as f:
+                with open(item[7], "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
-            else: 
-                data_to_base64 = None        
-        return {
-            "Daily": get_db,
-            "hinhanh": data_to_base64
-        }
-    return {
-        "message": "Không tồn tại đại lý cần tìm"
-    }
+            else:
+                data_to_base64 = None
+        return {"Daily": get_db, "hinhanh": data_to_base64}
+    return {"message": "Không tồn tại đại lý cần tìm"}
+
+
 @app.post("/daily/them")
 async def add_new_daily(
     tendaily: str = Form(...),
@@ -594,17 +643,17 @@ async def add_new_daily(
     tenquan: str = Form(...),
     tenthanhpho: str = Form(...),
     diachi: str = Form(...),
-    hinhanh: UploadFile = File(...), 
-    db: Session = Depends(get_db)
+    hinhanh: UploadFile = File(...),
+    db: Session = Depends(get_db),
 ):
     try:
         # Get longtitude and latitude
-        key = 'dd56554106174942acce0b3bd660a32a'
+        key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
-        query = u'{}'.format(diachi)
-        results = geocoder.geocode(query, language='vi')
-        kinhdo = results[0]['geometry']['lng']
-        vido = results[0]['geometry']['lat']
+        query = "{}".format(diachi)
+        results = geocoder.geocode(query, language="vi")
+        kinhdo = results[0]["geometry"]["lng"]
+        vido = results[0]["geometry"]["lat"]
 
         # Save image
         contents = await hinhanh.read()
@@ -612,7 +661,7 @@ async def add_new_daily(
             file.write(contents)
 
         # Get maloaidaily through tenloaidaily
-        pmaloaidaily = crud.get_maloaidaily_by_tenloaidaily(db, tenloaidaily)        
+        pmaloaidaily = crud.get_maloaidaily_by_tenloaidaily(db, tenloaidaily)
 
         # Prepare data and add new daily
         param_list = {
@@ -620,17 +669,19 @@ async def add_new_daily(
             "maloaidaily": pmaloaidaily,
             "ngaytiepnhan": ngaytiepnhan,
             "sodienthoai": sodienthoai,
-            "hinhanh": f"{IMAGEDIR}stores/{hinhanh.filename}"
+            "hinhanh": f"{IMAGEDIR}stores/{hinhanh.filename}",
         }
-        crud.add_daily(**param_list)  
+        crud.add_daily(**param_list)
 
         # Add address for daily_diachi
-            # Find madaily by tendaily, maquan by tenquan, tenthanhpho
-        db_get_madaily = api_operations.get_one_parameter(db, models.Daily, models.Daily.tendaily, tendaily, 'đại lý')
-        db_get_maquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)        
-            
-            # Solving address information before adding
-        diachi = diachi + ', ' + tenquan + ', ' + tenthanhpho        
+        # Find madaily by tendaily, maquan by tenquan, tenthanhpho
+        db_get_madaily = api_operations.get_one_parameter(
+            db, models.Daily, models.Daily.tendaily, tendaily, "đại lý"
+        )
+        db_get_maquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
+
+        # Solving address information before adding
+        diachi = diachi + ", " + tenquan + ", " + tenthanhpho
         param_list_diachi = {
             "madaily": db_get_madaily.madaily,
             "maquan": db_get_maquan,
@@ -638,47 +689,52 @@ async def add_new_daily(
             "kinhdo": kinhdo,
             "vido": vido,
         }
-        api_operations.add(db, models.DailyDiachi, 'đại lý địa chỉ', **param_list_diachi)
+        api_operations.add(
+            db, models.DailyDiachi, "đại lý địa chỉ", **param_list_diachi
+        )
     except Exception as e:
-        match = re.search(r'DETAIL:\s*(.*?)(?=\n|$)', str(e), re.DOTALL)
+        match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
-            if detail == "DETAIL:  Key (tendaily)=({}) already exists.".format(tendaily):            
-                return {
-                    "message": "Tên đại lý đã tồn tại"
-                }
-            elif detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(sodienthoai):
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
-            elif detail == "DETAIL:  Key (diachi)=({}) already exists.".format(diachi):        
-                api_operations.delete(db, models.Daily, models.Daily.madaily, db_get_madaily.madaily, 'đại lý')
+            if detail == "DETAIL:  Key (tendaily)=({}) already exists.".format(
+                tendaily
+            ):
+                return {"message": "Tên đại lý đã tồn tại"}
+            elif detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(
+                sodienthoai
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
+            elif detail == "DETAIL:  Key (diachi)=({}) already exists.".format(diachi):
+                api_operations.delete(
+                    db,
+                    models.Daily,
+                    models.Daily.madaily,
+                    db_get_madaily.madaily,
+                    "đại lý",
+                )
                 db.commit()
-                return {
-                    "message": "Địa chỉ đã tồn tại"
-                }
+                return {"message": "Địa chỉ đã tồn tại"}
             else:
-                return {
-                    "message": "Thêm đại lý thất bại"
-                }
+                return {"message": "Thêm đại lý thất bại"}
         # Check trigger constraint
-        match_trigger = re.search(r'psycopg2.errors.RaiseException\) (.+?)(?:\n|$)', str(e), re.DOTALL)
+        match_trigger = re.search(
+            r"psycopg2.errors.RaiseException\) (.+?)(?:\n|$)", str(e), re.DOTALL
+        )
         if match_trigger != None:
-            detail_trigger = match_trigger.group(1)        
-            if detail_trigger == 'Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!':
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
+            detail_trigger = match_trigger.group(1)
+            if (
+                detail_trigger
+                == "Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!"
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
             else:
-                return {
-                    "message": "Thêm đại lý thất bại"
-                }
-    return {
-                "message": "Thêm đại lý thành công"
-            }
+                return {"message": "Thêm đại lý thất bại"}
+    return {"message": "Thêm đại lý thành công"}
+
+
 @app.put("/daily/capnhat/{madaily}")
 async def update_daily(
-    madaily: int, 
+    madaily: int,
     tendaily: str = Form(...),
     tenloaidaily: str = Form(...),
     ngaytiepnhan: str = Form(...),
@@ -686,48 +742,48 @@ async def update_daily(
     tenquan: str = Form(...),
     tenthanhpho: str = Form(...),
     diachi: str = Form(...),
-    hinhanh: Union[UploadFile, str]= File(...), 
-    db: Session = Depends(get_db)
-):    
-    try:       
+    hinhanh: Union[UploadFile, str] = File(...),
+    db: Session = Depends(get_db),
+):
+    try:
         # Get longtitude and latitude
-        key = 'dd56554106174942acce0b3bd660a32a'
+        key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
-        query = u'{}'.format(diachi)
-        results = geocoder.geocode(query, language='vi')
-        kinhdo = results[0]['geometry']['lng']
-        vido = results[0]['geometry']['lat']
+        query = "{}".format(diachi)
+        results = geocoder.geocode(query, language="vi")
+        kinhdo = results[0]["geometry"]["lng"]
+        vido = results[0]["geometry"]["lat"]
 
         # Solve problem with image
-        if hinhanh == 'null':
-            hinhanh_dir = ''            
-        else:            
+        if hinhanh == "null":
+            hinhanh_dir = ""
+        else:
             # Save Image data in local - in real job, this mean the image will be saved on server machine
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}stores/{hinhanh.filename}", "wb") as file:
                 file.write(contents)
             hinhanh_dir = f"{IMAGEDIR}stores/{hinhanh.filename}"
-            # Check if existed data is the same with new data -> no need to check, this task will be check in database postgresql        
+            # Check if existed data is the same with new data -> no need to check, this task will be check in database postgresql
 
         # Update Daily
         pmaloaidaily = crud.get_maloaidaily_by_tenloaidaily(db, tenloaidaily)
 
-        # Prepare data and add new daily && updaload image        
+        # Prepare data and add new daily && updaload image
         param_list = {
             "tendaily": tendaily,
             "maloaidaily": pmaloaidaily,
             "ngaytiepnhan": ngaytiepnhan,
             "sodienthoai": sodienthoai,
             "madaily": madaily,
-            "hinhanh": hinhanh_dir
+            "hinhanh": hinhanh_dir,
         }
         crud.update_daily(**param_list)
 
         # Update DailyDiachi
-            # Get maquan by tenquan, tenthanhpho
+        # Get maquan by tenquan, tenthanhpho
         get_maquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
 
-        diachi = diachi + ', ' + tenquan + ', ' + tenthanhpho
+        diachi = diachi + ", " + tenquan + ", " + tenthanhpho
         param_list_dc = {
             "madaily": madaily,
             "maquan": get_maquan,
@@ -735,71 +791,87 @@ async def update_daily(
             "kinhdo": kinhdo,
             "vido": vido,
         }
-        api_operations.update(db, models.DailyDiachi, models.DailyDiachi.madaily, madaily, 'địa chỉ đại lý', **param_list_dc);        
+        api_operations.update(
+            db,
+            models.DailyDiachi,
+            models.DailyDiachi.madaily,
+            madaily,
+            "địa chỉ đại lý",
+            **param_list_dc,
+        )
     except Exception as e:
         # Get error from server
-        match = re.search(r'DETAIL:\s*(.*?)(?=\n|$)', str(e), re.DOTALL)
+        match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
             # Send error message to Client
-            if detail == "DETAIL:  Key (tendaily)=({}) already exists.".format(tendaily):
-                return {
-                    "message": "Tên đại lý đã tồn tại"
-                }
-            elif detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(sodienthoai):
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
+            if detail == "DETAIL:  Key (tendaily)=({}) already exists.".format(
+                tendaily
+            ):
+                return {"message": "Tên đại lý đã tồn tại"}
+            elif detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(
+                sodienthoai
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
             elif detail == "DETAIL:  Key (diachi)=({}) already exists.".format(diachi):
-                return {
-                    "message": "Địa chỉ đã tồn tại"
-                }
+                return {"message": "Địa chỉ đã tồn tại"}
             else:
-            # Send message that annouces success
-                return {
-                    "message": "Đại lý cập nhật thất bại"
-                }
+                # Send message that annouces success
+                return {"message": "Đại lý cập nhật thất bại"}
         # Check trigger constraint
-        match_trigger = re.search(r'psycopg2.errors.RaiseException\) (.+?)(?:\n|$)', str(e), re.DOTALL)
+        match_trigger = re.search(
+            r"psycopg2.errors.RaiseException\) (.+?)(?:\n|$)", str(e), re.DOTALL
+        )
         if match_trigger != None:
-            detail_trigger = match_trigger.group(1)        
-            if detail_trigger == 'Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!':
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
+            detail_trigger = match_trigger.group(1)
+            if (
+                detail_trigger
+                == "Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!"
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
             else:
-                return {
-                    "message": "Đại lý cập nhật thất bại"
-                }
-    return {
-        "message": "Đại lý cập nhật thành công"
-    }
+                return {"message": "Đại lý cập nhật thất bại"}
+    return {"message": "Đại lý cập nhật thành công"}
+
+
 @app.delete("/daily/xoa/{madaily}")
 def delete_daily(madaily: int, db: Session = Depends(get_db)):
     # Delete DAILY - this will automatically delete DAILY_DIACHI too
-    return api_operations.delete(db, models.Daily, models.Daily.madaily, madaily, 'đại lý')
+    return api_operations.delete(
+        db, models.Daily, models.Daily.madaily, madaily, "đại lý"
+    )
+
 
 # BAOTRIDAILY manipulating
 @app.post("/daily/baotri/them")
-def add_baotri(madaily: int = Body(..., embed=True), chiphibaotri: Decimal = Body(..., embed=True), chiphidukien: Decimal = Body(..., embed=True), mota: str = Body(..., embed=True), thoidiembatdau: datetime = Body(..., embed=True), thoidiemketthuc: datetime = Body(..., embed=True), db: Session = Depends(get_db)):    
+def add_baotri(
+    madaily: int = Body(..., embed=True),
+    chiphibaotri: Decimal = Body(..., embed=True),
+    chiphidukien: Decimal = Body(..., embed=True),
+    mota: str = Body(..., embed=True),
+    thoidiembatdau: datetime = Body(..., embed=True),
+    thoidiemketthuc: datetime = Body(..., embed=True),
+    db: Session = Depends(get_db),
+):
     param_list = {
         "madaily": madaily,
         "chiphibaotri": chiphibaotri,
         "chiphidukien": chiphidukien,
         "mota": mota,
         "thoidiembatdau": thoidiembatdau,
-        "thoidiemketthuc": thoidiemketthuc
+        "thoidiemketthuc": thoidiemketthuc,
     }
-                
-    return api_operations.add(db, models.Baotridaily, 'bảo trì đại lý', **param_list)
+
+    return api_operations.add(db, models.Baotridaily, "bảo trì đại lý", **param_list)
+
+
 @app.get("/daily/baotri/{madaily}")
 def get_baotri_bu_madaily(madaily: int, db: Session = Depends(get_db)):
     get_db = crud.get_baotri_by_madaily(db, madaily)
     if get_db:
-        return get_db 
-    return {
-        "message": "Danh sách bảo trì rỗng"
-    }
+        return get_db
+    return {"message": "Danh sách bảo trì rỗng"}
+
 
 # NHANVIEN manipulating
 @app.get("/nhanvien")
@@ -814,53 +886,62 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
                     data_to_base64 = base64.b64encode(data)
                 item.Nhanvien.hinhanh = data_to_base64
             Nhanvien_dict = item[0].__dict__.copy()
-            result.append({
-                "Nhanvien": Nhanvien_dict,
-                "tenchucvu": item[1],
-                "diachi": item[2],
-                "tendaily": item[3],
-                "kinhdo": item[4],
-                "vido": item[5]
-            })
+            result.append(
+                {
+                    "Nhanvien": Nhanvien_dict,
+                    "tenchucvu": item[1],
+                    "diachi": item[2],
+                    "tendaily": item[3],
+                    "kinhdo": item[4],
+                    "vido": item[5],
+                }
+            )
         return result
-    return {
-        "message": "Danh sách nhân viên rỗng"
-    }
+    return {"message": "Danh sách nhân viên rỗng"}
+
+
 @app.get("/nhanvien/manhanvien/{manhanvien}")
 def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
     get_db = crud.get_nhanvien_by_manhanvien(db, manhanvien)
-    if get_db:        
+    result = []
+    if get_db:
         if get_db[0].hinhanh:
             with open(get_db[0].hinhanh, "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
             get_db[0].hinhanh = data_to_base64
-        return get_db
-    return {
-        "message": "Danh sách nhân viên rỗng"
-    }
+
+        result.append(
+            {
+                "Nhanvien": get_db[0].__dict__.copy(),
+                "tenquan": get_db[1],
+                "tenthanhpho": get_db[2],
+                "tendaily": get_db[3],
+                "tenchucvu": get_db[4],
+                "diachi": get_db[5],
+            }
+        )
+        print(result)
+        return result
+    return {"message": "Danh sách nhân viên rỗng"}
+
+
 @app.get("/nhanvien/chitiet/{manhanvien}")
 def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
     get_db = crud.get_nhanvien_chitiet_by_manhanvien(db, manhanvien)
-    response_data = {}    
+    response_data = {}
     if get_db:
         if get_db.hinhanh:
             with open(get_db.hinhanh, "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
-            response_data = {
-                "info": get_db,
-                "avatar": data_to_base64
-            } 
+            response_data = {"info": get_db, "avatar": data_to_base64}
         else:
-            response_data = {
-                "info": get_db,
-                "avatar": None
-            } 
+            response_data = {"info": get_db, "avatar": None}
         return response_data
-    return {
-        "message": "Không tim thấy nhân viên"
-    }
+    return {"message": "Không tim thấy nhân viên"}
+
+
 @app.post("/nhanvien/them")
 async def add_new_nhanvien(
     diachi: str = Form(...),
@@ -873,15 +954,15 @@ async def add_new_nhanvien(
     tenquan: str = Form(...),
     tenthanhpho: str = Form(...),
     hinhanh: UploadFile = File(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    try:# Get longtitude and latitude
-        key = 'dd56554106174942acce0b3bd660a32a'
+    try:  # Get longtitude and latitude
+        key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
-        query = u'{}'.format(diachi)
-        results = geocoder.geocode(query, language='vi')
-        kinhdo = results[0]['geometry']['lng']
-        vido = results[0]['geometry']['lat']
+        query = "{}".format(diachi)
+        results = geocoder.geocode(query, language="vi")
+        kinhdo = results[0]["geometry"]["lng"]
+        vido = results[0]["geometry"]["lat"]
 
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
@@ -898,12 +979,12 @@ async def add_new_nhanvien(
             "ngaysinh": ngaysinh,
             "sodienthoai": sodienthoai,
             "email": email,
-            "hinhanh": f"{IMAGEDIR}staffs/{hinhanh.filename}"
+            "hinhanh": f"{IMAGEDIR}staffs/{hinhanh.filename}",
         }
         # Getting id of currently inserted staff
-        pmanhanvien = crud.add_nhanvien(**param_list_nhanvien)        
+        pmanhanvien = crud.add_nhanvien(**param_list_nhanvien)
         # Add staff's address information
-        diachi = diachi + ',' + tenquan + ', ' + tenthanhpho
+        diachi = diachi + "," + tenquan + ", " + tenthanhpho
         param_list_diachi = {
             "manhanvien": pmanhanvien,
             "maquan": pmaquan,
@@ -911,45 +992,46 @@ async def add_new_nhanvien(
             "kinhdo": kinhdo,
             "vido": vido,
         }
-        api_operations.add(db, models.NhanvienDiachi, 'nhân viên địa chỉ', **param_list_diachi)
+        api_operations.add(
+            db, models.NhanvienDiachi, "nhân viên địa chỉ", **param_list_diachi
+        )
         # Prepare data for staff's position
         param_list_position = {
             "manhanvien": pmanhanvien,
             "machucvu": pmachuvu,
         }
-        api_operations.add(db, models.NhanvienChucvu, 'nhân viên chức vụ', **param_list_position)
-    except Exception as e:        
-        match = re.search(r'DETAIL\s*(.*?)(?=\n|$)', str(e), re.DOTALL)
+        api_operations.add(
+            db, models.NhanvienChucvu, "nhân viên chức vụ", **param_list_position
+        )
+    except Exception as e:
+        match = re.search(r"DETAIL\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
             # Returning error message
-            if detail == 'DETAIL:  Key (sodienthoai)=({}) already exists.'.format(sodienthoai):            
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
-            elif detail == 'DETAIL:  Key (email)=({}) already exists.'.format(email):
-                return {
-                    "message": "Email đã tồn tại"
-                }
+            if detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(
+                sodienthoai
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
+            elif detail == "DETAIL:  Key (email)=({}) already exists.".format(email):
+                return {"message": "Email đã tồn tại"}
             else:
-                {
-                    "message": "Thêm nhân viên thất bại"
-                }
+                {"message": "Thêm nhân viên thất bại"}
         # Check trigger constraint
-        match_trigger = re.search(r'psycopg2.errors.RaiseException\) (.+?)(?:\n|$)', str(e), re.DOTALL)
+        match_trigger = re.search(
+            r"psycopg2.errors.RaiseException\) (.+?)(?:\n|$)", str(e), re.DOTALL
+        )
         if match_trigger != None:
-            detail_trigger = match_trigger.group(1)        
-            if detail_trigger == 'Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!':
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
+            detail_trigger = match_trigger.group(1)
+            if (
+                detail_trigger
+                == "Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!"
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
             else:
-                return {
-                    "message": "Thêm nhân viên thất bại"
-                }
-    return {
-        "message": "Thêm nhân viên thành công" 
-    }
+                return {"message": "Thêm nhân viên thất bại"}
+    return {"message": "Thêm nhân viên thành công"}
+
+
 @app.put("/nhanvien/capnhat/{manhanvien}")
 async def update_nhanvien(
     manhanvien: int,
@@ -967,19 +1049,19 @@ async def update_nhanvien(
 ):
     try:
         # Get longtitude and latitude
-        key = 'dd56554106174942acce0b3bd660a32a'
+        key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
-        query = u'{}'.format(diachi)
-        results = geocoder.geocode(query, language='vi')
-        kinhdo = results[0]['geometry']['lng']
-        vido = results[0]['geometry']['lat']
+        query = "{}".format(diachi)
+        results = geocoder.geocode(query, language="vi")
+        kinhdo = results[0]["geometry"]["lng"]
+        vido = results[0]["geometry"]["lat"]
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
         pmachuvu = crud.get_machucvu_by_tenchucvu(db, tenchucvu)
         pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
         # Save image
-        image_dir = ''
-        if hinhanh != 'null':
+        image_dir = ""
+        if hinhanh != "null":
             image_dir = f"{IMAGEDIR}staffs/{hinhanh.filename}"
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}staffs/{hinhanh.filename}", "wb") as file:
@@ -995,130 +1077,142 @@ async def update_nhanvien(
             "hinhanh": image_dir,
         }
         # Getting id of currently inserted staff
-        crud.update_nhanvien(manhanvien, **param_list_nhanvien)        
+        crud.update_nhanvien(manhanvien, **param_list_nhanvien)
         # Add staff's address information
-        diachi = diachi + ',' + tenquan + ', ' + tenthanhpho
+        diachi = diachi + "," + tenquan + ", " + tenthanhpho
         param_list_diachi = {
             "maquan": pmaquan,
             "diachi": diachi,
             "kinhdo": kinhdo,
             "vido": vido,
         }
-        api_operations.update(db, models.NhanvienDiachi, models.NhanvienDiachi.manhanvien, manhanvien, 'nhân viên', **param_list_diachi)
+        api_operations.update(
+            db,
+            models.NhanvienDiachi,
+            models.NhanvienDiachi.manhanvien,
+            manhanvien,
+            "nhân viên",
+            **param_list_diachi,
+        )
         # Prepare data for staff's position
         param_list_position = {
             "machucvu": pmachuvu,
         }
-        api_operations.update(db, models.NhanvienChucvu, models.NhanvienChucvu.manhanvien, manhanvien, 'nhân viên', **param_list_position)
+        api_operations.update(
+            db,
+            models.NhanvienChucvu,
+            models.NhanvienChucvu.manhanvien,
+            manhanvien,
+            "nhân viên",
+            **param_list_position,
+        )
     except Exception as e:
         # Check non-trigger constraint
-        match = re.search(r'DETAIL\s*(.*?)(?=\n|$)', str(e), re.DOTALL)
+        match = re.search(r"DETAIL\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
             # Returning error message
-            if detail == 'DETAIL:  Key (sodienthoai)=({}) already exists.'.format(sodienthoai):            
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
-            elif detail == 'DETAIL:  Key (email)=({}) already exists.'.format(email):
-                return {
-                    "message": "Email đã tồn tại"
-                }
+            if detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(
+                sodienthoai
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
+            elif detail == "DETAIL:  Key (email)=({}) already exists.".format(email):
+                return {"message": "Email đã tồn tại"}
             else:
-                {
-                    "message": "Cập nhật nhân viên thất bại"
-                }            
+                {"message": "Cập nhật nhân viên thất bại"}
         # Check trigger constraint
-        match_trigger = re.search(r'psycopg2.errors.RaiseException\) (.+?)(?:\n|$)', str(e), re.DOTALL)
+        match_trigger = re.search(
+            r"psycopg2.errors.RaiseException\) (.+?)(?:\n|$)", str(e), re.DOTALL
+        )
         if match_trigger != None:
-            detail_trigger = match_trigger.group(1)        
-            if detail_trigger == 'Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!':
-                return {
-                    "message": "Số điện thoại đã tồn tại"
-                }
+            detail_trigger = match_trigger.group(1)
+            if (
+                detail_trigger
+                == "Số điện thoại đã tồn tại trong bảng. Giao dịch bị hủy!"
+            ):
+                return {"message": "Số điện thoại đã tồn tại"}
             else:
-                return {
-                    "message": "Cập nhật nhân viên thất bại"
-                }
-    return {
-        "message": "Cập nhật nhân viên thành công" 
-    }
+                return {"message": "Cập nhật nhân viên thất bại"}
+    return {"message": "Cập nhật nhân viên thành công"}
+
+
 @app.delete("/nhanvien/xoa/{manhanvien}")
 def delete_nhanvien(manhanvien: int, db: Session = Depends(get_db)):
-    return api_operations.delete(db, models.Nhanvien, models.Nhanvien.manhanvien, manhanvien, 'nhân viên')
+    return api_operations.delete(
+        db, models.Nhanvien, models.Nhanvien.manhanvien, manhanvien, "nhân viên"
+    )
+
 
 # CHUCVU manipulating
 @app.get("/chucvu")
 def get_chucvu_all(db: Session = Depends(get_db)):
-    return api_operations.get_all(db, models.Chucvu, 'chức vụ')
+    return api_operations.get_all(db, models.Chucvu, "chức vụ")
+
+
 @app.get("/chucvu/tenchucvu")
 def get_all_tenchucvu(db: Session = Depends(get_db)):
     get_db = crud.get_all_tenchucvu(db)
     if get_db:
-        results_list = [item[0] for item in get_db]        
+        results_list = [item[0] for item in get_db]
         return results_list
-    return {
-        "message": "Danh sách chức vụ rỗng"
-    }
+    return {"message": "Danh sách chức vụ rỗng"}
+
+
 @app.post("/chucvu/them")
 def add_new_chucvu(
     tenchucvu: str = Form(...),
     capdo: int = Form(...),
     luong: Decimal = Form(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    param_list = {
-        "tenchucvu": tenchucvu,
-        "luong": luong,
-        "capdo": capdo
-    }
-    result = api_operations.add(db, models.Chucvu, 'chức vụ', **param_list)
+    param_list = {"tenchucvu": tenchucvu, "luong": luong, "capdo": capdo}
+    result = api_operations.add(db, models.Chucvu, "chức vụ", **param_list)
     if result["message"] == "Thêm chức vụ thất bại do chức vụ đã tồn tại":
-        return  {
-            "message": "Thêm chức vụ thất bại do chức vụ đã tồn tại"
-        }
-    elif result["message"] == "Thêm chức vụ thành công":     
-        return {
-            "message": "Thêm chức vụ thành công"
-        }
+        return {"message": "Thêm chức vụ thất bại do chức vụ đã tồn tại"}
+    elif result["message"] == "Thêm chức vụ thành công":
+        return {"message": "Thêm chức vụ thành công"}
     else:
-        return {
-                "message": "Thêm chức vụ thất bại"
-            }      
+        return {"message": "Thêm chức vụ thất bại"}
+
+
 @app.get("/chucvu/machucvu/{machucvu}")
 def get_chucvu_by_machucvu(machucvu: int, db: Session = Depends(get_db)):
-    return api_operations.get_one_parameter(db, models.Chucvu, models.Chucvu.machucvu, machucvu, 'chức vụ')
+    return api_operations.get_one_parameter(
+        db, models.Chucvu, models.Chucvu.machucvu, machucvu, "chức vụ"
+    )
+
+
 @app.put("/chucvu/capnhat/{machucvu}")
 def update_chucvu(
     machucvu: int,
     tenchucvu: str = Form(...),
     capdo: int = Form(...),
     luong: Decimal = Form(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     try:
         param_list = {
             "tenchucvu": tenchucvu,
             "luong": luong,
             "capdo": capdo,
-            "ngaycapnhat": datetime.today().strftime('%Y-%m-%d'),
+            "ngaycapnhat": datetime.today().strftime("%Y-%m-%d"),
         }
         crud.update_chucvu(machucvu, **param_list)
     except Exception as e:
-        match = re.search(r'DETAIL\s*(.*?)(?=\n|$)', str(e), re.DOTALL)
+        match = re.search(r"DETAIL\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         detail = match.group(0).strip()
-        if detail == 'DETAIL:  Key (tenchucvu)=({}) already exists.'.format(tenchucvu):
-            return  {
-                "message": "Cập nhật chức vụ thất bại do chức vụ đã tồn tại"
-            }
+        if detail == "DETAIL:  Key (tenchucvu)=({}) already exists.".format(tenchucvu):
+            return {"message": "Cập nhật chức vụ thất bại do chức vụ đã tồn tại"}
         else:
-            return {
-                "message": "Cập nhật chức vụ thất bại"
-            }
-    return {
-            "message": "Cập nhật chức vụ thành công"
-        }    
+            return {"message": "Cập nhật chức vụ thất bại"}
+    return {"message": "Cập nhật chức vụ thành công"}
+
+
 @app.delete("/chucvu/xoa/{machucvu}")
 def delete_chucvu(machucvu: int, db: Session = Depends(get_db)):
-    return api_operations.delete(db, models.Chucvu, models.Chucvu.machucvu, machucvu, 'chức vụ')
+    return api_operations.delete(
+        db, models.Chucvu, models.Chucvu.machucvu, machucvu, "chức vụ"
+    )
+
+
 # Functions for export/ import here
