@@ -829,13 +829,23 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
 @app.get("/nhanvien/manhanvien/{manhanvien}")
 def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
     get_db = crud.get_nhanvien_by_manhanvien(db, manhanvien)
+    result = []
     if get_db:        
         if get_db[0].hinhanh:
             with open(get_db[0].hinhanh, "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
             get_db[0].hinhanh = data_to_base64
-        return get_db
+        Nhanvien_dict = get_db[0].__dict__.copy()
+        result.append({
+            "Nhanvien": Nhanvien_dict,
+            "tenquan": get_db[1],
+            "tenthanhpho": get_db[2],
+            "tendaily": get_db[3],
+            "tenchucvu": get_db[4],
+            "diachi": get_db[5]
+        })
+        return result
     return {
         "message": "Danh sách nhân viên rỗng"
     }
