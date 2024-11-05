@@ -910,10 +910,10 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
             get_db[0].hinhanh = data_to_base64
-
+        Nhanvien_dict = get_db[0].__dict__.copy()
         result.append(
             {
-                "Nhanvien": get_db[0].__dict__.copy(),
+                "Nhanvien": Nhanvien_dict,
                 "tenquan": get_db[1],
                 "tenthanhpho": get_db[2],
                 "tendaily": get_db[3],
@@ -921,7 +921,6 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
                 "diachi": get_db[5],
             }
         )
-        print(result)
         return result
     return {"message": "Danh sách nhân viên rỗng"}
 
