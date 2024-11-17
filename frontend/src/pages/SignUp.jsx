@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
 function SignUp() {
   // Declare variables for Sign Up here
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -63,10 +64,14 @@ function SignUp() {
             "email": email 
           })
         });
-        const data = await response.json();
+        const data = await response.json();        
+        if (data.message === "Tạo tài khoản thành công") {
+          alert("Tạo tài khoản thành công");
+          navigate('/login');                    
+        }
       } catch (error) {
         console.error("POST method failed");
-      }
+      }      
     }    
   };
   // Return render here
