@@ -3,25 +3,6 @@ from datetime import date, datetime
 from decimal import Decimal
 from fastapi import Form
 
-
-# TAIKHOAN
-class TAIKHOAN(BaseModel):
-    mataikhoan: int
-    tentaikhoan: str
-    matkhau: str
-
-    class Congif:
-        orm_mode: True
-
-
-class TaikhoanCreate(BaseModel):
-    tentaikhoan: str
-    matkhau: str
-
-    class Config:
-        orm_mode: True
-
-
 # QUAN
 class QUAN(BaseModel):
     maquan: int
