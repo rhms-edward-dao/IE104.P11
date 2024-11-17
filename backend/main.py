@@ -150,25 +150,36 @@ def account_login(
     return {"success": False, "message": "Sai tên đăng nhập/ mật khẩu"}
 
 
-@app.post("/sign-up")
+@app.post("/signup")
 def account_sign_up(
-    ptaikhoan: schemas.TaikhoanCreate = Depends(), db: Session = Depends(get_db)
-):
-    # Add username and password and the status of new account will be {"isActivated": False}
-    # Check if username is exist
-    db_get_all_tentaikhoan = crud.get_tentaikhoan(
-        db, pTenTaiKhoan=ptaikhoan.tentaikhoan
-    )
-    if db_get_all_tentaikhoan:
-        raise HTTPException(400, "Tên tài khoản này đã tồn tại")
+    tentaikhoan: str = Body(..., embed=True),
+    matkhau: str = Body(..., embed=True),
+    email: str = Body(..., embed=True),
+    db: Session = Depends(get_db)
+):  
+    # Create new account        
+    db_add = crud.create_taikhoan(tentaikhoan, matkhau)
 
-    # After checking -> go to inserting operation
-    db_add_new_account = crud.add_new_taikhoan(db, Item=ptaikhoan)
-    if db_add_new_account:
-        # Insert successfully -> return message
-        # After inserting new account -> send email for verification (via google email)
-        return "Tài khoản thêm thành công. Bạn hãy vào gmail để kích hoạt tài khoản"
-    raise HTTPException(400, "Thêm tài khoản thất bại")
+    match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(db_add), re.DOTALL)
+    if (match):        
+        detail = match.group(0).strip()
+        if detail == "DETAIL:  Key (tentaikhoan)=({}) already exists.".format(
+            tentaikhoan
+        ):
+            return { "message": "Tên tài khoản đã tồn tại" }
+    
+    # Link taikhoan to nhanvien
+        # Check if email exists
+    db_check_email = api_operations.get_one_parameter(db, models.Nhanvien, models.Nhanvien.email, email, "nhân viên")    
+    if db_check_email:                
+        # Add a record refer to relation between staff and account in taikhoan_nhavien
+        crud.link_taikhoan_nhanvien(db_add, db_check_email.manhanvien)
+    else:    
+        return { "message": "Email không tồn tại trong database" }
+
+    # Email verification feature
+
+    # Return message
 
 
 @app.get("/taikhoan")
@@ -177,34 +188,6 @@ def get_taikhoan_all(db: Session = Depends(get_db)):
     if db_get_taikhoan_all:
         return db_get_taikhoan_all
     raise HTTPException(400, "Danh sách tài khoản rỗng")
-
-
-@app.put("/taikhoan/capnhat/{mataikhoan}", response_model=schemas.TAIKHOAN)
-def update_account(
-    ptaikhoan: schemas.TAIKHOAN = Depends(), db: Session = Depends(get_db)
-):
-    # Check if taikhoan exist
-    db_get_taikhoan_by_mataikhoan = crud.get_taikhoan_by_mataikhoan(
-        db, pMaTaiKhoan=ptaikhoan.mataikhoan
-    )
-    if db_get_taikhoan_by_mataikhoan:
-        db_update_taikhoan = crud.update_taikhoan(db, ptaikhoan)
-        if db_update_taikhoan:
-            return db_update_taikhoan
-        raise HTTPException(400, "Cập nhật tài khoản thất bại")
-    raise HTTPException(400, "Tài khoản không tồn tại")
-
-
-@app.delete("/taikhoan/xoa/{mataikhoan}")
-def delete_taikhoan(pmataikhoan: str, db: Session = Depends(get_db)):
-    # Check if account exist or not
-    db_get_taikhoan_by_mataikhoan = crud.get_taikhoan_by_mataikhoan(db, pmataikhoan)
-    if db_get_taikhoan_by_mataikhoan:
-        db_delete_taikhoan = crud.delete_taikhoan(db, pMaTaiKhoan=pmataikhoan)
-        if db_delete_taikhoan["message"] == "Đã xóa tài khoản":
-            return "Xóa tài khoản thành công"
-        raise HTTPException(400, "Xóa tài khoản")
-    raise HTTPException(400, "Tài khoản không tồn tại")
 
 
 # QUAN manipulating
