@@ -73,13 +73,29 @@ import StoreManagement from "./pages/StoreManagement/StoreManagement";
 import StoreManagementEditPage from "./pages/StoreManagement/StoreManagementEditPage";
 import StoreManagementMaintainPage from "./pages/StoreManagement/StoreManagementMaintainPage";
 
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
+
+// Component bảo vệ route
+function ProtectedRoute({ element }) {
+  const { userInfo } = useAuth();
+  if (userInfo.isAdmin !== undefined) {
+    // Just return route after successfully logged
+    return element; 
+  }  
+  else {
+    return null;
+  }
+};
+
+
 function App() {
   return (
     <div>
-      <ThemeProvider>
-        <BrowserRouter>
-          <LanguageProvider>
-            <AuthProvider>
+      <AuthProvider>
+        <ThemeProvider>        
+          <BrowserRouter>
+            <LanguageProvider>            
               <ActiveButtonProvider>
                 <StoreTabProvider>
                   <PopupProvider>
@@ -90,182 +106,75 @@ function App() {
                         </div>
                         <div className="right-0 w-9/12 md:w-5/6">
                           <Routes>
+                            {/* Login, SignUp dont need to be protected */}
                             <Route path="/" element={<Login />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
                             {/* Routes for My Account */}
-                            <Route path="/my-account" element={<MyAccount />} />
-                            <Route
-                              path="/my-account/my-account-edit-page"
-                              element={<MyAccountEditPage />}
-                            />
+                            <Route path="/my-account" element={<ProtectedRoute element={<MyAccount />} />} />
+                            <Route path="/my-account/my-account-edit-page" element={<ProtectedRoute element={<MyAccountEditPage />} />}/>
 
                             {/* Routes for district */}
-                            <Route
-                              path="/districts"
-                              element={<Districts />}
-                            ></Route>
-                            <Route
-                              path="/districts/district-add-page"
-                              element={<StoreDistrictAddPage />}
-                            ></Route>
-                            <Route
-                              path="/districts/district-edit-page/:districtId"
-                              element={<StoreDistrictEditPage />}
-                            ></Route>
+                            <Route path="/districts" element={<ProtectedRoute element={<Districts />} />} />
+                            <Route path="/districts/district-add-page" element={<ProtectedRoute element={<StoreDistrictAddPage />} />} />
+                            <Route path="/districts/district-edit-page/:districtId" element={<ProtectedRoute element={<StoreDistrictEditPage />} />} />
 
                             {/* Routes for store */}
-                            <Route path="/stores" element={<Stores />} />
-                            <Route
-                              path="/stores/store-add-page"
-                              element={<StoreAddPage />}
-                            />
-                            <Route
-                              path="/stores/store-edit-page/:storeId"
-                              element={<StoreEditPage />}
-                            />
-                            <Route
-                              path="/stores/store-category-add-page"
-                              element={<StoreCategoryAddPage />}
-                            />
-                            <Route
-                              path="/stores/store-category-edit-page/:storeCategoryId"
-                              element={<StoreCategoryEditPage />}
-                            />
+                            <Route path="/stores" element={<ProtectedRoute element={<Stores />} />} />
+                            <Route path="/stores/store-add-page" element={<ProtectedRoute element={<StoreAddPage />} />} />
+                            <Route path="/stores/store-edit-page/:storeId" element={<ProtectedRoute element={<StoreEditPage />} />} />
+                            <Route path="/stores/store-category-add-page" element={<ProtectedRoute element={<StoreCategoryAddPage />} />} />
+                            <Route path="/stores/store-category-edit-page/:storeCategoryId" element={<ProtectedRoute element={<StoreCategoryEditPage />} />}/>
 
                             {/* Routes for product category - for admin only */}
-                            <Route
-                              path="/product-categorys"
-                              element={<ProductCategorys />}
-                            ></Route>
-                            <Route
-                              path="/product-categorys/product-categorys-add-page"
-                              element={<ProductCategorysAddPage />}
-                            ></Route>
-                            <Route
-                              path="/product-categorys/product-categorys-edit-page/:productCategoryId"
-                              element={<ProductCategorysEditPage />}
-                            ></Route>
-                            <Route
-                              path="/product-categorys/product-add-page"
-                              element={<ProductAdminAddPage />}
-                            ></Route>
-                            <Route
-                              path="/product-categorys/product-edit-page/:productId"
-                              element={<ProductAdminEditPage />}
-                            ></Route>
+                            <Route path="/product-categorys" element={<ProtectedRoute element={<ProductCategorys />} />} />
+                            <Route path="/product-categorys/product-categorys-add-page" element={<ProtectedRoute element={<ProductCategorysAddPage />} />} />
+                            <Route path="/product-categorys/product-categorys-edit-page/:productCategoryId" element={<ProtectedRoute element={<ProductCategorysEditPage />} />} />
+                            {/* <Route path="/product-categorys/product-add-page" element={<ProtectedRoute element={<ProductAdminAddPage />} />} /> */}
+                            <Route path="/product-categorys/product-edit-page/:productId" element={<ProtectedRoute element={<ProductAdminEditPage />} />} />
 
                             {/* Routes for product */}
-                            <Route path="/products" element={<Products />} />
-                            <Route
-                              path="/products/products-add-page"
-                              element={<ProductStaffAddPage />}
-                            />
-                            <Route
-                              path="/products/products-edit-page"
-                              element={<ProductStaffEditPage />}
-                            />
-                            <Route
-                              path="/product-categories/product-categorys-add-page"
-                              element={<ProductCategoriesAddPage />}
-                            ></Route>
-                            <Route
-                              path="/product-categories/product-categorys-edit-page/:productCategoryId"
-                              element={<ProductCategoriesEditPage />}
-                            ></Route>
-
+                            <Route path="/products" element={<ProtectedRoute element={<Products />} />} />
+                            <Route path="/products/products-add-page" element={<ProtectedRoute element={<ProductStaffAddPage />} />} />
+                            <Route path="/products/products-edit-page" element={<ProtectedRoute element={<ProductStaffEditPage />} />} />
+                            <Route path="/product-categories/product-categorys-add-page" element={<ProtectedRoute element={<ProductCategoriesAddPage />} />} />                            
+                            <Route path="/product-categories/product-categorys-edit-page/:productCategoryId" element={<ProtectedRoute element={<ProductCategoriesEditPage />} />} />
                             {/* Routes for staff */}
-                            <Route
-                              path="/staff-management"
-                              element={<Staff />}
-                            ></Route>
-                            <Route
-                              path="/staff-management/staff-management-edit-page/:staffId"
-                              element={<StaffManagementEditPage />}
-                            ></Route>
-                            <Route
-                              path="/staff-management/staff-management-add-page"
-                              element={<StaffManagementAddPage />}
-                            ></Route>
-                            <Route
-                              path="/staff-management/position-add-page"
-                              element={<PositionAddPage />}
-                            ></Route>
-                            <Route
-                              path="/staff-management/position-edit-page/:positionId"
-                              element={<PositionEditPage />}
-                            ></Route>
+                            <Route path="/staff-management" element={<ProtectedRoute element={<Staff />} />} />
+                            <Route path="/staff-management/staff-management-edit-page/:staffId" element={<ProtectedRoute element={<StaffManagementEditPage />} />} />
+                            <Route path="/staff-management/staff-management-add-page" element={<ProtectedRoute element={<StaffManagementAddPage />} />} />
+                            <Route path="/staff-management/position-add-page" element={<ProtectedRoute element={<PositionAddPage />} />} />
+                            <Route path="/staff-management/position-edit-page/:positionId" element={<ProtectedRoute element={<PositionEditPage />} />} />
 
                             {/* Routes for rules */}
-                            <Route
-                              path="/rule-management"
-                              element={<Rule />}
-                            ></Route>
+                            <Route path="/rule-management" element={<ProtectedRoute element={<Rule />} />} />
 
                             {/* Route for store maintainance*/}
-                            <Route
-                              path="/store-maintainance/:storeId"
-                              element={<StoreMaintainance />}
-                            ></Route>
+                            <Route path="/store-maintainance/:storeId" element={<ProtectedRoute element={<StoreMaintainance />} />} />
 
-                            {/* Routes for Report */}
-                            <Route
-                              path="/admin-report"
-                              element={<AdminReport />}
-                            ></Route>
-                            <Route
-                              path="/profit-report"
-                              element={<ProfitReport />}
-                            ></Route>
-                            <Route
-                              path="/stock-report"
-                              element={<StockReport />}
-                            ></Route>
-                            <Route
-                              path="/revenue-report"
-                              element={<RevenueReport />}
-                            ></Route>
+                            {/* Routes for Report - only for Admin */}
+                            <Route path="/admin-report" element={<ProtectedRoute element={<AdminReport />} />} />
+                            <Route path="/profit-report" element={<ProtectedRoute element={<ProfitReport />} />} />
+                            <Route path="/stock-report" element={<ProtectedRoute element={<StockReport />} />} />
+                            <Route path="/revenue-report" element={<ProtectedRoute element={<RevenueReport />} />} />
 
+                            {/* Routes for Report - only for Staff */}
+                            <Route path="/staff-report" element={<ProtectedRoute element={<StaffReport />} />} />
 
+                            {/* Routes for Customer*/}
                             <Route
-                              path="/staff-report"
-                              element={<StaffReport />}
-                            />
+                              path="/customer" element={<ProtectedRoute element={<Customer />} />} />
+                            <Route path="/customer/customer-edit-page/:customerId" element={<ProtectedRoute element={<CustomerEditPage />} />} />
 
-                            {/* Routes for Customer */}
-                            <Route
-                              path="/customer"
-                              element={<Customer />}
-                            ></Route>
-                            <Route
-                              path="/customer/customer-edit-page/:customerId"
-                              element={<CustomerEditPage />}
-                            ></Route>
+                            {/* Routes for Warehouse - Only for Normal Staff */}
+                            <Route path="/warehouse" element={<ProtectedRoute element={<Warehouse />} />} />
+                            <Route path="/warehouse/warehoue-import-page" element={<ProtectedRoute element={<WarehouseImportPage />} />} />
+                            <Route path="/warehouse/warehouse-export-page" element={<ProtectedRoute element={<WarehouseExportPage />} />} />
 
-                            {/* Routes for Warehouse */}
-                            <Route path="/warehouse" element={<Warehouse />} />
-                            <Route
-                              path="/warehouse/warehoue-import-page"
-                              element={<WarehouseImportPage />}
-                            />
-                            <Route
-                              path="/warehouse/warehouse-export-page"
-                              element={<WarehouseExportPage />}
-                            />
-
-                            {/* Routes for Store Management */}
-                            <Route
-                              path="/store-management"
-                              element={<StoreManagement />}
-                            />
-                            <Route
-                              path="/store-management/store-management-edit-page"
-                              element={<StoreManagementEditPage />}
-                            />
-                            <Route
-                              path="/store-management/store-management-maintain-page"
-                              element={<StoreManagementMaintainPage />}
-                            />
+                            {/* Routes for Store Management - Only for Normal Staff*/}
+                            <Route path="/store-management" element={<ProtectedRoute element={<StoreManagement />} />} />
+                            <Route path="/store-management/store-management-edit-page" element={<ProtectedRoute element={<StoreManagementEditPage />} />} />
+                            <Route path="/store-management/store-management-maintain-page" element={<ProtectedRoute element={<StoreManagementMaintainPage />} />} />
                           </Routes>
                         </div>
                       </div>
@@ -274,11 +183,11 @@ function App() {
                     </ModalProvider>
                   </PopupProvider>
                 </StoreTabProvider>
-              </ActiveButtonProvider>
-            </AuthProvider>
-          </LanguageProvider>
-        </BrowserRouter>
-      </ThemeProvider>
+              </ActiveButtonProvider>            
+            </LanguageProvider>
+          </BrowserRouter>        
+        </ThemeProvider>
+      </AuthProvider>
     </div>
   );
 }

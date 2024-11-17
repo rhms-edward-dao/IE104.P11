@@ -23,7 +23,7 @@ import ReportsIcon from "../images/icons/sidebar/Reports.svg";
 function Sidebar() {
   // Variables here
   // Variables for controlling sidebar
-  const { isLoggedIn, logout, isAdmin } = useAuth();
+  const { isLoggedIn, logout, userInfo } = useAuth();
   const {
     isQuan,
     isDaily,
@@ -82,7 +82,7 @@ function Sidebar() {
       </div>
 
       {/* isAdmin */}
-      {isLoggedIn === true && isAdmin === true ? (
+      {isLoggedIn === true && userInfo.isAdmin === true ? (
         <>
           {isQuan ? (
             <div className="my-4 py-4 bg-red-500">
@@ -118,7 +118,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === true ? (
+      {isLoggedIn === true && userInfo.isAdmin === true ? (
         <>
           {isDaily ? (
             <>
@@ -156,7 +156,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === true ? (
+      {isLoggedIn === true && userInfo.isAdmin === true ? (
         <>
           {isMathang ? (
             <div className="my-4 py-4 bg-red-500">
@@ -192,7 +192,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === true ? (
+      {isLoggedIn === true && userInfo.isAdmin === true ? (
         <>
           {isNhanvien ? (
             <div className="my-4 py-4 bg-red-500">
@@ -228,7 +228,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === true ? (
+      {isLoggedIn === true && userInfo.isAdmin === true ? (
         <>
           {isQuitac ? (
             <div className="my-4 py-4 bg-red-500">
@@ -264,7 +264,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === true ? (
+      {isLoggedIn === true && userInfo.isAdmin === true ? (
         <>
           {isCustomer ? (
             <div className="my-4 py-4 bg-red-500">
@@ -300,7 +300,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === true ? (
+      {isLoggedIn === true && userInfo.isAdmin === true ? (
         <>
           {isBaocao ? (
             <div className="my-4 py-4 bg-red-500">
@@ -337,7 +337,7 @@ function Sidebar() {
       )}
 
       {/* !isAdmin */}
-      {isLoggedIn === true && isAdmin === false ? (
+      {isLoggedIn === true && userInfo.isAdmin === false ? (
         <>
           {isSanpham ? (
             <div className="my-4 py-4 bg-red-500">
@@ -373,7 +373,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === false ? (
+      {isLoggedIn === true && userInfo.isAdmin === false ? (
         <>
           {isQuanlykho ? (
             <div className="my-4 py-4 bg-red-500">
@@ -408,7 +408,7 @@ function Sidebar() {
       ) : (
         <></>
       )}
-      {isLoggedIn === true && isAdmin === false ? (
+      {isLoggedIn === true && userInfo.isAdmin === false ? (
         <>
           {isKhachhang ? (
             <div className="my-4 py-4 bg-red-500">
@@ -444,7 +444,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === false ? (
+      {isLoggedIn === true && userInfo.isAdmin === false ? (
         <>
           {isQuanlydaily ? (
             <div className="my-4 py-4 bg-red-500">
@@ -480,7 +480,7 @@ function Sidebar() {
         <></>
       )}
 
-      {isLoggedIn === true && isAdmin === false ? (
+      {isLoggedIn === true && userInfo.isAdmin === false ? (
         <>
           {isBaocaoStaff ? (
             <div className="my-4 py-4 bg-red-500">

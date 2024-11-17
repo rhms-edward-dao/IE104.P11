@@ -10,12 +10,12 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // Variables for button state
-  const { isDaily, isSanpham, activateDaily, activateSanpham } = ActiveButton();
+  const { activateDaily, activateSanpham } = ActiveButton();
 
   const navigate = useNavigate();
 
   // Variables for sidebar
-  const { login, isAdminYes, userInfo, setUserInfo } = useAuth();
+  const { login, isAdminYes } = useAuth();
   // Function here
   // Function for showing all button in sidebar after logining
 
@@ -40,8 +40,15 @@ function Login() {
           login({
             userName: data.staffName,
             userID: data.staffID,
+            isAdmin: data.isAdmin
           });
-
+          // Save dât to SessionStorage
+          sessionStorage.setItem("isLoggedIn", "true");
+          sessionStorage.setItem("userInfo", JSON.stringify({
+            userName: data.staffName,
+            userID: data.staffID,
+            isAdmin: data.isAdmin
+          }));
           // Set data for authentication here
           if (data.isAdmin) {
             isAdminYes();
