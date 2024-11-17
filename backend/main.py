@@ -174,6 +174,7 @@ def account_sign_up(
     if db_check_email:                
         # Add a record refer to relation between staff and account in taikhoan_nhavien
         crud.link_taikhoan_nhanvien(db_add, db_check_email.manhanvien)
+        return { "message": "Tạo tài khoản thành công" }
     else:    
         return { "message": "Email không tồn tại trong database" }
 
@@ -189,6 +190,61 @@ def get_taikhoan_all(db: Session = Depends(get_db)):
         return db_get_taikhoan_all
     raise HTTPException(400, "Danh sách tài khoản rỗng")
 
+@app.put("/taikhoan/capnhat/{manhanvien}")
+async def update_taikhoan(
+    manhanvien: int,
+    hinhanh: Union[UploadFile, str] = File(...),
+    hoten: str = Form(...),
+    ngaysinh: str = Form(...),
+    sodienthoai: str = Form(...),
+    email: str = Form(...),
+    diachi: str = Form(...),    
+    db: Session = Depends(get_db)
+):    
+    try:
+        # Get longtitude and latitude
+        key = "dd56554106174942acce0b3bd660a32a"        
+        geocoder = OpenCageGeocode(key)
+        query = "{}".format(diachi)
+        results = geocoder.geocode(query, language="vi")
+        kinhdo = results[0]["geometry"]["lng"]
+        vido = results[0]["geometry"]["lat"]        
+        # Save image
+        image_dir = ""
+        if hinhanh != "undefined":
+            image_dir = f"{IMAGEDIR}staffs/{hinhanh.filename}"
+            contents = await hinhanh.read()
+            with open(f"{IMAGEDIR}staffs/{hinhanh.filename}", "wb") as file:
+                file.write(contents)
+            
+        # Save data        
+        param_list = {
+            "manhanvien": manhanvien,
+            "hoten": hoten,
+            "ngaysinh": ngaysinh,
+            "sodienthoai": sodienthoai,
+            "email": email,
+            "diachi": diachi,
+            "kinhdo": kinhdo,
+            "vido": vido,
+            "hinhanh": image_dir,
+        }
+        crud.update_taikhoan(**param_list)
+        return { "success": True, "message": "Cập nhật thành công." }
+    except Exception as e:
+        print(e)
+        return { "success": False, "message": "Có lỗi xảy ra trong quá trình cập nhật. Hãy thử lại sau." }
+
+    
+    # except Exception as e:
+    #     match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
+    #     detail = match.group(0).strip()
+
+    #     if detail == "DETAIL:  Key (tenmathang)=({}) already exists.".format(
+    #         tenmathang
+    #     ):
+    #         return {"message": "Tên mặt hàng đã tồn tại"}
+    # return {"message": "Cập nhật mặt hàng thành công"}
 
 # QUAN manipulating
 @app.get("/quan")  # Used for loading page

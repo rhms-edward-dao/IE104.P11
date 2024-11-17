@@ -55,7 +55,7 @@ def create_taikhoan(pTenTaiKhoan: str, pMatKhau: str):
                     VALUES
                     ( (%s), (%s), (%s) )
                     RETURNING mataikhoan
-                """, (pTenTaiKhoan, pMatKhau, False))
+                """, (pTenTaiKhoan, pMatKhau, True))
             mataikhoan = result.fetchone()[0]
             return mataikhoan
     except Exception as e:
@@ -73,6 +73,47 @@ def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
     except Exception as e:
         return e
     return None
+
+def update_taikhoan(**param_list):
+    with engine.connect().execution_options(autocommit=True) as connection:
+            connection.execute(
+            """
+                UPDATE NHANVIEN
+                SET
+                   hoten = (%s),
+                   ngaysinh = (%s)
+                WHERE manhanvien = (%s)
+            """, 
+                param_list["hoten"],
+                param_list["ngaysinh"],
+                param_list["manhanvien"]
+            )
+            connection.execute(
+            """
+                UPDATE NHANVIEN_DIACHI
+                SET
+                   diachi = (%s),
+                   kinhdo = (%s),
+                   vido = (%s)
+                WHERE manhanvien = (%s)
+            """,
+                param_list["diachi"],
+                param_list["kinhdo"],
+                param_list["vido"],
+                param_list["manhanvien"]
+            )
+    if param_list["hinhanh"] != "":
+        with engine.connect().execution_options(autocommit=True) as connection:
+            connection.execute(
+            """
+                UPDATE NHANVIEN
+                SET
+                   hinhanh = (%s)
+                WHERE manhanvien = (%s)
+            """, 
+                param_list["hinhanh"],
+                param_list["manhanvien"]
+            )
 
 def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
     try:
