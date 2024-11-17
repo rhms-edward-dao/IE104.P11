@@ -19,7 +19,8 @@ class crud_operations:
             return new_db_item
         except Exception as e:
             print(e)
-            return None
+            return e
+        return None
 
     def delete(db, model_name, model_param, param):
         try:
@@ -44,6 +45,34 @@ def get_taikhoan_by_tentaikhoan_and_matkhau(
         .first()
     )
 
+def create_taikhoan(pTenTaiKhoan: str, pMatKhau: str):
+    try:
+        with engine.connect().execution_options(autocommit=True) as connection:
+            result = connection.execute(
+                """
+                    INSERT INTO Taikhoan 
+                        (tentaikhoan, matkhau, isactivated) 
+                    VALUES
+                    ( (%s), (%s), (%s) )
+                    RETURNING mataikhoan
+                """, (pTenTaiKhoan, pMatKhau, False))
+            mataikhoan = result.fetchone()[0]
+            return mataikhoan
+    except Exception as e:
+        return e
+    return None
+
+def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
+    try:
+        with engine.connect().execution_options(autocommit=True) as connection:
+            connection.execute(
+                """
+                    INSERT INTO taikhoan_nhavien VALUES
+                    ( (%s), (%s) )
+                """, (pMaNhanVien, pMaTaiKhoan))
+    except Exception as e:
+        return e
+    return None
 
 def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
     try:
