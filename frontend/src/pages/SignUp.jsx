@@ -16,7 +16,7 @@ function SignUp() {
     let check_email = true;
 
     // Check username's length
-    if (username.length < 5) {
+    if (username.length < 3) {
       alert("Tên tài khoản quá ngắn");
     } else if (username.length > 50) {
       alert("Tên tài khoản tối đa 50 kí tự");
@@ -58,14 +58,12 @@ function SignUp() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            tentaikhoan: username,
-            matkhau: password,
-            matkhau: confirmPassword,
-            email: email 
+            "tentaikhoan": username,
+            "matkhau": password,
+            "email": email 
           })
         });
         const data = await response.json();
-        console.log(data);
       } catch (error) {
         console.error("POST method failed");
       }
