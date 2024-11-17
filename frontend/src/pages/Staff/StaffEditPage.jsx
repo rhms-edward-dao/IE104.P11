@@ -56,17 +56,17 @@ function StaffManagementEditPage() {
       setStaffDistrictData(existed_district);
       // Getting all existedData
       const existedData = await getStaffById(id);
-      setStaffName(existedData.Nhanvien.hoten);
-      setStaffBirthday(existedData.Nhanvien.ngaysinh);
-      setStaffPhone(existedData.Nhanvien.sodienthoai);
-      setStaffEmail(existedData.Nhanvien.email);
-      setStaffStore(existedData.tendaily);
-      setStaffPosition(existedData.tenchucvu);
-      setStaffCityName(existedData.tenthanhpho);
-      setStaffDistrictName(existedData.tenquan);
-      setImageData(existedData.Nhanvien.hinhanh);
+      setStaffName(existedData[0].Nhanvien.hoten);
+      setStaffBirthday(existedData[0].Nhanvien.ngaysinh);
+      setStaffPhone(existedData[0].Nhanvien.sodienthoai);
+      setStaffEmail(existedData[0].Nhanvien.email);
+      setStaffStore(existedData[0].tendaily);
+      setStaffPosition(existedData[0].tenchucvu);
+      setStaffCityName(existedData[0].tenthanhpho);
+      setStaffDistrictName(existedData[0].tenquan);
+      setImageData(existedData[0].Nhanvien.hinhanh);
       // Solving problem with address (just get house's number and ward information)
-      setStaffAddress(existedData.diachi.split(",").slice(0, 2).join(","));
+      setStaffAddress(existedData[0].diachi.split(",").slice(0, 2).join(","));
     };
     fetchAllData(staffId);
   }, []);
