@@ -11,8 +11,22 @@ import {
   getAllPositionName,
 } from "../../assets/Staffs/StaffData";
 import { getAllStoreName } from "../../assets/Stores/StoreData";
+import { useTheme } from "../../contexts/ThemeContext";
+
+// Import icon here
+import GoBackIcon from "../../images/icons/button/GoBack.svg";
+import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
+import { useTranslation } from "react-i18next";
+
 function StaffManagementEditPage() {
   // Variable for adding here
+  // // For Dark Mode
+  const { theme } = useTheme();
+  // // For multi-language - adding something here
+  const { t } = useTranslation();
+  const { EP_Staff } = t("EditPage");
+  const { SF_Districts, SF_Staffs } = t("SearchFilter");
+
   const [staffName, setStaffName] = useState("");
   const [staffBirthday, setStaffBirthday] = useState("");
   const [staffPhone, setStaffPhone] = useState("");
@@ -225,63 +239,56 @@ function StaffManagementEditPage() {
       <div>
         <Header></Header>
       </div>
-      <hr />
-
-      <div>
-        <div>
+      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
           <div className="flex items-center gap-40">
             <NavLink to={"/staff-management"}>
               <button>
                 <img
-                  src={ReturnIcon}
+                  src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
                   alt="Icon trở lại"
                   className="w-15 h-12"
                 />
               </button>
             </NavLink>
           </div>
-          <div className="flex mt-5">
-            <div className="w-1/2">
-              <p className="text-xl font-bold italic">{"Cập nhật nhân viên"}</p>
-            </div>
-            <div className="w-1/2 flex justify-end mr-5">
-              <button
-                className="px-2 py-3 bg-red-500 rounded rounded-xl"
-                onClick={() =>
-                  updateData(
-                    staffId,
-                    staffName,
-                    staffBirthday,
-                    staffPhone,
-                    staffEmail,
-                    staffStore,
-                    staffPosition,
-                    staffCityName,
-                    staffDistrictName,
-                    staffAddress,
-                    imageData
-                  )
-                }
-              >
-                <p className="font-bold text-white text-lg">Cập nhật</p>
-              </button>
-            </div>
+          <div className="my-5 flex flex-wrap items-center justify-between">
+            <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
+              {EP_Staff.Title}
+            </p>
+            <button
+              className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+              onClick={() =>
+                updateData(
+                  staffId,
+                  staffName,
+                  staffBirthday,
+                  staffPhone,
+                  staffEmail,
+                  staffStore,
+                  staffPosition,
+                  staffCityName,
+                  staffDistrictName,
+                  staffAddress,
+                  imageData
+                )
+              }
+            >
+              <p className="font-bold text-white text-lg">Cập nhật</p>
+            </button>
           </div>
-        </div>
-      </div>
       <div className="m-5">
         <div className="block space-y-8">
           <div className="space-y-4">
             <label htmlFor="staff-name-add" className="font-bold text-lg">
-              Họ tên nhân viên
+              {SF_Staffs.Columns.Col1}
             </label>
             <br />
             <input
               id="staff-name-add"
               name="staff-name-add"
               type="text"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Họ tên nhân viên..."
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+              placeholder={`${SF_Staffs.Columns.Col2} ...`}
               value={staffName}
               onChange={(e) => setStaffName(e.target.value)}
             />
@@ -289,14 +296,14 @@ function StaffManagementEditPage() {
 
           <div className="space-y-4">
             <label htmlFor="birthdate-add" className="font-bold text-lg">
-              Ngày sinh
+              {SF_Staffs.Columns.Col2}
             </label>
             <br />
             <input
               id="birthdate-add"
               name="birthdate-add"
               type="date"
-              className="px-5 py-3 rounded bg-stone-300"
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
               value={staffBirthday}
               onChange={(e) => setStaffBirthday(e.target.value)}
             />
@@ -304,15 +311,15 @@ function StaffManagementEditPage() {
 
           <div className="space-y-4">
             <label htmlFor="staff-phone-add" className="font-bold text-lg">
-              Số điện thoại
+              {SF_Staffs.Columns.Col6}
             </label>
             <br />
             <input
               id="staff-phone-add"
               name="staff-phone-add"
               type="text"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Số điện thoại..."
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+              placeholder={`${SF_Staffs.Columns.Col6} ...`}
               value={staffPhone}
               onChange={(e) => setStaffPhone(e.target.value)}
             />
@@ -320,15 +327,15 @@ function StaffManagementEditPage() {
 
           <div className="space-y-4">
             <label htmlFor="staff-email-add" className="font-bold text-lg">
-              Email cơ quan
+              {SF_Staffs.Columns.Col7}
             </label>
             <br />
             <input
               id="staff-email-add"
               name="staff-email-add"
               type="email"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Email cơ quan..."
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+              placeholder={`${SF_Staffs.Columns.Col7} ...`}
               value={staffEmail}
               onChange={(e) => setStaffEmail(e.target.value)}
             />
@@ -336,14 +343,14 @@ function StaffManagementEditPage() {
 
           <div className="space-y-4">
             <label htmlFor="store-name-add" className="font-bold text-lg">
-              Tên đại lý
+              {SF_Staffs.Columns.Col3}
             </label>
             <br />
             <select
               id="store-name-add"
               name="store-name-add"
               type="email"
-              className="px-5 py-3 rounded bg-stone-300"
+              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
               value={staffStore}
               onChange={(e) => setStaffStore(e.target.value)}
             >
@@ -357,14 +364,14 @@ function StaffManagementEditPage() {
 
           <div className="space-y-4">
             <label htmlFor="position-name-add" className="font-bold text-lg">
-              Chức vụ
+              {SF_Staffs.Columns.Col4}
             </label>
             <br />
             <select
               id="position-name-add"
               name="position-name-add"
               type="email"
-              className="px-5 py-3 rounded bg-stone-300"
+              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
               value={staffPosition}
               onChange={(e) => setStaffPosition(e.target.value)}
             >
@@ -379,14 +386,14 @@ function StaffManagementEditPage() {
           <div className="space-x-20 flex">
             <div className="space-y-4">
               <label htmlFor="city-name-add" className="font-bold text-lg">
-                Thành phố
+                {SF_Districts.Columns.Col2}
               </label>
               <br />
               {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
               <select
                 id="city-name-add"
                 name="city-name-add"
-                className="px-5 py-3 rounded bg-stone-300"
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                 value={staffCityName}
                 onChange={(e) => setStaffCityName(e.target.value)}
               >
@@ -400,14 +407,14 @@ function StaffManagementEditPage() {
 
             <div className="space-y-4">
               <label htmlFor="district-name-add" className="font-bold text-lg">
-                Quận
+                {SF_Districts.Columns.Col1}
               </label>
               <br />
               {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
               <select
                 id="district-name-add"
                 name="district-name-add"
-                className="px-5 py-3 rounded bg-stone-300"
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                 value={staffDistrictName}
                 onChange={(e) => setStaffDistrictName(e.target.value)}
               >
@@ -422,15 +429,15 @@ function StaffManagementEditPage() {
 
           <div className="space-y-4">
             <label htmlFor="address-add" className="font-bold text-lg">
-              Địa chỉ
+              {SF_Staffs.Columns.Col5}
             </label>
             <br />
             <input
               id="address-add"
               name="address-add"
               type="email"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Địa chỉ (tới phường)..."
+              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+              placeholder={`${SF_Staffs.Columns.Col5} ...`}
               value={staffAddress}
               onChange={(e) => setStaffAddress(e.target.value)}
             />
@@ -438,7 +445,7 @@ function StaffManagementEditPage() {
 
           <div className="space-y-4">
             <label htmlFor="image-add" className="font-bold text-lg">
-              Hình ảnh
+              {SF_Staffs.Columns.Col8}
             </label>
             <br />
             <input
@@ -459,6 +466,7 @@ function StaffManagementEditPage() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

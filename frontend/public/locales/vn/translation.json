@@ -38,7 +38,7 @@
       "Staffs": "Danh sách nhân viên",
       "Positions": "Danh sách chức vụ",
       "Customers": "Danh sách khách hàng",
-      "Account": "Tài khoản"
+      "Account": "Tài khoản"  
     },
     "LanguageOptions": {
       "Chinese": "Tiếng Trung Quốc",
@@ -160,7 +160,10 @@
         "Col2": "Ngày sinh",
         "Col3": "Tên đại lý",
         "Col4": "Chức vụ",
-        "Col5": "Địa chỉ"
+        "Col5": "Địa chỉ",
+        "Col6": "Số điện thoại",        
+        "Col7": "Email",
+        "Col8": "Hình ảnh"
       },
       "Placeholders": {
         "Text1": "Tìm kiếm theo tên nhân viên ...",
@@ -225,6 +228,12 @@
     },
     "AP_ProductCategories": {
       "Title": "Thêm loại mặt hàng"
+    },
+    "AP_Staff": {
+      "Title": "Thêm nhân viên"
+    },
+    "AP_Position": {
+      "Title": "Thêm chức vụ"
     }
   },
   "EditPage": {
@@ -245,6 +254,12 @@
     },
     "EP_Account": {
       "Title": "Chỉnh sửa thông tin cá nhân"
+    },
+    "EP_Staff": {
+      "Title": "Chỉnh sửa nhân viên"
+    },
+    "EP_Position": {
+      "Title": "Chỉnh sửa chức vụ"
     }
   },
   "AccountPage": {

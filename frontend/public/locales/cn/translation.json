@@ -142,7 +142,10 @@
         "Col2": "出生日期",
         "Col3": "代理名稱",
         "Col4": "位置",
-        "Col5": "地址"
+        "Col5": "地址",
+        "Col6": "电话号码",
+        "Col7": "电子邮件",
+        "Col8": "图片"
       },
       "Placeholders": {
         "Text1": "按員工姓名搜尋...",
@@ -207,6 +210,12 @@
     },
     "AP_ProductCategories": {
       "Title": "新增產品類型"
+    },
+    "AP_Staff": {
+        "Title": "添加员工"
+    },
+    "AP_Position": {
+        "Title": "添加职位"
     }
   },
   "EditPage": {
@@ -227,6 +236,12 @@
     },
     "EP_Account": {
       "Title": "編輯個人資訊"
+    },
+    "EP_Staff": {
+      "Title": "编辑员工"
+    },
+    "EP_Position": {
+        "Title": "编辑职位"
     }
   },
   "AccountPage": {

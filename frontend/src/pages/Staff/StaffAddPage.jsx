@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import ReturnIcon from "../../images/icons/return-button.png";
+// Import icon here
+import GoBackIcon from "../../images/icons/button/GoBack.svg";
+import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
+
 import Header from "../../components/Header";
 
 import { getAllCityName, getAllDistrictName } from "../../assets/StoreDistrict";
 import { addStaff, getAllPositionName } from "../../assets/Staffs/StaffData";
 import { getAllStoreName } from "../../assets/Stores/StoreData";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useTranslation } from "react-i18next";
 function StaffManagementAddPage() {
+
   // Variable for adding here
+  // // For Them Mode
+  const { theme } = useTheme();
+  // // For multi-language - adding something here
+  const { t } = useTranslation();
+  const { AP_Staff } = t("AddPage");
+  const { SF_Districts, SF_Staffs } = t("SearchFilter");
+  
+  console.log(AP_Staff);
+  // // For other feature
+  // For Dark Mode
   const [staffName, setStaffName] = useState("");
   const [staffBirthday, setStaffBirthday] = useState("");
   const [staffPhone, setStaffPhone] = useState("");
@@ -214,171 +230,124 @@ function StaffManagementAddPage() {
       <div>
         <Header></Header>
       </div>
-      <hr />
-
-      <div>
+      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
         <div>
           <div className="flex items-center gap-40">
             <NavLink to={"/staff-management"}>
               <button>
                 <img
-                  src={ReturnIcon}
+                  src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
                   alt="Icon trở lại"
-                  className="w-15 h-12"
+                  className="w-12 h-12"
                 />
               </button>
             </NavLink>
           </div>
-          <div className="flex mt-5">
-            <div className="w-1/2">
-              <p className="text-xl font-bold italic">{"Thêm nhân viên"}</p>
-            </div>
-            <div className="w-1/2 flex justify-end mr-5">
-              <button
-                className="px-2 py-3 bg-red-500 rounded rounded-xl"
-                onClick={() =>
-                  addData(
-                    staffName,
-                    staffBirthday,
-                    staffPhone,
-                    staffEmail,
-                    staffStore,
-                    staffPosition,
-                    staffCityName,
-                    staffDistrictName,
-                    staffAddress,
-                    imageData
-                  )
-                }
-              >
-                <p className="font-bold text-white text-lg">Thêm</p>
-              </button>
-            </div>
+          <div className="my-5 flex flex-wrap items-center justify-between">
+            <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
+              {AP_Staff.Title}
+            </p>
+            <button
+              className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+              onClick={() =>
+                addData(
+                  staffName,
+                  staffBirthday,
+                  staffPhone,
+                  staffEmail,
+                  staffStore,
+                  staffPosition,
+                  staffCityName,
+                  staffDistrictName,
+                  staffAddress,
+                  imageData
+                )
+              }
+            >
+              <p className="font-bold text-white text-lg">Thêm</p>
+            </button>
           </div>
         </div>
-      </div>
-      <div className="m-5">
-        <div className="block space-y-8">
-          <div className="space-y-4">
-            <label htmlFor="staff-name-add" className="font-bold text-lg">
-              Họ tên nhân viên
-            </label>
-            <br />
-            <input
-              id="staff-name-add"
-              name="staff-name-add"
-              type="text"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Họ tên nhân viên..."
-              value={staffName}
-              onChange={(e) => setStaffName(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="birthdate-add" className="font-bold text-lg">
-              Ngày sinh
-            </label>
-            <br />
-            <input
-              id="birthdate-add"
-              name="birthdate-add"
-              type="date"
-              className="px-5 py-3 rounded bg-stone-300"
-              value={staffBirthday}
-              onChange={(e) => setStaffBirthday(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="staff-phone-add" className="font-bold text-lg">
-              Số điện thoại
-            </label>
-            <br />
-            <input
-              id="staff-phone-add"
-              name="staff-phone-add"
-              type="text"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Số điện thoại..."
-              value={staffPhone}
-              onChange={(e) => setStaffPhone(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="staff-email-add" className="font-bold text-lg">
-              Email cơ quan
-            </label>
-            <br />
-            <input
-              id="staff-email-add"
-              name="staff-email-add"
-              type="email"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Email cơ quan..."
-              value={staffEmail}
-              onChange={(e) => setStaffEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="store-name-add" className="font-bold text-lg">
-              Tên đại lý
-            </label>
-            <br />
-            <select
-              id="store-name-add"
-              name="store-name-add"
-              type="email"
-              className="px-5 py-3 rounded bg-stone-300"
-              value={staffStore}
-              onChange={(e) => setStaffStore(e.target.value)}
-            >
-              {staffStoreData.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="position-name-add" className="font-bold text-lg">
-              Chức vụ
-            </label>
-            <br />
-            <select
-              id="position-name-add"
-              name="position-name-add"
-              type="email"
-              className="px-5 py-3 rounded bg-stone-300"
-              value={staffPosition}
-              onChange={(e) => setStaffPosition(e.target.value)}
-            >
-              {staffPositionData.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-x-20 flex">
+      
+        <div className="m-5">
+          <div className="block space-y-8">
             <div className="space-y-4">
-              <label htmlFor="city-name-add" className="font-bold text-lg">
-                Thành phố
+              <label htmlFor="staff-name-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col1}
               </label>
               <br />
-              {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
+              <input
+                id="staff-name-add"
+                name="staff-name-add"
+                type="text"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col1} ... `}
+                value={staffName}
+                onChange={(e) => setStaffName(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="birthdate-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col2}
+              </label>
+              <br />
+              <input
+                id="birthdate-add"
+                name="birthdate-add"
+                type="date"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                value={staffBirthday}
+                onChange={(e) => setStaffBirthday(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="staff-phone-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col6}
+              </label>
+              <br />
+              <input
+                id="staff-phone-add"
+                name="staff-phone-add"
+                type="text"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col6} ...`}
+                value={staffPhone}
+                onChange={(e) => setStaffPhone(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="staff-email-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col7}
+              </label>
+              <br />
+              <input
+                id="staff-email-add"
+                name="staff-email-add"
+                type="email"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col7} ...`}
+                value={staffEmail}
+                onChange={(e) => setStaffEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="store-name-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col3}
+              </label>
+              <br />
               <select
-                id="city-name-add"
-                name="city-name-add"
-                className="px-5 py-3 rounded bg-stone-300"
-                value={staffCityName}
-                onChange={(e) => setStaffCityName(e.target.value)}
+                id="store-name-add"
+                name="store-name-add"
+                type="email"
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                value={staffStore}
+                onChange={(e) => setStaffStore(e.target.value)}
               >
-                {staffCityData.map((item) => (
+                {staffStoreData.map((item) => (
                   <option key={item} value={item}>
                     {item}
                   </option>
@@ -387,57 +356,101 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="district-name-add" className="font-bold text-lg">
-                Quận
+              <label htmlFor="position-name-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col4}
               </label>
               <br />
-              {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
               <select
-                id="district-name-add"
-                name="district-name-add"
-                className="px-5 py-3 rounded bg-stone-300"
-                value={staffDistrictName}
-                onChange={(e) => setStaffDistrictName(e.target.value)}
+                id="position-name-add"
+                name="position-name-add"
+                type="email"
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                value={staffPosition}
+                onChange={(e) => setStaffPosition(e.target.value)}
               >
-                {staffDistrictData.map((item) => (
+                {staffPositionData.map((item) => (
                   <option key={item} value={item}>
                     {item}
                   </option>
                 ))}
               </select>
             </div>
-          </div>
 
-          <div className="space-y-4">
-            <label htmlFor="address-add" className="font-bold text-lg">
-              Địa chỉ
-            </label>
-            <br />
-            <input
-              id="address-add"
-              name="address-add"
-              type="email"
-              className="w-full py-2 text-lg border border-black rounded-lg"
-              placeholder="   Địa chỉ (tới phường)..."
-              value={staffAddress}
-              onChange={(e) => setStaffAddress(e.target.value)}
-            />
-          </div>
+            <div className="space-x-20 flex">
+              <div className="space-y-4">
+                <label htmlFor="city-name-add" className="font-bold text-lg">
+                  {SF_Districts.Columns.Col2}
+                </label>
+                <br />
+                {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
+                <select
+                  id="city-name-add"
+                  name="city-name-add"
+                  className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                  value={staffCityName}
+                  onChange={(e) => setStaffCityName(e.target.value)}
+                >
+                  {staffCityData.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="space-y-4">
-            <label htmlFor="image-add" className="font-bold text-lg">
-              Hình ảnh
-            </label>
-            <br />
-            <input
-              id="image-add"
-              name="image-add"
-              type="file"
-              accept="images/*"
-              onChange={handleUploadImage}
-            />
+              <div className="space-y-4">
+                <label htmlFor="district-name-add" className="font-bold text-lg">
+                  {SF_Districts.Columns.Col1}
+                </label>
+                <br />
+                {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
+                <select
+                  id="district-name-add"
+                  name="district-name-add"
+                  className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                  value={staffDistrictName}
+                  onChange={(e) => setStaffDistrictName(e.target.value)}
+                >
+                  {staffDistrictData.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-            <img src={image} alt="Hình đại diện" />
+            <div className="space-y-4">
+              <label htmlFor="address-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col5}
+              </label>
+              <br />
+              <input
+                id="address-add"
+                name="address-add"
+                type="email"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col5} ...`}
+                value={staffAddress}
+                onChange={(e) => setStaffAddress(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="image-add" className="font-bold text-lg">
+                {SF_Staffs.Columns.Col8}
+              </label>
+              <br />
+              <input
+                id="image-add"
+                name="image-add"
+                type="file"
+                accept="images/*"
+                onChange={handleUploadImage}
+              />
+
+              <img src={image} alt="Hình đại diện" />
+            </div>
           </div>
         </div>
       </div>

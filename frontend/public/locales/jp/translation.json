@@ -144,7 +144,10 @@
         "Col2": "生年月日",
         "Col3": "エージェント名",
         "Col4": "職位",
-        "Col5": "住所"
+        "Col5": "住所",
+        "Col6": "電話番号",
+        "Col7": "メールアドレス",
+        "Col8": "画像"
       },
       "Placeholders": {
         "Text1": "従業員名で検索...",
@@ -209,6 +212,12 @@
     },
     "AP_ProductCategories": {
       "Title": "製品タイプを追加します"
+    },
+    "AP_Staff": {
+    "Title": "スタッフを追加"
+    },
+    "AP_Position": {
+        "Title": "職位を追加"
     }
   },
   "EditPage": {
@@ -229,6 +238,12 @@
     },
     "EP_Account": {
       "Title": "個人情報を編集します"
+    },
+    "EP_Staff": {
+      "Title": "スタッフを編集"
+    },
+    "EP_Position": {
+        "Title": "職位を編集"
     }
   },
   "AccountPage": {

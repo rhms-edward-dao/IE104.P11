@@ -144,7 +144,10 @@
         "Col2": "Date de naissance",
         "Col3": "Nom de l'agent",
         "Col4": "Poste",
-        "Col5": "Adresse"
+        "Col5": "Adresse",
+        "Col6": "Numéro de téléphone",
+        "Col7": "Email",
+        "Col8": "Image"
       },
       "Placeholders": {
         "Text1": "Recherche par nom d'employé ...",
@@ -209,6 +212,12 @@
     },
     "AP_ProductCategories": {
       "Title": "Ajouter un type de produit"
+    },
+    "AP_Staff": {
+    "Title": "Ajouter un employé"
+    },
+    "AP_Position": {
+        "Title": "Ajouter un poste"
     }
   },
   "EditPage": {
@@ -229,6 +238,12 @@
     },
     "EP_Account": {
       "Title": "Modifier les informations personnelles"
+    },
+    "EP_Staff": {
+        "Title": "Modifier un employé"
+    },
+    "EP_Position": {
+        "Title": "Modifier un poste"
     }
   },
   "AccountPage": {

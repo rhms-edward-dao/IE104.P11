@@ -6,8 +6,21 @@ import Header from "../../components/Header";
 
 import { updatePosition, getPositionById } from "../../assets/Staffs/StaffData";
 
+// Import icon here
+import GoBackIcon from "../../images/icons/button/GoBack.svg";
+import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
+import { useTheme } from "../../contexts/ThemeContext";
+import { useTranslation } from "react-i18next";
+
 function PositionEditPage() {
   // Variables here
+  // // For Dark Mode
+  const { theme } = useTheme();
+  // // For multi-language
+  const { t } = useTranslation();
+  const { EP_Position } = t("EditPage");
+  const { SF_Positions } = t("SearchFilter");
+
   const [positionName, setPositionName] = useState("");
   const [level, setLevel] = useState(1);
   const [salary, setSalary] = useState(0);
@@ -73,16 +86,14 @@ function PositionEditPage() {
       <div>
         <Header></Header>
       </div>
-      <hr />
-
-      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
+      <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
         <div>
           <div>
             <div className="flex items-center gap-40">
               <NavLink to={"/staff-management"}>
                 <button>
                   <img
-                    src={ReturnIcon}
+                    src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
                     alt="Icon trở lại"
                     className="w-15 h-12"
                   />
@@ -90,7 +101,9 @@ function PositionEditPage() {
               </NavLink>
             </div>
             <div className="my-5 flex flex-wrap items-center justify-between">
-              <p className="text-2xl font-bold italic">{"Cập nhật chức vụ"}</p>
+              <p className="text-2xl font-bold italic">
+                {EP_Position.Title}  
+              </p>
               <div className="flex justify-end">
                 <button
                   className="px-2 py-3 bg-red-500 rounded rounded-xl"
@@ -108,14 +121,15 @@ function PositionEditPage() {
           <div className="block space-y-8">
             <div className="space-y-4">
               <label htmlFor="district-name-add" className="font-bold text-lg">
-                Tên chức vụ
+                {SF_Positions.Columns.Col1}
               </label>
               <br />
               <input
                 id="district-name-add"
                 name="district-name-add"
                 type="text"
-                className="w-full py-2 text-lg border border-black rounded-lg"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Positions.Columns.Col1} ...`}
                 value={positionName}
                 onChange={(e) => setPositionName(e.target.value)}
               />
@@ -123,14 +137,14 @@ function PositionEditPage() {
 
             <div className="space-y-4">
               <label htmlFor="level-add" className="font-bold text-lg">
-                Cấp độ
+                {SF_Positions.Columns.Col2}
               </label>
               <br />
               <input
                 id="level-add"
                 name="level-add"
                 type="number"
-                className="w-full py-2 text-lg border border-black rounded-lg"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                 placeholder="  Cấp độ..."
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
@@ -139,14 +153,14 @@ function PositionEditPage() {
 
             <div className="space-y-4">
               <label htmlFor="salary-add" className="font-bold text-lg">
-                Lương
+                {SF_Positions.Columns.Col3}
               </label>
               <br />
               <input
                 id="salary-add"
                 name="salary-add"
                 type="number"
-                className="w-full py-2 text-lg border border-black rounded-lg"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                 placeholder="   Lương..."
                 value={salary}
                 onChange={(e) => setSalary(e.target.value)}
