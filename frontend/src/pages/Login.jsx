@@ -36,7 +36,6 @@ function Login() {
         const data = await response.json();
 
         if (data.success) {
-          console.log(data);
           alert("Đăng nhập thành công");
           login({
             userName: data.staffName,
@@ -52,6 +51,7 @@ function Login() {
               userName: data.staffName,
               userID: data.staffID,
               isAdmin: data.isAdmin,
+              storeID: data.storeID
             })
           );
           // Set data for authentication here

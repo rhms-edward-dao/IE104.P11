@@ -73,9 +73,7 @@ const Products = () => {
     const fetchData = async () => {
       try {
         // Get Exsisted Products
-        const existedProduct = (await userInfo.isAdmin)
-          ? getAllProducts()
-          : getProductByStoreId(userInfo.storeID);
+        const existedProduct = await getProductByStoreId(userInfo.storeID); // Just get products for only one store - not for all stores
         if (existedProduct.length === 0) {
           setProductData([]);
         } else {

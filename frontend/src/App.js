@@ -133,12 +133,13 @@ function App() {
                             {/* <Route path="/product-categorys/product-add-page" element={<ProtectedRoute element={<ProductAdminAddPage />} />} /> */}
                             <Route path="/product-categorys/product-edit-page/:productId" element={<ProtectedRoute element={<ProductAdminEditPage />} />} />
 
-                            {/* Routes for product */}
+                            {/* Routes for product - for staff only*/}
                             <Route path="/products" element={<ProtectedRoute element={<Products />} />} />
-                            <Route path="/products/products-add-page" element={<ProtectedRoute element={<ProductStaffAddPage />} />} />
-                            <Route path="/products/products-edit-page" element={<ProtectedRoute element={<ProductStaffEditPage />} />} />
-                            <Route path="/product-categories/product-categorys-add-page" element={<ProtectedRoute element={<ProductCategoriesAddPage />} />} />                            
-                            <Route path="/product-categories/product-categorys-edit-page/:productCategoryId" element={<ProtectedRoute element={<ProductCategoriesEditPage />} />} />
+                            <Route path="/products/product-add-page" element={<ProtectedRoute element={<ProductStaffAddPage />} />} />
+                            <Route path="/products/product-edit-page/:productId" element={<ProtectedRoute element={<ProductStaffEditPage />} />} />
+                            <Route path="/products/product-categorys-add-page" element={<ProtectedRoute element={<ProductCategoriesAddPage />} />} />                            
+                            <Route path="/products/product-categorys-edit-page/:productCategoryId" element={<ProtectedRoute element={<ProductCategoriesEditPage />} />} />
+
                             {/* Routes for staff */}
                             <Route path="/staff-management" element={<ProtectedRoute element={<Staff />} />} />
                             <Route path="/staff-management/staff-management-edit-page/:staffId" element={<ProtectedRoute element={<StaffManagementEditPage />} />} />

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../../contexts/ThemeContext";
 
 // Import Assets Here
-import { addProduct } from "../../assets/Products/ProductData";
+import { addProductOnlyProduct } from "../../assets/Products/ProductData";
 import { getAllCategoryName } from "../../assets/Products/ProductCategoryData";
 import { getAllStoreName } from "../../assets/Stores/StoreData";
 
@@ -16,9 +16,13 @@ import Header from "../../components/Header";
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
+// Import useAuth*()
+import { useAuth } from "../../contexts/AuthContext";
 
 const ProductStaffAddPage = () => {
+  
   // Variable here
+  const { userInfo } = useAuth();
   // // For Theme Mode
   const { theme } = useTheme();
   // // For Multi-Language
@@ -75,7 +79,6 @@ const ProductStaffAddPage = () => {
   const addData = async (
     tenmathang,
     tenloaimathang,
-    tendaily,
     dongia,
     soluongton,
     tendvt,
@@ -94,9 +97,6 @@ const ProductStaffAddPage = () => {
     // // Check tenmathang
     if (tenmathang.length < 1) {
       alert("Tên mặt hàng không được rỗng");
-      check_tenmathang = false;
-    } else if (tendaily.length > 200) {
-      alert("Tên mặt hàng quá dài");
       check_tenmathang = false;
     }
     // // Check dongia
@@ -137,15 +137,15 @@ const ProductStaffAddPage = () => {
       check_hinhanh
     ) {
       let item = {
+        madaily: userInfo.storeID,
         tenmathang: tenmathang,
         tenloaimathang: tenloaimathang,
-        tendaily: tendaily,
         dongia: dongia,
         soluongton: soluongton,
         tendvt: tendvt,
         hinhanh: hinhanh,
       };
-      const data = await addProduct(item);
+      const data = await addProductOnlyProduct(item);
       if (data.message === "Thêm mặt hàng thất bại") {
         alert("Thêm mặt hàng thất bại");
       } else if (data.message === "Tên mặt hàng đã tồn tại") {
@@ -165,7 +165,7 @@ const ProductStaffAddPage = () => {
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex items-center gap-40">
-          <NavLink to={"/product-categorys"}>
+          <NavLink to={"/products"}>
             <button>
               <img
                 src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
@@ -185,7 +185,6 @@ const ProductStaffAddPage = () => {
               addData(
                 newProductName,
                 newProductCategoryName,
-                newStoreName,
                 newUnitPrice,
                 newStockQuantity,
                 newUnit,
@@ -289,30 +288,6 @@ const ProductStaffAddPage = () => {
               onChange={(e) => setNewProductCategoryName(e.target.value)}
             >
               {existedProductCategoryName.map((item) => (
-                <>
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                </>
-              ))}
-            </select>
-          </div>
-          {/* Select store name */}
-          <div className="space-y-4">
-            <label
-              className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="store-name-add"
-            >
-              {SF_Products.Columns.Col6}
-            </label>
-            <select
-              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="store-name-add"
-              name="store-name-add"
-              value={newStoreName}
-              onChange={(e) => setNewStoreName(e.target.value)}
-            >
-              {existedStoreName.map((item) => (
                 <>
                   <option key={item} value={item}>
                     {item}

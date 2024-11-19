@@ -409,17 +409,27 @@ def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
     return {"message": "Danh sách mặt hàng rỗng"}
 
 
-# Minh: How ?????????? #######################################
 @app.get("/mathang/madaily/{madaily}")
 def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
-    get_db = crud.get_mathang_by_madaily(db, madaily)
+    get_db = crud.get_mathang_by_madaily(db, madaily)    
     if get_db:
-        if get_db[0].hinhanh:
-            with open(get_db[0].hinhanh, "rb") as f:
-                data = f.read()
-                data_to_base64 = base64.b64encode(data)
-            get_db[0].hinhanh = data_to_base64
-        return get_db
+        result = []
+        for item in get_db:        
+            item_dict = item.Mathang.__dict__.copy()     
+            if item.Mathang.hinhanh:
+                try:
+                    with open(item.Mathang.hinhanh, "rb") as f:
+                        data = f.read()
+                        data_to_base64 = base64.b64encode(data)
+                    item_dict["hinhanh"] = data_to_base64
+                except:
+                    item_dict["hinhanh"] = None                
+            result.append({
+                    "Mathang": item_dict,
+                    "tenloaimathang": item.tenloaimathang,
+                    "tendaily": item.tendaily
+                })
+        return result
     return {"message": "Danh sách mặt hàng rỗng"}
 
 
@@ -454,6 +464,48 @@ async def add_new_mathang(
             "tendvt": tendvt,
             "hinhanh": f"{IMAGEDIR}/products/{hinhanh.filename}",
             "madaily": pmadaily,
+            "maloaimathang": pmaloaimathang,
+        }
+        crud.add_new_mathang(**param_list)
+    except Exception as e:
+        match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
+        detail = match.group(0).strip()
+
+        if detail == "DETAIL:  Key (tenmathang)=({}) already exists.".format(
+            tenmathang
+        ):
+            return {"message": "Tên mặt hàng đã tồn tại"}
+    return {"message": "Thêm mặt hàng thành công"}
+
+
+@app.post("/mathang_staff/them")
+async def add_new_mathang(
+    tenmathang: str = Form(...),
+    dongia: int = Form(...),
+    soluongton: Decimal = Form(...),
+    tendvt: str = Form(...),
+    tenloaimathang: str = Form(...),
+    madaily: str = Form(...),
+    hinhanh: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+    try:
+        # Getting maloaimathang by tenloaimathang
+        pmaloaimathang = crud.get_maloaimathang_by_tenloaimathang(db, tenloaimathang)
+
+        # Solving image
+        contents = await hinhanh.read()
+        with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
+            file.write(contents)
+
+        # Save data
+        param_list = {
+            "tenmathang": tenmathang,
+            "soluongton": soluongton,
+            "dongia": dongia,
+            "tendvt": tendvt,
+            "hinhanh": f"{IMAGEDIR}/products/{hinhanh.filename}",
+            "madaily": madaily,
             "maloaimathang": pmaloaimathang,
         }
         crud.add_new_mathang(**param_list)
@@ -505,6 +557,55 @@ async def update_mathang(
             "tendvt": tendvt,
             "hinhanh": image_dir,
             "madaily": pmadaily,
+            "maloaimathang": pmaloaimathang,
+        }
+        crud.update_mathang(**param_list)
+    except Exception as e:
+        match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
+        detail = match.group(0).strip()
+
+        if detail == "DETAIL:  Key (tenmathang)=({}) already exists.".format(
+            tenmathang
+        ):
+            return {"message": "Tên mặt hàng đã tồn tại"}
+    return {"message": "Cập nhật mặt hàng thành công"}
+
+
+@app.put("/mathang_staff/capnhat/{mamathang}")
+async def update_mathang(
+    mamathang: int,
+    tenmathang: str = Form(...),
+    dongia: int = Form(...),
+    soluongton: Decimal = Form(...),
+    tendvt: str = Form(...),
+    tenloaimathang: str = Form(...),
+    madaily: str = Form(...),
+    hinhanh: Union[UploadFile, str] = File(...),
+    db: Session = Depends(get_db),
+):
+    try:
+        # Getting maloaimathang by tenloaimathang
+        pmaloaimathang = crud.get_maloaimathang_by_tenloaimathang(db, tenloaimathang)
+
+
+        # Solving image
+        image_dir = ""
+        if hinhanh != "null":
+
+            image_dir = f"{IMAGEDIR}products/{hinhanh.filename}"
+            contents = await hinhanh.read()
+            with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
+                file.write(contents)
+
+        # Save data
+        param_list = {
+            "mamathang": mamathang,
+            "tenmathang": tenmathang,
+            "soluongton": soluongton,
+            "dongia": dongia,
+            "tendvt": tendvt,
+            "hinhanh": image_dir,
+            "madaily": madaily,
             "maloaimathang": pmaloaimathang,
         }
         crud.update_mathang(**param_list)

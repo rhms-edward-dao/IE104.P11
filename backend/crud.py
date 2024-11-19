@@ -286,6 +286,7 @@ def get_mathang_by_madaily(db: Session, pMaDaiLy: int):
         )
         .filter(
             models.Mathang.maloaimathang == models.Loaimathang.maloaimathang,
+            models.Mathang.madaily == models.Daily.madaily,
             models.Mathang.madaily == pMaDaiLy,
         )
         .all()

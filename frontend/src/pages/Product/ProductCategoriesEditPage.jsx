@@ -67,7 +67,7 @@ const ProductCategoriesEditPage = () => {
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex items-center gap-40">
-          <NavLink to={"/product-categorys"}>
+          <NavLink to={"/products"}>
             <button>
               <img
                 src={theme === "light" ? GoBackIcon : GoBackDarkIcon}

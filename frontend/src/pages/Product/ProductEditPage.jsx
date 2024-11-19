@@ -8,7 +8,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 // Import Assets Here
 import {
   getProductById,
-  updateProduct,
+  updateProductOnlyStaff,
 } from "../../assets/Products/ProductData";
 import { getAllCategoryName } from "../../assets/Products/ProductCategoryData";
 import { getAllStoreName } from "../../assets/Stores/StoreData";
@@ -19,9 +19,11 @@ import Header from "../../components/Header";
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
+import { useAuth } from "../../contexts/AuthContext";
 
 const ProductStaffEditPage = () => {
   // Variable here
+  const { userInfo } = useAuth();
   // // For Theme Mode
   const { theme } = useTheme();
   // // For Multi-Language
@@ -43,7 +45,6 @@ const ProductStaffEditPage = () => {
     []
   );
 
-  const [currentStoreName, setCurrentStoreName] = useState("");
   const [existedStoreName, setExistedStoreName] = useState([]);
 
   const [currentImage, setCurrentImage] = useState();
@@ -63,7 +64,6 @@ const ProductStaffEditPage = () => {
       setCurrentStockQuantity(currentProduct.Mathang.soluongton);
       setCurrentUnit(currentProduct.Mathang.tendvt);
       setCurrentProductCategoryName(currentProduct.tenloaimathang);
-      setCurrentStoreName(currentProduct.tendaily);
 
       if (currentProduct.Mathang.hinhanh !== null) {
         setCurrentImage(currentProduct.Mathang.hinhanh);
@@ -91,7 +91,6 @@ const ProductStaffEditPage = () => {
     mamathang,
     tenmathang,
     tenloaimathang,
-    tendaily,
     dongia,
     soluongton,
     tendvt,
@@ -137,13 +136,13 @@ const ProductStaffEditPage = () => {
       let item = {
         tenmathang: tenmathang,
         tenloaimathang: tenloaimathang,
-        tendaily: tendaily,
+        madaily: userInfo.storeID,
         dongia: dongia,
         soluongton: soluongton,
         tendvt: tendvt,
         hinhanh: hinhanh,
       };
-      const data = await updateProduct(mamathang, item);
+      const data = await updateProductOnlyStaff(mamathang, item);
       if (data.message === "Cập nhật mặt hàng thất bại") {
         alert("Cập nhật mặt hàng thất bại");
       } else if (data.message === "Tên mặt hàng đã tồn tại") {
@@ -162,7 +161,7 @@ const ProductStaffEditPage = () => {
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex items-center gap-40">
-          <NavLink to={"/product-categorys"}>
+          <NavLink to={"/products"}>
             <button>
               <img
                 src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
@@ -183,7 +182,6 @@ const ProductStaffEditPage = () => {
                 productId,
                 currentProductName,
                 currentProductCategoryName,
-                currentStoreName,
                 currentUnitPrice,
                 currentStockQuantity,
                 currentUnit,
@@ -290,31 +288,7 @@ const ProductStaffEditPage = () => {
                 </>
               ))}
             </select>
-          </div>
-          {/* Select store name */}
-          <div className="space-y-4">
-            <label
-              className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="store-name-edit"
-            >
-              {SF_Products.Columns.Col6}
-            </label>
-            <select
-              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="store-name-edit"
-              name="store-name-edit"
-              value={currentStoreName}
-              onChange={(e) => setCurrentStoreName(e.target.value)}
-            >
-              {existedStoreName.map((item) => (
-                <>
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                </>
-              ))}
-            </select>
-          </div>
+          </div>        
           {/* Update image */}
           <div className="space-y-4">
             <label
