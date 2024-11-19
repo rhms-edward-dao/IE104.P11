@@ -45,6 +45,7 @@ def get_taikhoan_by_tentaikhoan_and_matkhau(
         .first()
     )
 
+
 def create_taikhoan(pTenTaiKhoan: str, pMatKhau: str):
     try:
         with engine.connect().execution_options(autocommit=True) as connection:
@@ -55,12 +56,15 @@ def create_taikhoan(pTenTaiKhoan: str, pMatKhau: str):
                     VALUES
                     ( (%s), (%s), (%s) )
                     RETURNING mataikhoan
-                """, (pTenTaiKhoan, pMatKhau, True))
+                """,
+                (pTenTaiKhoan, pMatKhau, True),
+            )
             mataikhoan = result.fetchone()[0]
             return mataikhoan
     except Exception as e:
         return e
     return None
+
 
 def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
     try:
@@ -69,26 +73,29 @@ def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
                 """
                     INSERT INTO taikhoan_nhavien VALUES
                     ( (%s), (%s) )
-                """, (pMaNhanVien, pMaTaiKhoan))
+                """,
+                (pMaNhanVien, pMaTaiKhoan),
+            )
     except Exception as e:
         return e
     return None
 
+
 def update_taikhoan(**param_list):
     with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute(
+        connection.execute(
             """
                 UPDATE NHANVIEN
                 SET
                    hoten = (%s),
                    ngaysinh = (%s)
                 WHERE manhanvien = (%s)
-            """, 
-                param_list["hoten"],
-                param_list["ngaysinh"],
-                param_list["manhanvien"]
-            )
-            connection.execute(
+            """,
+            param_list["hoten"],
+            param_list["ngaysinh"],
+            param_list["manhanvien"],
+        )
+        connection.execute(
             """
                 UPDATE NHANVIEN_DIACHI
                 SET
@@ -97,23 +104,24 @@ def update_taikhoan(**param_list):
                    vido = (%s)
                 WHERE manhanvien = (%s)
             """,
-                param_list["diachi"],
-                param_list["kinhdo"],
-                param_list["vido"],
-                param_list["manhanvien"]
-            )
+            param_list["diachi"],
+            param_list["kinhdo"],
+            param_list["vido"],
+            param_list["manhanvien"],
+        )
     if param_list["hinhanh"] != "":
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(
-            """
+                """
                 UPDATE NHANVIEN
                 SET
                    hinhanh = (%s)
                 WHERE manhanvien = (%s)
-            """, 
+            """,
                 param_list["hinhanh"],
-                param_list["manhanvien"]
+                param_list["manhanvien"],
             )
+
 
 def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
     try:
@@ -122,7 +130,13 @@ def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
             .filter(models.t_taikhoan_nhavien.c.mataikhoan == pMaTaiKhoan)
             .first()[0]
         )
-    
+
+        get_madaily = (
+            db.query(models.Nhanvien.madaily)
+            .filter(models.Nhanvien.manhanvien == get_manhanvien)
+            .first()[0]
+        )
+
         get_tennhanvien = (
             db.query(models.Nhanvien.hoten)
             .filter(models.Nhanvien.manhanvien == get_manhanvien)
@@ -149,6 +163,7 @@ def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
         "isStaff": True,
         "capdo": get_capdo,
         "manhanvien": get_manhanvien,
+        "madaily": get_madaily,
         "tennhanvien": get_tennhanvien,
     }
 
@@ -263,6 +278,20 @@ def get_mathang_by_mamathang(db: Session, pMaMatHang: int):
     )
 
 
+# Get mathang by store's id
+def get_mathang_by_madaily(db: Session, pMaDaiLy: int):
+    return (
+        db.query(
+            models.Mathang, models.Loaimathang.tenloaimathang, models.Daily.tendaily
+        )
+        .filter(
+            models.Mathang.maloaimathang == models.Loaimathang.maloaimathang,
+            models.Mathang.madaily == pMaDaiLy,
+        )
+        .all()
+    )
+
+
 # Add New MATHANG
 def add_new_mathang(**param_list):
     print(param_list)
@@ -339,102 +368,142 @@ def update_mathang(**param_list):
                 param_list["mamathang"],
             )
 
+
 # QUITAC
 def get_all_quitac(db: Session):
-    return db.query(models.t_quitac.c.sodailytoidamoiquan, models.t_quitac.c.tiledongiaban, models.t_quitac.c.sothietbitoidataikhoan).first()
+    return db.query(
+        models.t_quitac.c.sodailytoidamoiquan,
+        models.t_quitac.c.tiledongiaban,
+        models.t_quitac.c.sothietbitoidataikhoan,
+    ).first()
+
+
 def update_quitac(db: Session, pItems: schemas.QUITACupdate):
     try:
         with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute("""
+            connection.execute(
+                """
                 UPDATE QUITAC
                     SET
                     sothietbitoidataikhoan = (%s),
                     sodailytoidamoiquan = (%s),
                     tiledongiaban = (%s)
-            """,        
-            pItems.sothietbitoidataikhoan,
-            pItems.sodailytoidamoiquan,
-            pItems.tiledongiaban)
+            """,
+                pItems.sothietbitoidataikhoan,
+                pItems.sodailytoidamoiquan,
+                pItems.tiledongiaban,
+            )
     except:
         return "cập nhật thất bại"
     return "Cập nhật thành công"
+
 
 # LOAIDAILY
 # Get all tenloaidaily in Loaidaily
 def get_all_tenloaidaily():
     with engine.connect().execution_options(autocommit=True) as connection:
-        results = connection.execute("""
+        results = connection.execute(
+            """
                                         select distinct tenloaidaily
                                         from Loaidaily;
-                                    """)
+                                    """
+        )
     results_list = [row for row in results]
     return results_list
 
+
 # Get maloaidaily by tenloaidaily
 def get_maloaidaily_by_tenloaidaily(db: Session, pTenLoaiDaiLy: str):
-    return db.query(models.Loaidaily.maloaidaily) \
-        .filter(models.Loaidaily.tenloaidaily == pTenLoaiDaiLy) \
+    return (
+        db.query(models.Loaidaily.maloaidaily)
+        .filter(models.Loaidaily.tenloaidaily == pTenLoaiDaiLy)
         .first()[0]
+    )
+
 
 # DAILY
 # Get all in DAILY
 def get_all_daily(db: Session):
     # Getting sotiennotoida field from LOAIDAILY and diachi field from DAILY_DIACHI
     try:
-        get_db = db.query(models.Daily, models.Loaidaily.tenloaidaily, models.DailyDiachi.diachi, models.DailyDiachi.kinhdo, models.DailyDiachi.vido) \
-            .filter(models.Loaidaily.maloaidaily == models.Daily.maloaidaily,
-                models.DailyDiachi.madaily == models.Daily.madaily) \
+        get_db = (
+            db.query(
+                models.Daily,
+                models.Loaidaily.tenloaidaily,
+                models.DailyDiachi.diachi,
+                models.DailyDiachi.kinhdo,
+                models.DailyDiachi.vido,
+            )
+            .filter(
+                models.Loaidaily.maloaidaily == models.Daily.maloaidaily,
+                models.DailyDiachi.madaily == models.Daily.madaily,
+            )
             .all()
-        return get_db    
+        )
+        return get_db
     except:
         return None
+
 
 # Get all tendaily
 def get_all_tendaily(db: Session):
     return db.query(models.Daily.tendaily).distinct().all()
 
+
 # Get madaily by tendaily
 def get_madaily_by_tendaily(db: Session, pTenDaiLy: str):
-    return db.query(models.Daily.madaily) \
-        .filter(models.Daily.tendaily == pTenDaiLy) \
+    return (
+        db.query(models.Daily.madaily)
+        .filter(models.Daily.tendaily == pTenDaiLy)
         .first()[0]
+    )
+
 
 # Get Daily's hinhanh
 def get_daily_hinhanh(db: Session):
     return db.query(models.Daily.hinhanh).all()
 
+
 # Add DAILY
 def get_daily_by_madaily(pMadaiLy: int):
     with engine.connect().execution_options(autocommit=True) as connection:
-        results = connection.execute("""
+        results = connection.execute(
+            """
                         SELECT tendaily, ngaytiepnhan, tenloaidaily, sodienthoai, tenquan, tenthanhpho, diachi, hinhanh
                         FROM Daily, Loaidaily, daily_diachi, Quan
                         WHERE Daily.maloaidaily = Loaidaily.maloaidaily
                         AND Daily.madaily = daily_diachi.madaily
                         AND daily_diachi.maquan = Quan.maquan
                         AND Daily.madaily = (%s);
-                            """, pMadaiLy)
+                            """,
+            pMadaiLy,
+        )
         results_list = [item for item in results]
         return results_list
 
+
 def add_daily(**param_list):
     with engine.connect().execution_options(autocommit=True) as connection:
-        connection.execute("""
+        connection.execute(
+            """
             INSERT INTO Daily
             (tendaily, maloaidaily, ngaytiepnhan, sodienthoai, hinhanh) 
             VALUES
             ( (%s), (%s), (%s), (%s), (%s) );
-        """, 
-        param_list["tendaily"],
-        param_list["maloaidaily"],
-        param_list["ngaytiepnhan"],                        
-        param_list["sodienthoai"],
-        param_list["hinhanh"])
+        """,
+            param_list["tendaily"],
+            param_list["maloaidaily"],
+            param_list["ngaytiepnhan"],
+            param_list["sodienthoai"],
+            param_list["hinhanh"],
+        )
+
 
 def update_daily(**param_list):
-    if param_list["hinhanh"] == '':
+    if param_list["hinhanh"] == "":
         with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute("""
+            connection.execute(
+                """
                 UPDATE DAILY
                 SET 
                     tendaily = (%s),
@@ -442,15 +511,17 @@ def update_daily(**param_list):
                     ngaytiepnhan = (%s),
                     sodienthoai = (%s)
                 WHERE madaily = (%s);
-            """, 
-            param_list["tendaily"],
-            param_list["maloaidaily"],
-            param_list["ngaytiepnhan"],
-            param_list["sodienthoai"],
-            param_list["madaily"])
+            """,
+                param_list["tendaily"],
+                param_list["maloaidaily"],
+                param_list["ngaytiepnhan"],
+                param_list["sodienthoai"],
+                param_list["madaily"],
+            )
     else:
         with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute("""
+            connection.execute(
+                """
                 UPDATE DAILY
                 SET 
                     tendaily = (%s),
@@ -459,42 +530,72 @@ def update_daily(**param_list):
                     sodienthoai = (%s),
                     hinhanh = (%s)
                 WHERE madaily = (%s);
-            """, 
-            param_list["tendaily"],
-            param_list["maloaidaily"],
-            param_list["ngaytiepnhan"],
-            param_list["sodienthoai"],
-            param_list["hinhanh"],
-            param_list["madaily"])
+            """,
+                param_list["tendaily"],
+                param_list["maloaidaily"],
+                param_list["ngaytiepnhan"],
+                param_list["sodienthoai"],
+                param_list["hinhanh"],
+                param_list["madaily"],
+            )
+
 
 def delete_daily_daily_diachi(**param_list):
     with engine.connect().execution_options(autocommit=True) as connection:
-        connection.execute("""
+        connection.execute(
+            """
             DELETE FROM (%s)
             WHERE (%s) = (%s);                           
-        """, 
-        param_list["param1"],
-        param_list["param2"],
-        param_list["param3"])
+        """,
+            param_list["param1"],
+            param_list["param2"],
+            param_list["param3"],
+        )
 
     # NHANVIEN
+
+
 # Get all nhanvien
 def get_all_nhanvien(db: Session):
-    return db.query(models.Nhanvien, models.Chucvu.tenchucvu, models.NhanvienDiachi.diachi, models.Daily.tendaily, models.NhanvienDiachi.kinhdo, models.NhanvienDiachi.vido) \
-        .filter(models.Nhanvien.manhanvien == models.NhanvienChucvu.manhanvien,
-                models.NhanvienChucvu.machucvu == models.Chucvu.machucvu,
-                models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien,
-                models.Nhanvien.madaily == models.Daily.madaily) \
+    return (
+        db.query(
+            models.Nhanvien,
+            models.Chucvu.tenchucvu,
+            models.NhanvienDiachi.diachi,
+            models.Daily.tendaily,
+            models.NhanvienDiachi.kinhdo,
+            models.NhanvienDiachi.vido,
+        )
+        .filter(
+            models.Nhanvien.manhanvien == models.NhanvienChucvu.manhanvien,
+            models.NhanvienChucvu.machucvu == models.Chucvu.machucvu,
+            models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien,
+            models.Nhanvien.madaily == models.Daily.madaily,
+        )
         .all()
+    )
+
+
 # Get manhanvien by email
 def get_manhanvien_by_email(db: Session, pEmail: str):
-    return db.query(models.Nhanvien.manhanvien) \
-        .filter(models.Nhanvien.email == pEmail) \
+    return (
+        db.query(models.Nhanvien.manhanvien)
+        .filter(models.Nhanvien.email == pEmail)
         .first()
+    )
+
 
 # Get nhanvien by manhanvien
 def get_nhanvien_by_manhanvien(db: Session, pMaNhanVien: int):
-    return db.query(models.Nhanvien, models.Quan.tenquan, models.Quan.tenthanhpho, models.Daily.tendaily, models.Chucvu.tenchucvu, models.NhanvienDiachi.diachi) \
+    return (
+        db.query(
+            models.Nhanvien,
+            models.Quan.tenquan,
+            models.Quan.tenthanhpho,
+            models.Daily.tendaily,
+            models.Chucvu.tenchucvu,
+            models.NhanvienDiachi.diachi,
+        )
         .filter(
             models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien,
             models.NhanvienDiachi.maquan == models.Quan.maquan,
@@ -502,13 +603,16 @@ def get_nhanvien_by_manhanvien(db: Session, pMaNhanVien: int):
             models.NhanvienChucvu.machucvu == models.Chucvu.machucvu,
             models.Nhanvien.madaily == models.Daily.madaily,
             models.Nhanvien.manhanvien == pMaNhanVien,
-            models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien
-        ) \
+            models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien,
+        )
         .first()
+    )
+
 
 def get_nhanvien_chitiet_by_manhanvien(db: Session, pMaNhanVien: int):
     with engine.connect().execution_options(auto_commit=True) as connection:
-        result = connection.execute("""
+        result = connection.execute(
+            """
             SELECT
                 nhanvien.hinhanh, hoten, ngaysinh, nhanvien.sodienthoai, email, diachi,
                 tenchucvu, capdo, luong, ngaybatdau, thoihan,
@@ -520,29 +624,37 @@ def get_nhanvien_chitiet_by_manhanvien(db: Session, pMaNhanVien: int):
                 and daily.madaily = nhanvien.madaily
                 and nhanvien.manhanvien = (%s)
         """,
-        pMaNhanVien)            
+            pMaNhanVien,
+        )
         return result.fetchone()
+
+
 # Add new Staff
 def add_nhanvien(**param_list):
     with engine.connect().execution_options(auto_commit=True) as connection:
-        result = connection.execute("""
+        result = connection.execute(
+            """
             INSERT INTO NHANVIEN (madaily, hoten, ngaysinh, sodienthoai, email, hinhanh)
             VALUES
             ( (%s), (%s), (%s), (%s), (%s), (%s))
             RETURNING manhanvien;
         """,
-        param_list["madaily"],
-        param_list["hoten"],
-        param_list["ngaysinh"],
-        param_list["sodienthoai"],
-        param_list["email"],
-        param_list["hinhanh"])        
+            param_list["madaily"],
+            param_list["hoten"],
+            param_list["ngaysinh"],
+            param_list["sodienthoai"],
+            param_list["email"],
+            param_list["hinhanh"],
+        )
         return result.fetchone()[0]
+
+
 # Update Nhanvien
 def update_nhanvien(manhanvien: int, **param_list):
-    if param_list["hinhanh"] != '':        
+    if param_list["hinhanh"] != "":
         with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute("""
+            connection.execute(
+                """
                     UPDATE NHANVIEN
                     SET
                         hoten = (%s),
@@ -553,16 +665,18 @@ def update_nhanvien(manhanvien: int, **param_list):
                         hinhanh = (%s)
                     WHERE manhanvien = (%s);
             """,
-            param_list["hoten"],
-            param_list["madaily"],
-            param_list["ngaysinh"],
-            param_list["sodienthoai"],
-            param_list["email"],
-            param_list["hinhanh"],
-            manhanvien)
+                param_list["hoten"],
+                param_list["madaily"],
+                param_list["ngaysinh"],
+                param_list["sodienthoai"],
+                param_list["email"],
+                param_list["hinhanh"],
+                manhanvien,
+            )
     else:
         with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute("""
+            connection.execute(
+                """
                     UPDATE NHANVIEN
                     SET
                         hoten = (%s),
@@ -572,26 +686,35 @@ def update_nhanvien(manhanvien: int, **param_list):
                         email = (%s)
                     WHERE manhanvien = (%s);
             """,
-            param_list["hoten"],
-            param_list["madaily"],
-            param_list["ngaysinh"],
-            param_list["sodienthoai"],
-            param_list["email"],
-            manhanvien)
+                param_list["hoten"],
+                param_list["madaily"],
+                param_list["ngaysinh"],
+                param_list["sodienthoai"],
+                param_list["email"],
+                manhanvien,
+            )
+
 
 # CHUCVU
 # Get all tenchucvu
 def get_all_tenchucvu(db: Session):
     return db.query(models.Chucvu.tenchucvu).distinct().all()
+
+
 # Get machucvu by tenchucvu
 def get_machucvu_by_tenchucvu(db: Session, pTenChucVu: str):
-    return db.query(models.Chucvu.machucvu) \
-        .filter(models.Chucvu.tenchucvu == pTenChucVu) \
+    return (
+        db.query(models.Chucvu.machucvu)
+        .filter(models.Chucvu.tenchucvu == pTenChucVu)
         .first()[0]
+    )
+
+
 # Update CHUCVU
 def update_chucvu(machucvu: int, **param_list):
     with engine.connect().execution_options(autocommit=True) as connection:
-        connection.execute("""
+        connection.execute(
+            """
             UPDATE CHUCVU
                            SET
                            tenchucvu = (%s),
@@ -600,26 +723,38 @@ def update_chucvu(machucvu: int, **param_list):
                            ngaycapnhat = (%s)
             WHERE machucvu = (%s);
         """,
-        param_list["tenchucvu"],
-        param_list["capdo"],
-        param_list["luong"],
-        param_list["ngaycapnhat"],
-        machucvu)
+            param_list["tenchucvu"],
+            param_list["capdo"],
+            param_list["luong"],
+            param_list["ngaycapnhat"],
+            machucvu,
+        )
+
+
 # Khachhang
-def update_khachhang(db: Session, makhachhang: int, tenkhachhang: str, sodienthoai: str):
+def update_khachhang(
+    db: Session, makhachhang: int, tenkhachhang: str, sodienthoai: str
+):
     with engine.connect().execution_options(autocommit=True) as connection:
-        connection.execute("""
+        connection.execute(
+            """
             UPDATE KHACHHANG
                         SET
                         tenkhachhang = (%s),
                         sodienthoai= (%s)
             WHERE makhachhang = (%s);
         """,
-        tenkhachhang,
-        sodienthoai,
-        makhachhang)    
+            tenkhachhang,
+            sodienthoai,
+            makhachhang,
+        )
+
 
 # Baotri
 def get_baotri_by_madaily(db: Session, madaily: int):
-    return db.query(models.Baotridaily).filter(models.Baotridaily.madaily == madaily).all()
+    return (
+        db.query(models.Baotridaily).filter(models.Baotridaily.madaily == madaily).all()
+    )
+
+
 # For Import and Export

@@ -11,8 +11,18 @@ export const getAllProducts = async () => {
 export const getProductById = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/mathang/mamathang/${id}`,
+      `http://127.0.0.1:8000/mathang/mamathang/${id}`
     );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch error: ", error);
+  }
+};
+
+export const getProductByStoreId = async (id) => {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/mathang/madaily/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -64,7 +74,7 @@ export const updateProduct = async (id, item) => {
       {
         method: "PUT",
         body: formData,
-      },
+      }
     );
     const data = await response.json();
     return data;

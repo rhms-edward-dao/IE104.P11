@@ -36,19 +36,24 @@ function Login() {
         const data = await response.json();
 
         if (data.success) {
+          console.log(data);
           alert("Đăng nhập thành công");
           login({
             userName: data.staffName,
             userID: data.staffID,
-            isAdmin: data.isAdmin
+            storeID: data.storeID,
+            isAdmin: data.isAdmin,
           });
-          // Save dât to SessionStorage
+          // Save data to SessionStorage
           sessionStorage.setItem("isLoggedIn", "true");
-          sessionStorage.setItem("userInfo", JSON.stringify({
-            userName: data.staffName,
-            userID: data.staffID,
-            isAdmin: data.isAdmin
-          }));
+          sessionStorage.setItem(
+            "userInfo",
+            JSON.stringify({
+              userName: data.staffName,
+              userID: data.staffID,
+              isAdmin: data.isAdmin,
+            })
+          );
           // Set data for authentication here
           if (data.isAdmin) {
             isAdminYes();

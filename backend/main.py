@@ -141,6 +141,7 @@ def account_login(
             return {
                 "success": True,
                 "staffID": db_get_nhanvien_capdo["manhanvien"],
+                "storeID": db_get_nhanvien_capdo["madaily"],
                 "staffName": db_get_nhanvien_capdo["tennhanvien"],
                 "isAdmin": isAdmin,
             }
@@ -155,28 +156,30 @@ def account_sign_up(
     tentaikhoan: str = Body(..., embed=True),
     matkhau: str = Body(..., embed=True),
     email: str = Body(..., embed=True),
-    db: Session = Depends(get_db)
-):  
-    # Create new account        
+    db: Session = Depends(get_db),
+):
+    # Create new account
     db_add = crud.create_taikhoan(tentaikhoan, matkhau)
 
     match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(db_add), re.DOTALL)
-    if (match):        
+    if match:
         detail = match.group(0).strip()
         if detail == "DETAIL:  Key (tentaikhoan)=({}) already exists.".format(
             tentaikhoan
         ):
-            return { "message": "Tên tài khoản đã tồn tại" }
-    
+            return {"message": "Tên tài khoản đã tồn tại"}
+
     # Link taikhoan to nhanvien
-        # Check if email exists
-    db_check_email = api_operations.get_one_parameter(db, models.Nhanvien, models.Nhanvien.email, email, "nhân viên")    
-    if db_check_email:                
+    # Check if email exists
+    db_check_email = api_operations.get_one_parameter(
+        db, models.Nhanvien, models.Nhanvien.email, email, "nhân viên"
+    )
+    if db_check_email:
         # Add a record refer to relation between staff and account in taikhoan_nhavien
         crud.link_taikhoan_nhanvien(db_add, db_check_email.manhanvien)
-        return { "message": "Tạo tài khoản thành công" }
-    else:    
-        return { "message": "Email không tồn tại trong database" }
+        return {"message": "Tạo tài khoản thành công"}
+    else:
+        return {"message": "Email không tồn tại trong database"}
 
     # Email verification feature
 
@@ -190,6 +193,7 @@ def get_taikhoan_all(db: Session = Depends(get_db)):
         return db_get_taikhoan_all
     raise HTTPException(400, "Danh sách tài khoản rỗng")
 
+
 @app.put("/taikhoan/capnhat/{manhanvien}")
 async def update_taikhoan(
     manhanvien: int,
@@ -198,17 +202,17 @@ async def update_taikhoan(
     ngaysinh: str = Form(...),
     sodienthoai: str = Form(...),
     email: str = Form(...),
-    diachi: str = Form(...),    
-    db: Session = Depends(get_db)
-):    
+    diachi: str = Form(...),
+    db: Session = Depends(get_db),
+):
     try:
         # Get longtitude and latitude
-        key = "dd56554106174942acce0b3bd660a32a"        
+        key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
         kinhdo = results[0]["geometry"]["lng"]
-        vido = results[0]["geometry"]["lat"]        
+        vido = results[0]["geometry"]["lat"]
         # Save image
         image_dir = ""
         if hinhanh != "undefined":
@@ -216,8 +220,8 @@ async def update_taikhoan(
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}staffs/{hinhanh.filename}", "wb") as file:
                 file.write(contents)
-            
-        # Save data        
+
+        # Save data
         param_list = {
             "manhanvien": manhanvien,
             "hoten": hoten,
@@ -230,12 +234,14 @@ async def update_taikhoan(
             "hinhanh": image_dir,
         }
         crud.update_taikhoan(**param_list)
-        return { "success": True, "message": "Cập nhật thành công." }
+        return {"success": True, "message": "Cập nhật thành công."}
     except Exception as e:
         print(e)
-        return { "success": False, "message": "Có lỗi xảy ra trong quá trình cập nhật. Hãy thử lại sau." }
+        return {
+            "success": False,
+            "message": "Có lỗi xảy ra trong quá trình cập nhật. Hãy thử lại sau.",
+        }
 
-    
     # except Exception as e:
     #     match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
     #     detail = match.group(0).strip()
@@ -245,6 +251,7 @@ async def update_taikhoan(
     #     ):
     #         return {"message": "Tên mặt hàng đã tồn tại"}
     # return {"message": "Cập nhật mặt hàng thành công"}
+
 
 # QUAN manipulating
 @app.get("/quan")  # Used for loading page
@@ -392,6 +399,20 @@ def get_mathang_all(db: Session = Depends(get_db)):
 @app.get("/mathang/mamathang/{mamathang}")
 def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
     get_db = crud.get_mathang_by_mamathang(db, mamathang)
+    if get_db:
+        if get_db[0].hinhanh:
+            with open(get_db[0].hinhanh, "rb") as f:
+                data = f.read()
+                data_to_base64 = base64.b64encode(data)
+            get_db[0].hinhanh = data_to_base64
+        return get_db
+    return {"message": "Danh sách mặt hàng rỗng"}
+
+
+# Minh: How ?????????? #######################################
+@app.get("/mathang/madaily/{madaily}")
+def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
+    get_db = crud.get_mathang_by_madaily(db, madaily)
     if get_db:
         if get_db[0].hinhanh:
             with open(get_db[0].hinhanh, "rb") as f:

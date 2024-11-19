@@ -10,6 +10,7 @@ import { useStoreTab } from "../../contexts/StoreTabState";
 import {
   getAllProducts,
   deleteProduct,
+  getProductByStoreId,
 } from "../../assets/Products/ProductData";
 import {
   getAllTypeOfProduct,
@@ -26,10 +27,11 @@ import PaginationButtons from "../../components/UI/PaginationButtons";
 // Import Icons Here
 import EditIcon from "../../images/icons/button/Edit.svg";
 import DeleteIcon from "../../images/icons/button/Delete.svg";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Products = () => {
   // Variables here
-  // // For Theme Mode and Switch Tab
+  // // For Theme Mode
   const { theme } = useTheme();
   // // For Multi-Language
   const { t } = useTranslation();
@@ -38,6 +40,8 @@ const Products = () => {
   const { Product, ProductCategory } = t("TabView");
   const { SearchBy, SF_Products, SF_ProductCategories } = t("SearchFilter");
   const { Add, Edit, Delete } = t("Buttons");
+  // // For Checking If Staff Account Or Not
+  const { userInfo } = useAuth();
   // // For tab state here
   const { isProductTab, activateProductTab, deactivateProductTab } =
     useStoreTab();
@@ -69,7 +73,9 @@ const Products = () => {
     const fetchData = async () => {
       try {
         // Get Exsisted Products
-        const existedProduct = await getAllProducts();
+        const existedProduct = (await userInfo.isAdmin)
+          ? getAllProducts()
+          : getProductByStoreId(userInfo.storeID);
         if (existedProduct.length === 0) {
           setProductData([]);
         } else {
