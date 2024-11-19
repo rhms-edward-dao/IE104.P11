@@ -71,7 +71,6 @@ import WarehouseExportPage from "./pages/Warehouse/WarehouseExportPage";
 
 import StoreManagement from "./pages/StoreManagement/StoreManagement";
 import StoreManagementEditPage from "./pages/StoreManagement/StoreManagementEditPage";
-import StoreManagementMaintainPage from "./pages/StoreManagement/StoreManagementMaintainPage";
 
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
@@ -175,7 +174,6 @@ function App() {
                             {/* Routes for Store Management - Only for Normal Staff*/}
                             <Route path="/store-management" element={<ProtectedRoute element={<StoreManagement />} />} />
                             <Route path="/store-management/store-management-edit-page" element={<ProtectedRoute element={<StoreManagementEditPage />} />} />
-                            <Route path="/store-management/store-management-maintain-page" element={<ProtectedRoute element={<StoreManagementMaintainPage />} />} />
                           </Routes>
                         </div>
                       </div>
