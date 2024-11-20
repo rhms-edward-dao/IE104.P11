@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from database import engine
 import models, schemas
 
@@ -468,17 +469,18 @@ def get_daily_hinhanh(db: Session):
 # Add DAILY
 def get_daily_by_madaily(pMadaiLy: int):
     with engine.connect().execution_options(autocommit=True) as connection:
-        results = connection.execute(
-            """
+        query = """
                         SELECT tendaily, ngaytiepnhan, tenloaidaily, sodienthoai, tenquan, tenthanhpho, diachi, hinhanh
                         FROM Daily, Loaidaily, daily_diachi, Quan
                         WHERE Daily.maloaidaily = Loaidaily.maloaidaily
                         AND Daily.madaily = daily_diachi.madaily
                         AND daily_diachi.maquan = Quan.maquan
-                        AND Daily.madaily = (%s);
-                            """,
-            pMadaiLy,
+                        AND Daily.madaily = {};
+                            """.format(
+            pMadaiLy
         )
+        results = connection.execute(text(query))
+
         results_list = [item for item in results]
         return results_list
 

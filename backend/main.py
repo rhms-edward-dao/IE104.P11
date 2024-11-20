@@ -796,7 +796,7 @@ def get_all_tendaily(db: Session = Depends(get_db)):
 @app.get("/daily/madaily/{madaily}")  # Used for updating
 def get_daily_by_madaily(madaily, db: Session = Depends(get_db)):
     get_db = crud.get_daily_by_madaily(madaily)
-
+    result = []
     if get_db != []:
         for item in get_db:
             if item[7]:
@@ -805,7 +805,19 @@ def get_daily_by_madaily(madaily, db: Session = Depends(get_db)):
                     data_to_base64 = base64.b64encode(data)
             else:
                 data_to_base64 = None
-        return {"Daily": get_db, "hinhanh": data_to_base64}
+            result.append(
+                {
+                    "tendaily": item[0],
+                    "ngaytiepnhan": item[1],
+                    "tenloaidaily": item[2],
+                    "sodienthoai": item[3],
+                    "tenquan": item[4],
+                    "tenthanhpho": item[5],
+                    "diachi": item[6],
+                    "hinhanh": data_to_base64,
+                }
+            )
+        return result
     return {"message": "Không tồn tại đại lý cần tìm"}
 
 
