@@ -93,7 +93,6 @@ export const deleteProduct = async (id) => {
   }
 };
 
-
 // For staff only
 export const addProductOnlyProduct = async (item) => {
   try {
