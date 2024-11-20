@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 
 // Import Contexts Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useStoreTab } from "../../contexts/StoreTabState";
 
 // Import Assets Here
 import {
-  getAllProducts,
   deleteProduct,
   getProductByStoreId,
 } from "../../assets/Products/ProductData";
@@ -27,7 +27,6 @@ import PaginationButtons from "../../components/UI/PaginationButtons";
 // Import Icons Here
 import EditIcon from "../../images/icons/button/Edit.svg";
 import DeleteIcon from "../../images/icons/button/Delete.svg";
-import { useAuth } from "../../contexts/AuthContext";
 
 const Products = () => {
   // Variables here
