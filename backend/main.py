@@ -400,22 +400,35 @@ def get_mathang_all(db: Session = Depends(get_db)):
 def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
     get_db = crud.get_mathang_by_mamathang(db, mamathang)
     if get_db:
-        if get_db[0].hinhanh:
-            with open(get_db[0].hinhanh, "rb") as f:
-                data = f.read()
-                data_to_base64 = base64.b64encode(data)
-            get_db[0].hinhanh = data_to_base64
-        return get_db
+        result = []
+        db_dict = get_db.Mathang.__dict__.copy()
+        if get_db.Mathang.hinhanh:
+            try:
+                with open(get_db.Mathang.hinhanh, "rb") as f:
+                    data = f.read()
+                    data_to_base64 = base64.b64encode(data)
+                    db_dict["hinhanh"] = data_to_base64
+            except:
+                db_dict["hinhanh"] = None
+
+        result.append(
+            {
+                "Mathang": db_dict,
+                "tenloaimathang": get_db.tenloaimathang,
+                "tendaily": get_db.tendaily,
+            }
+        )
+        return result
     return {"message": "Danh sách mặt hàng rỗng"}
 
 
 @app.get("/mathang/madaily/{madaily}")
 def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
-    get_db = crud.get_mathang_by_madaily(db, madaily)    
+    get_db = crud.get_mathang_by_madaily(db, madaily)
     if get_db:
         result = []
-        for item in get_db:        
-            item_dict = item.Mathang.__dict__.copy()     
+        for item in get_db:
+            item_dict = item.Mathang.__dict__.copy()
             if item.Mathang.hinhanh:
                 try:
                     with open(item.Mathang.hinhanh, "rb") as f:
@@ -423,12 +436,14 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
                         data_to_base64 = base64.b64encode(data)
                     item_dict["hinhanh"] = data_to_base64
                 except:
-                    item_dict["hinhanh"] = None                
-            result.append({
+                    item_dict["hinhanh"] = None
+            result.append(
+                {
                     "Mathang": item_dict,
                     "tenloaimathang": item.tenloaimathang,
-                    "tendaily": item.tendaily
-                })
+                    "tendaily": item.tendaily,
+                }
+            )
         return result
     return {"message": "Danh sách mặt hàng rỗng"}
 
@@ -586,7 +601,6 @@ async def update_mathang(
     try:
         # Getting maloaimathang by tenloaimathang
         pmaloaimathang = crud.get_maloaimathang_by_tenloaimathang(db, tenloaimathang)
-
 
         # Solving image
         image_dir = ""
