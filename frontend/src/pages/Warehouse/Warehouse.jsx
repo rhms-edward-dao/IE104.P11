@@ -4,9 +4,13 @@ import { useTranslation } from "react-i18next";
 
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
-import { getAllProducts } from "../../assets/Products/ProductData";
+import {
+  getAllProducts,
+  getProductByStoreId,
+} from "../../assets/Products/ProductData";
 import { WarehouseDataCard } from "../../assets/Warehouses/WarehouseDataCard";
 
 // Import Components Here
@@ -27,6 +31,8 @@ function Warehouse() {
   const { DC_Warehouses } = t("DataCard");
   const { SearchBy, SF_Products } = t("SearchFilter");
   const { Add, Edit, Delete } = t("Buttons");
+  // // For Checking If Staff Account Or Not
+  const { userInfo } = useAuth();
   // // For fetching products data of the warehouse
   const [productData, setProductData] = useState([]);
   // // For searching products of the warehouse
@@ -45,7 +51,7 @@ function Warehouse() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const existedProduct = await getAllProducts();
+        const existedProduct = await getProductByStoreId(userInfo.storeID);
         if (existedProduct.length === 0) {
           setProductData([]);
         } else {
@@ -197,9 +203,7 @@ function Warehouse() {
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
               <th scope="col"></th>
-              <th scop="col" className="py-5 border-r-2">
-                Hình ảnh
-              </th>
+              <th scop="col" className="py-5 border-r-2"></th>
               <th className="border-r-2 py-5" scope="col">
                 {SF_Products.Columns.Col1}
               </th>
@@ -223,14 +227,14 @@ function Warehouse() {
               <>
                 {currentProductItems.map((list, index) => (
                   <tr
-                    className="border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                    className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     key={index}
                   >
                     <td className="py-5 pl-3">
                       <input type="checkbox" />
                     </td>
 
-                    <td scope="row" className="py-5">
+                    <td scope="row" className="py-5 border-r-2">
                       <img
                         width="250px"
                         src={`data:image/jpeg;base64, ${list.Mathang.hinhanh}`}
@@ -238,25 +242,25 @@ function Warehouse() {
                         className="rounded 2xl:h-20 2xl:w-20"
                       />
                     </td>
-                    <td scope="row" className="border-r-2 py-5 text-lg">
+                    <td scope="row" className="border-r-2 py-5">
                       {list.Mathang.tenmathang}
                     </td>
-                    <td scope="row" className="border-r-2 py-5 text-lg">
+                    <td scope="row" className="border-r-2 py-5">
                       {list.Mathang.dongia}
                     </td>
-                    <td scope="row" className="border-r-2 py-5 text-lg">
+                    <td scope="row" className="border-r-2 py-5">
                       {list.Mathang.soluongton}
                     </td>
-                    <td scope="row" className="border-r-2 py-5 text-lg">
+                    <td scope="row" className="border-r-2 py-5">
                       {list.Mathang.tendvt}
                     </td>
-                    <td scope="row" className="border-r-2 py-5 text-lg">
+                    <td scope="row" className="border-r-2 py-5">
                       {list.tenloaimathang}
                     </td>
                     <td scope="row">
-                      <div className="flex justify-center gap-20">
+                      <div className="flex flex-wrap justify-center gap-5 my-5">
                         <NavLink
-                          className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                           to={"warehouse-import-page"}
                         >
                           <p className="hidden sm:hidden md:hidden lg:inline-block">
