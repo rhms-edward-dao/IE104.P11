@@ -1401,4 +1401,74 @@ def delete_chucvu(machucvu: int, db: Session = Depends(get_db)):
     )
 
 
-# Functions for export/ import here
+# PHIEUNHAPHANG & CHITIET_PNH manipulating
+@app.get("/phieunhaphang")
+def get_phieunhaphang_all(db: Session = Depends(get_db)):
+    get_all_phieunhaphang = crud.get_all_phieunhaphang(db)
+    result = []
+    # Sent to client reactjs
+    if get_all_phieunhaphang:
+        for item in get_all_phieunhaphang:
+            Phieunhaphang_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Phieunhaphang": Phieunhaphang_dict,
+                    "tendaily": item[1],
+                }
+            )
+        return result
+    return {"message": "Danh sách phiếu nhập hàng rỗng"}
+
+
+@app.get("/phieunhaphang/maphieunhap/{maphieunhap}")
+def get_chitiet_pnh_by_maphieunhap(maphieunhap: int, db: Session = Depends(get_db)):
+    get_db = crud.get_chitiet_pnh_by_maphieunhap(db, maphieunhap)
+    result = []
+    if get_db:
+        for item in get_db:
+            Chitiet_pnh_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Chitiet_pnh": Chitiet_pnh_dict,
+                    "tenmathang": item[1],
+                }
+            )
+        return result
+    return {"message": "Danh sách chi tiết phiếu nhập hàng rỗng"}
+
+
+# PHIEUXUATHANG & CHITIET_PXH manipulating
+@app.get("/phieuxuathang")
+def get_phieuxuathang_all(db: Session = Depends(get_db)):
+    get_all_phieuxuathang = crud.get_all_phieuxuathang(db)
+    result = []
+    # Sent to client reactjs
+    if get_all_phieuxuathang:
+        for item in get_all_phieuxuathang:
+            Phieuxuathang_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Phieuxuathang": Phieuxuathang_dict,
+                    "tendaily": item[1],
+                    "tenkhachhang": item[2],
+                }
+            )
+        return result
+    return {"message": "Danh sách phiếu xuất hàng rỗng"}
+
+
+@app.get("/phieuxuathang/maphieuxuat/{maphieuxuat}")
+def get_chitiet_pxh_by_maphieuxuat(maphieuxuat: int, db: Session = Depends(get_db)):
+    get_db = crud.get_chitiet_pxh_by_maphieuxuat(db, maphieuxuat)
+    result = []
+    if get_db:
+        for item in get_db:
+            Chitiet_pxh_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Chitiet_pxh": Chitiet_pxh_dict,
+                    "tenmathang": item[1],
+                }
+            )
+        return result
+    return {"message": "Danh sách chi tiết phiếu nhập hàng rỗng"}
