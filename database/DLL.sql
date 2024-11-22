@@ -150,9 +150,9 @@ create table PHIEUNHAPHANG (
 	MaPhieuNhap smallserial, -- Primary key, unique identifier for each record
 	MaDaiLy smallint not null,
 	NgayLapPhieu date default current_date, -- This date must be happened after NgayTiepNhan
-	TongTien decimal(12, 4) not null, -- constraint '(TongTien >= 0)' will be checked in frontend
+	TongTien decimal(12, 4) default 0, -- constraint '(TongTien >= 0)' will be checked in frontend
 	TienDaThanhToan decimal(12, 4) default 0,
-	TrinhTrang varchar(50) default 'Còn nợ',
+	TinhTrang varchar(50) default 'Còn nợ',
 	constraint pk_phieunhaphang primary key(MaPhieuNhap),
 	constraint fk_phieunhaphang_to_daily foreign key(MaDaiLy) references DAILY(MaDaiLy) on delete cascade
 );
@@ -173,7 +173,7 @@ create table CHITIET_PNH (
 create table PHIEUXUATHANG (
 	MaPhieuXuat smallserial, -- Primary key
 	NgayLapPhieu date default current_date,
-	TongTien decimal(12, 4) not null, -- constraint '(TongTien >= 0)' will be checked in frontend
+	TongTien decimal(12, 4) default 0, -- constraint '(TongTien >= 0)' will be checked in frontend
 	MaDaiLy smallint not null,
 	MaKhachHang smallint not null,
 	constraint pk_phieuxuathang primary key(MaPhieuXuat),

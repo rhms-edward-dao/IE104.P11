@@ -44,10 +44,7 @@ RETURNS TRIGGER AS $$
 BEGIN
     UPDATE MATHANG
     SET SoLuongTon = SoLuongTon + NEW.SoLuongNhap
-    WHERE NEW.MaMatHang = MATHANG.MaMatHang 
-    and MATHANG.MaDaiLy = DAILY.MaDaiLy
-    and NEW.MaPhieuNhap = PHIEUNHAPHANG.MaPhieuNhap
-    and PHIEUNHAPHANG.MaDaiLy = DAILY.MaDaiLy;
+    WHERE NEW.MaMatHang = MATHANG.MaMatHang;
     
     RETURN NEW;
 END;
@@ -64,10 +61,7 @@ RETURNS TRIGGER AS $$
 BEGIN
     UPDATE MATHANG
     SET SoLuongTon = SoLuongTon - NEW.SoLuongXuat
-    WHERE NEW.MaMatHang = MATHANG.MaMatHang
-    and MATHANG.MaDaiLy = DAILY.MaDaiLy
-    and NEW.MaPhieuXuat = PHIEUXUATHANG.MaPhieuXuat
-    and PHIEUXUATHANG.MaDaiLy = DAILY.MaDaiLy;
+    WHERE NEW.MaMatHang = MATHANG.MaMatHang;
 
     RETURN NEW;
 END;
@@ -89,7 +83,7 @@ DECLARE
 BEGIN
     -- Get value for tempSoTienNoToiDa
     SELECT SoTienNoToiDa::NUMERIC(12, 4) INTO tempSoTienNoToiDa 
-    FROM LOAIDAILY 
+    FROM LOAIDAILY, DAILY
     WHERE LOAIDAILY.MaLoaiDaiLy = DAILY.MaLoaiDaiLy
     AND DAILY.MaDaiLy = NEW.MaDaiLy;
 

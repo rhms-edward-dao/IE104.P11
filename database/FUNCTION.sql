@@ -19,12 +19,16 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION calculate_ct_pxh_thanhtien(vMaCT_PXH int) RETURNS NUMERIC(12, 4)
 AS $$
 DECLARE
+    MatHang_Nhap SMALLINT;
     SoLuong_pxh INT;
-    DonGia_pxh NUMERIC(12, 4);
+    DonGia_pnh NUMERIC(12, 4);
+    TiLe_DonGia NUMERIC(5, 5);
 BEGIN
     SELECT SoLuongXuat INTO SoLuong_pxh FROM CHITIET_PXH WHERE MaCT_PXH = vMaCT_PXH;
-    SELECT DonGiaXuat::NUMERIC(12, 4) INTO DonGia_pxh FROM CHITIET_PXH WHERE MaCT_PXH = vMaCT_PXH;
-    RETURN SoLuong_pxh * DonGia_pxh;
+    SELECT MaMatHang INTO MatHang_Nhap FROM CHITIET_PXH WHERE MaCT_PXH = vMaCT_PXH;
+    SELECT DonGiaNhap::NUMERIC(12, 4) INTO DonGia_pnh FROM CHITIET_PNH WHERE MaMatHang = MatHang_Nhap;
+    SELECT TiLeDonGiaBan::NUMERIC(5, 5) INTO TiLe_DonGia FROM QUITAC;
+    RETURN SoLuong_pxh * (DonGia_pnh / TiLe_DonGia);
 END;
 $$ LANGUAGE plpgsql;
 
