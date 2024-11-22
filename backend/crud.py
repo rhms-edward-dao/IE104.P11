@@ -760,4 +760,63 @@ def get_baotri_by_madaily(db: Session, madaily: int):
     )
 
 
-# For Import and Export
+# PHIEUNHAPHANG & CHITIET_PNH
+# Get all phieunhaphang
+def get_all_phieunhaphang(db: Session):
+    return (
+        db.query(
+            models.Phieunhaphang,
+            models.Daily.tendaily,
+        )
+        .filter(
+            models.Phieunhaphang.madaily == models.Daily.madaily,
+        )
+        .all()
+    )
+
+
+# Get all chitiet_pnh by phieunhaphang's id
+def get_chitiet_pnh_by_maphieunhap(db: Session, pMaPhieuNhap: int):
+    return (
+        db.query(
+            models.ChitietPnh,
+            models.Mathang.tenmathang,
+        )
+        .filter(
+            models.ChitietPnh.maphieunhap == pMaPhieuNhap,
+            models.ChitietPnh.mamathang == models.Mathang.mamathang,
+        )
+        .all()
+    )
+
+
+# PHIEUXUATHANG & CHITIET_PXH
+# Get all phieuxuathang
+def get_all_phieuxuathang(db: Session):
+    return (
+        db.query(
+            models.Phieuxuathang,
+            models.Daily.tendaily,
+            models.Khachhang.tenkhachhang,
+        )
+        .filter(
+            models.Phieuxuathang.madaily == models.Daily.madaily,
+            models.Phieuxuathang.makhachhang == models.Khachhang.makhachhang,
+        )
+        .all()
+    )
+
+
+# Get all chitiet_pxh by Phieuxuathang's id
+def get_chitiet_pxh_by_maphieuxuat(db: Session, pMaPhieuXuat: int):
+    return (
+        db.query(
+            models.ChitietPxh,
+            models.Mathang.tenmathang,
+        )
+        .filter(
+            models.ChitietPxh.maphieuxuat == pMaPhieuXuat,
+            models.ChitietPxh.mamathang == models.Mathang.mamathang,
+        )
+        .all()
+    )
