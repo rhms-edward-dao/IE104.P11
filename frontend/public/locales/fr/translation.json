@@ -22,6 +22,8 @@
       "Staffs": "Liste des employés",
       "Positions": "Liste des postes",
       "Customers": "Liste des clients",
+      "WarehouseImport": "Liste des bons de réception de marchandises",
+      "WarehouseExport": "Liste des bons de livraison de marchandises",
       "Account": "Compte"
     },
     "LanguageOptions": {
@@ -70,7 +72,9 @@
     "Product": "Produit",
     "ProductCategory": "Type de produit",
     "Staff": "Employés",
-    "Position": "Poste"
+    "Position": "Poste",
+    "Import": "Bon de réception des marchandises",
+    "Export": "Bon de livraison des marchandises"
   },
   "SearchFilter": {
     "SearchBy": "Rechercher par:",
@@ -182,6 +186,32 @@
         "Text1": "Rechercher par nom du client...",
         "Text2": "Rechercher par numéro de téléphone..."
       }
+    },
+    "SF_WarehouseImport": {
+      "Columns": {
+        "Col1": "Date de création de la note",
+        "Col2": "Montant total",
+        "Col3": "Montant payé",
+        "Col4": "Statut"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par date de création de la note...",
+        "Text2": "Recherche par montant total...",
+        "Text3": "Recherche par montant payé...",
+        "Text4": "Recherche par statut..."
+      }
+    },
+    "SF_WarehouseExport": {
+      "Columns": {
+        "Col1": "Date de création de la note",
+        "Col2": "Montant total",
+        "Col3": "Nom du client"
+      },
+      "Placeholders": {
+        "Text1": "Recherche par date de création de la note...",
+        "Text2": "Recherche par montant total...",
+        "Text3": "Recherche par nom du client..."
+      }
     }
   },
   "Buttons": {
@@ -192,7 +222,10 @@
     "Update": "Mise à jour",
     "Save": "Enregistrer les modifications",
     "Maintain": "Agent Maintenance",
-    "UploadImage": "Télécharger une photo"
+    "UploadImage": "Télécharger une photo",
+    "Import": "Importer",
+    "Export": "Exporter",
+    "Confirm": "Confirmer"
   },
   "AddPage": {
     "AP_Districts": {
@@ -214,10 +247,38 @@
       "Title": "Ajouter un type de produit"
     },
     "AP_Staff": {
-    "Title": "Ajouter un employé"
+      "Title": "Ajouter un employé"
     },
     "AP_Position": {
-        "Title": "Ajouter un poste"
+      "Title": "Ajouter un poste"
+    },
+    "AP_Import": {
+      "Title": "Ajouter un bon de réception de marchandises",
+      "Labels": {
+        "Lb1": "Saisissez la quantité de produits à importer",
+        "Lb2": "Produit",
+        "Lb3": "Quantité en stock",
+        "Lb4": "Quantité à importer"
+      },
+      "Placeholders": {
+        "Text1": "Saisissez la quantité à partir de ",
+        "Text2": "Sélectionnez le nom du produit"
+      }
+    },
+    "AP_Export": {
+      "Title": "Ajouter un bon de livraison de marchandises",
+      "Labels": {
+        "Lb1": "Sélectionnez le client",
+        "Lb2": "Saisissez la quantité de produits à exporter",
+        "Lb3": "Produit",
+        "Lb4": "Quantité en stock",
+        "Lb5": "Quantité à exporter"
+      },
+      "Placeholders": {
+        "Text1": "Sélectionnez le nom du client",
+        "Text2": "Saisissez la quantité à partir de ",
+        "Text3": "Sélectionnez le nom du produit"
+      }
     }
   },
   "EditPage": {
@@ -240,10 +301,23 @@
       "Title": "Modifier les informations personnelles"
     },
     "EP_Staff": {
-        "Title": "Modifier un employé"
+      "Title": "Modifier un employé"
     },
     "EP_Position": {
-        "Title": "Modifier un poste"
+      "Title": "Modifier un poste"
+    }
+  },
+  "DetailPage": {
+    "DP_WarehouseImport": {
+      "Title": "Note détaillée de réception des marchandises",
+      "Column1": "Nom du produit",
+      "Column2": "Quantité importée",
+      "Column3": "Prix importé"
+    },
+    "DP_WarehouseExport": {
+      "Titile": "Note détaillée de livraison des marchandises",
+      "Column1": "Nom du produit",
+      "Column2": "Quantité exportée"
     }
   },
   "AccountPage": {

@@ -22,6 +22,8 @@
       "Staffs": "Liste der Mitarbeiter",
       "Positions": "Liste der Positionen",
       "Customers": "Kundenliste",
+      "WarehouseImport": "Liste der Wareneingangsscheine",
+      "WarehouseExport": "Liste der Warenlieferscheine",
       "Account": "Konto"
     },
     "LanguageOptions": {
@@ -71,7 +73,9 @@
     "Product": "Produkt",
     "ProductCategory": "Produkttyp",
     "Staff": "Mitarbeiter",
-    "Position": "Position"
+    "Position": "Position",
+    "Import": "Wareneingangsschein",
+    "Export": "Warenlieferschein"
   },
   "SearchFilter": {
     "SearchBy": "Suche nach:",
@@ -183,6 +187,32 @@
         "Text1": "Suche nach Kundenname ...",
         "Text2": "Suche nach Telefonnummer ..."
       }
+    },
+    "SF_WarehouseImport": {
+      "Columns": {
+        "Col1": "Erstellungsdatum der Notiz",
+        "Col2": "Gesamtbetrag",
+        "Col3": "Bezahlter Betrag",
+        "Col4": "Status"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Erstellungsdatum der Notiz ...",
+        "Text2": "Suche nach Gesamtbetrag ...",
+        "Text3": "Suche nach bezahltem Betrag ...",
+        "Text4": "Suche nach Status ..."
+      }
+    },
+    "SF_WarehouseExport": {
+      "Columns": {
+        "Col1": "Erstellungsdatum der Notiz",
+        "Col2": "Gesamtbetrag",
+        "Col3": "Kundenname"
+      },
+      "Placeholders": {
+        "Text1": "Suche nach Erstellungsdatum der Notiz ...",
+        "Text2": "Suche nach Gesamtbetrag ...",
+        "Text3": "Suche nach Kundenname ..."
+      }
     }
   },
   "Buttons": {
@@ -193,7 +223,10 @@
     "Update": "Aktualisieren",
     "Save": "Änderungen speichern",
     "Maintain": "Agentenwartung",
-    "UploadImage": "Foto hochladen"
+    "UploadImage": "Foto hochladen",
+    "Import": "Importieren",
+    "Export": "Exportieren",
+    "Confirm": "Bestätigen"
   },
   "AddPage": {
     "AP_Districts": {
@@ -218,7 +251,35 @@
       "Title": "Mitarbeiter hinzufügen"
     },
     "AP_Position": {
-        "Title": "Position hinzufügen"
+      "Title": "Position hinzufügen"
+    },
+    "AP_Import": {
+      "Title": "Wareneingangsschein hinzufügen",
+      "Labels": {
+        "Lb1": "Geben Sie die Menge der zu importierenden Produkte ein",
+        "Lb2": "Produkt",
+        "Lb3": "Lagermenge",
+        "Lb4": "Importmenge"
+      },
+      "Placeholders": {
+        "Text1": "Geben Sie die Menge von ein ",
+        "Text2": "Wählen Sie den Produktnamen"
+      }
+    },
+    "AP_Export": {
+      "Title": "Warenlieferschein hinzufügen",
+      "Labels": {
+        "Lb1": "Wählen Sie den Kunden aus",
+        "Lb2": "Geben Sie die Menge der zu exportierenden Produkte ein",
+        "Lb3": "Produkt",
+        "Lb4": "Lagermenge",
+        "Lb5": "Exportmenge"
+      },
+      "Placeholders": {
+        "Text1": "Wählen Sie den Kundennamen aus",
+        "Text2": "Geben Sie die Menge von ein ",
+        "Text3": "Wählen Sie den Produktnamen"
+      }
     }
   },
   "EditPage": {
@@ -244,7 +305,20 @@
       "Title": "Mitarbeiter bearbeiten"
     },
     "EP_Position": {
-        "Title": "Position bearbeiten"
+      "Title": "Position bearbeiten"
+    }
+  },
+  "DetailPage": {
+    "DP_WarehouseImport": {
+      "Title": "Detaillierter Hinweis zum Wareneingang",
+      "Column1": "Produktname",
+      "Column2": "Importmenge",
+      "Column3": "Importpreis"
+    },
+    "DP_WarehouseExport": {
+      "Titile": "Detaillierter Hinweis zur Warenlieferung",
+      "Column1": "Produktname",
+      "Column2": "Exportmenge"
     }
   },
   "AccountPage": {

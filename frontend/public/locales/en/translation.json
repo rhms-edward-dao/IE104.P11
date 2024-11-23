@@ -22,6 +22,8 @@
       "Staffs": "List of employees",
       "Positions": "List of positions",
       "Customers": "Customer list",
+      "WarehouseImport": "List of goods received notes",
+      "WarehouseExport": "List of goods delivery notes",
       "Account": "Account"
     },
     "LanguageOptions": {
@@ -71,7 +73,9 @@
     "Product": "Product",
     "ProductCategory": "Product type",
     "Staff": "Employees",
-    "Position": "Position"
+    "Position": "Position",
+    "Import": "Goods received note",
+    "Export": "Goods delivery note"
   },
   "SearchFilter": {
     "SearchBy": "Search by:",
@@ -183,6 +187,32 @@
         "Text1": "Search by Customer Name ...",
         "Text2": "Search by Phone Number ..."
       }
+    },
+    "SF_WarehouseImport": {
+      "Columns": {
+        "Col1": "Note created date",
+        "Col2": "Total amount",
+        "Col3": "Paid amount",
+        "Col4": "Status"
+      },
+      "Placeholders": {
+        "Text1": "Search by note created date ...",
+        "Text2": "Search by total amount ...",
+        "Text3": "Search by paid amount ...",
+        "Text4": "Search by status ..."
+      }
+    },
+    "SF_WarehouseExport": {
+      "Columns": {
+        "Col1": "Note created date",
+        "Col2": "Total amount",
+        "Col3": "Customer name"
+      },
+      "Placeholders": {
+        "Text1": "Search by note created date ...",
+        "Text2": "Search by total amount ...",
+        "Text3": "Search by customer name ..."
+      }
     }
   },
   "Buttons": {
@@ -193,7 +223,10 @@
     "Update": "Update",
     "Save": "Save changes",
     "Maintain": "Agent maintenance",
-    "UploadImage": "Upload photo"
+    "UploadImage": "Upload photo",
+    "Import": "Import",
+    "Export": "Export",
+    "Confirm": "Confirm"
   },
   "AddPage": {
     "AP_Districts": {
@@ -218,7 +251,35 @@
       "Title": "Add staff"
     },
     "AP_Position": {
-        "Title": "Add position"
+      "Title": "Add position"
+    },
+    "AP_Import": {
+      "Title": "Add goods received note",
+      "Labels": {
+        "Lb1": "Enter the quantity of products to be imported",
+        "Lb2": "Product",
+        "Lb3": "Stock quantity",
+        "Lb4": "Import quantity"
+      },
+      "Placeholders": {
+        "Text1": "Enter the quantity from ",
+        "Text2": "Select the product name"
+      }
+    },
+    "AP_Export": {
+      "Title": "Add goods delivery note",
+      "Labels": {
+        "Lb1": "Select the customer",
+        "Lb2": "Enter the quantity of products to be exported",
+        "Lb3": "Product",
+        "Lb4": "Stock quantity",
+        "Lb5": "Export quantity"
+      },
+      "Placeholders": {
+        "Text1": "Select the customer name",
+        "Text2": "Enter the quantity from ",
+        "Text3": "Select the product name"
+      }
     }
   },
   "EditPage": {
@@ -244,7 +305,20 @@
       "Title": "Edit staff"
     },
     "EP_Position": {
-        "Title": "Edit position"
+      "Title": "Edit position"
+    }
+  },
+  "DetailPage": {
+    "DP_WarehouseImport": {
+      "Title": "Goods received detail note",
+      "Column1": "Product name",
+      "Column2": "Import price",
+      "Column3": "Import price"
+    },
+    "DP_WarehouseExport": {
+      "Titile": "Goods delivery detail note",
+      "Column1": "Product name",
+      "Column2": "Export quantity"
     }
   },
   "AccountPage": {

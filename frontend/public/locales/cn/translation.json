@@ -20,6 +20,8 @@
       "Staffs": "員工名單",
       "Positions": "職位列表",
       "Customers": "客戶名單",
+      "WarehouseImport": "收到的貨物清單備註",
+      "WarehouseExport": "貨物交貨單清單",
       "Account": "帳戶"
     },
     "LanguageOptions": {
@@ -68,7 +70,9 @@
     "Product": "產品",
     "ProductCategory": "產品類型",
     "Staff": "僱員",
-    "Position": "位置"
+    "Position": "位置",
+    "Import": "貨物已收到備註",
+    "Export": "貨物交貨單"
   },
   "SearchFilter": {
     "SearchBy": "搜尋方式：",
@@ -180,6 +184,32 @@
         "Text1": "按客戶名稱搜尋...",
         "Text2": "按電話號碼搜尋..."
       }
+    },
+    "SF_WarehouseImport": {
+      "Columns": {
+        "Col1": "注意建立日期",
+        "Col2": "總金額",
+        "Col3": "已付金額",
+        "Col4": "地位"
+      },
+      "Placeholders": {
+        "Text1": "按筆記建立日期搜尋...",
+        "Text2": "以總金額搜尋...",
+        "Text3": "以支付金額搜尋...",
+        "Text4": "按狀態搜尋..."
+      }
+    },
+    "SF_WarehouseExport": {
+      "Columns": {
+        "Col1": "注意建立日期",
+        "Col2": "總金額",
+        "Col3": "客戶姓名"
+      },
+      "Placeholders": {
+        "Text1": "按筆記建立日期搜尋...",
+        "Text2": "以總金額搜尋...",
+        "Text3": "按客戶名稱搜尋..."
+      }
     }
   },
   "Buttons": {
@@ -190,7 +220,10 @@
     "Update": "更新",
     "Save": "儲存更改",
     "Maintain": "代理維護",
-    "UploadImage": "上傳照片"
+    "UploadImage": "上傳照片",
+    "Import": "進口",
+    "Export": "出口",
+    "Confirm": "確認"
   },
   "AddPage": {
     "AP_Districts": {
@@ -212,10 +245,38 @@
       "Title": "新增產品類型"
     },
     "AP_Staff": {
-        "Title": "添加员工"
+      "Title": "添加员工"
     },
     "AP_Position": {
-        "Title": "添加职位"
+      "Title": "添加职位"
+    },
+    "AP_Import": {
+      "Title": "新增收貨備註",
+      "Labels": {
+        "Lb1": "輸入要進口的產品數量",
+        "Lb2": "產品",
+        "Lb3": "庫存數量",
+        "Lb4": "進口數量"
+      },
+      "Placeholders": {
+        "Text1": "輸入數量 ",
+        "Text2": "選擇產品名稱"
+      }
+    },
+    "AP_Export": {
+      "Title": "新增貨物交貨單",
+      "Labels": {
+        "Lb1": "選擇客戶",
+        "Lb2": "輸入要出口的產品數量",
+        "Lb3": "產品",
+        "Lb4": "庫存數量",
+        "Lb5": "出口數量"
+      },
+      "Placeholders": {
+        "Text1": "選擇客戶名稱",
+        "Text2": "輸入數量 ",
+        "Text3": "選擇產品名稱"
+      }
     }
   },
   "EditPage": {
@@ -241,7 +302,20 @@
       "Title": "编辑员工"
     },
     "EP_Position": {
-        "Title": "编辑职位"
+      "Title": "编辑职位"
+    }
+  },
+  "DetailPage": {
+    "DP_WarehouseImport": {
+      "Title": "貨物收到詳細說明",
+      "Column1": "產品名稱",
+      "Column2": "進口數量",
+      "Column3": "進口價格"
+    },
+    "DP_WarehouseExport": {
+      "Titile": "貨物交付詳細說明",
+      "Column1": "產品名稱",
+      "Column2": "出口數量"
     }
   },
   "AccountPage": {

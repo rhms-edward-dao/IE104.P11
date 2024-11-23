@@ -22,6 +22,8 @@
       "Staffs": "従業員リスト",
       "Positions": "職位リスト",
       "Customers": "顧客リスト",
+      "WarehouseImport": "商品受領書リスト",
+      "WarehouseExport": "商品配送書リスト",
       "Account": "アカウント"
     },
     "LanguageOptions": {
@@ -70,7 +72,9 @@
     "Product": "製品",
     "ProductCategory": "製品タイプ",
     "Staff": "従業員",
-    "Position": "職位"
+    "Position": "職位",
+    "Import": "商品受領書",
+    "Export": "商品配送書"
   },
   "SearchFilter": {
     "SearchBy": "検索条件:",
@@ -182,6 +186,32 @@
         "Text1": "顧客名で検索...",
         "Text2": "電話番号で検索..."
       }
+    },
+    "SF_WarehouseImport": {
+      "Columns": {
+        "Col1": "メモ作成日",
+        "Col2": "合計金額",
+        "Col3": "支払額",
+        "Col4": "ステータス"
+      },
+      "Placeholders": {
+        "Text1": "メモ作成日で検索...",
+        "Text2": "合計金額で検索...",
+        "Text3": "支払額で検索...",
+        "Text4": "ステータスで検索..."
+      }
+    },
+    "SF_WarehouseExport": {
+      "Columns": {
+        "Col1": "メモ作成日",
+        "Col2": "合計金額",
+        "Col3": "顧客名"
+      },
+      "Placeholders": {
+        "Text1": "メモ作成日で検索...",
+        "Text2": "合計金額で検索...",
+        "Text3": "顧客名で検索..."
+      }
     }
   },
   "Buttons": {
@@ -192,7 +222,10 @@
     "Update": "アップデート",
     "Save": "変更を保存します",
     "Maintain": "エージェントのメンテナンス",
-    "UploadImage": "写真をアップロードします"
+    "UploadImage": "写真をアップロードします",
+    "Import": "インポート",
+    "Export": "エクスポート",
+    "Confirm": "確認"
   },
   "AddPage": {
     "AP_Districts": {
@@ -214,10 +247,38 @@
       "Title": "製品タイプを追加します"
     },
     "AP_Staff": {
-    "Title": "スタッフを追加"
+      "Title": "スタッフを追加"
     },
     "AP_Position": {
-        "Title": "職位を追加"
+      "Title": "職位を追加"
+    },
+    "AP_Import": {
+      "Title": "商品受領書を追加します",
+      "Labels": {
+        "Lb1": "輸入する製品の数量を入力します",
+        "Lb2": "製品",
+        "Lb3": "在庫数量",
+        "Lb4": "輸入数量"
+      },
+      "Placeholders": {
+        "Text1": "数量を入力します ",
+        "Text2": "製品名を選択します"
+      }
+    },
+    "AP_Export": {
+      "Title": "商品配送書を追加します",
+      "Labels": {
+        "Lb1": "顧客を選択します",
+        "Lb2": "輸出する製品の数量を入力します",
+        "Lb3": "製品",
+        "Lb4": "在庫数量",
+        "Lb5": "輸出数量"
+      },
+      "Placeholders": {
+        "Text1": "顧客名を選択します",
+        "Text2": "数量を入力します ",
+        "Text3": "製品名を選択します"
+      }
     }
   },
   "EditPage": {
@@ -243,7 +304,20 @@
       "Title": "スタッフを編集"
     },
     "EP_Position": {
-        "Title": "職位を編集"
+      "Title": "職位を編集"
+    }
+  },
+  "DetailPage": {
+    "DP_WarehouseImport": {
+      "Title": "商品受領明細メモ",
+      "Column1": "商品名",
+      "Column2": "輸入数量",
+      "Column3": "輸入価格"
+    },
+    "DP_WarehouseExport": {
+      "Titile": "商品配送明細メモ",
+      "Column1": "商品名",
+      "Column2": "輸出数量"
     }
   },
   "AccountPage": {

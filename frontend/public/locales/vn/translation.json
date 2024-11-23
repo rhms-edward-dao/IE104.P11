@@ -38,7 +38,9 @@
       "Staffs": "Danh sách nhân viên",
       "Positions": "Danh sách chức vụ",
       "Customers": "Danh sách khách hàng",
-      "Account": "Tài khoản"  
+      "WarehouseImport": "Danh sách phiếu nhập hàng",
+      "WarehouseExport": "Danh sách phiếu xuất hàng",
+      "Account": "Tài khoản"
     },
     "LanguageOptions": {
       "Chinese": "Tiếng Trung Quốc",
@@ -86,7 +88,9 @@
     "Product": "Mặt hàng",
     "ProductCategory": "Loại mặt hàng",
     "Staff": "Nhân viên",
-    "Position": "Chức vụ"
+    "Position": "Chức vụ",
+    "Import": "Phiếu nhập hàng",
+    "Export": "Phiếu xuất hàng"
   },
   "SearchFilter": {
     "SearchBy": "Tìm kiếm theo:",
@@ -161,7 +165,7 @@
         "Col3": "Tên đại lý",
         "Col4": "Chức vụ",
         "Col5": "Địa chỉ",
-        "Col6": "Số điện thoại",        
+        "Col6": "Số điện thoại",
         "Col7": "Email",
         "Col8": "Hình ảnh"
       },
@@ -198,6 +202,32 @@
         "Text1": "Tìm kiếm theo tên khách hàng ...",
         "Text2": "Tìm kiếm theo số điện thoại ..."
       }
+    },
+    "SF_WarehouseImport": {
+      "Columns": {
+        "Col1": "Ngày lập phiếu",
+        "Col2": "Tổng tiền",
+        "Col3": "Tiền đã thanh toán",
+        "Col4": "Tình trạng"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo ngày lập phiếu ...",
+        "Text2": "Tìm kiếm theo tổng tiền ...",
+        "Text3": "Tìm kiếm theo tiền đã thanh toán ...",
+        "Text4": "Tìm kiếm theo tình trang ..."
+      }
+    },
+    "SF_WarehouseExport": {
+      "Columns": {
+        "Col1": "Ngày lập phiếu",
+        "Col2": "Tổng tiền",
+        "Col3": "Tên khách hàng"
+      },
+      "Placeholders": {
+        "Text1": "Tìm kiếm theo ngày lập phiếu ...",
+        "Text2": "Tìm kiếm theo tổng tiền ...",
+        "Text3": "Tìm kiếm theo tên khách hàng ..."
+      }
     }
   },
   "Buttons": {
@@ -208,7 +238,10 @@
     "Update": "Cập nhật",
     "Save": "Lưu thay đổi",
     "Maintain": "Bảo trì đại lý",
-    "UploadImage": "Tải ảnh lên"
+    "UploadImage": "Tải ảnh lên",
+    "Import": "Nhập hàng",
+    "Export": "Xuất hàng",
+    "Confirm": "Xác nhận"
   },
   "AddPage": {
     "AP_Districts": {
@@ -234,6 +267,34 @@
     },
     "AP_Position": {
       "Title": "Thêm chức vụ"
+    },
+    "AP_Import": {
+      "Title": "Thêm phiếu nhập hàng",
+      "Labels": {
+        "Lb1": "Nhập số lượng mặt hàng cần nhập kho",
+        "Lb2": "Mặt hàng",
+        "Lb3": "Số lượng tồn",
+        "Lb4": "Số lượng nhập"
+      },
+      "Placeholders": {
+        "Text1": "Nhập số lượng từ ",
+        "Text2": "Chọn tên mặt hàng"
+      }
+    },
+    "AP_Export": {
+      "Title": "Thêm phiếu xuất hàng",
+      "Labels": {
+        "Lb1": "Chọn khách hàng",
+        "Lb2": "Nhập số lượng mặt hàng cần xuất kho",
+        "Lb3": "Mặt hàng",
+        "Lb4": "Số lượng tồn",
+        "Lb5": "Số lượng xuất"
+      },
+      "Placeholders": {
+        "Text1": "Chọn tên khách hàng",
+        "Text2": "Nhập số lượng từ ",
+        "Text3": "Chọn tên mặt hàng"
+      }
     }
   },
   "EditPage": {
@@ -260,6 +321,19 @@
     },
     "EP_Position": {
       "Title": "Chỉnh sửa chức vụ"
+    }
+  },
+  "DetailPage": {
+    "DP_WarehouseImport": {
+      "Title": "Chi tiết phiếu nhập hàng",
+      "Column1": "Tên mặt hàng",
+      "Column2": "Số lượng nhập",
+      "Column3": "Đơn giá nhập"
+    },
+    "DP_WarehouseExport": {
+      "Titile": "Chi tiết phiếu xuất hàng",
+      "Column1": "Tên mặt hàng",
+      "Column2": "Số lượng xuất"
     }
   },
   "AccountPage": {
