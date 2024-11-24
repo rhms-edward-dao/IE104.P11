@@ -8,6 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
 import { getStaffDetail } from "../../assets/Staffs/StaffData";
+import { updateAccount } from "../../assets/MyAccount/MyACcountData";
 
 // Import Components Here
 import Header from "../../components/Header";
@@ -16,7 +17,6 @@ import Header from "../../components/Header";
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
 import SaveIcon from "../../images/icons/button/Save.svg";
-import { updateAccount } from "../../assets/MyAccount/MyACcountData";
 
 const MyAccountEditPage = () => {
   // Variable here
@@ -30,7 +30,7 @@ const MyAccountEditPage = () => {
   const { UploadImage, Save } = t("Buttons");
   // // For editing my account
   const { userInfo } = useAuth();
-  const [currentAccount, setCurrentAccount] = useState({});  
+  const [currentAccount, setCurrentAccount] = useState({});
   const [loading, setLoading] = useState(true);
   // Variables for image here
   const [imageForShow, setImageForShow] = useState();
@@ -43,16 +43,16 @@ const MyAccountEditPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const accountInfo = await getStaffDetail(userInfo.userID);        
+        const accountInfo = await getStaffDetail(userInfo.userID);
         if (accountInfo.length === 0) {
-          setCurrentAccount([]);          
+          setCurrentAccount([]);
         } else {
           setLoading(false);
-          setCurrentAccount(accountInfo);
-          setUserName(accountInfo.info.hoten);
-          setDate(accountInfo.info.ngaysinh)
-          setAddress(accountInfo.info.diachi);
-          setImageForShow(accountInfo.avatar);
+          setCurrentAccount(accountInfo[0]);
+          setUserName(accountInfo[0].hoten);
+          setDate(accountInfo[0].ngaysinh);
+          setAddress(accountInfo[0].diachi);
+          setImageForShow(accountInfo[0].avatar);
         }
       } catch (error) {
         console.error("Error while fetching: ", error);
@@ -66,7 +66,14 @@ const MyAccountEditPage = () => {
     setImageForShow(URL.createObjectURL(e.target.files[0]));
   };
   // Function for upadting
-  const handleUpdate = async(hoten, ngaysinh, sodienthoai, email, diachi, hinhanh) => {
+  const handleUpdate = async (
+    hoten,
+    ngaysinh,
+    sodienthoai,
+    email,
+    diachi,
+    hinhanh
+  ) => {
     let check_hoten = true;
     let check_ngaysinh = true;
     let check_sodienthoai = true;
@@ -74,29 +81,35 @@ const MyAccountEditPage = () => {
     let check_diachi = true;
     let check_hinhanh = true;
 
-    if (check_hoten && check_ngaysinh && check_sodienthoai && check_email && check_diachi && check_hinhanh) {
+    if (
+      check_hoten &&
+      check_ngaysinh &&
+      check_sodienthoai &&
+      check_email &&
+      check_diachi &&
+      check_hinhanh
+    ) {
       let item = {
-        "hinhanh": hinhanh,
-        "hoten": hoten,
-        "ngaysinh": ngaysinh,
-        "sodienthoai": sodienthoai,
-        "email": email,
-        "diachi": diachi
-      }
+        hinhanh: hinhanh,
+        hoten: hoten,
+        ngaysinh: ngaysinh,
+        sodienthoai: sodienthoai,
+        email: email,
+        diachi: diachi,
+      };
       const response = await updateAccount(userInfo.userID, item);
       console.log(response);
-      if (response.success == true) {
+      if (response.success === true) {
         alert(response.message);
-        navigate("/my-account")
+        navigate("/my-account");
       } else {
         alert(response.message);
       }
-    };
+    }
   };
   return (
     <>
-    {
-      loading ? (
+      {loading ? (
         <p>Loading ...</p>
       ) : (
         <div>
@@ -122,19 +135,14 @@ const MyAccountEditPage = () => {
               </h3>
               <div className="w-5/6 flex flex-col justify-center">
                 <div className="flex justify-center">
-                  {
-                    imageForUpload === undefined ? (
-                      <img
-                        alt="Ảnh đại diện"
-                        src={`data:image/jpeg;base64, ${imageForShow}`}
-                      ></img>
-                    ) : (
-                      <img
-                        alt="Hình đại diện"
-                        src={imageForShow}
-                      ></img>
-                    )
-                  }
+                  {imageForUpload === undefined ? (
+                    <img
+                      alt="Ảnh đại diện"
+                      src={`data:image/jpeg;base64, ${imageForShow}`}
+                    ></img>
+                  ) : (
+                    <img alt="Hình đại diện" src={imageForShow}></img>
+                  )}
                 </div>
                 <div className="rounded-full flex items-center justify-center transition-colors duration-300 my-10">
                   <input
@@ -184,7 +192,7 @@ const MyAccountEditPage = () => {
               <input
                 className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
                 type="text"
-                value={currentAccount.info.sodienthoai}
+                value={currentAccount.sodienthoai}
                 disabled="true"
               />
             </div>
@@ -195,7 +203,7 @@ const MyAccountEditPage = () => {
               <input
                 className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
                 type="text"
-                value={currentAccount.info.email}
+                value={currentAccount.email}
                 disabled="true"
               />
             </div>
@@ -213,14 +221,16 @@ const MyAccountEditPage = () => {
           </div>
           <div className="w-full mx-8 my-4 flex items-center justify-center">
             <button
-              onClick={() => {handleUpdate(
-                userName,
-                date,
-                currentAccount.info.sodienthoai,
-                currentAccount.info.email,
-                address,
-                imageForUpload
-              );}}
+              onClick={() => {
+                handleUpdate(
+                  userName,
+                  date,
+                  currentAccount.sodienthoai,
+                  currentAccount.email,
+                  address,
+                  imageForUpload
+                );
+              }}
             >
               <div className="flex gap-2 bg-red-500 p-2 rounded-lg items-center m-2">
                 <img src={SaveIcon} alt="Icon lưu" />
@@ -231,8 +241,7 @@ const MyAccountEditPage = () => {
             </button>
           </div>
         </div>
-      )
-    }
+      )}
     </>
   );
 };
