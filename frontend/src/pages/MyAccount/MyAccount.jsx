@@ -40,7 +40,7 @@ function MyAccount() {
           setAccountData([]);
         } else {
           setLoading(false);
-          setAccountData(accoutInfo);
+          setAccountData(accoutInfo[0]);
         }
       } catch (error) {
         console.error("Error while fetching: ", error);
@@ -51,8 +51,7 @@ function MyAccount() {
   // Return render here
   return (
     <>
-    {
-      loading ? (
+      {loading ? (
         <p>Loading ...</p>
       ) : (
         <div>
@@ -78,11 +77,11 @@ function MyAccount() {
                   {Section1.Label1}:
                 </h3>
                 <div className="relative w-3/4 flex justify-center">
-                  <div className="w-32 h-32 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center transition-colors duration-300">                                        
-                    <img 
-                      alt="Ảnh đại diện" 
-                      src={`data:images/jpeg;base64, ${accountData.avatar}`} 
-                      className="w-full h-full rounded-lg" 
+                  <div className="w-32 h-32 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center transition-colors duration-300">
+                    <img
+                      alt="Ảnh đại diện"
+                      src={`data:images/jpeg;base64, ${accountData.avatar}`}
+                      className="w-full h-full rounded-lg"
                     />
                   </div>
                 </div>
@@ -92,7 +91,7 @@ function MyAccount() {
                   {Section1.Label2}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.hoten}
+                  {accountData.hoten}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -100,7 +99,7 @@ function MyAccount() {
                   {Section1.Label3}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.ngaysinh}
+                  {accountData.ngaysinh}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -108,7 +107,7 @@ function MyAccount() {
                   {Section1.Label4}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.sodienthoai}
+                  {accountData.sodienthoai}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -116,7 +115,7 @@ function MyAccount() {
                   {Section1.Label5}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.email}
+                  {accountData.email}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -124,7 +123,7 @@ function MyAccount() {
                   {Section1.Label6}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.diachi}
+                  {accountData.diachi}
                 </p>
               </div>
             </div>
@@ -134,7 +133,7 @@ function MyAccount() {
                   {Section2.Title}
                 </h1>
                 <NavLink
-                  className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white hidden"
+                  className="items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white hidden"
                   to="#"
                 >
                   <p className="hidden sm:hidden md:hidden lg:inline-block">
@@ -148,7 +147,7 @@ function MyAccount() {
                   {Section2.Label1}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.tenchucvu}
+                  {accountData.tenchucvu}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -156,7 +155,7 @@ function MyAccount() {
                   {Section2.Label2}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.capdo}
+                  {accountData.capdo}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -164,7 +163,7 @@ function MyAccount() {
                   {Section2.Label3}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.luong}
+                  {accountData.luong}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -172,7 +171,7 @@ function MyAccount() {
                   {Section2.Label4}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.ngaybatdau}
+                  {accountData.ngaybatdau}
                 </p>
               </div>
               <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
@@ -180,14 +179,13 @@ function MyAccount() {
                   {Section2.Label5}:
                 </h3>
                 <p className="w-2/3 italic justify-start">
-                  {accountData.info.thoihan}
+                  {accountData.thoihan}
                 </p>
               </div>
             </div>
           </div>
         </div>
-      )
-    }
+      )}
     </>
   );
 }
