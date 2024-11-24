@@ -62,16 +62,16 @@ const StoreEditPage = () => {
       if (currentStore.message === "Không tồn tại đại lý cần tìm") {
         alert("Không tồn tại đại lý cần tìm");
       } else {
-        setCurrentStoreName(currentStore.Daily[0].tendaily);
-        setCurrentStoreCategoryName(currentStore.Daily[0].tenloaidaily);
-        setCurrentReceiveDate(currentStore.Daily[0].ngaytiepnhan);
-        setCurrentPhoneNumber(currentStore.Daily[0].sodienthoai);
-        setCurrentDistrictName(currentStore.Daily[0].tenquan);
-        setCurrentCityName(currentStore.Daily[0].tenthanhpho);
+        setCurrentStoreName(currentStore[0].tendaily);
+        setCurrentStoreCategoryName(currentStore[0].tenloaidaily);
+        setCurrentReceiveDate(currentStore[0].ngaytiepnhan);
+        setCurrentPhoneNumber(currentStore[0].sodienthoai);
+        setCurrentDistrictName(currentStore[0].tenquan);
+        setCurrentCityName(currentStore[0].tenthanhpho);
         setCurrentAddress(
-          currentStore.Daily[0].diachi.split(",").slice(0, 2).join(", ")
+          currentStore[0].diachi.split(",").slice(0, 2).join(", ")
         );
-        if (currentStore.hinhanh !== null) {
+        if (currentStore[0].hinhanh !== null) {
           setCurrentImage(currentStore.hinhanh);
         }
       }
