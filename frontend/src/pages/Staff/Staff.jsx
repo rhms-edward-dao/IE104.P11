@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useStoreTab } from "../../contexts/StoreTabState";
 import { useModal } from "../../contexts/ModalState";
-import { useDetailPopup } from "../../contexts/StaffDetailState";
+import { useDetailPopup } from "../../contexts/DetailPopup";
 
 // Import Assets Here
 import {
