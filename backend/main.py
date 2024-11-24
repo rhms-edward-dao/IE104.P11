@@ -257,7 +257,18 @@ async def update_taikhoan(
 @app.get("/quan")  # Used for loading page
 def get_quan_all(db: Session = Depends(get_db)):
     db_get_all_quan_summary = crud.get_summary_quan()
-    return db_get_all_quan_summary
+    result = []
+    for item in db_get_all_quan_summary:
+        result.append(
+            {
+                "maquan": item[0],
+                "tenquan": item[1],
+                "tenthanhpho": item[2],
+                "tong_so_daily": item[3],
+            }
+        )
+
+    return result
 
 
 @app.get("/quan/thanhpho/")  # Used for adding and updating
@@ -1115,15 +1126,31 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
 @app.get("/nhanvien/chitiet/{manhanvien}")
 def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
     get_db = crud.get_nhanvien_chitiet_by_manhanvien(db, manhanvien)
-    response_data = {}
+    response_data = []
     if get_db:
-        if get_db.hinhanh:
-            with open(get_db.hinhanh, "rb") as f:
+        if get_db[0]:
+            with open(get_db[0], "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
-            response_data = {"info": get_db, "avatar": data_to_base64}
         else:
-            response_data = {"info": get_db, "avatar": None}
+            data_to_base64 = None
+
+        response_data.append(
+            {
+                "hoten": get_db[1],
+                "ngaysinh": get_db[2],
+                "sodienthoai": get_db[3],
+                "email": get_db[4],
+                "diachi": get_db[5],
+                "tenchucvu": get_db[6],
+                "capdo": get_db[7],
+                "luong": get_db[8],
+                "ngaybatdau": get_db[9],
+                "thoihan": get_db[10],
+                "tendaily": get_db[11],
+                "avatar": data_to_base64,
+            }
+        )
         return response_data
     return {"message": "Không tim thấy nhân viên"}
 
