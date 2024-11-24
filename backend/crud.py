@@ -216,18 +216,22 @@ def get_summary_quan() -> list:
     # get_db = db.query(models.Quan.tenquan, models.DailyDiachi.)
     with engine.connect().execution_options(autocommit=True) as connection:
         results = connection.execute(
-            """
+            text(
+                """
                                     select Quan.maquan, tenquan, tenthanhpho , count(Daily_diachi.maquan) as tong_so_daily
                                     from Quan, Daily_diachi
                                     where Quan.maquan = Daily_diachi.maquan
                                     group by Quan.maquan, tenquan, tenthanhpho;
                                     """
+            )
         )
         results_non_store = connection.execute(
-            """
+            text(
+                """
                                     select Quan.*, 0 as tong_so_daily
                                     from Quan;
                                     """
+            )
         )
         results_non_list = [row for row in results_non_store]
         results_list = [row for row in results]
@@ -405,10 +409,12 @@ def update_quitac(db: Session, pItems: schemas.QUITACupdate):
 def get_all_tenloaidaily():
     with engine.connect().execution_options(autocommit=True) as connection:
         results = connection.execute(
-            """
+            text(
+                """
                                         select distinct tenloaidaily
                                         from Loaidaily;
                                     """
+            )
         )
     results_list = [row for row in results]
     return results_list
@@ -615,7 +621,8 @@ def get_nhanvien_by_manhanvien(db: Session, pMaNhanVien: int):
 def get_nhanvien_chitiet_by_manhanvien(db: Session, pMaNhanVien: int):
     with engine.connect().execution_options(auto_commit=True) as connection:
         result = connection.execute(
-            """
+            text(
+                """
             SELECT
                 nhanvien.hinhanh, hoten, ngaysinh, nhanvien.sodienthoai, email, diachi,
                 tenchucvu, capdo, luong, ngaybatdau, thoihan,
@@ -625,9 +632,11 @@ def get_nhanvien_chitiet_by_manhanvien(db: Session, pMaNhanVien: int):
                 and nhanvien_chucvu.machucvu = chucvu.machucvu
                 and nhanvien.manhanvien = nhanvien_diachi.manhanvien
                 and daily.madaily = nhanvien.madaily
-                and nhanvien.manhanvien = (%s)
-        """,
-            pMaNhanVien,
+                and nhanvien.manhanvien = {}
+        """.format(
+                    pMaNhanVien
+                )
+            )
         )
         return result.fetchone()
 
