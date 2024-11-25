@@ -58,7 +58,7 @@ function StoreManagement() {
                   Thông tin đại lý
                 </h1>
                 <NavLink
-                  className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                  className="hidden items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                   to="store-management-edit-page"
                 >
                   <p className="hidden sm:hidden md:hidden lg:inline-block">
