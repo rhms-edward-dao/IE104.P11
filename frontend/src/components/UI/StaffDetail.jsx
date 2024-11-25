@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useDetailPopup } from "../../contexts/StaffDetailState";
+import { useDetailPopup } from "../../contexts/DetailPopup";
 import { getStaffDetail } from "../../assets/Staffs/StaffData";
 
 const StaffDetail = () => {
   // Variables here
-  const { staffData, showPopup, closePopup } = useDetailPopup();
+  const { popupData, showPopup, closePopup } = useDetailPopup();
   const [staffDataDetail, setStaffDataDetail] = useState([]);
   const [loading, setLoading] = useState(true);
   // Function here
   useEffect(() => {
     const fetchData = async () => {
       // Getting data for staff
-      const existedStaffData = await getStaffDetail(staffData);
-      setStaffDataDetail(existedStaffData);
+      const existedStaffData = await getStaffDetail(popupData);
+      setStaffDataDetail(existedStaffData[0]);
       setLoading(false);
     };
     if (showPopup) {
       fetchData();
     }
-  }, [staffData, showPopup]);
+  }, [popupData, showPopup]);
   // Return here
   return (
     <>
@@ -66,7 +66,7 @@ const StaffDetail = () => {
                       <NavLink
                         className="w-[100px] h-[40px] flex justify-center items-center bg-green-500"
                         onClick={closePopup}
-                        to={`staff-management/staff-management-edit-page/${staffData}`}
+                        to={`staff-management/staff-management-edit-page/${popupData}`}
                       >
                         <p className="font-bold text-white">Cập nhật</p>
                       </NavLink>
@@ -82,23 +82,23 @@ const StaffDetail = () => {
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Họ tên: </p>
-                    <p>{staffDataDetail.info.hoten}</p>
+                    <p>{staffDataDetail.hoten}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Ngày sinh: </p>
-                    <p>{staffDataDetail.info.ngaysinh}</p>
+                    <p>{staffDataDetail.ngaysinh}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Số điện thoại: </p>
-                    <p>{staffDataDetail.info.sodienthoai}</p>
+                    <p>{staffDataDetail.sodienthoai}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Email: </p>
-                    <p>{staffDataDetail.info.email}</p>
+                    <p>{staffDataDetail.email}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Địa chỉ: </p>
-                    <p>{staffDataDetail.info.diachi}</p>
+                    <p>{staffDataDetail.diachi}</p>
                   </div>
                 </div>
                 <div className="w-1/2 mx-5">
@@ -107,28 +107,28 @@ const StaffDetail = () => {
                   </h2>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Đại lý:</p>
-                    <p>{staffDataDetail.info.tendaily}</p>
+                    <p>{staffDataDetail.tendaily}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Chức vụ:</p>
-                    <p>{staffDataDetail.info.tenchucvu}</p>
+                    <p>{staffDataDetail.tenchucvu}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Cấp độ:</p>
-                    <p>{staffDataDetail.info.capdo}</p>
+                    <p>{staffDataDetail.capdo}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Lương:</p>
-                    <p>{staffDataDetail.info.luong}</p>
+                    <p>{staffDataDetail.luong}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Ngày bắt đầu:</p>
-                    <p>{staffDataDetail.info.ngaybatdau}</p>
+                    <p>{staffDataDetail.ngaybatdau}</p>
                   </div>
                   <div className="flex justify-between lg:mx-14 my-8">
                     <p className="font-bold">Thời hạn:</p>
-                    <p>{staffDataDetail.info.thoihan}</p>
-                  </div>                  
+                    <p>{staffDataDetail.thoihan}</p>
+                  </div>
                 </div>
               </div>
             )}
