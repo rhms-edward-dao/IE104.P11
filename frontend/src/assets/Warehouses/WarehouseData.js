@@ -10,6 +10,18 @@ export const getAllImportBill = async () => {
   }
 };
 
+export const getImportBillByStoreId = async (id) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/phieunhaphang/madaily/${id}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch error: ", error);
+  }
+};
+
 export const getImportBillDetail = async (id) => {
   try {
     const response = await fetch(
@@ -26,6 +38,18 @@ export const getImportBillDetail = async (id) => {
 export const getAllExportBill = async () => {
   try {
     const response = await fetch(`http://127.0.0.1:8000/phieuxuathang`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch error: ", error);
+  }
+};
+
+export const getExportBillByStoreId = async (id) => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/phieuxuathang/madaily/${id}`
+    );
     const data = await response.json();
     return data;
   } catch (error) {
