@@ -331,7 +331,7 @@
       "Column3": "Đơn giá nhập"
     },
     "DP_WarehouseExport": {
-      "Titile": "Chi tiết phiếu xuất hàng",
+      "Title": "Chi tiết phiếu xuất hàng",
       "Column1": "Tên mặt hàng",
       "Column2": "Số lượng xuất"
     }
@@ -368,7 +368,7 @@
     },
     "Rule3": {
       "Title": "Tỷ lệ đơn giá xuất",
-      "Description": "Đơn giá xuất hàng sẽ được tính theo công thức: đơn giá xuất = đơn giá nhập + (đơn giá nhập * tỷ lệ đơn giá xuất)."
+      "Description": "Đơn giá xuất hàng sẽ được tính theo công thức: đơn giá xuất = đơn giá nhập + (đơn giá nhập / tỷ lệ đơn giá xuất)."
     }
   }
 }

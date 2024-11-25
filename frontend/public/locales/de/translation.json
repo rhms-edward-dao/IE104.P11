@@ -316,7 +316,7 @@
       "Column3": "Importpreis"
     },
     "DP_WarehouseExport": {
-      "Titile": "Detaillierter Hinweis zur Warenlieferung",
+      "Title": "Detaillierter Hinweis zur Warenlieferung",
       "Column1": "Produktname",
       "Column2": "Exportmenge"
     }
@@ -353,7 +353,7 @@
     },
     "Rule3": {
       "Title": "Verkaufsstückpreisverhältnis",
-      "Description": "Der Exportstückpreis wird nach der Formel berechnet: Exportstückpreis = Importstückpreis + (Importstückpreis * Exportstückpreisverhältnis)."
+      "Description": "Der Exportstückpreis wird nach der Formel berechnet: Exportstückpreis = Importstückpreis + (Importstückpreis / Exportstückpreisverhältnis)."
     }
   }
 }

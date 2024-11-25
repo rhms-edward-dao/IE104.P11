@@ -315,7 +315,7 @@
       "Column3": "Prix importé"
     },
     "DP_WarehouseExport": {
-      "Titile": "Note détaillée de livraison des marchandises",
+      "Title": "Note détaillée de livraison des marchandises",
       "Column1": "Nom du produit",
       "Column2": "Quantité exportée"
     }
@@ -352,7 +352,7 @@
     },
     "Rule3": {
       "Title": "Ratio du prix unitaire de vente",
-      "Description": "Le prix unitaire d'exportation sera calculé selon la formule : prix unitaire d'exportation = prix unitaire d'importation + (prix unitaire d'importation * ratio du prix unitaire d'exportation)."
+      "Description": "Le prix unitaire d'exportation sera calculé selon la formule : prix unitaire d'exportation = prix unitaire d'importation + (prix unitaire d'importation / ratio du prix unitaire d'exportation)."
     }
   }
 }

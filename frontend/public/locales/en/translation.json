@@ -316,7 +316,7 @@
       "Column3": "Import price"
     },
     "DP_WarehouseExport": {
-      "Titile": "Goods delivery detail note",
+      "Title": "Goods delivery detail note",
       "Column1": "Product name",
       "Column2": "Export quantity"
     }
@@ -353,7 +353,7 @@
     },
     "Rule3": {
       "Title": "Sale unit price ratio",
-      "Description": "The export unit price will be calculated according to the formula: export unit price = import unit price + (import unit price * export unit price ratio)."
+      "Description": "The export unit price will be calculated according to the formula: export unit price = import unit price + (import unit price / export unit price ratio)."
     }
   }
 }
