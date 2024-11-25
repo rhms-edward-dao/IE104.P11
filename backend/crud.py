@@ -784,6 +784,18 @@ def get_all_phieunhaphang(db: Session):
     )
 
 
+# Get phieunhaphang by store's id
+def get_phieunhaphang_by_madaily(db: Session, pMaDaiLy: int):
+    return (
+        db.query(models.Phieunhaphang, models.Daily.tendaily)
+        .filter(
+            models.Phieunhaphang.madaily == models.Daily.madaily,
+            models.Phieunhaphang.madaily == pMaDaiLy,
+        )
+        .all()
+    )
+
+
 # Get all chitiet_pnh by phieunhaphang's id
 def get_chitiet_pnh_by_maphieunhap(db: Session, pMaPhieuNhap: int):
     return (
@@ -811,6 +823,18 @@ def get_all_phieuxuathang(db: Session):
         .filter(
             models.Phieuxuathang.madaily == models.Daily.madaily,
             models.Phieuxuathang.makhachhang == models.Khachhang.makhachhang,
+        )
+        .all()
+    )
+
+
+# Get phieuxuathang by store's id
+def get_phieuxuathang_by_madaily(db: Session, pMaDaiLy: int):
+    return (
+        db.query(models.Phieuxuathang, models.Daily.tendaily)
+        .filter(
+            models.Phieuxuathang.madaily == models.Daily.madaily,
+            models.Phieuxuathang.madaily == pMaDaiLy,
         )
         .all()
     )
