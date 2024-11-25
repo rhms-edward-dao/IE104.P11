@@ -45,9 +45,9 @@ function Rule() {
     const fetchData = async () => {
       const existedRule = await getAllRule();
       setValues({
-        1: existedRule.sothietbitoidataikhoan,
-        2: existedRule.sodailytoidamoiquan,
-        3: existedRule.tiledongiaban,
+        1: existedRule[0].sothietbitoidataikhoan,
+        2: existedRule[0].sodailytoidamoiquan,
+        3: existedRule[0].tiledongiaban,
       });
     };
     fetchData();
