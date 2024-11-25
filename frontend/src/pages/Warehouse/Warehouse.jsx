@@ -4,12 +4,15 @@ import { useTranslation } from "react-i18next";
 
 // Import Contexts Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useStoreTab } from "../../contexts/StoreTabState";
 
 // Import Assets Here
 import {
   getAllExportBill,
   getAllImportBill,
+  getExportBillByStoreId,
+  getImportBillByStoreId,
 } from "../../assets/Warehouses/WarehouseData";
 import { WarehouseDataCard } from "../../assets/Warehouses/WarehouseDataCard";
 
@@ -33,27 +36,24 @@ function Warehouse() {
   const { Import, Export } = t("TabView");
   const { SearchBy, SF_WarehouseImport, SF_WarehouseExport } =
     t("SearchFilter");
-  const { Detail, Edit, Delete } = t("Buttons");
-
+  const { Detail } = t("Buttons");
+  // // For Checking If Staff Account Or Not
+  const { userInfo } = useAuth();
   // // For warehouse-tab here
   const { isWarehouseTab, activateWarehouseTab, deactivateWarehouseTab } =
     useStoreTab();
-
   // // For fetching import & export bills data
   const [importData, setImportData] = useState([]);
   const [exportData, setExportData] = useState([]);
-
   // // For searching import & export bills
   const [importSearchTerm, setImportSearchTerm] = useState("");
   const [exportSearchTerm, setExportSearchTerm] = useState("");
   const [importSearchResults, setImportSearchResults] = useState([]);
   const [exportSearchResults, setExportSearchResults] = useState([]);
-
   // // For pagination import & export
   const [currentImportPage, setCurrentImportPage] = useState(0);
   const [currentExportPage, setCurrentExportPage] = useState(0);
   const itemsPerPage = 5;
-
   // For tracking the search-filter option and placeholder text on import & export bills
   const [importFilterOption, setImportFilterOption] = useState(
     SF_WarehouseImport.Columns.Col1
@@ -68,6 +68,7 @@ function Warehouse() {
     const fetchData = async () => {
       try {
         // Get Existed Import Bills
+        // const existedImport = await getImportBillByStoreId(userInfo.storeID);
         const existedImport = await getAllImportBill();
         if (existedImport.length === 0) {
           setImportData([]);
@@ -75,6 +76,7 @@ function Warehouse() {
           setImportData(existedImport);
         }
         // Get Existed Export Bills
+        // const existedExport = await getExportBillByStoreId(userInfo.storeID);
         const existedExport = await getAllExportBill();
         if (existedExport.length === 0) {
           setExportData([]);
