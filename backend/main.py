@@ -657,7 +657,13 @@ def delete_mathang(mamathang: int, db: Session = Depends(get_db)):
 def get_all_quitac(db: Session = Depends(get_db)):
     get_db = crud.get_all_quitac(db)
     if get_db:
-        return get_db
+        return [
+            {
+                "sothietbitoidataikhoan": get_db[0],
+                "tiledongiaban": get_db[1],
+                "sodailytoidamoiquan": get_db[2],
+            }
+        ]
     return {"message": "Qui tắc rỗng"}
 
 
@@ -1447,6 +1453,23 @@ def get_phieunhaphang_all(db: Session = Depends(get_db)):
     return {"message": "Danh sách phiếu nhập hàng rỗng"}
 
 
+@app.get("/phieunhaphang/madaily/{madaily}")
+def get_phieunhaphang_by_madaily(madaily: int, db: Session = Depends(get_db)):
+    get_db = crud.get_phieunhaphang_by_madaily(db, madaily)
+    if get_db:
+        result = []
+        for item in get_db:
+            item_dict = item.Phieunhaphang.__dict__.copy()
+            result.append(
+                {
+                    "Phieunhaphang": item_dict,
+                    "tendaily": item.tendaily,
+                }
+            )
+        return result
+    return {"message": "Danh sách phiếu nhập hàng rỗng"}
+
+
 @app.get("/phieunhaphang/maphieunhap/{maphieunhap}")
 def get_chitiet_pnh_by_maphieunhap(maphieunhap: int, db: Session = Depends(get_db)):
     get_db = crud.get_chitiet_pnh_by_maphieunhap(db, maphieunhap)
@@ -1478,6 +1501,23 @@ def get_phieuxuathang_all(db: Session = Depends(get_db)):
                     "Phieuxuathang": Phieuxuathang_dict,
                     "tendaily": item[1],
                     "tenkhachhang": item[2],
+                }
+            )
+        return result
+    return {"message": "Danh sách phiếu xuất hàng rỗng"}
+
+
+@app.get("/phieuxuathang/madaily/{madaily}")
+def get_phieuxuathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
+    get_db = crud.get_phieuxuathang_by_madaily(db, madaily)
+    if get_db:
+        result = []
+        for item in get_db:
+            item_dict = item.Phieuxuathang.__dict__.copy()
+            result.append(
+                {
+                    "Phieuxuathang": item_dict,
+                    "tendaily": item.tendaily,
                 }
             )
         return result
