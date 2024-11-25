@@ -123,7 +123,7 @@ function Customer() {
       <div>
         <Header headerTitle={Title.Customers} />
       </div>
-      <div className="flex flex-wrap gap-5 xl:gap-16 2xl:gap-44 justify-center m-5">
+      <div className="flex flex-wrap gap-5 justify-center m-5">
         {CustomerDataCard(theme, DC_Customers).map((card, index) => (
           <Card
             key={index}
