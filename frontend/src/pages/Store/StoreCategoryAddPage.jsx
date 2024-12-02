@@ -34,7 +34,7 @@ const StoreCategoryAddPage = () => {
   const addData = async (tenloaidaily, sotiennotoida) => {
     // Variables here for condition to call addStoreApi
     let checkName = true;
-
+    let checkMaxDepth = true;
     // Functions for checking string format tenloaidaily + sotiennotoida
     const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
 
@@ -49,8 +49,19 @@ const StoreCategoryAddPage = () => {
       checkName = false;
     }
 
-    if (checkName === true) {
+    // Check Sotiennotoida
+    if (sotiennotoida < 0) {
+      alert("Số tiền nợ tối đa phải là số dương");
+      checkMaxDepth = false;
+    };
+    if (sotiennotoida >= Math.pow(10, 8)) {
+      alert("Số tiền nợ tối đa là 99999999");
+      checkMaxDepth = false;
+    }
+
+    if (checkName && checkMaxDepth) {
       const data = await addStoreCategory(tenloaidaily, sotiennotoida);
+      console.log(data);
       if (
         data.message === "Thêm loại đại lý thất bại do loại đại lý đã tồn tại"
       ) {

@@ -1,23 +1,20 @@
+// Import Hook
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
-
 // Import Assets Here
 import {
   getStoreCategoryById,
   updateStoreCategory,
 } from "../../assets/Stores/StoreCategoryData";
-
 // Import Components Here
 import Header from "../../components/Header";
-
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
-
+// Main function
 const StoreCategoryEditPage = () => {
   // Variable here
   // // For Theme Mode
@@ -33,15 +30,12 @@ const StoreCategoryEditPage = () => {
   // // For navigating
   const navigate = useNavigate();
   const { storeCategoryId } = useParams();
-  console.log(storeCategoryId);
-
   // Use Effect here
   // // For getting data to edit
   useEffect(() => {
     const fetchData = async () => {
       // Get current store category infomation by its id
       const currentStoreCategory = await getStoreCategoryById(storeCategoryId);
-      console.log(currentStoreCategory);
       setCurrentStoreCategoryName(currentStoreCategory.tenloaidaily);
       setCurrentMaxDebt(currentStoreCategory.sotiennotoida);
     };
@@ -54,12 +48,13 @@ const StoreCategoryEditPage = () => {
     const data = await updateStoreCategory(id, tenloaidaily, sotiennotoida);
     if (data.message === "loại đại lý không tồn tại") {
       alert("Cập nhật loại đại lý thất bại. Loại đại lý không tồn tại");
+    } else if (data.message === "loại đại lý đã tồn tại") {
+      alert("Cập nhật loại đại lý thất bại. Loại đại lý đã tồn tại");      
     } else {
       alert("Cập nhật loại đại lý thành công");
       navigate("/stores");
     }
   };
-
   // Return render here
   return (
     <div>
