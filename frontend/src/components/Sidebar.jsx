@@ -14,7 +14,7 @@ import RulesIcon from "../images/icons/sidebar/Rules.svg";
 // Staff Sidebar Icons
 import WarehousesIcon from "../images/icons/sidebar/Warehouses.svg";
 // Both Admin & Staff Sidebar Icons
-import LogoIcon from "../images/icons/sidebar/Logo.svg";
+import LogoIcon from "../images/logo.png";
 import LogoutIcon from "../images/icons/sidebar/Logout.svg";
 import ProductsIcon from "../images/icons/sidebar/Products.svg";
 import CustomersIcon from "../images/icons/sidebar/Customers.svg";
@@ -77,8 +77,8 @@ function Sidebar() {
     <div className="bg-black w-full h-full ">
       {/* If in login page, show only 'KietStore' */}
       <div className="flex flex-wrap space-x-3 items-center justify-center pt-5">
-        <img src={LogoIcon} alt="Logo" className="w-18 h-15" />
-        <p className="text-white font-bold text-2xl">KietStore</p>
+        <img src={LogoIcon} alt="Logo" className="w-[100px] h-[100px] rounded-full" />
+        <p className="text-white font-bold text-xl lg:text-2xl italic">BettaShop</p>
       </div>
 
       {/* isAdmin */}
