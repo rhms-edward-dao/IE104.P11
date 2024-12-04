@@ -214,30 +214,19 @@ def get_maquan_by_tenquan_tenthanhpho(db: Session, pTenQuan: str, pTenThanhPho: 
 
 def get_summary_quan() -> list:
     # get_db = db.query(models.Quan.tenquan, models.DailyDiachi.)
-    with engine.connect().execution_options(autocommit=True) as connection:
+    with engine.connect().execution_options() as connection:
         results = connection.execute(
             text(
                 """
-                                    select Quan.maquan, tenquan, tenthanhpho , count(Daily_diachi.maquan) as tong_so_daily
-                                    from Quan, Daily_diachi
-                                    where Quan.maquan = Daily_diachi.maquan
-                                    group by Quan.maquan, tenquan, tenthanhpho;
-                                    """
-            )
-        )
-        results_non_store = connection.execute(
-            text(
+                    select Quan.maquan, tenquan, tenthanhpho , count(Daily_diachi.maquan) as tong_so_daily
+                    from Quan
+                    left join Daily_diachi
+                    on Quan.maquan = Daily_diachi.maquan
+                    group by Quan.maquan, tenquan, tenthanhpho;
                 """
-                                    select Quan.*, 0 as tong_so_daily
-                                    from Quan;
-                                    """
             )
-        )
-        results_non_list = [row for row in results_non_store]
-        results_list = [row for row in results]
-        merged_results_list = results_non_list + results_list
-        return merged_results_list
-
+        )    
+        return results
 
 # MATHANG
 # Get all MATHANG
@@ -300,8 +289,6 @@ def get_mathang_by_madaily(db: Session, pMaDaiLy: int):
 
 # Add New MATHANG
 def add_new_mathang(**param_list):
-    print(param_list)
-    print("Hello")
     with engine.connect().execution_options(autocommit=True) as connection:
         connection.execute(
             """

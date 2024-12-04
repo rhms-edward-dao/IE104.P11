@@ -242,21 +242,12 @@ async def update_taikhoan(
             "message": "Có lỗi xảy ra trong quá trình cập nhật. Hãy thử lại sau.",
         }
 
-    # except Exception as e:
-    #     match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
-    #     detail = match.group(0).strip()
-
-    #     if detail == "DETAIL:  Key (tenmathang)=({}) already exists.".format(
-    #         tenmathang
-    #     ):
-    #         return {"message": "Tên mặt hàng đã tồn tại"}
-    # return {"message": "Cập nhật mặt hàng thành công"}
-
 
 # QUAN manipulating
 @app.get("/quan")  # Used for loading page
 def get_quan_all(db: Session = Depends(get_db)):
     db_get_all_quan_summary = crud.get_summary_quan()
+    print(db_get_all_quan_summary)
     result = []
     for item in db_get_all_quan_summary:
         result.append(
@@ -267,7 +258,6 @@ def get_quan_all(db: Session = Depends(get_db)):
                 "tong_so_daily": item[3],
             }
         )
-
     return result
 
 
