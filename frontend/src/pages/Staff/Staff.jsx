@@ -336,6 +336,9 @@ function Staff() {
           <NavLink
             className="my-5"
             to={isStaffTab ? "staff-management-add-page" : "position-add-page"}
+            state={{
+              existedData: isStaffTab ? staffData : positionData
+            }}
           >
             <Button />
           </NavLink>

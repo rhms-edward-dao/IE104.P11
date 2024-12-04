@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
-import ReturnIcon from "../../images/icons/button/GoBack.svg";
 import Header from "../../components/Header";
 
 import { addPosition } from "../../assets/Staffs/StaffData";
@@ -24,50 +23,57 @@ function PositionAddPage() {
 
   const [positionName, setPositionName] = useState("");
   const [level, setLevel] = useState(1);
-  const [salary, setSalary] = useState(0);
+  const [salary, setSalary] = useState(3000000);
 
   const navigate = useNavigate();
+  // // Get existedData
+  const location = useLocation();
+  const { existedData } = location.state;
   // Functions here
   const addData = async (tenchucvu, capdo, luong) => {
-    let check_tenchucvu = true;
-    let check_capdo = true;
-    let check_luong = true;
+    const checkExistedData = existedData.some(item => item.tenchucvu === tenchucvu);
+    if (checkExistedData) {
+      alert("Tên chức vụ đã tồn tại");
+    } else {
+      let check_tenchucvu = true;
+      let check_capdo = true;
+      let check_luong = true;
+      // if - else condition here
+      // Check tenchucvu
+      if (tenchucvu.length < 2) {
+        alert("Tên chức vụ không được để trống");
+        check_tenchucvu = false;
+      } else if (tenchucvu.length > 100) {
+        alert("Tên chức vụ quá dài");
+        check_tenchucvu = false;
+      }
+      // Check capdo
+      if (capdo < 1 || capdo > 2) {
+        alert("Chỉ có cấp độ 1 - nhân viên và cấp độ 2 - quản lý");
+        check_capdo = false;
+      }
+      // Check luong
+      if (luong < 3000000) {
+        alert("Lương tối thiểu là 3000000");
+        check_luong = false;
+      }
 
-    // if - else condition here
-    // Check tenchucvu
-    if (tenchucvu.length < 2) {
-      alert("Tên chức vụ không được để trống");
-      check_tenchucvu = false;
-    } else if (tenchucvu.length > 100) {
-      alert("Tên chức vụ quá dài");
-      check_tenchucvu = false;
-    }
-    // Check capdo
-    if (capdo < 1 || capdo > 2) {
-      alert("Chỉ có cấp độ 1 - nhân viên và cấp độ 2 - quản lý");
-      check_capdo = false;
-    }
-    // Check luong
-    if (luong < 3000000) {
-      alert("Lương tối thiểu là 3000000");
-      check_luong = false;
-    }
-
-    // Send data to server here
-    if (check_tenchucvu && check_capdo && check_luong) {
-      let item = {
-        tenchucvu: tenchucvu,
-        capdo: capdo,
-        luong: luong,
-      };
-      const response = await addPosition(item);
-      if (response.message === "Thêm chức vụ thất bại do chức vụ đã tồn tại") {
-        alert("Tên chức vụ đã tồn tại");
-      } else if (response.message === "Thêm chức vụ thất bại") {
-        alert("Thêm chức vụ thất bại");
-      } else {
-        alert("Thêm chức vụ thành công");
-        navigate("/staff-management");
+      // Send data to server here
+      if (check_tenchucvu && check_capdo && check_luong) {
+        let item = {
+          tenchucvu: tenchucvu,
+          capdo: capdo,
+          luong: luong,
+        };
+        const response = await addPosition(item);
+        if (response.message === "Thêm chức vụ thất bại do chức vụ đã tồn tại") {
+          alert("Tên chức vụ đã tồn tại");
+        } else if (response.message === "Thêm chức vụ thất bại") {
+          alert("Thêm chức vụ thất bại");
+        } else {
+          alert("Thêm chức vụ thành công");
+          navigate("/staff-management");
+        }
       }
     }
   };

@@ -55,9 +55,9 @@ function PositionEditPage() {
       alert("Chỉ có cấp độ 1 - nhân viên và cấp độ 2 - quản lý");
       check_capdo = false;
     }
-    // Check luong
-    if (luong < 0) {
-      alert("Lương không được âm");
+    // Check luong  
+    if (luong < 3000000) {
+      alert("Lương tối thiểu là 3000000");
       check_luong = false;
     }
     // Send data to server here
