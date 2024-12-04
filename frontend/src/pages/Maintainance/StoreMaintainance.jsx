@@ -167,7 +167,7 @@ function StoreMaintainance() {
                   onClick={() => handleReset()}
                   className="p-3 rounded bg-red-500"
                 >
-                  <p className="text-white font-bold">Xóa hết</p>
+                  <p className="text-white font-bold">Đặt lại</p>
                 </button>
                 <button
                   onClick={() =>

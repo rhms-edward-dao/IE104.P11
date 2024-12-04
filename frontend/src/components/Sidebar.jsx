@@ -101,7 +101,7 @@ function Sidebar() {
               onClick={() => activateQuan()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/districts"
               >
                 <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
@@ -137,7 +137,7 @@ function Sidebar() {
               onClick={() => activateDaily()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/stores"
               >
                 <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
@@ -171,7 +171,7 @@ function Sidebar() {
               onClick={() => activateMathang()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/product-categorys"
               >
                 <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
@@ -205,7 +205,7 @@ function Sidebar() {
               onClick={() => activateNhanvien()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/staff-management"
               >
                 <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
@@ -239,7 +239,7 @@ function Sidebar() {
               onClick={() => activateQuitac()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/rule-management"
               >
                 <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
@@ -273,7 +273,7 @@ function Sidebar() {
               onClick={() => activateKhachhang()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/customer"
               >
                 <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
@@ -307,7 +307,7 @@ function Sidebar() {
               onClick={() => activateBaocao()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/admin-report"
               >
                 <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
@@ -342,7 +342,7 @@ function Sidebar() {
               onClick={() => activateSanpham()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/products"
               >
                 <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
@@ -376,7 +376,7 @@ function Sidebar() {
               onClick={() => activateQuanlykho()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/warehouse"
               >              
                 <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
@@ -409,7 +409,7 @@ function Sidebar() {
               onClick={() => activateKhachhangStaff()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/customer"
               >
                 <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
@@ -443,7 +443,7 @@ function Sidebar() {
               onClick={() => activateQuanlydaily()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/store-management"
               >
                 <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
@@ -477,7 +477,7 @@ function Sidebar() {
               onClick={() => activateBaocaoStaff()}
             >
               <NavLink
-                className="flex justify-center lg:justify-start"
+                className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/staff-report"
               >                
                 <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
