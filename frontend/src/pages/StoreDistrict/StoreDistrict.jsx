@@ -31,9 +31,11 @@ function Districts() {
   const { Title } = t("Header");
   const { DC_Districts } = t("DataCard");
   const { SearchBy, SF_Districts } = t("SearchFilter");
-  const { Add, Edit, Delete } = t("Buttons");
+  const { Edit, Delete } = t("Buttons");
   // // For fetching data
   const [districtData, setDistrictData] = useState([]);
+  const [districtCount, setDistrictCount] = useState(0);
+  const [cityCount, setCityCount] = useState(0);
   // // For searching
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -51,11 +53,27 @@ function Districts() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const existedDistrict = await getAllDistrict();
+        const existedDistrict = await getAllDistrict();        
         if (existedDistrict.length === 0) {
           setDistrictData([]);
+          setDistrictCount(0);
+          setCityCount(0);
         } else {
           setDistrictData(existedDistrict);
+          // For district count and city count      
+          const distinctDistrict = new Set();
+          const distinctCity = new Set()
+
+          for (let i=0;i<existedDistrict.length;i++) {
+            if (existedDistrict[i].maquan) {
+              distinctDistrict.add(existedDistrict[i].maquan); // Use maquan because i will count by pair of tenquan-tenthanhpho
+            }
+            if (existedDistrict[i].tenthanhpho) {
+              distinctCity.add(existedDistrict[i].tenthanhpho);
+            };
+          }
+          setDistrictCount(distinctDistrict.size);
+          setCityCount(distinctCity.size);
         }
       } catch (error) {
         console.error("Error while fetching: ", error);
@@ -63,7 +81,6 @@ function Districts() {
     };
     fetchData();
   }, []);
-
   // // For searching
   useEffect(() => {
     if (searchTerm.trim() !== "") {
@@ -141,7 +158,7 @@ function Districts() {
         <Header headerTitle={Title.Districts}></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5 xl:gap-16 2xl:gap-44">
-        {DistrictDataCard(theme, DC_Districts).map((card, index) => (
+        {DistrictDataCard(theme, DC_Districts, districtCount, cityCount).map((card, index) => (
           <Card
             key={index}
             image={card.img}

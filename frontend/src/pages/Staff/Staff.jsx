@@ -55,6 +55,10 @@ function Staff() {
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [positionSearchResults, setPositionSearchResults] = useState([]);
 
+  const [staffCount, setStaffCount] = useState(0);
+  const [totalSalary, setTotalSalary] = useState(0);
+  const [positionCount, setPositionCount] = useState(0);
+
   // // For pagination staff & position
   const [currentStaffPage, setCurrentStaffPage] = useState(0);
   const [currentPositionPage, setCurrentPositionPage] = useState(0);
@@ -85,8 +89,29 @@ function Staff() {
         if (existedPosition.length === 0) {
           setPositionData([]);
         } else {
-          setPositionData(existedPosition);
+          setPositionData(existedPosition);          
         }
+        // Statistics here
+        // Staff count
+        const distinctStaff = new Set();
+        const distinctPosition = new Set();
+        console.log(existedPosition);
+        for (let i=0;i<existedStaff.length;i++) {
+          if (existedStaff[i].Nhanvien.manhanvien) {
+            distinctStaff.add(existedStaff[i].Nhanvien.manhanvien);
+          }          
+          if (existedStaff[i].tenchucvu) {
+
+          }
+        }
+        for (let i=0;i<existedPosition.length;i++) {
+          if (existedPosition[i].machucvu) {
+            distinctPosition.add(existedPosition[i].machucvu);
+          }
+        }
+        
+        setStaffCount(distinctStaff.size);
+        setPositionCount(distinctPosition.size);
       } catch (error) {
         console.error("Error while fetching: ", error);
       }
@@ -245,7 +270,7 @@ function Staff() {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {StaffDataCard(theme, DC_Staffs).map((card, index) => (
+        {StaffDataCard(theme, DC_Staffs, staffCount, totalSalary, positionCount).map((card, index) => (
           <Card
             key={index}
             image={card.img}
