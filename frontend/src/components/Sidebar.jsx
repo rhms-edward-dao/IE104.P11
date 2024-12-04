@@ -96,20 +96,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateQuan()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/districts"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateQuan()}
-                >
-                  <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Districts}
-                  </p>
-                </button>
+                <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Districts}
+                </p>
               </NavLink>
             </div>
           )}
@@ -134,20 +132,18 @@ function Sidebar() {
               </div>
             </>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateDaily()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/stores"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateDaily()}
-                >
-                  <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Stores}
-                  </p>
-                </button>
+                <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Stores}
+                </p>
               </NavLink>
             </div>
           )}
@@ -170,20 +166,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateMathang()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/product-categorys"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateMathang()}
-                >
-                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {ProductCategories}
-                  </p>
-                </button>
+                <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {ProductCategories}
+                </p>
               </NavLink>
             </div>
           )}
@@ -206,20 +200,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateNhanvien()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/staff-management"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateNhanvien()}
-                >
-                  <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Staffs}
-                  </p>
-                </button>
+                <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Staffs}
+                </p>
               </NavLink>
             </div>
           )}
@@ -242,20 +234,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateQuitac()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/rule-management"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateQuitac()}
-                >
-                  <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Rules}
-                  </p>
-                </button>
+                <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Rules}
+                </p>
               </NavLink>
             </div>
           )}
@@ -278,20 +268,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateKhachhang()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/customer"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateKhachhang()}
-                >
-                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Customers}
-                  </p>
-                </button>
+                <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Customers}
+                </p>
               </NavLink>
             </div>
           )}
@@ -314,20 +302,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateBaocao()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/admin-report"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateBaocao()}
-                >
-                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Reports}
-                  </p>
-                </button>
+                <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Reports}
+                </p>
               </NavLink>
             </div>
           )}
@@ -351,20 +337,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateSanpham()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/products"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateSanpham()}
-                >
-                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Products}
-                  </p>
-                </button>
+                <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Products}
+                </p>
               </NavLink>
             </div>
           )}
@@ -387,20 +371,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateQuanlykho()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/warehouse"
-              >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateQuanlykho()}
-                >
-                  <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Warehouses}
-                  </p>
-                </button>
+              >              
+                <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Warehouses}
+                </p>
               </NavLink>
             </div>
           )}
@@ -422,20 +404,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateKhachhangStaff()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/customer"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateKhachhangStaff()}
-                >
-                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Customers}
-                  </p>
-                </button>
+                <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Customers}
+                </p>
               </NavLink>
             </div>
           )}
@@ -458,20 +438,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateQuanlydaily()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/store-management"
               >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateQuanlydaily()}
-                >
-                  <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {StoreManagement}
-                  </p>
-                </button>
+                <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {StoreManagement}
+                </p>
               </NavLink>
             </div>
           )}
@@ -494,20 +472,18 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div className="my-4 py-4 hover:bg-red-500">
+            <div 
+              className="my-4 py-4 hover:bg-red-500"
+              onClick={() => activateBaocaoStaff()}
+            >
               <NavLink
                 className="flex justify-center lg:justify-start"
                 to="/staff-report"
-              >
-                <button
-                  className="flex gap-3 items-center"
-                  onClick={() => activateBaocaoStaff()}
-                >
-                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Reports}
-                  </p>
-                </button>
+              >                
+                <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
+                <p className="text-white font-bold hidden lg:block">
+                  {Reports}
+                </p>
               </NavLink>
             </div>
           )}
