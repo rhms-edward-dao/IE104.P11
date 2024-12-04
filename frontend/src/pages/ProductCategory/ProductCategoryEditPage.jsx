@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -33,7 +33,9 @@ const ProductCategorysEditPage = () => {
   // // For navigating
   const navigate = useNavigate();
   const { productCategoryId } = useParams();
-
+  // // Get existed data
+  const location = useLocation();
+  const { existedData } = location.state;
   // Use Effect here
   // // For getting data to edit
   useEffect(() => {
@@ -50,12 +52,31 @@ const ProductCategorysEditPage = () => {
   // Functions here
   // // For editing current product category
   const updateData = async (id, tenloaimathang) => {
-    const data = await updateOneCategory(id, tenloaimathang);
-    if (data.message === "loại mặt hàng không tồn tại") {
-      alert("Cập nhật loại mặt hàng thất bại. Loại mặt hàng không tồn tại");
-    } else if (data.message === "Đã cập nhật") {
-      alert("Cập nhật loại mặt hàng thành công");
-      navigate("/product-categorys");
+    const checkExistedData = existedData.some(item => item.tenloaimathang === tenloaimathang);
+    if (checkExistedData) {
+      alert("Loại mặt hàng đã tồn tài");
+    } else {
+      // Variables here for condition to call addProductCategoryApi
+      let checkName = true;
+      // Functions for checking string format tenloaimathang
+      const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
+      // Check tenloaimathang: non-special-letter, length in [1, 200]
+      if (tenloaimathang.length < 1 || tenloaimathang.length > 200) {
+        alert(
+          "Độ dài tên loại mặt hàng không hợp lệ. Tên loại mặt hàng không được rỗng và không dài quá 200 ký tự"
+        );
+        checkName = false;
+      } else if (isSpecicalLetter(tenloaimathang)) {
+        alert("Tên loại đại lý không được chứa các ký tự đặc biệt");
+        checkName = false;
+      }
+      if (checkName) {
+        const data = await updateOneCategory(id, tenloaimathang);        
+        if (data.message === "Đã cập nhật") {
+          alert("Cập nhật loại mặt hàng thành công");
+          navigate("/product-categorys");
+        };
+      };    
     }
   };
 

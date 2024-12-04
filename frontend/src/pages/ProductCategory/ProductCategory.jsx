@@ -347,6 +347,9 @@ const ProductCategorys = () => {
                 to={
                   "product-categorys-add-page"
                 }
+                state = {{
+                  existedData: isProductTab ? productData : productCategoryData
+                }}
               >
                 <Button />
               </NavLink>
@@ -447,8 +450,11 @@ const ProductCategorys = () => {
                           to={
                             isProductTab
                               ? `product-edit-page/${list.Mathang.mamathang}`
-                              : `product-categorys-edit-page/${list.maloaimathang}`
+                              : `product-categorys-edit-page/${list.maloaimathang}`                              
                           }
+                          state={{
+                            existedData: isProductTab ? productData : productCategoryData
+                          }}
                         >
                           <p className="hidden lg:inline-block">
                             {Edit}

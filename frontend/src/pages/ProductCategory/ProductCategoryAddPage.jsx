@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -28,38 +28,42 @@ const ProductCategorysAddPage = () => {
   const [newProductCategoryName, setNewProductCategoryName] = useState("");
   // // For navigating
   const navigate = useNavigate();
-
-  // Functions here
+  // // Get existed data
+  const location = useLocation();
+  const { existedData } = location.state;
+  // Functions here 
   const addData = async (tenloaimathang) => {
-    // Variables here for condition to call addProductCategoryApi
-    let checkName = true;
-
-    // Functions for checking string format tenloaimathang
-    const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
-
-    // Check tenloaimathang: non-special-letter, length in [1, 200]
-    if (tenloaimathang.length < 1 || tenloaimathang.length > 200) {
-      alert(
-        "Độ dài tên loại mặt hàng không hợp lệ. Tên loại mặt hàng không được rỗng và không dài quá 200 ký tự"
-      );
-      checkName = false;
-    } else if (isSpecicalLetter(tenloaimathang)) {
-      alert("Tên loại đại lý không được chứa các ký tự đặc biệt");
-      checkName = false;
-    }
-
-    if (checkName === true) {
-      const data = await addOneCategory(tenloaimathang);
-      if (
-        data.message ===
-        "Thêm loại mặt hàng thất bại do loại mặt hàng đã tồn tại"
-      ) {
-        alert("Thêm loại mặt hàng thất bại do loại mặt hàng đã tồn tại");
-      } else {
-        alert("Thêm loại mặt hàng thành công");
-        navigate("/product-categorys");
+    const checkExistedData = existedData.some(item => item.tenloaimathang === tenloaimathang);
+    if (checkExistedData) {
+      alert("Loại mặt hàng đã tồn tại");
+    } else {    
+      // Variables here for condition to call addProductCategoryApi
+      let checkName = true;
+      // Functions for checking string format tenloaimathang
+      const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
+      // Check tenloaimathang: non-special-letter, length in [1, 200]
+      if (tenloaimathang.length < 1 || tenloaimathang.length > 200) {
+        alert(
+          "Độ dài tên loại mặt hàng không hợp lệ. Tên loại mặt hàng không được rỗng và không dài quá 200 ký tự"
+        );
+        checkName = false;
+      } else if (isSpecicalLetter(tenloaimathang)) {
+        alert("Tên loại đại lý không được chứa các ký tự đặc biệt");
+        checkName = false;
       }
-    }
+      if (checkName === true) {
+        const data = await addOneCategory(tenloaimathang);
+        if (
+          data.message ===
+          "Thêm loại mặt hàng thất bại do loại mặt hàng đã tồn tại"
+        ) {
+          alert("Thêm loại mặt hàng thất bại.");
+        } else {
+          alert("Thêm loại mặt hàng thành công");
+          navigate("/product-categorys");
+        }
+      }
+    };
   };
 
   // Return render here

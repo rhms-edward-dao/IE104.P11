@@ -58,15 +58,15 @@ const ProductAdminEditPage = () => {
     const fetchData = async () => {
       // Get current product infomation by its id
       const currentProduct = await getProductById(productId);
-      setCurrentProductName(currentProduct.Mathang.tenmathang);
-      setCurrentUnitPrice(currentProduct.Mathang.dongia);
-      setCurrentStockQuantity(currentProduct.Mathang.soluongton);
-      setCurrentUnit(currentProduct.Mathang.tendvt);
-      setCurrentProductCategoryName(currentProduct.tenloaimathang);
-      setCurrentStoreName(currentProduct.tendaily);
+      setCurrentProductName(currentProduct[0].Mathang.tenmathang);
+      setCurrentUnitPrice(currentProduct[0].Mathang.dongia);
+      setCurrentStockQuantity(currentProduct[0].Mathang.soluongton);
+      setCurrentUnit(currentProduct[0].Mathang.tendvt);
+      setCurrentProductCategoryName(currentProduct[0].tenloaimathang);
+      setCurrentStoreName(currentProduct[0].tendaily);
 
-      if (currentProduct.Mathang.hinhanh !== null) {
-        setCurrentImage(currentProduct.Mathang.hinhanh);
+      if (currentProduct[0].Mathang.hinhanh !== null) {
+        setCurrentImage(currentProduct[0].Mathang.hinhanh);
       }
 
       // Get all existed product category name
