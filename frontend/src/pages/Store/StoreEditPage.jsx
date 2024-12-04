@@ -58,7 +58,7 @@ const StoreEditPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Get current store infomation by its id
-      const currentStore = await getStoreById(storeId);
+      const currentStore = await getStoreById(storeId);      
       if (currentStore.message === "Không tồn tại đại lý cần tìm") {
         alert("Không tồn tại đại lý cần tìm");
       } else {
@@ -72,7 +72,7 @@ const StoreEditPage = () => {
           currentStore[0].diachi.split(",").slice(0, 2).join(", ")
         );
         if (currentStore[0].hinhanh !== null) {
-          setCurrentImage(currentStore.hinhanh);
+          setCurrentImage(currentStore[0].hinhanh);
         }
       }
 
@@ -88,7 +88,6 @@ const StoreEditPage = () => {
     };
     fetchData();
   }, []);
-
   // Function here
   // // For changing store image
   const handleUploadImage = (e) => {
