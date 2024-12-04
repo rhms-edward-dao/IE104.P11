@@ -659,9 +659,9 @@ def get_all_quitac(db: Session = Depends(get_db)):
     if get_db:
         return [
             {
-                "sothietbitoidataikhoan": get_db[0],
+                "sothietbitoidataikhoan": get_db[2],
                 "tiledongiaban": get_db[1],
-                "sodailytoidamoiquan": get_db[2],
+                "sodailytoidamoiquan": get_db[0],
             }
         ]
     return {"message": "Qui tắc rỗng"}
@@ -1174,7 +1174,7 @@ async def add_new_nhanvien(
     tenthanhpho: str = Form(...),
     hinhanh: UploadFile = File(...),
     db: Session = Depends(get_db),
-):
+):    
     try:  # Get longtitude and latitude
         key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
@@ -1223,6 +1223,7 @@ async def add_new_nhanvien(
             db, models.NhanvienChucvu, "nhân viên chức vụ", **param_list_position
         )
     except Exception as e:
+        print(e)
         match = re.search(r"DETAIL\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
@@ -1385,13 +1386,7 @@ def add_new_chucvu(
     db: Session = Depends(get_db),
 ):
     param_list = {"tenchucvu": tenchucvu, "luong": luong, "capdo": capdo}
-    result = api_operations.add(db, models.Chucvu, "chức vụ", **param_list)
-    if result["message"] == "Thêm chức vụ thất bại do chức vụ đã tồn tại":
-        return {"message": "Thêm chức vụ thất bại do chức vụ đã tồn tại"}
-    elif result["message"] == "Thêm chức vụ thành công":
-        return {"message": "Thêm chức vụ thành công"}
-    else:
-        return {"message": "Thêm chức vụ thất bại"}
+    return api_operations.add(db, models.Chucvu, "chức vụ", **param_list)
 
 
 @app.get("/chucvu/machucvu/{machucvu}")
