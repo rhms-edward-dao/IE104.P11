@@ -232,7 +232,9 @@ const Products = () => {
     productCategoryItems.length > 0
       ? Math.ceil(parseFloat(productCategoryItems.length / itemsPerPage))
       : 0;
-
+  // Items for rendering
+  const PItems = productSearchTerm ? productSearchResults : currentProductItems;
+  const CItems = productCategorySearchTerm ? productCategorySearchResults : currentProductCategoryItems;
   // Return here
   return (
     <div>
@@ -377,12 +379,12 @@ const Products = () => {
             </tr>
           </thead>
           <tbody>
-            {(isProductTab ? currentProductItems : currentProductCategoryItems)
+            {(isProductTab ? PItems : CItems)
               .length >= 1 ? (
               <>
                 {(isProductTab
-                  ? currentProductItems
-                  : currentProductCategoryItems
+                  ? PItems
+                  : CItems
                 ).map((list, index) => (
                   <tr
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"

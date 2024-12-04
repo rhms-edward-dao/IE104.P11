@@ -233,7 +233,9 @@ function Staff() {
     positionItems.length > 0
       ? Math.ceil(parseFloat(positionItems.length / itemsPerPage))
       : 0;
-
+  // Items for rendering
+  const PItems = positionSearchTerm ? positionSearchResults : currentPositionItems;    
+  const SItems = staffSearchTerm ? staffSearchResults : currentStaffItems;
   // Return here
   return (
     <div>
@@ -384,10 +386,10 @@ function Staff() {
             </tr>
           </thead>
           <tbody>
-            {(isStaffTab ? currentStaffItems : currentPositionItems).length >=
+            {(isStaffTab ? SItems : PItems).length >=
             1 ? (
               <>
-                {(isStaffTab ? currentStaffItems : currentPositionItems).map(
+                {(isStaffTab ? SItems : PItems).map(
                   (list, index) => (
                     <tr
                       className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"

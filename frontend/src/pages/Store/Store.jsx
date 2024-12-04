@@ -243,6 +243,9 @@ function Stores() {
       ? Math.ceil(parseFloat(storeCategoryItems.length / itemsPerPage))
       : 0;
 
+  // Items for rendering
+  const SItems = storeSearchTerm ? storeSearchResults : currentStoreItems;
+  const CItems = storeCategorySearchTerm ? storeCategorySearchResults : currentStoreCategoryItems;
   // Return here
   return (
     <div>
@@ -384,12 +387,12 @@ function Stores() {
             </tr>
           </thead>
           <tbody>
-            {(isStoreTab ? currentStoreItems : currentStoreCategoryItems)
+            {(isStoreTab ? SItems : CItems)
               .length >= 1 ? (
               <>
                 {(isStoreTab
-                  ? currentStoreItems
-                  : currentStoreCategoryItems
+                  ? SItems
+                  : CItems
                 ).map((list, index) => (
                   <tr
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"

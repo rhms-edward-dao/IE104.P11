@@ -55,7 +55,6 @@ function Customer() {
     };
     fetchData();
   }, []);
-
   // Function for searching
   // // For searching
   useEffect(() => {
@@ -116,7 +115,8 @@ function Customer() {
     items.length > 0 ? items.slice(offset, offset + itemsPerPage) : [];
   const pageCount =
     items.length > 0 ? Math.ceil(items.length / itemsPerPage) : 0;
-
+  // Items for rendering
+  const CItems = searchTerm ? searchResults : currentItems;
   // Return here
   return (
     <div>
@@ -174,8 +174,8 @@ function Customer() {
             </tr>
           </thead>
           <tbody>
-            {currentItems.length > 0 ? (
-              currentItems.map((list, index) => (
+            {CItems.length > 0 ? (
+              CItems.map((list, index) => (
                 <tr
                   key={index}
                   className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"

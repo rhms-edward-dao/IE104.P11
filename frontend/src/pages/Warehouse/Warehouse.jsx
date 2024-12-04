@@ -215,7 +215,9 @@ function Warehouse() {
     exportItems.length > 0
       ? Math.ceil(parseFloat(exportItems.length / itemsPerPage))
       : 0;
-
+  // Items for rendering
+  const IItems = importSearchTerm ? importSearchResults : currentImportItems;
+  const EItems = exportSearchTerm ? exportSearchResults : currentExportItems;
   // Return render here
   return (
     <div>
@@ -372,10 +374,10 @@ function Warehouse() {
             </tr>
           </thead>
           <tbody>
-            {(isWarehouseTab ? currentImportItems : currentExportItems)
+            {(isWarehouseTab ? IItems : EItems)
               .length >= 1 ? (
               <>
-                {(isWarehouseTab ? currentImportItems : currentExportItems).map(
+                {(isWarehouseTab ? IItems : EItems).map(
                   (list, index) => (
                     <tr
                       className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"

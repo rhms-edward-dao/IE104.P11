@@ -64,18 +64,6 @@ function Districts() {
     fetchData();
   }, []);
 
-  // Search feature here
-  // useEffect(() => {
-  //   if (searchTerm.trim() !== "") {
-  //     const result = data.filter((item) =>
-  //       item.tenquan.toLowerCase().includes(searchTerm.toLowerCase())
-  //     );
-  //     setSearchResults(result);
-  //   } else {
-  //     setSearchResults(data);
-  //   }
-  // }, [searchTerm, data]);
-
   // // For searching
   useEffect(() => {
     if (searchTerm.trim() !== "") {
@@ -143,6 +131,8 @@ function Districts() {
   const pageCount =
     items.length > 0 ? Math.ceil(parseFloat(items.length / itemsPerPage)) : 0;
 
+  // Items for render
+  const districtItems = searchTerm ? searchResults : currentItems;
   // Return here
   return (
     <div>
@@ -209,8 +199,8 @@ function Districts() {
             </tr>
           </thead>
           <tbody>
-            {currentItems.length > 0 ? (
-              currentItems.map((list, index) => (
+            {districtItems.length > 0 ? (
+              districtItems.map((list, index) => (
                 <tr
                   className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                   key={index}
