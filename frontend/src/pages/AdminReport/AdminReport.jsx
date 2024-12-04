@@ -46,7 +46,7 @@ function AdminReport() {
     display: 'flex',
     justifyContent: 'center',
     gap: '100px',
-    marginTop: '-100px',
+    marginTop: '-100px',    
   };
 
   const reportCardStyle = (width, height) => ({
@@ -61,7 +61,7 @@ function AdminReport() {
     boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)', 
     textAlign: 'left',
     padding: '20px',
-    cursor: 'pointer',
+    cursor: 'pointer',    
   });
 
   const titleStyle = {
@@ -81,7 +81,7 @@ function AdminReport() {
         <Header headerTitle="Báo cáo" />
       </div>
       <div style={contentStyle}>
-        <div style={reportOptionsStyle}>
+        <div style={reportOptionsStyle} className='flex-wrap'>
           <div style={reportCardStyle(365, 153)} onClick={() => handleNavigation('/profit-report')}>
             <p style={titleStyle}>Báo Cáo Lợi Nhuận</p>
             <img src={ProfitIcon} alt="Lợi Nhuận" style={iconStyle} />
