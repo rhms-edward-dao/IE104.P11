@@ -1,16 +1,12 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
-
 // Import Assets Here
 import { addStoreCategory } from "../../assets/Stores/StoreCategoryData";
-
 // Import Components Here
 import Header from "../../components/Header";
-
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
@@ -29,50 +25,53 @@ const StoreCategoryAddPage = () => {
   const [newMaxDebt, setNewMaxDebt] = useState(0);
   // // For navigating
   const navigate = useNavigate();
-
+  // // Get data existing store among pages
+  const location = useLocation();
+  const { existedData } = location.state;
   // Functions here
   const addData = async (tenloaidaily, sotiennotoida) => {
-    // Variables here for condition to call addStoreApi
-    let checkName = true;
-    let checkMaxDepth = true;
-    // Functions for checking string format tenloaidaily + sotiennotoida
-    const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
+    const checkExistedItem = existedData.some(item => item.tenloaidaily === tenloaidaily);
+    if (checkExistedItem) {
+      alert("Tên loại đại lý đã tồn tại");
+    } else { 
+      // Variables here for condition to call addStoreApi
+      let checkName = true;
+      let checkMaxDepth = true;
+      // Functions for checking string format tenloaidaily + sotiennotoida
+      const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
+      // Check tenloaidaily: non-special-letter, length in [1, 100]
+      if (tenloaidaily.length < 1 || tenloaidaily.length > 100) {
+        alert(
+          "Độ dài tên loại đại lý không hợp lệ. Tên loại đại lý không được rỗng và không dài quá 100 ký tự"
+        );
+        checkName = false;
+      } else if (isSpecicalLetter(tenloaidaily)) {
+        alert("Tên loại đại lý không được chứa các ký tự đặc biệt");
+        checkName = false;
+      } 
+      // Check Sotiennotoida
+      if (sotiennotoida < 0) {
+        alert("Số tiền nợ tối đa phải là số dương");
+        checkMaxDepth = false;
+      };
+      if (sotiennotoida >= Math.pow(10, 8)) {
+        alert("Số tiền nợ tối đa là 99999999");
+        checkMaxDepth = false;
+      }
 
-    // Check tenloaidaily: non-special-letter, length in [1, 100]
-    if (tenloaidaily.length < 1 || tenloaidaily.length > 100) {
-      alert(
-        "Độ dài tên loại đại lý không hợp lệ. Tên loại đại lý không được rỗng và không dài quá 100 ký tự"
-      );
-      checkName = false;
-    } else if (isSpecicalLetter(tenloaidaily)) {
-      alert("Tên loại đại lý không được chứa các ký tự đặc biệt");
-      checkName = false;
-    }
-
-    // Check Sotiennotoida
-    if (sotiennotoida < 0) {
-      alert("Số tiền nợ tối đa phải là số dương");
-      checkMaxDepth = false;
-    };
-    if (sotiennotoida >= Math.pow(10, 8)) {
-      alert("Số tiền nợ tối đa là 99999999");
-      checkMaxDepth = false;
-    }
-
-    if (checkName && checkMaxDepth) {
-      const data = await addStoreCategory(tenloaidaily, sotiennotoida);
-      console.log(data);
-      if (
-        data.message === "Thêm loại đại lý thất bại do loại đại lý đã tồn tại"
-      ) {
-        alert("Thêm loại đại lý thất bại do loại đại lý đã tồn tại");
-      } else {
-        alert("Thêm loại đại lý thành công");
-        navigate("/stores");
+      if (checkName && checkMaxDepth) {
+        const data = await addStoreCategory(tenloaidaily, sotiennotoida);
+        if (
+          data.message === "Thêm loại đại lý thất bại do loại đại lý đã tồn tại"
+        ) {
+          alert("Thêm loại đại lý thất bại do loại đại lý đã tồn tại");
+        } else {
+          alert("Thêm loại đại lý thành công");
+          navigate("/stores");
+        }
       }
     }
   };
-
   // Return render here
   return (
     <div>

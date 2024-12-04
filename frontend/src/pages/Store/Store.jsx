@@ -346,6 +346,9 @@ function Stores() {
           <NavLink
             className="my-5"
             to={isStoreTab ? "store-add-page" : "store-category-add-page"}
+            state={{
+              existedData: isStoreTab ? storeData : storeCategoryData,
+            }}
           >
             <Button />
           </NavLink>
@@ -464,6 +467,9 @@ function Stores() {
                               ? `store-edit-page/${list.Daily.madaily}`
                               : `store-category-edit-page/${list.maloaidaily}`
                           }
+                          state = {{
+                            existedData: isStoreTab ? storeData : storeCategoryData
+                          }}
                         >
                           <p className="hidden lg:inline-block">{Edit}</p>
                           <img src={EditIcon} alt="Icon chỉnh sửa" />

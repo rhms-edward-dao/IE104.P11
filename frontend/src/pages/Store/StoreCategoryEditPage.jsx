@@ -1,6 +1,6 @@
 // Import Hook
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
@@ -30,6 +30,9 @@ const StoreCategoryEditPage = () => {
   // // For navigating
   const navigate = useNavigate();
   const { storeCategoryId } = useParams();
+  // // Get exostedData
+  const location = useLocation();
+  const { existedData } = location.state;
   // Use Effect here
   // // For getting data to edit
   useEffect(() => {
@@ -41,18 +44,49 @@ const StoreCategoryEditPage = () => {
     };
     fetchData();
   }, []);
-
   // Functions here
   // For editing current store category
   const updateData = async (id, tenloaidaily, sotiennotoida) => {
-    const data = await updateStoreCategory(id, tenloaidaily, sotiennotoida);
-    if (data.message === "loại đại lý không tồn tại") {
-      alert("Cập nhật loại đại lý thất bại. Loại đại lý không tồn tại");
-    } else if (data.message === "loại đại lý đã tồn tại") {
-      alert("Cập nhật loại đại lý thất bại. Loại đại lý đã tồn tại");      
+    const checkExistedData = existedData.some(item => item.tenloaidaily === tenloaidaily);
+    if (checkExistedData && currentStoreCategoryName !== tenloaidaily) {
+      alert("Tên loại đại lý đã tồn tại");
     } else {
-      alert("Cập nhật loại đại lý thành công");
-      navigate("/stores");
+      // Variables here for condition to call addStoreApi
+      let checkName = true;
+      let checkMaxDepth = true;
+      // Functions for checking string format tenloaidaily + sotiennotoida
+      const isSpecicalLetter = (input) => /[!@#\$%\^\&*\)\(+=._-]/.test(input);
+
+      // Check tenloaidaily: non-special-letter, length in [1, 100]
+      if (tenloaidaily.length < 1 || tenloaidaily.length > 100) {
+        alert(
+          "Độ dài tên loại đại lý không hợp lệ. Tên loại đại lý không được rỗng và không dài quá 100 ký tự"
+        );
+        checkName = false;
+      } else if (isSpecicalLetter(tenloaidaily)) {
+        alert("Tên loại đại lý không được chứa các ký tự đặc biệt");
+        checkName = false;
+      }
+
+      // Check Sotiennotoida
+      if (sotiennotoida < 0) {
+        alert("Số tiền nợ tối đa phải là số dương");
+        checkMaxDepth = false;
+      };
+      if (sotiennotoida >= Math.pow(10, 8)) {
+        alert("Số tiền nợ tối đa là 99999999");
+        checkMaxDepth = false;
+      }
+
+      if (checkName && checkMaxDepth) {
+        const data = await updateStoreCategory(id, tenloaidaily, sotiennotoida);
+        if (data.message === "loại đại lý không tồn tại") {
+          alert("Cập nhật loại đại lý thất bại. Loại đại lý không tồn tại");
+        } else {
+          alert("Cập nhật loại đại lý thành công");
+          navigate("/stores");
+        }
+      }    
     }
   };
   // Return render here
