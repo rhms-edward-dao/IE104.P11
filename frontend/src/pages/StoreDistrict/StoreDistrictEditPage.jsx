@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -35,7 +35,9 @@ const StoreDistrictEditPage = () => {
   // // For navigating
   const navigate = useNavigate();
   const { districtId } = useParams();
-
+  // // Get existedData
+  const location = useLocation();
+  const { existedData } = location.state;
   // Use Effect here
   // // For getting data to edit
   useEffect(() => {
@@ -49,24 +51,27 @@ const StoreDistrictEditPage = () => {
       setExistedCityName(data);
     };
     fetchData();
-  }, []);
-
+  }, []);  
   // Function here
   // // For editing current district
   const updateData = async (id, tenquan, tenthanhpho) => {
-    if (tenquan.length < 1) {
-      alert("Tên quận không thể rỗng");
+    const checkExistedData = existedData.some(item => item.tenquan === tenquan && item.tenthanhpho === tenthanhpho);
+    console.log(checkExistedData)
+    if (checkExistedData) {
+      alert("(Quận, Thành phố) đã tồn tại");
     } else {
-      const data = await updateDistrict(id, tenquan, tenthanhpho);
-      if (data.message === "Đã cập nhật") {
-        alert("Cập nhật quận thành công");
-        navigate("/districts");
-      } else if (data.message === "quận không tồn tại") {
-        alert("Quận không tồn tại");
+      if (tenquan.length < 1) {
+        alert("Tên quận không thể rỗng");
       } else {
-        alert("Cập nhật quận thất bại");
+        const data = await updateDistrict(id, tenquan, tenthanhpho);
+        if (data.message === "Đã cập nhật") {
+          alert("Cập nhật quận thành công");
+          navigate("/districts");
+        } else {
+          alert("Cập nhật quận thất bại");
+        }
       }
-    }
+    };    
   };
 
   // Return render here

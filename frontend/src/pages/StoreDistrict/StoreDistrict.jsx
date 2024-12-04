@@ -92,11 +92,12 @@ function Districts() {
   // Delete feature
   const deleteItem = async (id) => {
     const response = await deleteDistrict(id);
-    if (response.message === "Xóa quận thành công") {
-      alert("Xóa quận thành công");
+    console.log(response)
+    if (response.success) {
+      alert(response.message);
       setDistrictData(districtData.filter((item) => item.maquan !== id));
     } else {
-      alert("Xóa quận thất bại");
+      alert(response.message);
     }
   };
 
@@ -222,6 +223,9 @@ function Districts() {
                       <NavLink
                         className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                         to={`district-edit-page/${list.maquan}`}
+                        state={{
+                          existedData: districtData
+                        }}
                       >
                         <p className="hidden sm:hidden md:hidden lg:inline-block">
                           {Edit}
