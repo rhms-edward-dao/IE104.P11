@@ -95,15 +95,15 @@ function Staff() {
         // Staff count
         const distinctStaff = new Set();
         const distinctPosition = new Set();
-        console.log(existedPosition);
+        let totalIncome = 0.0;
         for (let i=0;i<existedStaff.length;i++) {
           if (existedStaff[i].Nhanvien.manhanvien) {
             distinctStaff.add(existedStaff[i].Nhanvien.manhanvien);
           }          
-          if (existedStaff[i].tenchucvu) {
-
+          if (existedStaff[i].luong) {
+            totalIncome += parseFloat(existedStaff[i].luong);
           }
-        }
+        }        
         for (let i=0;i<existedPosition.length;i++) {
           if (existedPosition[i].machucvu) {
             distinctPosition.add(existedPosition[i].machucvu);
@@ -112,6 +112,7 @@ function Staff() {
         
         setStaffCount(distinctStaff.size);
         setPositionCount(distinctPosition.size);
+        setTotalSalary(totalIncome);
       } catch (error) {
         console.error("Error while fetching: ", error);
       }

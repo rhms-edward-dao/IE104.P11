@@ -44,10 +44,12 @@ const ProductCategorys = () => {
   // // For fetching products & product category data
   const [productData, setProductData] = useState([]);
   const [productCategoryData, setProductCategoryData] = useState([]);
+  const [totalProduct, setTotalProduct] = useState(0);
+  const [totalValue, setTotalValue] = useState(0);
+  const [totalOutOfStock, setTotalOutOfStock] = useState(0);
   // // For searching products & product category
   const [productSearchTerm, setProductSearchTerm] = useState("");
-  const [productCategorySearchTerm, setProductCategorySearchTerm] =
-    useState("");
+  const [productCategorySearchTerm, setProductCategorySearchTerm] = useState("");
   const [productSearchResults, setProductSearchResults] = useState([]);
   const [productCategorySearchResults, setProductCategorySearchResults] =
     useState([]);
@@ -74,6 +76,24 @@ const ProductCategorys = () => {
           setProductData([]);
         } else {
           setProductData(existedProduct);
+          // Statistics here
+          const distinctProducts = new Set();
+          let outOfStock = 0;
+          let totalValue = 0;
+          for (let i=0;i<existedProduct.length;i++){
+            if (existedProduct[i].Mathang.mamathang) {
+              distinctProducts.add(existedProduct[i].Mathang.mamathang);
+            }
+            if (existedProduct[i].Mathang.dongia) {
+              totalValue += existedProduct[i].Mathang.dongia;
+            }
+            if (existedProduct[i].Mathang.soluongton == 0) {
+              outOfStock += 1;
+            }          
+          }
+          setTotalProduct(distinctProducts.size);
+          setTotalValue(totalValue);
+          setTotalOutOfStock(outOfStock);
         }
         // Get Exsisted Product Categories
         const existedProductCategory = await getAllTypeOfProduct();
@@ -243,7 +263,7 @@ const ProductCategorys = () => {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {ProductDataCard(theme, DC_Products).map((card, index) => (
+        {ProductDataCard(theme, DC_Products, totalProduct, totalValue, totalOutOfStock).map((card, index) => (
           <Card
             key={index}
             image={card.img}

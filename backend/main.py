@@ -1071,6 +1071,7 @@ def get_baotri_bu_madaily(madaily: int, db: Session = Depends(get_db)):
 @app.get("/nhanvien")
 def get_nhanvien_all(db: Session = Depends(get_db)):
     get_db = crud.get_all_nhanvien(db)
+    print(get_db)
     result = []
     if get_db:
         for item in get_db:
@@ -1088,6 +1089,7 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
                     "tendaily": item[3],
                     "kinhdo": item[4],
                     "vido": item[5],
+                    "luong": item[6]
                 }
             )
         return result

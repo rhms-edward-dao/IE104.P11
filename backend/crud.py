@@ -561,6 +561,7 @@ def get_all_nhanvien(db: Session):
             models.Daily.tendaily,
             models.NhanvienDiachi.kinhdo,
             models.NhanvienDiachi.vido,
+            models.Chucvu.luong
         )
         .filter(
             models.Nhanvien.manhanvien == models.NhanvienChucvu.manhanvien,
