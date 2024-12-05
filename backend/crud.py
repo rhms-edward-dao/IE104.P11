@@ -732,6 +732,16 @@ def update_chucvu(machucvu: int, **param_list):
 
 
 # Khachhang
+def get_all_khachhang(db: Session):
+    return (
+        db.query(
+            models.Khachhang,
+            models.KhachhangDiachi,
+        )
+        .filter(models.Khachhang.makhachhang == models.KhachhangDiachi.makhachhang)
+        .all()
+    )
+
 def update_khachhang(
     db: Session, makhachhang: int, tenkhachhang: str, sodienthoai: str
 ):

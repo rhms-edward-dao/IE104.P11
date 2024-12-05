@@ -667,8 +667,8 @@ def update_all_quitac(pItems: schemas.QUITACupdate, db: Session = Depends(get_db
 
 # KHACHHANG manipulating
 @app.get("/khachhang")
-def get_all_khachhang(db: Session = Depends(get_db)):
-    return api_operations.get_all(db, models.Khachhang, "khách hàng")
+def get_all_khachhang(db: Session = Depends(get_db)):        
+    return crud.get_all_khachhang(db)
 
 
 @app.get("/khachhang/{makhachhang}")
@@ -1071,7 +1071,6 @@ def get_baotri_bu_madaily(madaily: int, db: Session = Depends(get_db)):
 @app.get("/nhanvien")
 def get_nhanvien_all(db: Session = Depends(get_db)):
     get_db = crud.get_all_nhanvien(db)
-    print(get_db)
     result = []
     if get_db:
         for item in get_db:
