@@ -55,9 +55,7 @@ function Staff() {
   const [staffSearchResults, setStaffSearchResults] = useState([]);
   const [positionSearchResults, setPositionSearchResults] = useState([]);
 
-  const [staffCount, setStaffCount] = useState(0);
-  const [totalSalary, setTotalSalary] = useState(0);
-  const [positionCount, setPositionCount] = useState(0);
+  const [statistics, setStatistics] = useState({});
 
   // // For pagination staff & position
   const [currentStaffPage, setCurrentStaffPage] = useState(0);
@@ -93,26 +91,34 @@ function Staff() {
         }
         // Statistics here
         // Staff count
-        const distinctStaff = new Set();
-        const distinctPosition = new Set();
+        let distinctStaff = new Set();
+        let distinctPosition = new Set();
         let totalIncome = 0.0;
-        for (let i=0;i<existedStaff.length;i++) {
-          if (existedStaff[i].Nhanvien.manhanvien) {
-            distinctStaff.add(existedStaff[i].Nhanvien.manhanvien);
-          }          
-          if (existedStaff[i].luong) {
-            totalIncome += parseFloat(existedStaff[i].luong);
+        // Get distinct staffs
+        existedStaff.forEach(item => {
+          if (item.Nhanvien.manhanvien) {
+            distinctStaff.add(item.Nhanvien.manhanvien);            
           }
-        }        
-        for (let i=0;i<existedPosition.length;i++) {
-          if (existedPosition[i].machucvu) {
-            distinctPosition.add(existedPosition[i].machucvu);
+        });        
+        // Get distinct positions
+        existedPosition.forEach(item => {
+          if (item.machucvu) {
+            distinctPosition.add(item.machucvu);
           }
-        }
-        
-        setStaffCount(distinctStaff.size);
-        setPositionCount(distinctPosition.size);
-        setTotalSalary(totalIncome);
+        });
+        // For total salary
+        distinctStaff.forEach(item => {
+          existedStaff.filter(sitem => {
+            if (sitem.Nhanvien.manhanvien === item) {
+              totalIncome += sitem.luong;
+            }
+          })
+        })
+        setStatistics({
+          "totalStaff": distinctStaff.size,
+          "totalPosition": distinctPosition.size,
+          "totalSalary": totalIncome
+        })
       } catch (error) {
         console.error("Error while fetching: ", error);
       }
@@ -271,7 +277,7 @@ function Staff() {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {StaffDataCard(theme, DC_Staffs, staffCount, totalSalary, positionCount).map((card, index) => (
+        {StaffDataCard(theme, DC_Staffs, statistics).map((card, index) => (
           <Card
             key={index}
             image={card.img}

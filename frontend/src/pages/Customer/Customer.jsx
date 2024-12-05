@@ -10,6 +10,9 @@ import {
   getAllCustomer,
   deleteCustomer,
 } from "../../assets/Customers/CustomerData";
+
+import { getAllExportBill } from "../../assets/Warehouses/WarehouseData";
+
 import { CustomerDataCard } from "../../assets/Customers/CustomerDataCard";
 
 // Import Components Here
@@ -29,9 +32,10 @@ function Customer() {
   const { Title } = t("Header");
   const { DC_Customers } = t("DataCard");
   const { SearchBy, SF_Customers } = t("SearchFilter");
-  const { Add, Edit, Delete } = t("Buttons");
+  const { Edit, Delete } = t("Buttons");
   // // For fetching data
   const [data, setData] = useState([]);
+  const [statistics, setStatistics] = useState({});
   // // For searching
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -51,8 +55,46 @@ function Customer() {
   useEffect(() => {
     const fetchData = async () => {
       const existedData = await getAllCustomer();
-      setData(existedData);
-    };
+      let distinctCustomers = new Set();
+      let distinctDistricts = new Set();
+      let distinctExportBill = new Set();
+      let totalProfit = 0.0;
+      if (existedData.length === 0) {
+        setData([]);        
+      } else {
+        setData(existedData);
+        // Get data for statistic        
+        existedData.forEach(item => {
+          if (item.Khachhang.makhachhang) {
+            distinctCustomers.add(item.Khachhang.makhachhang);
+          };
+          if (item.KhachhangDiachi.maquan) {
+            distinctDistricts.add(item.KhachhangDiachi.maquan);
+          };
+        });              
+      };
+      // Get phieuxuathang
+      const existedExport = await getAllExportBill();
+      if (existedExport.length > 0) {
+        existedExport.forEach(item => {
+          if (item.Phieuxuathang.maphieuxuat) {
+            distinctExportBill.add(item.Phieuxuathang.maphieuxuat);
+          }
+        })
+        distinctExportBill.forEach(item => {
+          existedExport.filter(eitem => {
+            if (eitem.Phieuxuathang.maphieuxuat === item) {
+              totalProfit += eitem.Phieuxuathang.tongtien;
+            }
+          })          
+        })
+      };
+      setStatistics({
+        "totalCustomers": distinctCustomers.size,
+        "totalDistricts": distinctDistricts.size,
+        "totalProfit": totalProfit
+      })
+    };    
     fetchData();
   }, []);
   // Function for searching
@@ -124,7 +166,7 @@ function Customer() {
         <Header headerTitle={Title.Customers} />
       </div>
       <div className="flex flex-wrap gap-5 justify-center m-5">
-        {CustomerDataCard(theme, DC_Customers).map((card, index) => (
+        {CustomerDataCard(theme, DC_Customers, statistics).map((card, index) => (
           <Card
             key={index}
             image={card.img}
@@ -167,8 +209,11 @@ function Customer() {
               <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col1}
               </th>
-              <th scope="col" className="py-5">
+              <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col2}
+              </th>
+              <th scope="col" className="border-r-2 py-5">
+                {SF_Customers.Columns.Col3}
               </th>
               <th scope="col"></th>
             </tr>
@@ -184,10 +229,13 @@ function Customer() {
                     <input type="checkbox" />
                   </td>
                   <td scope="row" className="border-r-2 py-5">
-                    {list.tenkhachhang}
+                    {list.Khachhang.tenkhachhang}
                   </td>
-                  <td scope="row" className="py-5">
-                    {list.sodienthoai}
+                  <td scope="row" className="border-r-2 py-5">
+                    {list.Khachhang.sodienthoai}
+                  </td>
+                  <td scope="row" className="border-r-2 py-5">
+                    {list.KhachhangDiachi.diachi}
                   </td>
                   <td scope="row">
                     <div className="flex flex-wrap justify-center gap-5 my-5 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">

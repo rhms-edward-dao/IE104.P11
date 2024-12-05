@@ -34,8 +34,7 @@ function Districts() {
   const { Edit, Delete } = t("Buttons");
   // // For fetching data
   const [districtData, setDistrictData] = useState([]);
-  const [districtCount, setDistrictCount] = useState(0);
-  const [cityCount, setCityCount] = useState(0);
+  const [statistics, setStatistics] = useState({});
   // // For searching
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -56,24 +55,24 @@ function Districts() {
         const existedDistrict = await getAllDistrict();        
         if (existedDistrict.length === 0) {
           setDistrictData([]);
-          setDistrictCount(0);
-          setCityCount(0);
+          setStatistics({});
         } else {
           setDistrictData(existedDistrict);
-          // For district count and city count      
-          const distinctDistrict = new Set();
-          const distinctCity = new Set()
-
-          for (let i=0;i<existedDistrict.length;i++) {
-            if (existedDistrict[i].maquan) {
-              distinctDistrict.add(existedDistrict[i].maquan); // Use maquan because i will count by pair of tenquan-tenthanhpho
-            }
-            if (existedDistrict[i].tenthanhpho) {
-              distinctCity.add(existedDistrict[i].tenthanhpho);
+          // Set data for statistics
+          let totalDistrict = new Set();
+          let totalCity = new Set();
+          existedDistrict.forEach(item => {
+            if (item.maquan) {
+              totalDistrict.add(item.maquan);
             };
-          }
-          setDistrictCount(distinctDistrict.size);
-          setCityCount(distinctCity.size);
+            if (item.tenthanhpho) {
+              totalCity.add(item.tenthanhpho);
+            };
+          })
+          setStatistics({
+            "totalDistrict": totalDistrict.size,
+            "totalCity": totalCity.size
+          });
         }
       } catch (error) {
         console.error("Error while fetching: ", error);
@@ -109,7 +108,6 @@ function Districts() {
   // Delete feature
   const deleteItem = async (id) => {
     const response = await deleteDistrict(id);
-    console.log(response)
     if (response.success) {
       alert(response.message);
       setDistrictData(districtData.filter((item) => item.maquan !== id));
@@ -138,7 +136,6 @@ function Districts() {
         return SF_Districts.Placeholders.Text1;
     }
   };
-
   // Items for render
   const items = searchTerm ? searchResults : districtData;
 
@@ -158,7 +155,7 @@ function Districts() {
         <Header headerTitle={Title.Districts}></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5 xl:gap-16 2xl:gap-44">
-        {DistrictDataCard(theme, DC_Districts, districtCount, cityCount).map((card, index) => (
+        {DistrictDataCard(theme, DC_Districts, statistics).map((card, index) => (          
           <Card
             key={index}
             image={card.img}

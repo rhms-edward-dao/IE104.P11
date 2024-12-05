@@ -37,16 +37,14 @@ const ProductCategorys = () => {
   const { DC_Products } = t("DataCard");
   const { Product, ProductCategory } = t("TabView");
   const { SearchBy, SF_Products, SF_ProductCategories } = t("SearchFilter");
-  const { Add, Edit, Delete } = t("Buttons");
+  const { Edit, Delete } = t("Buttons");
   // // For tab state here
   const { isProductTab, activateProductTab, deactivateProductTab } =
     useStoreTab();
   // // For fetching products & product category data
   const [productData, setProductData] = useState([]);
   const [productCategoryData, setProductCategoryData] = useState([]);
-  const [totalProduct, setTotalProduct] = useState(0);
-  const [totalValue, setTotalValue] = useState(0);
-  const [totalOutOfStock, setTotalOutOfStock] = useState(0);
+  const [statistics, setStatistics] = useState({});
   // // For searching products & product category
   const [productSearchTerm, setProductSearchTerm] = useState("");
   const [productCategorySearchTerm, setProductCategorySearchTerm] = useState("");
@@ -74,27 +72,37 @@ const ProductCategorys = () => {
         const existedProduct = await getAllProducts();
         if (existedProduct.length === 0) {
           setProductData([]);
+          setStatistics({});
         } else {
           setProductData(existedProduct);
           // Statistics here
-          const distinctProducts = new Set();
-          let outOfStock = 0;
+          let totalProduct = new Set();
           let totalValue = 0;
-          for (let i=0;i<existedProduct.length;i++){
-            if (existedProduct[i].Mathang.mamathang) {
-              distinctProducts.add(existedProduct[i].Mathang.mamathang);
-            }
-            if (existedProduct[i].Mathang.dongia) {
-              totalValue += existedProduct[i].Mathang.dongia;
-            }
-            if (existedProduct[i].Mathang.soluongton == 0) {
-              outOfStock += 1;
-            }          
-          }
-          setTotalProduct(distinctProducts.size);
-          setTotalValue(totalValue);
-          setTotalOutOfStock(outOfStock);
-        }
+          let totalOutofStock = 0;
+          // Get distinct fish
+          existedProduct.forEach(item => {
+            if (item.Mathang.mamathang) {
+              totalProduct.add(item.Mathang.mamathang);
+            };
+          });
+          // Get data for statistics
+          totalProduct.forEach(item => {
+            existedProduct.forEach(fitem => {
+              if (fitem.Mathang.mamathang === item) {
+                if (fitem.Mathang.soluongton === 0) {
+                  totalOutofStock += 1;
+                }
+                totalValue += fitem.Mathang.dongia;
+              }
+            });
+          });                                
+          // Set data for card
+          setStatistics({
+            "totalProduct": totalProduct.size,
+            "totalValue": totalValue,
+            "totalOutofStock": totalOutofStock
+          });
+        };
         // Get Exsisted Product Categories
         const existedProductCategory = await getAllTypeOfProduct();
         if (existedProductCategory.length === 0) {
@@ -263,7 +271,7 @@ const ProductCategorys = () => {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {ProductDataCard(theme, DC_Products, totalProduct, totalValue, totalOutOfStock).map((card, index) => (
+        {ProductDataCard(theme, DC_Products, statistics).map((card, index) => (
           <Card
             key={index}
             image={card.img}

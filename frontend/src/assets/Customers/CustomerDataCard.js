@@ -5,20 +5,20 @@ import ProfitDarkIcon from "../../images/icons/datacard/Profit_Dark.svg";
 import DistrictIcon from "../../images/icons/datacard/TotalDistrict.svg";
 import DistrictDarkIcon from "../../images/icons/datacard/TotalDistrict_Dark.svg";
 
-export const CustomerDataCard = (theme, trans) => {
+export const CustomerDataCard = (theme, trans, statistics) => {
   const DataCard = [
     {
-      value: 10,
+      value: statistics.totalCustomers,
       img: `${theme === "light" ? CustomerIcon : CustomerDarkIcon}`,
       description: trans.First,
     },
     {
-      value: 150000000,
+      value: statistics.totalProfit,
       img: `${theme === "light" ? ProfitIcon : ProfitDarkIcon}`,
       description: trans.Second,
     },
     {
-      value: 2,
+      value: statistics.totalDistricts,
       img: `${theme === "light" ? DistrictIcon : DistrictDarkIcon}`,
       description: trans.Third,
     },
