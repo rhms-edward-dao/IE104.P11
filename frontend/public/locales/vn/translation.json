@@ -196,7 +196,8 @@
     "SF_Customers": {
       "Columns": {
         "Col1": "Tên khách hàng",
-        "Col2": "Số điện thoại"
+        "Col2": "Số điện thoại",
+        "Col3": "Địa chỉ"
       },
       "Placeholders": {
         "Text1": "Tìm kiếm theo tên khách hàng ...",

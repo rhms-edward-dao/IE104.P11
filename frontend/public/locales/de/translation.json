@@ -181,7 +181,8 @@
     "SF_Customers": {
       "Columns": {
         "Col1": "Kundenname",
-        "Col2": "Telefonnummer"
+        "Col2": "Telefonnummer",
+        "Col3": "Adresse"
       },
       "Placeholders": {
         "Text1": "Suche nach Kundenname ...",

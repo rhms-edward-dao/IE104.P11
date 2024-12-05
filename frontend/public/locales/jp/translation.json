@@ -180,7 +180,8 @@
     "SF_Customers": {
       "Columns": {
         "Col1": "顧客名",
-        "Col2": "電話番号"
+        "Col2": "電話番号",
+        "Col3": "住所"
       },
       "Placeholders": {
         "Text1": "顧客名で検索...",

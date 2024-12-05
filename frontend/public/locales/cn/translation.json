@@ -178,7 +178,8 @@
     "SF_Customers": {
       "Columns": {
         "Col1": "客戶名稱",
-        "Col2": "電話號碼"
+        "Col2": "電話號碼",
+        "Col3": "地址"
       },
       "Placeholders": {
         "Text1": "按客戶名稱搜尋...",
