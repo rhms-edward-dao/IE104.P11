@@ -95,14 +95,6 @@ class api_operations:
         return {"message": message_fail}
 
 
-class product_flow:
-    pass
-
-
-class statistics:
-    pass
-
-
 # TAIKHOAN
 # Need to be protected
 @app.post("/login")
@@ -118,7 +110,9 @@ def account_login(
         # Account found, so i need to continuouslly trying to get CapDo
         # Check if account is activated or not
         if db_get_taikhoan.isactivated == False:
-            raise HTTPException(400, "Tài khoản chưa kích hoạt")
+            return {
+                "message": "Tài khoản chưa kích hoạt"
+            }
 
         db_get_nhanvien_capdo = crud.get_manhanvien_taikhoan_nhanvien_capdo(
             db, db_get_taikhoan.mataikhoan
@@ -151,40 +145,6 @@ def account_login(
     return {"success": False, "message": "Sai tên đăng nhập/ mật khẩu"}
 
 
-@app.post("/signup")
-def account_sign_up(
-    tentaikhoan: str = Body(..., embed=True),
-    matkhau: str = Body(..., embed=True),
-    email: str = Body(..., embed=True),
-    db: Session = Depends(get_db),
-):
-    # Create new account
-    db_add = crud.create_taikhoan(tentaikhoan, matkhau)
-
-    match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(db_add), re.DOTALL)
-    if match:
-        detail = match.group(0).strip()
-        if detail == "DETAIL:  Key (tentaikhoan)=({}) already exists.".format(
-            tentaikhoan
-        ):
-            return {"message": "Tên tài khoản đã tồn tại"}
-
-    # Link taikhoan to nhanvien
-    # Check if email exists
-    db_check_email = api_operations.get_one_parameter(
-        db, models.Nhanvien, models.Nhanvien.email, email, "nhân viên"
-    )
-    if db_check_email:
-        # Add a record refer to relation between staff and account in taikhoan_nhavien
-        crud.link_taikhoan_nhanvien(db_add, db_check_email.manhanvien)
-        return {"message": "Tạo tài khoản thành công"}
-    else:
-        return {"message": "Email không tồn tại trong database"}
-
-    # Email verification feature
-
-    # Return message
-
 # Settings for sending email
 import smtplib
 import random
@@ -197,7 +157,7 @@ from datetime import datetime, timedelta
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
 SENDER_EMAIL = 'anhkiet.nguyen798@gmail.com'
-# SENDER_PASSWORD = 'hidden_password:))'
+SENDER_PASSWORD = 'qahd zxob ldon jmxs'
 
 # Function for creating random OTP
 def generate_otp(length=4):
@@ -209,11 +169,11 @@ def generate_otp(length=4):
 # Hàm gửi email OTP
 def send_otp(email: str):
     otp = generate_otp()  # Tạo OTP ngẫu nhiên
-    expires_at = datetime.utcnow() + timedelta(minutes=1)  # Hạn sử dụng OTP trong 5 phút
+    expires_at = datetime.utcnow() + timedelta(minutes=2)  # Hạn sử dụng OTP trong 2 phút
 
     # Tạo nội dung email
     subject = "Mã OTP của bạn"
-    body = f"Chào bạn chúng tôi là BettaShop,\n\nMã OTP của bạn là: {otp}\nMã OTP sẽ hết hạn sau 1 phút.\n\nCảm ơn bạn đã sử dụng dịch vụ của chúng tôi."
+    body = f"Chào bạn chúng tôi là BettaShop,\n\nMã OTP của bạn là: {otp}\nMã OTP sẽ hết hạn sau 2 phút.\n\nCảm ơn bạn đã sử dụng dịch vụ của chúng tôi."
 
     # Tạo đối tượng email
     msg = MIMEMultipart()
@@ -236,23 +196,108 @@ def send_otp(email: str):
     except Exception as e:
         print(f"Không thể gửi email. Lỗi: {e}")
         return None, None
+    
 
+@app.post("/signup")
+def account_sign_up(
+    ptentaikhoan: str = Body(..., embed=True),
+    pmatkhau: str = Body(..., embed=True),
+    pemail: str = Body(..., embed=True),
+    db: Session = Depends(get_db),
+):
+# Create new account
+    db_add = crud.create_taikhoan(ptentaikhoan, pmatkhau)
+
+    match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(db_add), re.DOTALL)
+    if match:
+        detail = match.group(0).strip()
+        if detail == "DETAIL:  Key (tentaikhoan)=({}) already exists.".format(
+            ptentaikhoan
+        ):
+            return {"message": "Tên tài khoản đã tồn tại"}
+
+    # Link taikhoan to nhanvien
+    # Check if email exists
+    db_check_email = api_operations.get_one_parameter(
+        db, models.Nhanvien, models.Nhanvien.email, pemail, "nhân viên"
+    )
+    if db_check_email:
+        # Add a record refer to relation between staff and account in taikhoan_nhavien
+        crud.link_taikhoan_nhanvien(db_add, db_check_email.manhanvien)
+        # After create account for staff then send email for OTP verification        
+            # Send OTP via email
+        otp, expired_time = send_otp(pemail)
+        if otp == None and expired_time == None:
+            return {
+                "message": "Lỗi khi gửi email"
+            }
+        
+        # Save account            
+        get_db = crud.get_taikhoan_by_email(db, pemail)   
+        get_db.OTP = otp
+        get_db.otp_expiration = expired_time
+        db.commit()
+        db.refresh(get_db)
+
+        return {
+            "message": "Tài khoản đã tạo nhưng chưa xác nhận. OTP xác nhận đã được gửi đến email {}".format(pemail)
+        }
+    else:
+        return {"message": "Email không tồn tại trong database"}
+
+
+@app.post("/xacnhanotp-signup")
+def verify_otp(pemail: str = Body(..., embed=True), OTP: str = Body(..., embed=True), db: Session = Depends(get_db)):
+    try:
+        # Search OTP by email (using current OTP)
+        get_db = crud.get_taikhoan_by_email(db, pemail)  
+        if get_db:
+            if get_db.otp_expiration and datetime.utcnow() - get_db.otp_expiration > timedelta(minutes=2):
+                # Delete taikhoan if time of otp is expired
+                db.delete(get_db)
+                db.commit()
+                return {
+                    "message": "OTP đã hết hạn (quá 2 phút).\n Tài khoản đã bị xóa.\n Hãy tạo lại"
+                }
+            # Check OTP
+            if get_db.OTP == OTP:     
+                get_db.isactivated = True
+                db.commit()
+                db.refresh(get_db)       
+                return {
+                    "message": "Tài khoản đã được kích hoạt"
+                }
+            # Send message for frontend
+            else:
+                return {
+                    "message": "Sai OTP"
+                }
+        else:
+            return {
+                    "message": "Không tìm thấy tài khoản như email cung cấp"
+                }
+    except Exception as e:
+        print(e)
+        return {
+            "message": "Lỗi hệ thống"
+        }
+    
 
 @app.put("/quenmatkhau")
 def reset_password(pemail: str = Body(..., embed=True), db: Session = Depends(get_db)):
     # Check if email exists or not ?
     try:        
         get_db = crud.get_taikhoan_by_email(db, pemail)       
-        if get_db:
+        if get_db:            
+            if get_db.otp_expiration and datetime.utcnow() - get_db.otp_expiration > timedelta(minutes=2):
+                return {
+                    "message": "Không thể tạo OTP khi OTP mới nhất được tạo cách đây chưa đầy 2 phút.\nBạn hãy đợi sau 2 phút và thử lại."
+                }
             # Send OTP via email
             otp, expired_time = send_otp(pemail)
             if otp == None and expired_time == None:
                 return {
                     "message": "Lỗi khi gửi email"
-                }
-            if get_db.otp_expiration and datetime.utcnow() - get_db.otp_expiration < timedelta(minutes=1):
-                return {
-                    "message": "Không thể tạo OTP khi OTP mới nhất được tạo cách đây chưa đầy 1 phút.\nBạn hãy đợi 1 phút và thử lại."
                 }
 
             # Save account            

@@ -8,7 +8,13 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-
+  // // For modal
+  const [otp, setOtp] = useState('');
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  // // For manual modal
+  const [emailManual, setEmailManual] = useState('');
+  const [otpManual, setOtpManual] = useState('');
+  const [isOpenVerificationModal, setIsOpenVerificationModal] = useState(false);
   // Declare functions for Sign Up here
   const handleSubmit = async() => {
     let check_username = true;
@@ -59,21 +65,91 @@ function SignUp() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            "tentaikhoan": username,
-            "matkhau": password,
-            "email": email 
+            "ptentaikhoan": username,
+            "pmatkhau": password,
+            "pemail": email 
           })
         });
         const data = await response.json();        
-        if (data.message === "Tạo tài khoản thành công") {
-          alert("Tạo tài khoản thành công");
-          navigate('/login');                    
+        if (data.message === `Tài khoản đã tạo nhưng chưa xác nhận. OTP xác nhận đã được gửi đến email ${email}`) {
+          alert(`${data.message}.\n Trong 2 phút nếu không nhập OTP thì phải tạo lại tài khoản`);
+          setIsOpenModal(true);
+        } else {
+          alert(data.message);
         }
       } catch (error) {
         console.error("POST method failed");
       }      
     }    
   };
+  // Handle otp verification
+  const handleVerifyOtp = async() => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/xacnhanotp-signup/`, {
+          method: 'POST',
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              pemail: email,
+              OTP: otp
+          }),
+      });
+
+      if (!response.ok) {
+          throw new Error("OTP validation failed");
+      } else {
+          const data = await response.json();
+          if (data.message === "Tài khoản đã được kích hoạt") {
+              alert("OTP đúng. Tài khoản đã được kích hoạt.\n Chuyển đến trang đăng nhập.");
+              setIsOpenModal(false);
+              navigate('/login');
+          } else if (data.message === "OTP đã hết hạn (quá 2 phút).\n Tài khoản đã bị xóa.\n Hãy tạo lại") {
+            alert(data.message);
+            setIsOpenModal(false);
+          } else {
+              alert(data.message);
+          }
+      }
+    } catch (error) {
+      console.error("Error verifying OTP: ", error);
+    }
+  };
+
+  // Handle otp verification Again
+  const handleVerifyOtpManual = async() => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/xacnhanotp-signup/`, {
+          method: 'POST',
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              pemail: emailManual,
+              OTP: otpManual
+          }),
+      });
+
+      if (!response.ok) {
+          throw new Error("OTP validation failed");
+      } else {
+          const data = await response.json();
+          if (data.message === "Tài khoản đã được kích hoạt") {
+              alert("OTP đúng. Tài khoản đã được kích hoạt.\n Chuyển đến trang đăng nhập.");
+              setIsOpenVerificationModal(false);
+              navigate('/login');
+          } else if (data.message === "OTP đã hết hạn (quá 2 phút).\n Tài khoản đã bị xóa.\n Hãy tạo lại") {
+            alert(data.message);
+            setIsOpenVerificationModal(false);
+          } else {
+              alert(data.message);
+          }
+      }
+    } catch (error) {
+      console.error("Error verifying OTP: ", error);
+    }
+  };
+
   // Return render here
   return (
     <div className="flex justify-center items-center h-screen">
@@ -162,15 +238,82 @@ function SignUp() {
           >
             Đăng ký
           </button>
-          <div className="flex items-center">
+          <button
+            onClick={() => {setIsOpenVerificationModal(true);}}
+          >
+            <p className="text-white hover:text-blue-500">Xác nhận OTP tài khoản đã đăng ký?</p>
+          </button>          
+        </div>
+        <div className="flex items-center justify-center mb-4">
             <Link to="/login">
-              <p className="text-white text-center hover:text-blue-500">
+              <p className="text-lg text-white text-center hover:text-blue-500">
                 Đã có tài khoản?
               </p>
             </Link>
           </div>
-        </div>
       </div>
+      {/* Modal OTP here */}
+      {isOpenModal && (
+                <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
+                    <div className="bg-white p-5 rounded-lg">
+                        <h2 className="text-2xl font-semibold">Nhập OTP</h2>
+                        <input
+                            type="text"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                            placeholder="Nhập OTP..."
+                            className="mt-2 w-full rounded-lg p-2"
+                        />
+                        <button
+                            onClick={handleVerifyOtp}
+                            className="bg-green-500 mr-4 mt-4 px-5 py-2 text-white text-lg rounded-lg"
+                        >
+                            Xác nhận OTP
+                        </button>
+                        <button
+                            onClick={() => setIsOpenModal(false)}
+                            className="bg-gray-500 mt-4 px-5 py-2 text-white text-lg rounded-lg"
+                        >
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            )}
+      {/* Modal for verification OTP here */}
+      {isOpenVerificationModal && (
+                <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
+                    <div className="bg-white p-5 rounded-lg">
+                        <h2 className="text-2xl font-semibold">Nhập Email</h2>
+                        <input
+                            type="text"
+                            value={emailManual}
+                            onChange={(e) => setEmailManual(e.target.value)}
+                            placeholder="Nhập email..."
+                            className="mt-2 w-full rounded-lg p-2"
+                        />
+                        <h2 className="mt-3 text-2xl font-semibold">Nhập OTP</h2>
+                        <input
+                            type="text"
+                            value={otpManual}
+                            onChange={(e) => setOtpManual(e.target.value)}
+                            placeholder="Nhập OTP..."
+                            className="mt-2 w-full rounded-lg p-2"
+                        />
+                        <button
+                            onClick={handleVerifyOtpManual}
+                            className="bg-green-500 mr-4 mt-4 px-5 py-2 text-white text-lg rounded-lg"
+                        >
+                            Xác nhận OTP
+                        </button>
+                        <button
+                            onClick={() => setIsOpenVerificationModal(false)}
+                            className="bg-gray-500 mt-4 px-5 py-2 text-white text-lg rounded-lg"
+                        >
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            )}
     </div>
   );
 }
