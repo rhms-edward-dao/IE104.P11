@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useModal } from "../../contexts/ModalState";
 
 // Import Assets Here
 import {
@@ -33,6 +34,8 @@ function Customer() {
   const { DC_Customers } = t("DataCard");
   const { SearchBy, SF_Customers } = t("SearchFilter");
   const { Edit, Delete } = t("Buttons");
+  // // For modal
+  const { openModal, setLng, setLat } = useModal();
   // // For fetching data
   const [data, setData] = useState([]);
   const [statistics, setStatistics] = useState({});
@@ -136,6 +139,13 @@ function Customer() {
     setSelectedOption(e.target.value);
   };
 
+  // // For handling modal
+  const handleOpenMapModal = (kinhdo, vido) => {
+    setLng(kinhdo);
+    setLat(vido);
+    openModal();
+  };
+
   // // For changing placeholder text base on the selected search-filter option
   // Placeholder text based on the selected option
   const getPlaceholderText = () => {
@@ -235,7 +245,11 @@ function Customer() {
                     {list.Khachhang.sodienthoai}
                   </td>
                   <td scope="row" className="border-r-2 py-5">
-                    {list.KhachhangDiachi.diachi}
+                    <button
+                      onClick={() => handleOpenMapModal(list.KhachhangDiachi.kinhdo, list.KhachhangDiachi.vido)}
+                    >
+                      <p className="line-clamp-1 hover:underline">{list.KhachhangDiachi.diachi}</p>
+                    </button>
                   </td>
                   <td scope="row">
                     <div className="flex flex-wrap justify-center gap-5 my-5 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">

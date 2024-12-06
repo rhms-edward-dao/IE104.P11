@@ -147,7 +147,8 @@ class KhachhangDiachi(Base):
     )
     maquan = Column(ForeignKey("quan.maquan"), primary_key=True, nullable=False)
     diachi = Column(String(200), nullable=False)
-
+    kinhdo = Column(String(15), nullable=False)
+    vido = Column(String(15), nullable=False)
     khachhang = relationship("Khachhang")
     quan = relationship("Quan")
 
