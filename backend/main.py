@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Depends, HTTPException, Body, UploadFile, File, Form
-from typing import Union
+from typing import Union, List
 from sqlalchemy.orm import Session
 import models, schemas, crud
 from database import Session, engine
+from pydantic import BaseModel
 
 # import jwt
 from datetime import datetime, timedelta
@@ -13,8 +14,8 @@ from opencage.geocoder import OpenCageGeocode
 from pprint import pprint
 import re, os, base64
 
-# IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images"
-IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
+IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images/"
+# IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
 
 # from security import validate_token
 app = FastAPI()
@@ -404,18 +405,19 @@ async def update_taikhoan(
 @app.get("/quan")  # Used for loading page
 def get_quan_all(db: Session = Depends(get_db)):
     db_get_all_quan_summary = crud.get_summary_quan()
-    print(db_get_all_quan_summary)
-    result = []
-    for item in db_get_all_quan_summary:
-        result.append(
-            {
-                "maquan": item[0],
-                "tenquan": item[1],
-                "tenthanhpho": item[2],
-                "tong_so_daily": item[3],
-            }
-        )
-    return result
+    if db_get_all_quan_summary:
+        result = []
+        for item in db_get_all_quan_summary:
+            result.append(
+                {
+                    "maquan": item[0],
+                    "tenquan": item[1],
+                    "tenthanhpho": item[2],
+                    "tong_so_daily": item[3],
+                }
+            )
+        return result
+    return {"message": "Danh sách quận rỗng"}
 
 
 @app.get("/quan/thanhpho/")  # Used for adding and updating
@@ -635,7 +637,7 @@ async def add_new_mathang(
             "soluongton": soluongton,
             "dongia": dongia,
             "tendvt": tendvt,
-            "hinhanh": f"{IMAGEDIR}/products/{hinhanh.filename}",
+            "hinhanh": f"{IMAGEDIR}products/{hinhanh.filename}",
             "madaily": pmadaily,
             "maloaimathang": pmaloaimathang,
         }
@@ -654,11 +656,9 @@ async def add_new_mathang(
 @app.post("/mathang_staff/them")
 async def add_new_mathang(
     tenmathang: str = Form(...),
-    dongia: int = Form(...),
-    soluongton: Decimal = Form(...),
     tendvt: str = Form(...),
     tenloaimathang: str = Form(...),
-    madaily: str = Form(...),
+    madaily: int = Form(...),
     hinhanh: UploadFile = File(...),
     db: Session = Depends(get_db),
 ):
@@ -671,18 +671,21 @@ async def add_new_mathang(
         with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
             file.write(contents)
 
-        # Save data
-        param_list = {
-            "tenmathang": tenmathang,
-            "soluongton": soluongton,
-            "dongia": dongia,
-            "tendvt": tendvt,
-            "hinhanh": f"{IMAGEDIR}/products/{hinhanh.filename}",
-            "madaily": madaily,
-            "maloaimathang": pmaloaimathang,
-        }
-        crud.add_new_mathang(**param_list)
+        mathang = models.Mathang(
+            tenmathang=tenmathang,
+            tendvt=tendvt,
+            hinhanh=f"{IMAGEDIR}products/{hinhanh.filename}",
+            madaily=madaily,
+            maloaimathang=pmaloaimathang,
+            dongia=0,
+        )
+        db.add(mathang)
+        db.flush()
+        db.commit()
+
     except Exception as e:
+        print(e)
+        db.rollback()
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         detail = match.group(0).strip()
 
@@ -748,11 +751,9 @@ async def update_mathang(
 async def update_mathang(
     mamathang: int,
     tenmathang: str = Form(...),
-    dongia: int = Form(...),
-    soluongton: Decimal = Form(...),
     tendvt: str = Form(...),
     tenloaimathang: str = Form(...),
-    madaily: str = Form(...),
+    madaily: int = Form(...),
     hinhanh: Union[UploadFile, str] = File(...),
     db: Session = Depends(get_db),
 ):
@@ -763,25 +764,26 @@ async def update_mathang(
         # Solving image
         image_dir = ""
         if hinhanh != "null":
-
             image_dir = f"{IMAGEDIR}products/{hinhanh.filename}"
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
                 file.write(contents)
+        # crud.update_mathang(**param_list)
 
-        # Save data
-        param_list = {
-            "mamathang": mamathang,
-            "tenmathang": tenmathang,
-            "soluongton": soluongton,
-            "dongia": dongia,
-            "tendvt": tendvt,
-            "hinhanh": image_dir,
-            "madaily": madaily,
-            "maloaimathang": pmaloaimathang,
-        }
-        crud.update_mathang(**param_list)
+        mathang = db.query(models.Mathang).filter_by(mamathang=mamathang).first()
+        if mathang:
+            mathang.tenmathang = tenmathang
+            mathang.tendvt = tendvt
+            mathang.hinhanh = image_dir
+            mathang.madaily = madaily
+            mathang.maloaimathang = pmaloaimathang
+            mathang.dongia = 0
+        db.commit()
+        return {"success": True, "message": "Cập nhật mặt hàng thành công."}
+
     except Exception as e:
+        print(e)
+        db.rollback()
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         detail = match.group(0).strip()
 
@@ -824,8 +826,18 @@ def update_all_quitac(pItems: schemas.QUITACupdate, db: Session = Depends(get_db
 
 # KHACHHANG manipulating
 @app.get("/khachhang")
-def get_all_khachhang(db: Session = Depends(get_db)):        
-    return crud.get_all_khachhang(db)
+def get_all_khachhang(db: Session = Depends(get_db)):
+    get_khachhang_all = crud.get_all_khachhang(db)
+    result = []
+    if get_khachhang_all:
+        for item in get_khachhang_all:
+            Khachhang_dict = item[0].__dict__.copy()
+            Khachhang_Diachi_dict = item[1].__dict__.copy()
+            result.append(
+                {"Khachhang": Khachhang_dict, "Diachi": Khachhang_Diachi_dict}
+            )
+        return result
+    return {"message": "Danh sách khách hàng rỗng"}
 
 
 @app.get("/khachhang/{makhachhang}")
@@ -833,6 +845,50 @@ def get_khachhang_by_makhachhang(makhachhang: int, db: Session = Depends(get_db)
     return api_operations.get_one_parameter(
         db, models.Khachhang, models.Khachhang.makhachhang, makhachhang, "khách hàng"
     )
+
+
+# Define a Pydantic model to parse individual item data
+class CustomerItem(BaseModel):
+    tenkhachhang: str
+    sodienthoai: str
+    maquan: int
+    diachi: str
+
+
+# Define another model for the request body
+class AddCustomer(BaseModel):
+    items: List[CustomerItem]  # A list of ImportItem
+
+
+@app.post("/khachhang/them")
+def add_new_phieunhaphang(
+    add_customer: AddCustomer,  # Parse the JSON body into this Pydantic model
+    db: Session = Depends(get_db),
+):
+    try:
+        for item in add_customer.items:
+            khachhang = models.Khachhang(
+                tenkhachhang=item.tenkhachhang,
+                sodienthoai=item.sodienthoai,
+            )
+            db.add(khachhang)
+            db.flush()
+
+            khachhang_diachi = models.KhachhangDiachi(
+                makhachhang=khachhang.makhachhang,
+                maquan=item.maquan,
+                diachi=item.diachi,
+            )
+            db.add(khachhang_diachi)
+
+        db.commit()
+
+        return {"success": True, "message": "Thêm khách hàng thành công."}
+
+    except Exception as e:
+        db.rollback()
+        print(e)
+        return {"success": False, "message": str(e)}
 
 
 @app.put("/khachhang/capnhat/{makhachhang}")
@@ -1245,7 +1301,7 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
                     "tendaily": item[3],
                     "kinhdo": item[4],
                     "vido": item[5],
-                    "luong": item[6]
+                    "luong": item[6],
                 }
             )
         return result
@@ -1322,7 +1378,7 @@ async def add_new_nhanvien(
     tenthanhpho: str = Form(...),
     hinhanh: UploadFile = File(...),
     db: Session = Depends(get_db),
-):    
+):
     try:  # Get longtitude and latitude
         key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
@@ -1596,6 +1652,24 @@ def get_phieunhaphang_all(db: Session = Depends(get_db)):
     return {"message": "Danh sách phiếu nhập hàng rỗng"}
 
 
+@app.get("/phieunhaphang/maphieunhap/{maphieunhap}")
+def get_phieunhaphang_by_maphieunhap(maphieunhap: int, db: Session = Depends(get_db)):
+    get_db = crud.get_phieunhaphang_by_maphieunhap(db, maphieunhap)
+    if get_db:
+        result = []
+        for item in get_db:
+            result.append(
+                {
+                    "ngaylapphieu": item.ngaylapphieu,
+                    "tongtien": item.tongtien,
+                    "tiendathanhtoan": item.tiendathanhtoan,
+                    "tinhtrang": item.tinhtrang,
+                }
+            )
+        return result
+    return {"message": "Phiếu nhập hàng không tồn tại"}
+
+
 @app.get("/phieunhaphang/madaily/{madaily}")
 def get_phieunhaphang_by_madaily(madaily: int, db: Session = Depends(get_db)):
     get_db = crud.get_phieunhaphang_by_madaily(db, madaily)
@@ -1613,7 +1687,7 @@ def get_phieunhaphang_by_madaily(madaily: int, db: Session = Depends(get_db)):
     return {"message": "Danh sách phiếu nhập hàng rỗng"}
 
 
-@app.get("/phieunhaphang/maphieunhap/{maphieunhap}")
+@app.get("/phieunhaphang/ctphieunhap/{maphieunhap}")
 def get_chitiet_pnh_by_maphieunhap(maphieunhap: int, db: Session = Depends(get_db)):
     get_db = crud.get_chitiet_pnh_by_maphieunhap(db, maphieunhap)
     result = []
@@ -1628,6 +1702,95 @@ def get_chitiet_pnh_by_maphieunhap(maphieunhap: int, db: Session = Depends(get_d
             )
         return result
     return {"message": "Danh sách chi tiết phiếu nhập hàng rỗng"}
+
+
+# Define a Pydantic model to parse individual item data
+class ImportItem(BaseModel):
+    mamathang: int
+    soluongnhap: int
+    dongianhap: int
+
+
+# Define another model for the request body
+class ImportBill(BaseModel):
+    items: List[ImportItem]  # A list of ImportItem
+
+
+@app.post("/phieunhaphang/them/madaily/{madaily}")
+def add_new_phieunhaphang(
+    madaily: int,
+    import_bill: ImportBill,  # Parse the JSON body into this Pydantic model
+    db: Session = Depends(get_db),
+):
+    try:
+        # Insert the import bill (phieunhaphang)
+        phieunhap = models.Phieunhaphang(madaily=madaily, tongtien=0)
+        db.add(phieunhap)
+        db.flush()  # Flush to generate maphieunhap (autogenerated primary key)
+
+        # Calculate total amount and insert details into chitiet_pnh
+        total_amount = 0
+        for item in import_bill.items:
+            chitiet_pnh = models.ChitietPnh(
+                maphieunhap=phieunhap.maphieunhap,
+                mamathang=item.mamathang,
+                soluongnhap=item.soluongnhap,
+                dongianhap=item.dongianhap,
+            )
+            total_amount += item.soluongnhap * item.dongianhap
+            db.add(chitiet_pnh)
+
+            # Update soluongton in Mathang table
+            mathang = (
+                db.query(models.Mathang).filter_by(mamathang=item.mamathang).first()
+            )
+            quytac = db.query(models.t_quitac).first()
+            if mathang:
+                mathang.soluongton += item.soluongnhap
+                mathang.dongia = item.dongianhap / quytac.tiledongiaban
+
+        # Update total amount in the phieunhaphang
+        phieunhap.tongtien = total_amount
+        db.commit()
+
+        return {"success": True, "message": "Thêm phiếu nhập hàng thành công."}
+
+    except Exception as e:
+        db.rollback()
+        return {"success": False, "message": str(e)}
+
+
+# Define a Pydantic model to parse individual item data
+class UpdateImportItem(BaseModel):
+    tiendathanhtoan: int
+    tinhtrang: str
+
+
+# Define another model for the request body
+class UpdateImportBill(BaseModel):
+    items: List[UpdateImportItem]  # A list of ImportItem
+
+
+@app.put("/phieunhaphang/capnhat/maphieunhap/{maphieunhap}")
+def update_phieunhaphang(
+    maphieunhap: int,
+    update_import_bill: UpdateImportBill,
+    db: Session = Depends(get_db),
+):
+    try:
+        phieunhaphang = (
+            db.query(models.Phieunhaphang).filter_by(maphieunhap=maphieunhap).first()
+        )
+        if phieunhaphang:
+            for item in update_import_bill.items:
+                phieunhaphang.tiendathanhtoan = item.tiendathanhtoan
+                phieunhaphang.tinhtrang = item.tinhtrang
+        db.commit()
+        return {"success": True, "message": "Cập nhật phiếu nhập hàng thành công."}
+    except Exception as e:
+        db.rollback()
+        print(e)
+        return {"success": False, "message": str(e)}
 
 
 # PHIEUXUATHANG & CHITIET_PXH manipulating
@@ -1650,6 +1813,19 @@ def get_phieuxuathang_all(db: Session = Depends(get_db)):
     return {"message": "Danh sách phiếu xuất hàng rỗng"}
 
 
+@app.get("/phieuxuathang/maphieuxuat/{maphieuxuat}")
+def get_phieuxuathang_by_maphieuxuat(maphieuxuat: int, db: Session = Depends(get_db)):
+    get_db = crud.get_phieuxuathang_by_maphieuxuat(db, maphieuxuat)
+    if get_db:
+        result = []
+        for item in get_db:
+            result.append(
+                {"makhachhang": item.makhachhang, "tenkhachhang": item.tenkhachhang}
+            )
+        return result
+    return {"message": "Phiếu xuất hàng không tồn tại"}
+
+
 @app.get("/phieuxuathang/madaily/{madaily}")
 def get_phieuxuathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
     get_db = crud.get_phieuxuathang_by_madaily(db, madaily)
@@ -1660,6 +1836,7 @@ def get_phieuxuathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
             result.append(
                 {
                     "Phieuxuathang": item_dict,
+                    "tenkhachhang": item.tenkhachhang,
                     "tendaily": item.tendaily,
                 }
             )
@@ -1667,7 +1844,7 @@ def get_phieuxuathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
     return {"message": "Danh sách phiếu xuất hàng rỗng"}
 
 
-@app.get("/phieuxuathang/maphieuxuat/{maphieuxuat}")
+@app.get("/phieuxuathang/ctphieuxuat/{maphieuxuat}")
 def get_chitiet_pxh_by_maphieuxuat(maphieuxuat: int, db: Session = Depends(get_db)):
     get_db = crud.get_chitiet_pxh_by_maphieuxuat(db, maphieuxuat)
     result = []
@@ -1682,3 +1859,84 @@ def get_chitiet_pxh_by_maphieuxuat(maphieuxuat: int, db: Session = Depends(get_d
             )
         return result
     return {"message": "Danh sách chi tiết phiếu nhập hàng rỗng"}
+
+
+# Define a Pydantic model to parse individual item data
+class ExportItem(BaseModel):
+    mamathang: int
+    dongia: int
+    soluongxuat: int
+
+
+# Define another model for the request body
+class ExportBill(BaseModel):
+    customerId: int
+    items: List[ExportItem]  # A list of ExportItem
+
+
+@app.post("/phieuxuathang/them/madaily/{madaily}")
+def add_new_phieuxuathang(
+    madaily: int,
+    export_bill: ExportBill,  # Parse the JSON body into this Pydantic model
+    db: Session = Depends(get_db),
+):
+    try:
+        # Insert the export bill (phieuxuathang)
+        phieuxuat = models.Phieuxuathang(
+            madaily=madaily, makhachhang=export_bill.customerId, tongtien=0
+        )
+        db.add(phieuxuat)
+        db.flush()  # Flush to generate maphieuxuat (autogenerated primary key)
+
+        # Calculate total amount and insert details into chitiet_pxh
+        total_amount = 0
+        for item in export_bill.items:
+            chitiet_pxh = models.ChitietPxh(
+                maphieuxuat=phieuxuat.maphieuxuat,
+                mamathang=item.mamathang,
+                soluongxuat=item.soluongxuat,
+            )
+            total_amount += item.soluongxuat * item.dongia
+            db.add(chitiet_pxh)
+
+            # Update soluongton in Mathang table
+            mathang = (
+                db.query(models.Mathang).filter_by(mamathang=item.mamathang).first()
+            )
+            if mathang:
+                mathang.soluongton -= item.soluongxuat
+
+        # Update total amount in the phieuxuathang
+        phieuxuat.tongtien = total_amount
+        db.commit()
+
+        return {"success": True, "message": "Thêm phiếu xuất hàng thành công."}
+
+    except Exception as e:
+        db.rollback()
+        return {"success": False, "message": str(e)}
+
+
+# Define another model for the request body
+class UpdateExportBill(BaseModel):
+    customerId: int
+
+
+@app.put("/phieuxuathang/capnhat/maphieuxuat/{maphieuxuat}")
+def update_phieuxuathang(
+    maphieuxuat: int,
+    update_export_bill: UpdateExportBill,
+    db: Session = Depends(get_db),
+):
+    try:
+        phieuxuathang = (
+            db.query(models.Phieuxuathang).filter_by(maphieuxuat=maphieuxuat).first()
+        )
+        if phieuxuathang:
+            phieuxuathang.makhachhang = update_export_bill.customerId
+        db.commit()
+        return {"success": True, "message": "Cập nhật phiếu xuất hàng thành công."}
+    except Exception as e:
+        db.rollback()
+        print(e)
+        return {"success": False, "message": str(e)}

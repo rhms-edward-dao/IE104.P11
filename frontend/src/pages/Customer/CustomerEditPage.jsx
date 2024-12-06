@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -25,6 +25,9 @@ const CustomerEditPage = () => {
   // // For Multi-Language
   const { t } = useTranslation();
   const { Update } = t("Buttons");
+  // // For checking existed customers
+  const location = useLocation();
+  const { existedData } = location.state;
   // // For editing customer
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -50,7 +53,6 @@ const CustomerEditPage = () => {
       alert("Tên khách hàng không thể rỗng");
     } else {
       const data = await updateCustomer(id, tenkhachhang, sodienthoai);
-      console.log(data);
       if (data.message === "Cập nhật khách hàng thành công") {
         alert("Cập nhật khách hàng thành công");
         navigate("/customer");
@@ -87,7 +89,13 @@ const CustomerEditPage = () => {
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
             onClick={() =>
-              updateData(customerId, name, phoneNumber)
+              existedData.some(
+                (item) => item.Khachhang.sodienthoai === phoneNumber.trim()
+              )
+                ? alert(
+                    "Chỉnh sửa khách hàng thất bại !!! Số điện thoại đã tồn tại"
+                  )
+                : updateData(customerId, name.trim(), phoneNumber.trim())
             }
           >
             {Update}

@@ -37,17 +37,19 @@ const ProductCategorys = () => {
   const { DC_Products } = t("DataCard");
   const { Product, ProductCategory } = t("TabView");
   const { SearchBy, SF_Products, SF_ProductCategories } = t("SearchFilter");
-  const { Edit, Delete } = t("Buttons");
+  const { Add, Edit, Delete } = t("Buttons");
   // // For tab state here
   const { isProductTab, activateProductTab, deactivateProductTab } =
     useStoreTab();
+  // // For calculating statistic datacard
+  const [statisticData, setStatisticData] = useState([]);
   // // For fetching products & product category data
   const [productData, setProductData] = useState([]);
   const [productCategoryData, setProductCategoryData] = useState([]);
-  const [statistics, setStatistics] = useState({});
   // // For searching products & product category
   const [productSearchTerm, setProductSearchTerm] = useState("");
-  const [productCategorySearchTerm, setProductCategorySearchTerm] = useState("");
+  const [productCategorySearchTerm, setProductCategorySearchTerm] =
+    useState("");
   const [productSearchResults, setProductSearchResults] = useState([]);
   const [productCategorySearchResults, setProductCategorySearchResults] =
     useState([]);
@@ -70,39 +72,26 @@ const ProductCategorys = () => {
       try {
         // Get Exsisted Products
         const existedProduct = await getAllProducts();
-        if (existedProduct.length === 0) {
+        if (existedProduct.message === "Danh sách mặt hàng rỗng") {
+          setStatisticData({ card1: 0, card2: 0, card3: 0 });
           setProductData([]);
-          setStatistics({});
         } else {
+          const [card1, card2, card3] = [
+            existedProduct.length,
+            existedProduct.reduce(
+              (sum, item) =>
+                sum + item.Mathang.dongia * item.Mathang.soluongton,
+              0
+            ),
+            existedProduct.reduce(
+              (count, item) =>
+                [0].includes(item.Mathang.soluongton) ? count + 1 : count,
+              0
+            ),
+          ];
+          setStatisticData({ card1: card1, card2: card2, card3: card3 });
           setProductData(existedProduct);
-          // Statistics here
-          let totalProduct = new Set();
-          let totalValue = 0;
-          let totalOutofStock = 0;
-          // Get distinct fish
-          existedProduct.forEach(item => {
-            if (item.Mathang.mamathang) {
-              totalProduct.add(item.Mathang.mamathang);
-            };
-          });
-          // Get data for statistics
-          totalProduct.forEach(item => {
-            existedProduct.forEach(fitem => {
-              if (fitem.Mathang.mamathang === item) {
-                if (fitem.Mathang.soluongton === 0) {
-                  totalOutofStock += 1;
-                }
-                totalValue += fitem.Mathang.dongia;
-              }
-            });
-          });                                
-          // Set data for card
-          setStatistics({
-            "totalProduct": totalProduct.size,
-            "totalValue": totalValue,
-            "totalOutofStock": totalOutofStock
-          });
-        };
+        }
         // Get Exsisted Product Categories
         const existedProductCategory = await getAllTypeOfProduct();
         if (existedProductCategory.length === 0) {
@@ -261,7 +250,9 @@ const ProductCategorys = () => {
       : 0;
   // Items for rendering
   const PItems = productSearchTerm ? productSearchResults : currentProductItems;
-  const CItems = productCategorySearchTerm ? productCategorySearchResults : currentProductCategoryItems;
+  const CItems = productCategorySearchTerm
+    ? productCategorySearchResults
+    : currentProductCategoryItems;
   // Return here
   return (
     <div>
@@ -271,14 +262,16 @@ const ProductCategorys = () => {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {ProductDataCard(theme, DC_Products, statistics).map((card, index) => (
-          <Card
-            key={index}
-            image={card.img}
-            description={card.description}
-            value={card.value}
-          />
-        ))}
+        {ProductDataCard(theme, DC_Products, statisticData).map(
+          (card, index) => (
+            <Card
+              key={index}
+              image={card.img}
+              description={card.description}
+              value={card.value}
+            />
+          )
+        )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         {/* Tab for changing what to show */}
@@ -366,23 +359,19 @@ const ProductCategorys = () => {
               }
             />
           </div>
-          {
-            isProductTab ? (
-              <></>
-            ) : (
-              <NavLink
-                className="my-5"
-                to={
-                  "product-categorys-add-page"
-                }
-                state = {{
-                  existedData: isProductTab ? productData : productCategoryData
-                }}
-              >
-                <Button />
-              </NavLink>
-            )
-          }          
+          {isProductTab ? (
+            <></>
+          ) : (
+            <NavLink
+              className="my-5"
+              to={"product-categorys-add-page"}
+              state={{
+                existedData: isProductTab ? productData : productCategoryData,
+              }}
+            >
+              <Button addBtn={Add} />
+            </NavLink>
+          )}
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
@@ -421,13 +410,9 @@ const ProductCategorys = () => {
             </tr>
           </thead>
           <tbody>
-            {(isProductTab ? PItems : CItems)
-              .length >= 1 ? (
+            {(isProductTab ? PItems : CItems).length >= 1 ? (
               <>
-                {(isProductTab
-                  ? PItems
-                  : CItems
-                ).map((list, index) => (
+                {(isProductTab ? PItems : CItems).map((list, index) => (
                   <tr
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     key={index}
@@ -478,15 +463,15 @@ const ProductCategorys = () => {
                           to={
                             isProductTab
                               ? `product-edit-page/${list.Mathang.mamathang}`
-                              : `product-categorys-edit-page/${list.maloaimathang}`                              
+                              : `product-categorys-edit-page/${list.maloaimathang}`
                           }
                           state={{
-                            existedData: isProductTab ? productData : productCategoryData
+                            existedData: isProductTab
+                              ? productData
+                              : productCategoryData,
                           }}
                         >
-                          <p className="hidden lg:inline-block">
-                            {Edit}
-                          </p>
+                          <p className="hidden lg:inline-block">{Edit}</p>
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
@@ -497,9 +482,7 @@ const ProductCategorys = () => {
                               : deleteAProductCategory(list.maloaimathang)
                           }
                         >
-                          <p className="hidden lg:inline-block">
-                            {Delete}
-                          </p>
+                          <p className="hidden lg:inline-block">{Delete}</p>
                           <img src={DeleteIcon} alt="Icon thùng rác" />
                         </button>
                       </div>

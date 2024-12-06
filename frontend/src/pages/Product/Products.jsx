@@ -44,6 +44,8 @@ const Products = () => {
   // // For tab state here
   const { isProductTab, activateProductTab, deactivateProductTab } =
     useStoreTab();
+  // // For calculating statistic datacard
+  const [statisticData, setStatisticData] = useState([]);
   // // For fetching products & product category data
   const [productData, setProductData] = useState([]);
   const [productCategoryData, setProductCategoryData] = useState([]);
@@ -65,6 +67,8 @@ const Products = () => {
   );
   const [productCategoryFilterOption, setProductCategoryFilterOption] =
     useState(SF_ProductCategories.Columns.Col1);
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // // For getting all existing products and product categories
@@ -73,9 +77,24 @@ const Products = () => {
       try {
         // Get Exsisted Products
         const existedProduct = await getProductByStoreId(userInfo.storeID); // Just get products for only one store - not for all stores
-        if (existedProduct.length === 0) {
+        if (existedProduct.message === "Danh sách mặt hàng rỗng") {
+          setStatisticData({ card1: 0, card2: 0, card3: 0 });
           setProductData([]);
         } else {
+          const [card1, card2, card3] = [
+            existedProduct.length,
+            existedProduct.reduce(
+              (sum, item) =>
+                sum + item.Mathang.dongia * item.Mathang.soluongton,
+              0
+            ),
+            existedProduct.reduce(
+              (count, item) =>
+                [0].includes(item.Mathang.soluongton) ? count + 1 : count,
+              0
+            ),
+          ];
+          setStatisticData({ card1: card1, card2: card2, card3: card3 });
           setProductData(existedProduct);
         }
         // Get Exsisted Product Categories
@@ -121,8 +140,7 @@ const Products = () => {
         return false;
       });
       setProductSearchResults(results);
-    } else {
-      setProductSearchResults(productData);
+      setCurrentProductPage(0);
     }
     // Filtering products category base on filter option and input text
     if (productCategorySearchTerm.trim() !== "") {
@@ -135,8 +153,7 @@ const Products = () => {
         return false;
       });
       setProductCategorySearchResults(results);
-    } else {
-      setProductCategorySearchResults(productCategoryData);
+      setCurrentProductCategoryPage(0);
     }
   }, [
     productSearchTerm,
@@ -148,6 +165,19 @@ const Products = () => {
   ]);
 
   // Functions here
+  // // Handle sorting
+  const handleSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+    const sortedData = [...productData].sort((a, b) => {
+      if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
+      if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+    console.log(sortedData);
+    setSortConfig({ key, direction });
+    setProductData(sortedData);
+  };
   // // For deleting one product
   const deleteAProduct = async (id) => {
     const productResponse = await deleteProduct(id);
@@ -234,7 +264,9 @@ const Products = () => {
       : 0;
   // Items for rendering
   const PItems = productSearchTerm ? productSearchResults : currentProductItems;
-  const CItems = productCategorySearchTerm ? productCategorySearchResults : currentProductCategoryItems;
+  const CItems = productCategorySearchTerm
+    ? productCategorySearchResults
+    : currentProductCategoryItems;
   // Return here
   return (
     <div>
@@ -244,14 +276,16 @@ const Products = () => {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {ProductDataCard(theme, DC_Products).map((card, index) => (
-          <Card
-            key={index}
-            image={card.img}
-            description={card.description}
-            value={card.value}
-          />
-        ))}
+        {ProductDataCard(theme, DC_Products, statisticData).map(
+          (card, index) => (
+            <Card
+              key={index}
+              image={card.img}
+              description={card.description}
+              value={card.value}
+            />
+          )
+        )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         {/* Tab for changing what to show */}
@@ -341,25 +375,39 @@ const Products = () => {
             to={
               isProductTab ? "product-add-page" : "product-categorys-add-page"
             }
+            state={{
+              existedData: isProductTab ? productData : productCategoryData,
+            }}
           >
-            <Button />
+            <Button addBtn={Add} />
           </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>
               {isProductTab ? (
                 <>
                   <th scop="col" className="border-r-2 py-5"></th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Products.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleSort(`${SF_Products.Columns.Col2}`)}
+                  >
                     {SF_Products.Columns.Col2}
+                    {sortConfig.key === `${SF_Products.Columns.Col2}` &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleSort(`${SF_Products.Columns.Col3}`)}
+                  >
                     {SF_Products.Columns.Col3}
+                    {sortConfig.key === `${SF_Products.Columns.Col3}` &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Products.Columns.Col4}
@@ -379,20 +427,13 @@ const Products = () => {
             </tr>
           </thead>
           <tbody>
-            {(isProductTab ? PItems : CItems)
-              .length >= 1 ? (
+            {(isProductTab ? PItems : CItems).length >= 1 ? (
               <>
-                {(isProductTab
-                  ? PItems
-                  : CItems
-                ).map((list, index) => (
+                {(isProductTab ? PItems : CItems).map((list, index) => (
                   <tr
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     key={index}
                   >
-                    <td className="py-5 pl-3">
-                      <input type="checkbox" />
-                    </td>
                     {isProductTab ? (
                       <>
                         <td scope="row" className="border-r-2 py-5">

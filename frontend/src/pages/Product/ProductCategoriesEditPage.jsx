@@ -55,7 +55,7 @@ const ProductCategoriesEditPage = () => {
       alert("Cập nhật loại mặt hàng thất bại. Loại mặt hàng không tồn tại");
     } else if (data.message === "Đã cập nhật") {
       alert("Cập nhật loại mặt hàng thành công");
-      navigate("/product-categorys");
+      navigate("/products");
     }
   };
 
@@ -84,7 +84,7 @@ const ProductCategoriesEditPage = () => {
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
             onClick={() =>
-              updateData(productCategoryId, currentProductCategoryName)
+              updateData(productCategoryId, currentProductCategoryName.trim())
             }
           >
             {Update}

@@ -19,6 +19,7 @@ import { CustomerDataCard } from "../../assets/Customers/CustomerDataCard";
 // Import Components Here
 import Header from "../../components/Header";
 import Card from "../../components/content/Card";
+import Button from "../../components/UI/Button";
 import PaginationButtons from "../../components/UI/PaginationButtons";
 
 // Import Icons Here
@@ -33,12 +34,13 @@ function Customer() {
   const { Title } = t("Header");
   const { DC_Customers } = t("DataCard");
   const { SearchBy, SF_Customers } = t("SearchFilter");
-  const { Edit, Delete } = t("Buttons");
+  const { Add, Edit, Delete } = t("Buttons");
   // // For modal
   const { openModal, setLng, setLat } = useModal();
+  // // For calculating statistic datacard
+  const [statisticData, setStatisticData] = useState([]);
   // // For fetching data
   const [data, setData] = useState([]);
-  const [statistics, setStatistics] = useState({});
   // // For searching
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -58,46 +60,30 @@ function Customer() {
   useEffect(() => {
     const fetchData = async () => {
       const existedData = await getAllCustomer();
-      let distinctCustomers = new Set();
-      let distinctDistricts = new Set();
-      let distinctExportBill = new Set();
-      let totalProfit = 0.0;
-      if (existedData.length === 0) {
-        setData([]);        
-      } else {
-        setData(existedData);
-        // Get data for statistic        
-        existedData.forEach(item => {
-          if (item.Khachhang.makhachhang) {
-            distinctCustomers.add(item.Khachhang.makhachhang);
-          };
-          if (item.KhachhangDiachi.maquan) {
-            distinctDistricts.add(item.KhachhangDiachi.maquan);
-          };
-        });              
-      };
-      // Get phieuxuathang
       const existedExport = await getAllExportBill();
-      if (existedExport.length > 0) {
-        existedExport.forEach(item => {
-          if (item.Phieuxuathang.maphieuxuat) {
-            distinctExportBill.add(item.Phieuxuathang.maphieuxuat);
+      if (existedData.message === "Danh sách khách hàng rỗng") {
+        setStatisticData({ card1: 0, card2: 0, card3: 0 });
+        setData([]);
+      } else {
+        let distinctDistricts = new Set();
+        existedData.forEach((item) => {
+          if (item.Diachi.maquan) {
+            distinctDistricts.add(item.Diachi.maquan);
           }
-        })
-        distinctExportBill.forEach(item => {
-          existedExport.filter(eitem => {
-            if (eitem.Phieuxuathang.maphieuxuat === item) {
-              totalProfit += eitem.Phieuxuathang.tongtien;
-            }
-          })          
-        })
-      };
-      setStatistics({
-        "totalCustomers": distinctCustomers.size,
-        "totalDistricts": distinctDistricts.size,
-        "totalProfit": totalProfit
-      })
-    };    
+        });
+
+        const [card1, card2, card3] = [
+          existedData.length,
+          existedExport.reduce(
+            (sum, item) => sum + item.Phieuxuathang.tongtien,
+            0
+          ),
+          distinctDistricts.size,
+        ];
+        setStatisticData({ card1: card1, card2: card2, card3: card3 });
+        setData(existedData);
+      }
+    };
     fetchData();
   }, []);
   // Function for searching
@@ -106,17 +92,16 @@ function Customer() {
     if (searchTerm.trim() !== "") {
       const results = data.filter((item) => {
         if (selectedOption === SF_Customers.Columns.Col1) {
-          return item.tenkhachhang
+          return item.Khachhang.tenkhachhang
             .toLowerCase()
             .includes(searchTerm.toLowerCase());
         } else if (selectedOption === SF_Customers.Columns.Col2) {
-          return item.sodienthoai.includes(searchTerm);
+          return item.Khachhang.sodienthoai.includes(searchTerm);
         }
         return false;
       });
       setSearchResults(results);
-    } else {
-      setSearchResults(data);
+      setCurrentPage(0);
     }
   }, [searchTerm, data, selectedOption]);
 
@@ -129,7 +114,7 @@ function Customer() {
       alert("Xóa khách hàng thất bại");
     } else {
       alert("Xóa khách hàng thành công");
-      setData(data.filter((item) => item.makhachhang !== id));
+      setData(data.filter((item) => item.Khachhang.makhachhang !== id));
     }
   };
 
@@ -176,14 +161,16 @@ function Customer() {
         <Header headerTitle={Title.Customers} />
       </div>
       <div className="flex flex-wrap gap-5 justify-center m-5">
-        {CustomerDataCard(theme, DC_Customers, statistics).map((card, index) => (
-          <Card
-            key={index}
-            image={card.img}
-            description={card.description}
-            value={card.value}
-          />
-        ))}
+        {CustomerDataCard(theme, DC_Customers, statisticData).map(
+          (card, index) => (
+            <Card
+              key={index}
+              image={card.img}
+              description={card.description}
+              value={card.value}
+            />
+          )
+        )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex flex-wrap justify-between">
@@ -211,11 +198,19 @@ function Customer() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+          <NavLink
+            className="my-5"
+            to={"customer-add-page"}
+            state={{
+              existedData: data,
+            }}
+          >
+            <Button addBtn={Add} />
+          </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>
               <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col1}
               </th>
@@ -235,9 +230,6 @@ function Customer() {
                   key={index}
                   className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                 >
-                  <td className="py-5 pl-3">
-                    <input type="checkbox" />
-                  </td>
                   <td scope="row" className="border-r-2 py-5">
                     {list.Khachhang.tenkhachhang}
                   </td>
@@ -246,23 +238,28 @@ function Customer() {
                   </td>
                   <td scope="row" className="border-r-2 py-5">
                     <button
-                      onClick={() => handleOpenMapModal(list.KhachhangDiachi.kinhdo, list.KhachhangDiachi.vido)}
+                      onClick={() =>
+                        handleOpenMapModal(list.Diachi.kinhdo, list.Diachi.vido)
+                      }
                     >
-                      <p className="line-clamp-1 hover:underline">{list.KhachhangDiachi.diachi}</p>
+                      <p className="line-clamp-1 hover:underline">
+                        {list.Diachi.diachi}
+                      </p>
                     </button>
                   </td>
                   <td scope="row">
                     <div className="flex flex-wrap justify-center gap-5 my-5 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
                       <NavLink
                         className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
-                        to={`/customer/customer-edit-page/${list.makhachhang}`}
+                        to={`/customer/customer-edit-page/${list.Khachhang.makhachhang}`}
+                        state={{ existedData: data }}
                       >
                         <img src={EditIcon} alt="Icon chỉnh sửa" />
                         <p className="hidden lg:inline-block">{Edit}</p>
                       </NavLink>
                       <button
                         className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
-                        onClick={() => deleteItem(list.makhachhang)}
+                        onClick={() => deleteItem(list.Khachhang.makhachhang)}
                       >
                         <img src={DeleteIcon} alt="Icon thùng rác" />
                         <p className="hidden lg:inline-block">{Delete}</p>

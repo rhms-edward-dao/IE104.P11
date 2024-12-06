@@ -32,9 +32,6 @@ const ProductAdminEditPage = () => {
   const { Update } = t("Buttons");
   // // For editing product
   const [currentProductName, setCurrentProductName] = useState("");
-
-  const [currentUnitPrice, setCurrentUnitPrice] = useState(0);
-  const [currentStockQuantity, setCurrentStockQuantity] = useState("");
   const [currentUnit, setCurrentUnit] = useState("");
 
   const [currentProductCategoryName, setCurrentProductCategoryName] =
@@ -59,8 +56,6 @@ const ProductAdminEditPage = () => {
       // Get current product infomation by its id
       const currentProduct = await getProductById(productId);
       setCurrentProductName(currentProduct[0].Mathang.tenmathang);
-      setCurrentUnitPrice(currentProduct[0].Mathang.dongia);
-      setCurrentStockQuantity(currentProduct[0].Mathang.soluongton);
       setCurrentUnit(currentProduct[0].Mathang.tendvt);
       setCurrentProductCategoryName(currentProduct[0].tenloaimathang);
       setCurrentStoreName(currentProduct[0].tendaily);
@@ -92,15 +87,10 @@ const ProductAdminEditPage = () => {
     tenmathang,
     tenloaimathang,
     tendaily,
-    dongia,
-    soluongton,
     tendvt,
     hinhanh
   ) => {
-    
     let check_tenmathang = true;
-    let check_dongia = true;
-    let check_soluongton = true;
     let check_tendvt = true;
 
     // Checking before calling add api
@@ -112,16 +102,6 @@ const ProductAdminEditPage = () => {
       alert("Tên mặt hàng quá dài");
       check_tenmathang = false;
     }
-    // // Check dongia
-    if (dongia < 1000) {
-      alert("Đơn giá tối thiểu là 1000 đồng");
-      check_dongia = false;
-    } 
-    // // Check soluongton
-    if (soluongton < 0) {
-      alert("Số lượng tồn không âm");
-      check_soluongton = false;
-    }
     // // Check tendvt
     if (tendvt.length < 1) {
       alert("Tên đơn vị tính không được rỗng");
@@ -130,12 +110,7 @@ const ProductAdminEditPage = () => {
       alert("Tên đơn vị tính quá dài");
       check_tendvt = false;
     }
-    if (
-      check_tenmathang &&
-      check_dongia &&
-      check_soluongton &&
-      check_tendvt
-    ) {      
+    if (check_tenmathang && check_tendvt) {
       if (imageForShow === undefined) {
         hinhanh = null;
       }
@@ -144,11 +119,9 @@ const ProductAdminEditPage = () => {
         tenmathang: tenmathang,
         tenloaimathang: tenloaimathang,
         tendaily: tendaily,
-        dongia: dongia,
-        soluongton: soluongton,
         tendvt: tendvt,
         hinhanh: hinhanh,
-      };        
+      };
       const data = await updateProduct(mamathang, item);
       if (data.message === "Cập nhật mặt hàng thất bại") {
         alert("Cập nhật mặt hàng thất bại");
@@ -190,8 +163,6 @@ const ProductAdminEditPage = () => {
                 currentProductName,
                 currentProductCategoryName,
                 currentStoreName,
-                currentUnitPrice,
-                currentStockQuantity,
                 currentUnit,
                 currentImage
               )
@@ -216,42 +187,6 @@ const ProductAdminEditPage = () => {
               type="text"
               value={currentProductName}
               onChange={(e) => setCurrentProductName(e.target.value)}
-              required
-            />
-          </div>
-          {/* Type unit price */}
-          <div className="space-y-4">
-            <label
-              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="unit-price-edit"
-            >
-              {SF_Products.Columns.Col2}
-            </label>
-            <input
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="unit-price-edit"
-              name="unit-price-edit"
-              type="number"
-              value={currentUnitPrice}
-              onChange={(e) => setCurrentUnitPrice(e.target.value)}
-              required
-            />
-          </div>
-          {/* Type stock quantity */}
-          <div className="space-y-4">
-            <label
-              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="stock-quantity-edit"
-            >
-              {SF_Products.Columns.Col3}
-            </label>
-            <input
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="stock-quantity-edit"
-              name="stock-quantity-edit"
-              type="number"
-              value={currentStockQuantity}
-              onChange={(e) => setCurrentStockQuantity(e.target.value)}
               required
             />
           </div>

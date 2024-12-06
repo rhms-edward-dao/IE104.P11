@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -24,6 +24,9 @@ const ProductCategoriesAddPage = () => {
   const { AP_ProductCategories } = t("AddPage");
   const { SF_ProductCategories } = t("SearchFilter");
   const { Add } = t("Buttons");
+  // // For checking existed product category
+  const location = useLocation();
+  const { existedData } = location.state;
   // // For adding product category
   const [newProductCategoryName, setNewProductCategoryName] = useState("");
   // // For navigating
@@ -57,7 +60,7 @@ const ProductCategoriesAddPage = () => {
         alert("Thêm loại mặt hàng thất bại do loại mặt hàng đã tồn tại");
       } else {
         alert("Thêm loại mặt hàng thành công");
-        navigate("/product-categorys");
+        navigate("/products");
       }
     }
   };
@@ -86,7 +89,15 @@ const ProductCategoriesAddPage = () => {
           </p>
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
-            onClick={() => addData(newProductCategoryName)}
+            onClick={() =>
+              existedData.some(
+                (item) => item.tenloaimathang === newProductCategoryName.trim()
+              )
+                ? alert(
+                    "Thêm loại mặt hàng thất bại !!! Tên loại mặt hàng đã tồn tại"
+                  )
+                : addData(newProductCategoryName.trim())
+            }
           >
             {Add}
           </button>

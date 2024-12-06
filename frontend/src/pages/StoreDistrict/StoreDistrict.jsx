@@ -31,7 +31,7 @@ function Districts() {
   const { Title } = t("Header");
   const { DC_Districts } = t("DataCard");
   const { SearchBy, SF_Districts } = t("SearchFilter");
-  const { Edit, Delete } = t("Buttons");
+  const { Add, Edit, Delete } = t("Buttons");
   // // For fetching data
   const [districtData, setDistrictData] = useState([]);
   const [statistics, setStatistics] = useState({});
@@ -52,7 +52,7 @@ function Districts() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const existedDistrict = await getAllDistrict();        
+        const existedDistrict = await getAllDistrict();
         if (existedDistrict.length === 0) {
           setDistrictData([]);
           setStatistics({});
@@ -61,17 +61,17 @@ function Districts() {
           // Set data for statistics
           let totalDistrict = new Set();
           let totalCity = new Set();
-          existedDistrict.forEach(item => {
+          existedDistrict.forEach((item) => {
             if (item.maquan) {
               totalDistrict.add(item.maquan);
-            };
+            }
             if (item.tenthanhpho) {
               totalCity.add(item.tenthanhpho);
-            };
-          })
+            }
+          });
           setStatistics({
-            "totalDistrict": totalDistrict.size,
-            "totalCity": totalCity.size
+            totalDistrict: totalDistrict.size,
+            totalCity: totalCity.size,
           });
         }
       } catch (error) {
@@ -155,14 +155,16 @@ function Districts() {
         <Header headerTitle={Title.Districts}></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5 xl:gap-16 2xl:gap-44">
-        {DistrictDataCard(theme, DC_Districts, statistics).map((card, index) => (          
-          <Card
-            key={index}
-            image={card.img}
-            description={card.description}
-            value={card.value}
-          />
-        ))}
+        {DistrictDataCard(theme, DC_Districts, statistics).map(
+          (card, index) => (
+            <Card
+              key={index}
+              image={card.img}
+              description={card.description}
+              value={card.value}
+            />
+          )
+        )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex flex-wrap justify-between">
@@ -194,7 +196,7 @@ function Districts() {
             />
           </div>
           <NavLink to="district-add-page" className="my-5">
-            <Button />
+            <Button addBtn={Add} />
           </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
@@ -238,7 +240,7 @@ function Districts() {
                         className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                         to={`district-edit-page/${list.maquan}`}
                         state={{
-                          existedData: districtData
+                          existedData: districtData,
                         }}
                       >
                         <p className="hidden sm:hidden md:hidden lg:inline-block">

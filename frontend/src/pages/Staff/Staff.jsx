@@ -42,7 +42,7 @@ function Staff() {
   const { DC_Staffs } = t("DataCard");
   const { Staff, Position } = t("TabView");
   const { SearchBy, SF_Staffs, SF_Positions } = t("SearchFilter");
-  const { Detail, Edit, Delete } = t("Buttons");
+  const { Add, Detail, Edit, Delete } = t("Buttons");
 
   // // For staff-tab here
   const { isStaffTab, activateStaffTab, deactivateStaffTab } = useStoreTab();
@@ -91,7 +91,7 @@ function Staff() {
         if (existedPosition.length === 0) {
           setPositionData([]);
         } else {
-          setPositionData(existedPosition);          
+          setPositionData(existedPosition);
         }
         // Statistics here
         // Staff count
@@ -99,30 +99,30 @@ function Staff() {
         let distinctPosition = new Set();
         let totalIncome = 0.0;
         // Get distinct staffs
-        existedStaff.forEach(item => {
+        existedStaff.forEach((item) => {
           if (item.Nhanvien.manhanvien) {
-            distinctStaff.add(item.Nhanvien.manhanvien);            
+            distinctStaff.add(item.Nhanvien.manhanvien);
           }
-        });        
+        });
         // Get distinct positions
-        existedPosition.forEach(item => {
+        existedPosition.forEach((item) => {
           if (item.machucvu) {
             distinctPosition.add(item.machucvu);
           }
         });
         // For total salary
-        distinctStaff.forEach(item => {
-          existedStaff.filter(sitem => {
+        distinctStaff.forEach((item) => {
+          existedStaff.filter((sitem) => {
             if (sitem.Nhanvien.manhanvien === item) {
               totalIncome += sitem.luong;
             }
-          })
-        })
+          });
+        });
         setStatistics({
-          "totalStaff": distinctStaff.size,
-          "totalPosition": distinctPosition.size,
-          "totalSalary": totalIncome
-        })
+          totalStaff: distinctStaff.size,
+          totalPosition: distinctPosition.size,
+          totalSalary: totalIncome,
+        });
       } catch (error) {
         console.error("Error while fetching: ", error);
       }
@@ -270,7 +270,9 @@ function Staff() {
       ? Math.ceil(parseFloat(positionItems.length / itemsPerPage))
       : 0;
   // Items for rendering
-  const PItems = positionSearchTerm ? positionSearchResults : currentPositionItems;    
+  const PItems = positionSearchTerm
+    ? positionSearchResults
+    : currentPositionItems;
   const SItems = staffSearchTerm ? staffSearchResults : currentStaffItems;
   // Return here
   return (
@@ -373,10 +375,10 @@ function Staff() {
             className="my-5"
             to={isStaffTab ? "staff-management-add-page" : "position-add-page"}
             state={{
-              existedData: isStaffTab ? staffData : positionData
+              existedData: isStaffTab ? staffData : positionData,
             }}
           >
-            <Button />
+            <Button addBtn={Add} />
           </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
@@ -401,8 +403,7 @@ function Staff() {
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Staffs.Columns.Col5}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
-                  </th>
+                  <th className="border-r-2 py-5" scope="col"></th>
                 </>
               ) : (
                 <>
@@ -427,125 +428,128 @@ function Staff() {
             </tr>
           </thead>
           <tbody>
-            {(isStaffTab ? SItems : PItems).length >=
-            1 ? (
+            {(isStaffTab ? SItems : PItems).length >= 1 ? (
               <>
-                {(isStaffTab ? SItems : PItems).map(
-                  (list, index) => (
-                    <tr
-                      className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
-                      key={index}
-                    >
-                      <td className="py-5 pl-3">
-                        <input type="checkbox" />
-                      </td>
-                      {isStaffTab ? (
-                        <>
-                          <td scope="row" className="border-r-2 py-5">
-                            <img
-                              width="250px"
-                              src={`data:image/jpeg;base64, ${list.Nhanvien.hinhanh}`}
-                              alt="Hình nhân viên"
-                              className="rounded 2xl:h-20 2xl:w-20"
-                            />
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Nhanvien.hoten}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Nhanvien.ngaysinh}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.tendaily}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.tenchucvu}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            <button
-                              onClick={() =>
-                                handleOpenMapModal(list.kinhdo, list.vido)
-                              }
-                            >
-                              <p className="line-clamp-1 hover:underline">
-                                {list.diachi}
-                              </p>
-                            </button>
-                          </td>
-                          <td scope="row" className="border-r-2 px-3 py-5">
-                            {list.mataikhoan ? (
-                              <div className="flex justify-center items-center">
-                                <MdAccountCircle size={50} className="text-blue-400"/>
-                              </div>
-                            ): (
-                              <div className="flex justify-center items-center">
-                                <MdNoAccounts size={50} className="text-red-400" />
-                              </div>                              
-                            )}
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.tenchucvu}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.capdo}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.luong}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.ngaytao}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.ngaycapnhat}
-                          </td>
-                        </>
-                      )}
-                      <td scope="row">
-                        <div className="flex flex-wrap justify-center gap-5 my-5">
-                          <NavLink
-                            className={`flex flex-wrap items-center gap-2 rounded-lg ${
-                              isStaffTab ? "bg-cyan-500" : "bg-green-500"
-                            } px-4 py-2 font-bold text-white`}
-                            to={
-                              isStaffTab
-                                ? ""
-                                : `position-edit-page/${list.machucvu}`
-                            }
-                            onClick={() =>
-                              isStaffTab ? (
-                                handleOpenDetailModal(list.Nhanvien.manhanvien)
-                              ) : (
-                                <></>
-                              )
-                            }
-                          >
-                            <p className="hidden lg:inline-block">
-                              {isStaffTab ? Detail : Edit}
-                            </p>
-                            <img
-                              src={isStaffTab ? DetailIcon : EditIcon}
-                              alt="Icon chi tiết / chỉnh sửa"
-                            />
-                          </NavLink>
+                {(isStaffTab ? SItems : PItems).map((list, index) => (
+                  <tr
+                    className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                    key={index}
+                  >
+                    <td className="py-5 pl-3">
+                      <input type="checkbox" />
+                    </td>
+                    {isStaffTab ? (
+                      <>
+                        <td scope="row" className="border-r-2 py-5">
+                          <img
+                            width="250px"
+                            src={`data:image/jpeg;base64, ${list.Nhanvien.hinhanh}`}
+                            alt="Hình nhân viên"
+                            className="rounded 2xl:h-20 2xl:w-20"
+                          />
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Nhanvien.hoten}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Nhanvien.ngaysinh}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.tendaily}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.tenchucvu}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
                           <button
-                            className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
                             onClick={() =>
-                              isStaffTab
-                                ? deleteAStaff(list.Nhanvien.manhanvien)
-                                : deleteAPosition(list.machucvu)
+                              handleOpenMapModal(list.kinhdo, list.vido)
                             }
                           >
-                            <p className="hidden lg:inline-block">{Delete}</p>
-                            <img src={DeleteIcon} alt="Icon thùng rác" />
+                            <p className="line-clamp-1 hover:underline">
+                              {list.diachi}
+                            </p>
                           </button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                )}
+                        </td>
+                        <td scope="row" className="border-r-2 px-3 py-5">
+                          {list.mataikhoan ? (
+                            <div className="flex justify-center items-center">
+                              <MdAccountCircle
+                                size={50}
+                                className="text-blue-400"
+                              />
+                            </div>
+                          ) : (
+                            <div className="flex justify-center items-center">
+                              <MdNoAccounts
+                                size={50}
+                                className="text-red-400"
+                              />
+                            </div>
+                          )}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.tenchucvu}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.capdo}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.luong}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.ngaytao}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.ngaycapnhat}
+                        </td>
+                      </>
+                    )}
+                    <td scope="row">
+                      <div className="flex flex-wrap justify-center gap-5 my-5">
+                        <NavLink
+                          className={`flex flex-wrap items-center gap-2 rounded-lg ${
+                            isStaffTab ? "bg-cyan-500" : "bg-green-500"
+                          } px-4 py-2 font-bold text-white`}
+                          to={
+                            isStaffTab
+                              ? ""
+                              : `position-edit-page/${list.machucvu}`
+                          }
+                          onClick={() =>
+                            isStaffTab ? (
+                              handleOpenDetailModal(list.Nhanvien.manhanvien)
+                            ) : (
+                              <></>
+                            )
+                          }
+                        >
+                          <p className="hidden lg:inline-block">
+                            {isStaffTab ? Detail : Edit}
+                          </p>
+                          <img
+                            src={isStaffTab ? DetailIcon : EditIcon}
+                            alt="Icon chi tiết / chỉnh sửa"
+                          />
+                        </NavLink>
+                        <button
+                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                          onClick={() =>
+                            isStaffTab
+                              ? deleteAStaff(list.Nhanvien.manhanvien)
+                              : deleteAPosition(list.machucvu)
+                          }
+                        >
+                          <p className="hidden lg:inline-block">{Delete}</p>
+                          <img src={DeleteIcon} alt="Icon thùng rác" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </>
             ) : (
               <></>

@@ -101,8 +101,6 @@ export const addProductOnlyProduct = async (item) => {
     formData.append("tenmathang", item.tenmathang);
     formData.append("tenloaimathang", item.tenloaimathang);
     formData.append("madaily", item.madaily);
-    formData.append("dongia", item.dongia);
-    formData.append("soluongton", item.soluongton);
     formData.append("tendvt", item.tendvt);
 
     const response = await fetch(`http://127.0.0.1:8000/mathang_staff/them`, {
@@ -127,8 +125,6 @@ export const updateProductOnlyStaff = async (id, item) => {
     formData.append("tenmathang", item.tenmathang);
     formData.append("tenloaimathang", item.tenloaimathang);
     formData.append("madaily", item.madaily);
-    formData.append("dongia", item.dongia);
-    formData.append("soluongton", item.soluongton);
     formData.append("tendvt", item.tendvt);
 
     const response = await fetch(

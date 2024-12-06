@@ -30,6 +30,7 @@ class crud_operations:
             db.commit()
             return {"message": "Đã xóa"}
         except Exception as e:
+            print(e)
             return {"message": "Xóa thất bại"}
 
 
@@ -237,8 +238,9 @@ def get_summary_quan() -> list:
                     group by Quan.maquan, tenquan, tenthanhpho;
                 """
             )
-        )    
+        )
         return results
+
 
 # MATHANG
 # Get all MATHANG
@@ -301,29 +303,34 @@ def get_mathang_by_madaily(db: Session, pMaDaiLy: int):
 
 # Add New MATHANG
 def add_new_mathang(**param_list):
-    with engine.connect().execution_options(autocommit=True) as connection:
-        connection.execute(
-            """
-            INSERT INTO MATHANG (
-                tenmathang,
-                soluongton,
-                dongia,
-                tendvt,
-                hinhanh,
-                madaily,
-                maloaimathang
-            )
-            VALUES
-            ( (%s), (%s), (%s), (%s), (%s), (%s), (%s))
-        """,
-            param_list["tenmathang"],
-            param_list["soluongton"],
-            param_list["dongia"],
-            param_list["tendvt"],
-            param_list["hinhanh"],
-            param_list["madaily"],
-            param_list["maloaimathang"],
-        )
+    try:
+        with engine.connect().execution_options(autocommit=True) as connection:
+            connection.execute(
+                text(
+                    """
+                INSERT INTO MATHANG (
+                    tenmathang,
+                    soluongton,
+                    dongia,
+                    tendvt,
+                    hinhanh,
+                    madaily,
+                    maloaimathang
+                )
+                VALUES
+                ( '{}', 0, 0, '{}', '{}', {}, {})
+            """.format(
+                        param_list["tenmathang"],
+                        param_list["tendvt"],
+                        param_list["hinhanh"],
+                        param_list["madaily"],
+                        param_list["maloaimathang"],
+                    )
+                )
+            ),
+
+    except Exception as e:
+        print(e)
 
 
 # Update MATHANG
@@ -331,47 +338,56 @@ def update_mathang(**param_list):
     if param_list["hinhanh"] != "":
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(
-                """
+                text(
+                    """
                 UPDATE MATHANG                
-                SET tenmathang = (%s),
-                    soluongton = (%s),
-                    dongia = (%s),
-                    tendvt = (%s),
-                    hinhanh = (%s),
-                    madaily = (%s),
-                    maloaimathang = (%s)
-                WHERE mamathang = (%s)                                               
-            """,
-                param_list["tenmathang"],
-                param_list["soluongton"],
-                param_list["dongia"],
-                param_list["tendvt"],
-                param_list["hinhanh"],
-                param_list["madaily"],
-                param_list["maloaimathang"],
-                param_list["mamathang"],
+                SET tenmathang = '{}',
+                    soluongton = {},
+                    dongia = {},
+                    tendvt = '{}',
+                    hinhanh = '{}',
+                    madaily = {},
+                    maloaimathang = {}
+                WHERE mamathang = {}
+            """.format(
+                        param_list["tenmathang"],
+                        param_list["soluongton"],
+                        param_list["dongia"],
+                        param_list["tendvt"],
+                        param_list["hinhanh"],
+                        param_list["madaily"],
+                        param_list["maloaimathang"],
+                        param_list["mamathang"],
+                    )
+                )
             )
     else:
-        with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute(
-                """
-                UPDATE MATHANG                
-                SET tenmathang = (%s),
-                    soluongton = (%s),
-                    dongia = (%s),
-                    tendvt = (%s),
-                    madaily = (%s),
-                    maloaimathang = (%s)
-                WHERE mamathang = (%s)                                               
-            """,
-                param_list["tenmathang"],
-                param_list["soluongton"],
-                param_list["dongia"],
-                param_list["tendvt"],
-                param_list["madaily"],
-                param_list["maloaimathang"],
-                param_list["mamathang"],
-            )
+        try:
+            with engine.connect().execution_options(autocommit=True) as connection:
+                connection.execute(
+                    text(
+                        """
+                    UPDATE MATHANG                
+                    SET tenmathang = '{}',
+                        soluongton = {},
+                        dongia = {},
+                        tendvt = '{}',
+                        madaily = {},
+                        maloaimathang = {}
+                    WHERE mamathang = {}
+                """.format(
+                            param_list["tenmathang"],
+                            param_list["soluongton"],
+                            param_list["dongia"],
+                            param_list["tendvt"],
+                            param_list["madaily"],
+                            param_list["maloaimathang"],
+                            param_list["mamathang"],
+                        )
+                    )
+                )
+        except Exception as e:
+            print(e)
 
 
 # QUITAC
@@ -573,7 +589,7 @@ def get_all_nhanvien(db: Session):
             models.Daily.tendaily,
             models.NhanvienDiachi.kinhdo,
             models.NhanvienDiachi.vido,
-            models.Chucvu.luong
+            models.Chucvu.luong,
         )
         .filter(
             models.Nhanvien.manhanvien == models.NhanvienChucvu.manhanvien,
@@ -754,6 +770,7 @@ def get_all_khachhang(db: Session):
         .all()
     )
 
+
 def update_khachhang(
     db: Session, makhachhang: int, tenkhachhang: str, sodienthoai: str
 ):
@@ -794,6 +811,17 @@ def get_all_phieunhaphang(db: Session):
     )
 
 
+# Get phieunhaphang by maphieunhap
+def get_phieunhaphang_by_maphieunhap(db: Session, pMaPhieuNhap: int):
+    return (
+        db.query(models.Phieunhaphang)
+        .filter(
+            models.Phieunhaphang.maphieunhap == pMaPhieuNhap,
+        )
+        .all()
+    )
+
+
 # Get phieunhaphang by store's id
 def get_phieunhaphang_by_madaily(db: Session, pMaDaiLy: int):
     return (
@@ -821,6 +849,40 @@ def get_chitiet_pnh_by_maphieunhap(db: Session, pMaPhieuNhap: int):
     )
 
 
+# Add new phieunhaphang
+def add_new_phieunhaphang(madaily: int, items: list, db: Session):
+    try:
+        # Step 1: Insert a new record into the PHIEUNHAPHANG table
+        new_phieunhap = models.Phieunhaphang(
+            madaily=madaily, tongtien=0
+        )  # Set `tongtien` to 0 initially
+        db.add(new_phieunhap)
+        db.flush()  # Ensure the new record is written to the DB and maphieunhap is generated
+
+        # Get the generated maphieunhap
+        maphieunhap = new_phieunhap.maphieunhap
+
+        # Step 2: Loop through items and insert into CHITIET_PNH
+        for item in items:
+            chitiet = models.ChitietPnh(
+                maphieunhap=maphieunhap,
+                mamathang=item["mamathang"],
+                soluongnhap=item["soluongnhap"],
+                dongianhap=item["dongia"],
+            )
+            db.add(chitiet)
+
+        # Commit the transaction
+        db.commit()
+        return {
+            "message": "Phieu nhap hang created successfully",
+            "maphieunhap": maphieunhap,
+        }
+    except Exception as e:
+        db.rollback()  # Roll back the transaction if there's an error
+        raise e
+
+
 # PHIEUXUATHANG & CHITIET_PXH
 # Get all phieuxuathang
 def get_all_phieuxuathang(db: Session):
@@ -838,12 +900,31 @@ def get_all_phieuxuathang(db: Session):
     )
 
 
+# Get phieuxuathang by maphieuxuat
+def get_phieuxuathang_by_maphieuxuat(db: Session, pMaPhieuXuat: int):
+    return (
+        db.query(
+            models.Phieuxuathang,
+            models.Khachhang.makhachhang,
+            models.Khachhang.tenkhachhang,
+        )
+        .filter(
+            models.Phieuxuathang.makhachhang == models.Khachhang.makhachhang,
+            models.Phieuxuathang.maphieuxuat == pMaPhieuXuat,
+        )
+        .all()
+    )
+
+
 # Get phieuxuathang by store's id
 def get_phieuxuathang_by_madaily(db: Session, pMaDaiLy: int):
     return (
-        db.query(models.Phieuxuathang, models.Daily.tendaily)
+        db.query(
+            models.Phieuxuathang, models.Daily.tendaily, models.Khachhang.tenkhachhang
+        )
         .filter(
             models.Phieuxuathang.madaily == models.Daily.madaily,
+            models.Phieuxuathang.makhachhang == models.Khachhang.makhachhang,
             models.Phieuxuathang.madaily == pMaDaiLy,
         )
         .all()

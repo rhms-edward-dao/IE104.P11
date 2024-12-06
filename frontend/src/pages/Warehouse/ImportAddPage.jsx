@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -8,6 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
 import { getProductByStoreId } from "../../assets/Products/ProductData";
+import { addImportBill } from "../../assets/Warehouses/WarehouseData";
 
 // Import Components Here
 import Header from "../../components/Header";
@@ -28,8 +29,11 @@ const ImportAddPage = () => {
   // // For Adding New Import Bill
   const [productData, setProductData] = useState([]);
   const [soLuongNhap, setSoLuongNhap] = useState({});
+  const [donGiaNhap, setDonGiaNhap] = useState({});
   const [numDropdowns, setNumDropdowns] = useState(0);
   const [dropdownValues, setDropdownValues] = useState({});
+  // // For navigating
+  const navigate = useNavigate();
 
   // Use Effect here
   // // For getting all existing products
@@ -66,6 +70,7 @@ const ImportAddPage = () => {
     setNumDropdowns(inputNumber);
     setDropdownValues({});
     setSoLuongNhap({});
+    setDonGiaNhap({});
   };
   // // For handling the selected product
   const handleSelectChange = (index, value) => {
@@ -81,6 +86,13 @@ const ImportAddPage = () => {
       [index]: parseInt(value, 10),
     }));
   };
+  // // For handling the price of product to import
+  const handleDonGiaNhapChange = (index, value) => {
+    setDonGiaNhap((prev) => ({
+      ...prev,
+      [index]: parseInt(value, 10),
+    }));
+  };
   // // For showing product name in option list
   const getAvailableOptions = (currentIndex) => {
     const selectedValues = Object.values(dropdownValues);
@@ -89,6 +101,72 @@ const ImportAddPage = () => {
         !selectedValues.includes(product.Mathang.mamathang) ||
         dropdownValues[currentIndex] === product.Mathang.mamathang
     );
+  };
+
+  // // For adding new import bill
+  const addData = async () => {
+    // Prepare a list to hold the data for each selected product
+    const itemsToImport = [];
+
+    // Iterate over dropdownValues to collect necessary data
+    Object.keys(dropdownValues).forEach((index) => {
+      const mamathang = dropdownValues[index]; // Selected product ID
+      const soluongnhap = soLuongNhap[index]; // Inputted quantity
+      const dongianhap = donGiaNhap[index]; // Inputted price
+
+      // Add the product details to the list
+      itemsToImport.push({
+        mamathang,
+        soluongnhap,
+        dongianhap,
+      });
+    });
+
+    // Constraints check for `soluongnhap` and `dongianhap`
+    const isValidInput = itemsToImport.every((item) => {
+      if (item.soluongnhap < 0) {
+        alert(`Số lượng nhập cho mặt hàng ${item.mamathang} không được âm.`);
+        return false;
+      }
+      if (!/^\d+$/.test(item.soluongnhap)) {
+        alert(
+          `Số lượng nhập cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`
+        );
+        return false;
+      }
+      if (item.dongianhap < 0) {
+        alert(`Đơn giá nhập cho mặt hàng ${item.mamathang} không được âm.`);
+        return false;
+      }
+      if (!/^\d+$/.test(item.dongianhap)) {
+        alert(
+          `Đơn giá nhập cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`
+        );
+        return false;
+      }
+      return true;
+    });
+
+    if (!isValidInput) {
+      return; // Exit if any input is invalid
+    }
+
+    // Call the API to add import bill
+    try {
+      const data = await addImportBill(userInfo.storeID, itemsToImport);
+
+      // Handle response
+      if (data.message === "Thêm phiếu nhập hàng thành công.") {
+        alert("Thêm phiếu nhập hàng thành công");
+        navigate("/warehouse"); // Navigate to warehouse page on success
+      } else {
+        console.log(data.message);
+        alert("Thêm phiếu nhập hàng thất bại");
+      }
+    } catch (error) {
+      console.error("Error while adding import bill:", error);
+      alert("Đã xảy ra lỗi khi thêm phiếu nhập hàng.");
+    }
   };
 
   return (
@@ -114,16 +192,7 @@ const ImportAddPage = () => {
           </p>
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
-            // onClick={() =>
-            //   addData(
-            //     newProductName,
-            //     newProductCategoryName,
-            //     newUnitPrice,
-            //     newStockQuantity,
-            //     newUnit,
-            //     newImage
-            //   )
-            // }
+            onClick={addData}
           >
             {Import}
           </button>
@@ -202,7 +271,7 @@ const ImportAddPage = () => {
                         className="w-fit rounded-md border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                         id={`soluongton-${index}`}
                         type="number"
-                        value={selectedProduct?.Mathang.soluongton || ""}
+                        value={selectedProduct?.Mathang.soluongton}
                         readOnly
                       />
                     </div>
@@ -220,6 +289,23 @@ const ImportAddPage = () => {
                         value={soLuongNhap[index] || ""}
                         onChange={(e) =>
                           handleSoLuongNhapChange(index, e.target.value)
+                        }
+                      />
+                    </div>
+                    <div className="flex space-x-5 items-center">
+                      <label
+                        className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+                        htmlFor={`dongianhap-${index}`}
+                      >
+                        Đơn giá nhập:
+                      </label>
+                      <input
+                        className="w-fit rounded-md border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                        id={`dongianhap-${index}`}
+                        type="number"
+                        value={donGiaNhap[index] || ""}
+                        onChange={(e) =>
+                          handleDonGiaNhapChange(index, e.target.value)
                         }
                       />
                     </div>

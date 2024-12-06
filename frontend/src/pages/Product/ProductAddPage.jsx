@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
 import { addProductOnlyProduct } from "../../assets/Products/ProductData";
@@ -16,11 +17,8 @@ import Header from "../../components/Header";
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
-// Import useAuth*()
-import { useAuth } from "../../contexts/AuthContext";
 
 const ProductStaffAddPage = () => {
-  
   // Variable here
   const { userInfo } = useAuth();
   // // For Theme Mode
@@ -30,11 +28,11 @@ const ProductStaffAddPage = () => {
   const { AP_Products, AP_Stores } = t("AddPage");
   const { SF_Products } = t("SearchFilter");
   const { Add } = t("Buttons");
+  // // For checking existed products
+  const location = useLocation();
+  const { existedData } = location.state;
   // // For adding product
   const [newProductName, setNewProductName] = useState("");
-
-  const [newUnitPrice, setNewUnitPrice] = useState("");
-  const [newStockQuantity, setNewStockQuantity] = useState("");
   const [newUnit, setNewUnit] = useState("");
 
   const [newProductCategoryName, setNewProductCategoryName] = useState("");
@@ -76,17 +74,8 @@ const ProductStaffAddPage = () => {
     setImageForShow(URL.createObjectURL(e.target.files[0]));
   };
   // // For adding new product
-  const addData = async (
-    tenmathang,
-    tenloaimathang,
-    dongia,
-    soluongton,
-    tendvt,
-    hinhanh
-  ) => {
+  const addData = async (tenmathang, tenloaimathang, tendvt, hinhanh) => {
     let check_tenmathang = true;
-    let check_dongia = true;
-    let check_soluongton = true;
     let check_tendvt = true;
     let check_hinhanh = true;
 
@@ -98,22 +87,6 @@ const ProductStaffAddPage = () => {
     if (tenmathang.length < 1) {
       alert("Tên mặt hàng không được rỗng");
       check_tenmathang = false;
-    }
-    // // Check dongia
-    if (dongia < 1000) {
-      alert("Đơn giá tối thiểu là 1000 đồng");
-      check_dongia = false;
-    } else if (!isOnlyDigit(dongia)) {
-      alert("Đơn giá chỉ được có ký tự chữ số");
-      check_dongia = false;
-    }
-    // // Check soluongton
-    if (soluongton < 1) {
-      alert("Số lượng tồn không âm");
-      check_soluongton = false;
-    } else if (!isOnlyDigit(soluongton)) {
-      alert("Số lượng tồn chỉ được có ký tự chữ số");
-      check_soluongton = false;
     }
     // // Check tendvt
     if (tendvt.length < 1) {
@@ -129,19 +102,11 @@ const ProductStaffAddPage = () => {
       check_hinhanh = false;
     }
 
-    if (
-      check_tenmathang &&
-      check_dongia &&
-      check_soluongton &&
-      check_tendvt &&
-      check_hinhanh
-    ) {
+    if (check_tenmathang && check_tendvt && check_hinhanh) {
       let item = {
         madaily: userInfo.storeID,
         tenmathang: tenmathang,
         tenloaimathang: tenloaimathang,
-        dongia: dongia,
-        soluongton: soluongton,
         tendvt: tendvt,
         hinhanh: hinhanh,
       };
@@ -152,7 +117,7 @@ const ProductStaffAddPage = () => {
         alert("Tên mặt hàng đã tồn tại");
       } else if (data.message === "Thêm mặt hàng thành công") {
         alert("Thêm mặt hàng thành công");
-        navigate("/product-categorys");
+        navigate("/products");
       }
     }
   };
@@ -182,14 +147,16 @@ const ProductStaffAddPage = () => {
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
             onClick={() =>
-              addData(
-                newProductName,
-                newProductCategoryName,
-                newUnitPrice,
-                newStockQuantity,
-                newUnit,
-                newImage
+              existedData.some(
+                (item) => item.Mathang.tenmathang === newProductName.trim()
               )
+                ? alert("Thêm mặt hàng thất bại !!! Tên mặt hàng đã tồn tại")
+                : addData(
+                    newProductName.trim(),
+                    newProductCategoryName,
+                    newUnit.trim(),
+                    newImage
+                  )
             }
           >
             {Add}
@@ -212,44 +179,6 @@ const ProductStaffAddPage = () => {
               placeholder={`${SF_Products.Columns.Col1} ...`}
               values={newProductName}
               onChange={(e) => setNewProductName(e.target.value)}
-              required
-            />
-          </div>
-          {/* Type unit price */}
-          <div className="space-y-4">
-            <label
-              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="unit-price-add"
-            >
-              {SF_Products.Columns.Col2}
-            </label>
-            <input
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="unit-price-add"
-              name="unit-price-add"
-              type="number"
-              placeholder={`${SF_Products.Columns.Col2} ...`}
-              values={newUnitPrice}
-              onChange={(e) => setNewUnitPrice(e.target.value)}
-              required
-            />
-          </div>
-          {/* Type stock quantity */}
-          <div className="space-y-4">
-            <label
-              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="stock-quantity-add"
-            >
-              {SF_Products.Columns.Col3}
-            </label>
-            <input
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="stock-quantity-add"
-              name="stock-quantity-add"
-              type="number"
-              placeholder={`${SF_Products.Columns.Col3} ...`}
-              values={newStockQuantity}
-              onChange={(e) => setNewStockQuantity(e.target.value)}
               required
             />
           </div>

@@ -13,6 +13,7 @@ import {
   getAllStoreCategory,
   deleteStoreCategory,
 } from "../../assets/Stores/StoreCategoryData";
+import { getAllImportBill } from "../../assets/Warehouses/WarehouseData";
 import { StoreDataCard } from "../../assets/Stores/StoreDataCard";
 
 // Import Components Here
@@ -40,6 +41,9 @@ function Stores() {
   // // For store-tab here
   const { isStoreTab, activateStoreTab, deactivateStoreTab } = useStoreTab();
   const { openModal, setLng, setLat } = useModal();
+
+  // // For calculating statistic datacard
+  const [statisticData, setStatisticData] = useState([]);
 
   // // For fetching daily & loaidaily data
   const [storeData, setStoreData] = useState([]);
@@ -71,11 +75,29 @@ function Stores() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Get Exsisted Stores
+        // Get Existed Stores
         const existedStore = await getAllStore();
-        if (existedStore.length === 0) {
+        // Get Existed Import Bills
+        const existedImport = await getAllImportBill();
+        if (existedStore.message === "Danh sách đại lý rỗng") {
+          setStatisticData({ card1: 0, card2: 0, card3: 0 });
           setStoreData([]);
         } else {
+          const [card1, card2, card3] = [
+            existedStore.length,
+            existedImport.reduce(
+              (sum, item) =>
+                sum +
+                (item.Phieunhaphang.tongtien -
+                  item.Phieunhaphang.tiendathanhtoan),
+              0
+            ),
+            existedImport.reduce(
+              (sum, item) => sum + item.Phieunhaphang.tongtien,
+              0
+            ),
+          ];
+          setStatisticData({ card1: card1, card2: card2, card3: card3 });
           setStoreData(existedStore);
         }
         // Get Exsisted Stores Category
@@ -245,7 +267,9 @@ function Stores() {
 
   // Items for rendering
   const SItems = storeSearchTerm ? storeSearchResults : currentStoreItems;
-  const CItems = storeCategorySearchTerm ? storeCategorySearchResults : currentStoreCategoryItems;
+  const CItems = storeCategorySearchTerm
+    ? storeCategorySearchResults
+    : currentStoreCategoryItems;
   // Return here
   return (
     <div>
@@ -255,7 +279,7 @@ function Stores() {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {StoreDataCard(theme, DC_Stores).map((card, index) => (
+        {StoreDataCard(theme, DC_Stores, statisticData).map((card, index) => (
           <Card
             key={index}
             image={card.img}
@@ -350,7 +374,7 @@ function Stores() {
               existedData: isStoreTab ? storeData : storeCategoryData,
             }}
           >
-            <Button />
+            <Button addBtn={Add} />
           </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
@@ -390,13 +414,9 @@ function Stores() {
             </tr>
           </thead>
           <tbody>
-            {(isStoreTab ? SItems : CItems)
-              .length >= 1 ? (
+            {(isStoreTab ? SItems : CItems).length >= 1 ? (
               <>
-                {(isStoreTab
-                  ? SItems
-                  : CItems
-                ).map((list, index) => (
+                {(isStoreTab ? SItems : CItems).map((list, index) => (
                   <tr
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     key={index}
@@ -450,7 +470,7 @@ function Stores() {
                     )}
                     <td scope="row">
                       <div className="flex flex-wrap gap-5 m-3">
-                        { isStoreTab && (
+                        {isStoreTab && (
                           <NavLink
                             className="flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 font-bold text-white"
                             to={`/store-maintainance/${list.Daily.madaily}`}
@@ -458,8 +478,7 @@ function Stores() {
                             <p className="hidden lg:inline-block">Bảo trì</p>
                             <img src={MaintainanceIcon} alt="Icon bảo trì" />
                           </NavLink>
-                        )                          
-                        }
+                        )}
                         <NavLink
                           className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                           to={
@@ -467,8 +486,10 @@ function Stores() {
                               ? `store-edit-page/${list.Daily.madaily}`
                               : `store-category-edit-page/${list.maloaidaily}`
                           }
-                          state = {{
-                            existedData: isStoreTab ? storeData : storeCategoryData
+                          state={{
+                            existedData: isStoreTab
+                              ? storeData
+                              : storeCategoryData,
                           }}
                         >
                           <p className="hidden lg:inline-block">{Edit}</p>

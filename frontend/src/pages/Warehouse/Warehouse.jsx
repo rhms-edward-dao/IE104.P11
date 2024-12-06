@@ -9,6 +9,8 @@ import { useStoreTab } from "../../contexts/StoreTabState";
 
 // Import Assets Here
 import {
+  deleteExportBill,
+  deleteImportBill,
   getAllExportBill,
   getAllImportBill,
   getExportBillByStoreId,
@@ -23,7 +25,9 @@ import Button from "../../components/UI/Button";
 import PaginationButtons from "../../components/UI/PaginationButtons";
 
 // Import Icons Here
+import EditIcon from "../../images/icons/button/Edit.svg";
 import DetailIcon from "../../images/icons/button/SeeDetail.svg";
+import DeleteIcon from "../../images/icons/button/Delete.svg";
 
 function Warehouse() {
   // Variables here
@@ -36,12 +40,14 @@ function Warehouse() {
   const { Import, Export } = t("TabView");
   const { SearchBy, SF_WarehouseImport, SF_WarehouseExport } =
     t("SearchFilter");
-  const { Detail } = t("Buttons");
+  const { Add, Detail, Delete, Edit } = t("Buttons");
   // // For Checking If Staff Account Or Not
   const { userInfo } = useAuth();
   // // For warehouse-tab here
   const { isWarehouseTab, activateWarehouseTab, deactivateWarehouseTab } =
     useStoreTab();
+  // // For calculating statistic datacard
+  const [statisticData, setStatisticData] = useState([]);
   // // For fetching import & export bills data
   const [importData, setImportData] = useState([]);
   const [exportData, setExportData] = useState([]);
@@ -68,21 +74,36 @@ function Warehouse() {
     const fetchData = async () => {
       try {
         // Get Existed Import Bills
-        // const existedImport = await getImportBillByStoreId(userInfo.storeID);
-        const existedImport = await getAllImportBill();
-        if (existedImport.length === 0) {
+        const existedImport = await getImportBillByStoreId(userInfo.storeID);
+        // const existedImport = await getAllImportBill();
+        if (existedImport.message === "Danh sách phiếu nhập hàng rỗng") {
           setImportData([]);
         } else {
           setImportData(existedImport);
         }
         // Get Existed Export Bills
-        // const existedExport = await getExportBillByStoreId(userInfo.storeID);
-        const existedExport = await getAllExportBill();
-        if (existedExport.length === 0) {
+        const existedExport = await getExportBillByStoreId(userInfo.storeID);
+        // const existedExport = await getAllExportBill();
+        if (existedExport.message === "Danh sách phiếu xuất hàng rỗng") {
           setExportData([]);
         } else {
           setExportData(existedExport);
         }
+        const [card1, card2] = [
+          existedImport.message === "Danh sách phiếu nhập hàng rỗng"
+            ? 0
+            : existedImport.reduce(
+                (sum, item) => sum + item.Phieunhaphang.tongtien,
+                0
+              ),
+          existedExport.message === "Danh sách phiếu xuất hàng rỗng"
+            ? 0
+            : existedExport.reduce(
+                (sum, item) => sum + item.Phieuxuathang.tongtien,
+                0
+              ),
+        ];
+        setStatisticData({ card1: card1, card2: card2 });
       } catch (error) {
         console.error("Error while fetching: ", error);
       }
@@ -147,6 +168,32 @@ function Warehouse() {
   ]);
 
   // Functions here
+  // // For deleting one import bill
+  const deleteAImportBill = async (id) => {
+    const importResponse = await deleteImportBill(id);
+
+    if (importResponse.message === "Xóa phiếu nhập hàng thất bại") {
+      alert(importResponse.message);
+    } else {
+      alert(importResponse.message);
+      setImportData(
+        importData.filter((item) => item.Phieunhaphang.maphieunhap !== id)
+      );
+    }
+  };
+  // // For deleting one export bill
+  const deleteAExportBill = async (id) => {
+    const exportResponse = await deleteExportBill(id);
+
+    if (exportResponse.message === "Xóa phiếu xuất hàng thất bại") {
+      alert(exportResponse.message);
+    } else {
+      alert(exportResponse.message);
+      setExportData(
+        exportData.filter((item) => item.Phieuxuathang.maphieuxuat !== id)
+      );
+    }
+  };
   // // For changing placeholder text base on the selected search-filter option
   const getPlaceholderText = () => {
     switch (isWarehouseTab ? importFilterOption : exportFilterOption) {
@@ -229,14 +276,16 @@ function Warehouse() {
         ></Header>
       </div>
       <div className="m-5 flex flex-wrap justify-center gap-5">
-        {WarehouseDataCard(theme, DC_Warehouses).map((card, index) => (
-          <Card
-            key={index}
-            image={card.img}
-            description={card.description}
-            value={card.value}
-          />
-        ))}
+        {WarehouseDataCard(theme, DC_Warehouses, statisticData).map(
+          (card, index) => (
+            <Card
+              key={index}
+              image={card.img}
+              description={card.description}
+              value={card.value}
+            />
+          )
+        )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         {/* Tab for changing what to show */}
@@ -335,13 +384,12 @@ function Warehouse() {
                 : "warehouse-export-add-page"
             }
           >
-            <Button />
+            <Button addBtn={Add} />
           </NavLink>
         </div>
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>
               {isWarehouseTab ? (
                 <>
                   <th className="border-r-2 py-5" scope="col">
@@ -374,64 +422,92 @@ function Warehouse() {
             </tr>
           </thead>
           <tbody>
-            {(isWarehouseTab ? IItems : EItems)
-              .length >= 1 ? (
+            {(isWarehouseTab ? IItems : EItems).length >= 1 ? (
               <>
-                {(isWarehouseTab ? IItems : EItems).map(
-                  (list, index) => (
-                    <tr
-                      className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
-                      key={index}
-                    >
-                      <td className="py-5 pl-3">
-                        <input type="checkbox" />
-                      </td>
-                      {isWarehouseTab ? (
-                        <>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Phieunhaphang.ngaylapphieu}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Phieunhaphang.tongtien}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Phieunhaphang.tiendathanhtoan}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Phieunhaphang.tinhtrang}
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Phieuxuathang.ngaylapphieu}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.Phieuxuathang.tongtien}
-                          </td>
-                          <td scope="row" className="border-r-2 py-5">
-                            {list.tenkhachhang}
-                          </td>
-                        </>
-                      )}
-                      <td scope="row">
-                        <div className="flex flex-wrap justify-center gap-5 my-5">
-                          <NavLink
-                            className="flex flex-wrap items-center gap-2 rounded-lg bg-cyan-500 px-4 py-2 font-bold text-white"
-                            to={
-                              isWarehouseTab
-                                ? `warehouse-import-detail-page/${list.Phieunhaphang.maphieunhap}`
-                                : `warehouse-export-detail-page/${list.Phieuxuathang.maphieuxuat}`
-                            }
-                          >
-                            <p className="hidden lg:inline-block">{Detail}</p>
-                            <img src={DetailIcon} alt="Icon chi tiết" />
-                          </NavLink>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                )}
+                {(isWarehouseTab ? IItems : EItems).map((list, index) => (
+                  <tr
+                    className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                    key={index}
+                  >
+                    {isWarehouseTab ? (
+                      <>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Phieunhaphang.ngaylapphieu}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Phieunhaphang.tongtien}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Phieunhaphang.tiendathanhtoan}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Phieunhaphang.tinhtrang}
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Phieuxuathang.ngaylapphieu}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.Phieuxuathang.tongtien}
+                        </td>
+                        <td scope="row" className="border-r-2 py-5">
+                          {list.tenkhachhang}
+                        </td>
+                      </>
+                    )}
+                    <td scope="row">
+                      <div className="flex flex-wrap justify-center gap-5 my-5">
+                        <NavLink
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-cyan-500 px-4 py-2 font-bold text-white"
+                          to={
+                            isWarehouseTab
+                              ? `warehouse-import-detail-page/${list.Phieunhaphang.maphieunhap}`
+                              : `warehouse-export-detail-page/${list.Phieuxuathang.maphieuxuat}`
+                          }
+                        >
+                          <p className="hidden lg:inline-block">{Detail}</p>
+                          <img src={DetailIcon} alt="Icon chi tiết" />
+                        </NavLink>
+                        <NavLink
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          to={
+                            isWarehouseTab
+                              ? `warehouse-import-edit-page/${list.Phieunhaphang.maphieunhap}`
+                              : `warehouse-export-edit-page/${list.Phieuxuathang.maphieuxuat}`
+                          }
+                        >
+                          <p className="hidden lg:inline-block">{Edit}</p>
+                          <img src={EditIcon} alt="Icon chỉnh sửa" />
+                        </NavLink>
+                        <button
+                          className={`items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white ${
+                            isWarehouseTab
+                              ? list.Phieunhaphang.tongtien === 0
+                                ? "hidden"
+                                : "flex"
+                              : list.Phieuxuathang.tongtien === 0
+                              ? "hidden"
+                              : "flex"
+                          }`}
+                          onClick={() =>
+                            isWarehouseTab
+                              ? deleteAImportBill(
+                                  list.Phieunhaphang.maphieunhap
+                                )
+                              : deleteAExportBill(
+                                  list.Phieuxuathang.maphieuxuat
+                                )
+                          }
+                        >
+                          <p className="hidden lg:inline-block">{Delete}</p>
+                          <img src={DeleteIcon} alt="Icon thùng rác" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </>
             ) : (
               <></>

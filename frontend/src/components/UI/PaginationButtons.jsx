@@ -15,10 +15,14 @@ const PaginationButtons = ({ pageCount, currentPage, setCurrentPage }) => {
         </p>
       ) : (
         <ReactPaginate
-          breakLabel={<span className="mx-4">...</span>}
+          breakLabel={
+            <span className="mx-4 text-black dark:text-white transition-colors duration-300">
+              ...
+            </span>
+          }
           nextLabel={
             showNextButton ? (
-              <span className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-md mx-4">
+              <span className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-md mx-4 hover:bg-red-500 hover:text-white text-black transition-colors duration-300">
                 <BsChevronRight />
               </span>
             ) : null
@@ -27,15 +31,17 @@ const PaginationButtons = ({ pageCount, currentPage, setCurrentPage }) => {
           pageCount={pageCount}
           previousLabel={
             showPrevButton ? (
-              <span className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-md mr-4">
+              <span className="w-10 h-10 flex items-center justify-center bg-gray-300 rounded-md mr-4 hover:bg-red-500 hover:text-white text-black transition-colors duration-300">
                 <BsChevronLeft />
               </span>
             ) : null
           }
           renderOnZeroPageCount={null}
           containerClassName="flex items-center justify-center mt-8 mb-4"
-          pageClassName="block border-solid border-gray-200 hover:bg-gray-200 w-10 h-10 flex items-center justify-center rounded-md text-black dark:text-white dark:hover:text-black"
+          pageClassName="block border-solid border-gray-200 hover:bg-gray-200 w-10 h-10 flex items-center justify-center rounded-md text-black dark:text-white dark:hover:text-black m-1 transition-colors duration-300"
           activeClassName="bg-red-500 text-white"
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
         />
       )}
     </div>

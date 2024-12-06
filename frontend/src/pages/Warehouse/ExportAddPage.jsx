@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -16,6 +16,7 @@ import Header from "../../components/Header";
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
 import { getAllCustomer } from "../../assets/Customers/CustomerData";
+import { addExportBill } from "../../assets/Warehouses/WarehouseData";
 
 const ExportAddPage = () => {
   // Variable here
@@ -29,10 +30,12 @@ const ExportAddPage = () => {
   // // For Adding New Export Bill
   const [productData, setProductData] = useState([]);
   const [CustomerData, setCustomerData] = useState([]);
-  const [CustomerName, setCustomerName] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState("");
   const [soLuongXuat, setSoLuongXuat] = useState({});
   const [numDropdowns, setNumDropdowns] = useState(0);
   const [dropdownValues, setDropdownValues] = useState({});
+  // // For navigating
+  const navigate = useNavigate();
 
   // Use Effect here
   // // For getting all existing products
@@ -41,14 +44,14 @@ const ExportAddPage = () => {
       try {
         // Get Exsisted Products By Store's ID
         const existedProduct = await getProductByStoreId(userInfo.storeID);
-        if (existedProduct.length === 0) {
+        if (existedProduct.message === "Danh sách mặt hàng rỗng") {
           setProductData([]);
         } else {
           setProductData(existedProduct);
         }
         // Get All Existed Customer
         const existedCustomer = await getAllCustomer();
-        if (existedCustomer.length === 0) {
+        if (existedCustomer.message === "Danh sách khách hàng rỗng") {
           setCustomerData([]);
         } else {
           setCustomerData(existedCustomer);
@@ -77,6 +80,11 @@ const ExportAddPage = () => {
     setDropdownValues({});
     setSoLuongXuat({});
   };
+  // // For handling the selected customer
+  const handleCustomerChange = (e) => {
+    const selectedId = e.target.value; // Get the selected customer ID
+    setSelectedCustomer(selectedId);
+  };
   // // For handling the selected product
   const handleSelectChange = (index, value) => {
     setDropdownValues((prev) => ({
@@ -86,6 +94,17 @@ const ExportAddPage = () => {
   };
   // // For handling the ammount of product to export
   const handleSoLuongXuatChange = (index, value) => {
+    const selectedProduct = productData.find(
+      (product) => product.Mathang.mamathang === dropdownValues[index]
+    );
+
+    const maxQuantity = selectedProduct?.Mathang.soluongton || 0;
+
+    if (parseInt(value, 10) > maxQuantity) {
+      alert(`Số lượng xuất (${value}) vượt quá số lượng tồn (${maxQuantity}).`);
+      return; // Prevent state update if the value is invalid
+    }
+
     setSoLuongXuat((prev) => ({
       ...prev,
       [index]: parseInt(value, 10),
@@ -99,6 +118,72 @@ const ExportAddPage = () => {
         !selectedValues.includes(product.Mathang.mamathang) ||
         dropdownValues[currentIndex] === product.Mathang.mamathang
     );
+  };
+
+  // // For adding new export bill
+  const addData = async () => {
+    // Prepare a list to hold the data for each selected product
+    const itemsToExport = [];
+
+    // Iterate over dropdownValues to collect necessary data
+    Object.keys(dropdownValues).forEach((index) => {
+      const mamathang = dropdownValues[index]; // Selected product ID
+      const soluongxuat = soLuongXuat[index]; // Inputted quantity
+
+      const product = productData.find(
+        (product) => product.Mathang.mamathang === mamathang
+      );
+
+      if (product) {
+        const dongia = product.Mathang.dongia;
+        // Add the product details to the list
+        itemsToExport.push({
+          mamathang,
+          dongia,
+          soluongxuat,
+        });
+      }
+    });
+
+    // Constraints check for `soluongxuat`
+    const isValidInput = itemsToExport.every((item) => {
+      if (item.soluongxuat < 0) {
+        alert(`Số lượng xuất cho mặt hàng ${item.mamathang} không được âm.`);
+        return false;
+      }
+      if (!/^\d+$/.test(item.soluongxuat)) {
+        alert(
+          `Số lượng xuất cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`
+        );
+        return false;
+      }
+      return true;
+    });
+
+    if (!isValidInput) {
+      return; // Exit if any input is invalid
+    }
+
+    // Call the API to add import bill
+    try {
+      const data = await addExportBill(
+        userInfo.storeID,
+        selectedCustomer,
+        itemsToExport
+      );
+
+      // Handle response
+      if (data.message === "Thêm phiếu xuất hàng thành công.") {
+        alert("Thêm phiếu xuất hàng thành công");
+        navigate("/warehouse"); // Navigate to warehouse page on success
+      } else {
+        console.log(data.message);
+        alert("Thêm phiếu xuất hàng thất bại");
+      }
+    } catch (error) {
+      console.error("Error while adding import bill:", error);
+      alert("Đã xảy ra lỗi khi thêm phiếu xuất hàng.");
+    }
   };
 
   return (
@@ -124,16 +209,7 @@ const ExportAddPage = () => {
           </p>
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
-            // onClick={() =>
-            //   addData(
-            //     newProductName,
-            //     newProductCategoryName,
-            //     newUnitPrice,
-            //     newStockQuantity,
-            //     newUnit,
-            //     newImage
-            //   )
-            // }
+            onClick={addData}
           >
             {Export}
           </button>
@@ -151,15 +227,18 @@ const ExportAddPage = () => {
                 className="flex-grow rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                 id="customer-select"
                 name="customer-select"
-                value={CustomerName}
-                onChange={(e) => setCustomerName(e.target.value)}
+                value={selectedCustomer}
+                onChange={handleCustomerChange}
               >
                 <option value="" disabled>
                   {AP_Export.Placeholders.Text1}
                 </option>
                 {CustomerData.map((item) => (
-                  <option key={item.makhachhang} value={item.tenkhachhang}>
-                    {item.tenkhachhang}
+                  <option
+                    key={item.Khachhang.makhachhang}
+                    value={item.Khachhang.makhachhang}
+                  >
+                    {item.Khachhang.tenkhachhang}
                   </option>
                 ))}
               </select>
@@ -235,7 +314,22 @@ const ExportAddPage = () => {
                         className="w-fit rounded-md border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                         id={`soluongton-${index}`}
                         type="number"
-                        value={selectedProduct?.Mathang.soluongton || ""}
+                        value={selectedProduct?.Mathang.soluongton}
+                        readOnly
+                      />
+                    </div>
+                    <div className="flex space-x-5 items-center">
+                      <label
+                        className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+                        htmlFor={`dongiaban-${index}`}
+                      >
+                        Đơn giá bán:
+                      </label>
+                      <input
+                        className="w-fit rounded-md border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                        id={`dongiaban-${index}`}
+                        type="number"
+                        value={selectedProduct?.Mathang.dongia}
                         readOnly
                       />
                     </div>

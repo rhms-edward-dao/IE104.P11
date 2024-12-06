@@ -77,8 +77,14 @@ function Sidebar() {
     <div className="bg-black w-full h-full ">
       {/* If in login page, show only 'KietStore' */}
       <div className="flex flex-wrap space-x-3 items-center justify-center pt-5">
-        <img src={LogoIcon} alt="Logo" className="w-[100px] h-[100px] rounded-full" />
-        <p className="text-white font-bold text-xl lg:text-2xl italic">BettaShop</p>
+        <img
+          src={LogoIcon}
+          alt="Logo"
+          className="w-[100px] h-[100px] rounded-full"
+        />
+        <p className="text-white font-bold text-xl lg:text-2xl italic">
+          BettaShop
+        </p>
       </div>
 
       {/* isAdmin */}
@@ -96,7 +102,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateQuan()}
             >
@@ -132,7 +138,7 @@ function Sidebar() {
               </div>
             </>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateDaily()}
             >
@@ -141,9 +147,7 @@ function Sidebar() {
                 to="/stores"
               >
                 <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Stores}
-                </p>
+                <p className="text-white font-bold hidden lg:block">{Stores}</p>
               </NavLink>
             </div>
           )}
@@ -166,7 +170,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateMathang()}
             >
@@ -200,7 +204,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateNhanvien()}
             >
@@ -209,9 +213,7 @@ function Sidebar() {
                 to="/staff-management"
               >
                 <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Staffs}
-                </p>
+                <p className="text-white font-bold hidden lg:block">{Staffs}</p>
               </NavLink>
             </div>
           )}
@@ -234,7 +236,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateQuitac()}
             >
@@ -243,9 +245,7 @@ function Sidebar() {
                 to="/rule-management"
               >
                 <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Rules}
-                </p>
+                <p className="text-white font-bold hidden lg:block">{Rules}</p>
               </NavLink>
             </div>
           )}
@@ -268,7 +268,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateKhachhang()}
             >
@@ -302,7 +302,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateBaocao()}
             >
@@ -337,7 +337,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateSanpham()}
             >
@@ -371,14 +371,14 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateQuanlykho()}
             >
               <NavLink
                 className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/warehouse"
-              >              
+              >
                 <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
                 <p className="text-white font-bold hidden lg:block">
                   {Warehouses}
@@ -404,7 +404,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateKhachhangStaff()}
             >
@@ -438,7 +438,7 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateQuanlydaily()}
             >
@@ -472,14 +472,14 @@ function Sidebar() {
               </NavLink>
             </div>
           ) : (
-            <div 
+            <div
               className="my-4 py-4 hover:bg-red-500"
               onClick={() => activateBaocaoStaff()}
             >
               <NavLink
                 className="flex gap-3 justify-center items-center lg:justify-start"
                 to="/staff-report"
-              >                
+              >
                 <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
                 <p className="text-white font-bold hidden lg:block">
                   {Reports}

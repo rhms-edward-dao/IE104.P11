@@ -74,6 +74,9 @@ import WarehouseExportPage from "./pages/Warehouse/WarehouseExportPage";
 
 import StoreManagement from "./pages/StoreManagement/StoreManagement";
 import StoreManagementEditPage from "./pages/StoreManagement/StoreManagementEditPage";
+import ImportEditPage from "./pages/Warehouse/ImportEditPage";
+import ExportEditPage from "./pages/Warehouse/ExportEditPage";
+import CustomerAddPage from "./pages/Customer/CustomerAddPage";
 
 // Component bảo vệ route
 function ProtectedRoute({ element }) {
@@ -351,6 +354,12 @@ function App() {
                               }
                             />
                             <Route
+                              path="/customer/customer-add-page"
+                              element={
+                                <ProtectedRoute element={<CustomerAddPage />} />
+                              }
+                            />
+                            <Route
                               path="/customer/customer-edit-page/:customerId"
                               element={
                                 <ProtectedRoute
@@ -373,6 +382,12 @@ function App() {
                               }
                             />
                             <Route
+                              path="/warehouse/warehouse-import-edit-page/:importId"
+                              element={
+                                <ProtectedRoute element={<ImportEditPage />} />
+                              }
+                            />
+                            <Route
                               path="/warehouse/warehouse-import-detail-page/:importId"
                               element={
                                 <ProtectedRoute
@@ -384,6 +399,12 @@ function App() {
                               path="/warehouse/warehouse-export-add-page"
                               element={
                                 <ProtectedRoute element={<ExportAddPage />} />
+                              }
+                            />
+                            <Route
+                              path="/warehouse/warehouse-export-edit-page/:exportId"
+                              element={
+                                <ProtectedRoute element={<ExportEditPage />} />
                               }
                             />
                             <Route
