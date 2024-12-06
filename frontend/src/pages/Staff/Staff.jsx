@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
+// Import icon
+import { MdNoAccounts, MdAccountCircle } from "react-icons/md";
+
 // Import Contexts Here
 import { useTheme } from "../../contexts/ThemeContext";
 import { useStoreTab } from "../../contexts/StoreTabState";
@@ -27,6 +30,7 @@ import PaginationButtons from "../../components/UI/PaginationButtons";
 import DetailIcon from "../../images/icons/button/SeeDetail.svg";
 import EditIcon from "../../images/icons/button/Edit.svg";
 import DeleteIcon from "../../images/icons/button/Delete.svg";
+import { div } from "framer-motion/client";
 
 function Staff() {
   // Variables here
@@ -397,6 +401,8 @@ function Staff() {
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Staffs.Columns.Col5}
                   </th>
+                  <th className="border-r-2 py-5" scope="col">
+                  </th>
                 </>
               ) : (
                 <>
@@ -465,6 +471,17 @@ function Staff() {
                                 {list.diachi}
                               </p>
                             </button>
+                          </td>
+                          <td scope="row" className="border-r-2 px-3 py-5">
+                            {list.mataikhoan ? (
+                              <div className="flex justify-center items-center">
+                                <MdAccountCircle size={50} className="text-blue-400"/>
+                              </div>
+                            ): (
+                              <div className="flex justify-center items-center">
+                                <MdNoAccounts size={50} className="text-red-400" />
+                              </div>                              
+                            )}
                           </td>
                         </>
                       ) : (
