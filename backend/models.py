@@ -115,6 +115,8 @@ class Taikhoan(Base):
     tentaikhoan = Column(String(100), nullable=False, unique=True)
     matkhau = Column(String(200), nullable=False)
     isactivated = Column(Boolean, server_default=text("false"))
+    OTP = Column(String(4), nullable=True)
+    otp_expiration = Column(DateTime, nullable=True)
 
 
 class Daily(Base):

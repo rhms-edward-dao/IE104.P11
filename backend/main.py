@@ -185,6 +185,118 @@ def account_sign_up(
 
     # Return message
 
+# Settings for sending email
+import smtplib
+import random
+import string
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from datetime import datetime, timedelta
+
+# Configure server for sending email
+SMTP_SERVER = 'smtp.gmail.com'
+SMTP_PORT = 587
+SENDER_EMAIL = 'anhkiet.nguyen798@gmail.com'
+# SENDER_PASSWORD = 'hidden_password:))'
+
+# Function for creating random OTP
+def generate_otp(length=4):
+    characters = string.digits
+    otp = ''.join(random.choice(characters) for _ in range(length))
+    return otp
+
+
+# Hàm gửi email OTP
+def send_otp(email: str):
+    otp = generate_otp()  # Tạo OTP ngẫu nhiên
+    expires_at = datetime.utcnow() + timedelta(minutes=1)  # Hạn sử dụng OTP trong 5 phút
+
+    # Tạo nội dung email
+    subject = "Mã OTP của bạn"
+    body = f"Chào bạn chúng tôi là BettaShop,\n\nMã OTP của bạn là: {otp}\nMã OTP sẽ hết hạn sau 1 phút.\n\nCảm ơn bạn đã sử dụng dịch vụ của chúng tôi."
+
+    # Tạo đối tượng email
+    msg = MIMEMultipart()
+    msg['From'] = SENDER_EMAIL
+    msg['To'] = email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Kết nối với máy chủ SMTP và gửi email
+    try:
+        # Kết nối tới máy chủ Gmail SMTP
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()  # Bật mã hóa TLS
+            server.login(SENDER_EMAIL, SENDER_PASSWORD)  # Đăng nhập vào tài khoản Gmail
+            server.sendmail(SENDER_EMAIL, email, msg.as_string())  # Gửi email
+
+        print(f"Đã gửi OTP tới email {email}")
+        return otp, expires_at  # Trả về OTP và thời gian hết hạn để lưu vào DB
+
+    except Exception as e:
+        print(f"Không thể gửi email. Lỗi: {e}")
+        return None, None
+
+
+@app.put("/quenmatkhau")
+def reset_password(pemail: str = Body(..., embed=True), db: Session = Depends(get_db)):
+    # Check if email exists or not ?
+    try:        
+        get_db = crud.get_taikhoan_by_email(db, pemail)       
+        if get_db:
+            # Send OTP via email
+            otp, expired_time = send_otp(pemail)
+            if otp == None and expired_time == None:
+                return {
+                    "message": "Lỗi khi gửi email"
+                }
+            if get_db.otp_expiration and datetime.utcnow() - get_db.otp_expiration < timedelta(minutes=1):
+                return {
+                    "message": "Không thể tạo OTP khi OTP mới nhất được tạo cách đây chưa đầy 1 phút.\nBạn hãy đợi 1 phút và thử lại."
+                }
+
+            # Save account            
+            get_db.OTP = otp
+            get_db.otp_expiration = expired_time
+            db.commit()
+            db.refresh(get_db)
+            # Send message to frontend
+            return {                
+                "message": "Đã gửi OTP đến email {}".format(pemail)
+            }
+        return {
+            "message": "Không tìm thấy tài khoản"
+        }
+    except Exception as e:
+        print(e)
+        return {
+            "message": "Lỗi hệ thống"
+        }
+
+
+@app.post("/xacnhanotp")
+def verify_otp(pemail: str = Body(..., embed=True), pmatkhau: str = Body(..., embed=True), OTP: str = Body(..., embed=True), db: Session = Depends(get_db)):
+    try:
+        # Search OTP by email (using current OTP)
+        get_db = crud.get_taikhoan_by_email(db, pemail)   
+        # Check OTP
+        if get_db.OTP == OTP:
+            get_db.matkhau = pmatkhau
+            db.commit()
+            db.refresh(get_db)
+            return {
+                "message": "Đổi mật khẩu thành công"
+            }
+        # Send message for frontend
+        else:
+            return {
+                "message": "Sai OTP"
+            }
+    except Exception as e:
+        return {
+            "message": "Lỗi hệ thống"
+        }
+
 
 @app.get("/taikhoan")
 def get_taikhoan_all(db: Session = Depends(get_db)):

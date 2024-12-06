@@ -17,6 +17,7 @@ import StaffDetail from "./components/UI/StaffDetail";
 // Import Pages Here
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import ForgetPassword from "./pages/ForgetPassword";
 
 import Districts from "./pages/StoreDistrict/StoreDistrict";
 import StoreDistrictAddPage from "./pages/StoreDistrict/StoreDistrictAddPage";
@@ -106,6 +107,7 @@ function App() {
                             <Route path="/" element={<Login />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
+                            <Route path="/forget-password" element={<ForgetPassword />}/>
                             {/* Routes for My Account */}
                             <Route
                               path="/my-account"

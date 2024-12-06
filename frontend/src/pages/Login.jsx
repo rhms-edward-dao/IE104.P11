@@ -81,7 +81,7 @@ function Login() {
   // Render return here
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col bg-black w-1/2 sm:w-5/6 md:w-1/2 xl:w-2/5 gap-2">
+      <div className="flex flex-col bg-black w-1/2 sm:w-5/6 md:w-1/2 xl:w-2/5 gap-2 py-3">
         <p className="mt-2 p-2 text-4xl text-center text-white font-bold italic">
           ĐĂNG NHẬP
         </p>
@@ -127,14 +127,21 @@ function Login() {
             onClick={loginHandle}
           >
             Đăng nhập
-          </button>
+          </button>                  
           <div className="flex items-center">
-            <Link to="/sign-up">
+            <Link to="/forget-password">
               <p className="text-white text-center hover:text-blue-500">
-                Chưa có tài khoản?
+                Quên mật khẩu ?
               </p>
             </Link>
           </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <Link to="/sign-up">
+            <p className="text-lg font-semibold text-white text-center hover:text-blue-500">
+              Chưa có tài khoản ?
+            </p>
+          </Link>
         </div>
       </div>
     </div>

@@ -169,6 +169,18 @@ def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
     }
 
 
+def get_taikhoan_by_email(db: Session, pemail: str):
+    return (
+        db.query(models.Taikhoan)
+        .filter(
+            models.Nhanvien.email == pemail,
+            models.Nhanvien.manhanvien == models.t_taikhoan_nhavien.c.manhanvien,
+            models.t_taikhoan_nhavien.c.mataikhoan == models.Taikhoan.mataikhoan
+        )
+        .first()
+    )
+
+
 # QUAN
 # Get all City in QUAN
 def get_all_quan_thanhpho(db: Session):
