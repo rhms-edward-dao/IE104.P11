@@ -168,7 +168,6 @@ const ImportAddPage = () => {
       alert("Đã xảy ra lỗi khi thêm phiếu nhập hàng.");
     }
   };
-
   return (
     <div>
       <div>
@@ -303,7 +302,10 @@ const ImportAddPage = () => {
                         className="w-fit rounded-md border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                         id={`dongianhap-${index}`}
                         type="number"
-                        value={donGiaNhap[index] || ""}
+                        value={
+                          donGiaNhap[index] ||
+                          (donGiaNhap[index] = selectedProduct?.Mathang.dongia)
+                        }
                         onChange={(e) =>
                           handleDonGiaNhapChange(index, e.target.value)
                         }
