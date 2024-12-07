@@ -53,6 +53,8 @@ function Customer() {
   const [selectedOption, setSelectedOption] = useState(
     SF_Customers.Columns.Col1
   );
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // // For getting all existing customers
@@ -106,6 +108,27 @@ function Customer() {
   }, [searchTerm, data, selectedOption]);
 
   // Functions here
+  // // Handle sorting
+  const handleSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...data].sort((a, b) => {
+      const aValue = key.includes("Khachhang")
+        ? a.Khachhang[key.split(".")[1]]
+        : a[key];
+      const bValue = key.includes("Khachhang")
+        ? b.Khachhang[key.split(".")[1]]
+        : b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setData(sortedData);
+  };
   // // For deleting one customer
   // Function for deleting one customer
   const deleteItem = async (id) => {
@@ -214,8 +237,14 @@ function Customer() {
               <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col1}
               </th>
-              <th scope="col" className="border-r-2 py-5">
+              <th
+                scope="col"
+                className="border-r-2 py-5"
+                onClick={() => handleSort("Khachhang.sodienthoai")}
+              >
                 {SF_Customers.Columns.Col2}
+                {sortConfig.key === "Khachhang.sodienthoai" &&
+                  (sortConfig.direction === "asc" ? " ▲" : " ▼")}
               </th>
               <th scope="col" className="border-r-2 py-5">
                 {SF_Customers.Columns.Col3}

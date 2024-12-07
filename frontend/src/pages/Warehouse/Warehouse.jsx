@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Contexts Here
@@ -14,7 +14,9 @@ import {
   getAllExportBill,
   getAllImportBill,
   getExportBillByStoreId,
+  getExportBillDetail,
   getImportBillByStoreId,
+  getImportBillDetail,
 } from "../../assets/Warehouses/WarehouseData";
 import { WarehouseDataCard } from "../../assets/Warehouses/WarehouseDataCard";
 
@@ -29,7 +31,7 @@ import EditIcon from "../../images/icons/button/Edit.svg";
 import DetailIcon from "../../images/icons/button/SeeDetail.svg";
 import DeleteIcon from "../../images/icons/button/Delete.svg";
 
-function Warehouse() {
+const Warehouse = () => {
   // Variables here
   // // For Theme Mode
   const { theme } = useTheme();
@@ -67,6 +69,8 @@ function Warehouse() {
   const [exportFilterOption, setExportFilterOption] = useState(
     SF_WarehouseExport.Columns.Col1
   );
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // // For getting all existing import or export bills
@@ -168,9 +172,69 @@ function Warehouse() {
   ]);
 
   // Functions here
+  // // Handle import data sorting
+  const handleImportSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...importData].sort((a, b) => {
+      const aValue = key.includes("Phieunhaphang")
+        ? a.Phieunhaphang[key.split(".")[1]]
+        : a[key];
+      const bValue = key.includes("Phieunhaphang")
+        ? b.Phieunhaphang[key.split(".")[1]]
+        : b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setImportData(sortedData);
+  };
+  // // Handle export data sorting
+  const handleExportSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...exportData].sort((a, b) => {
+      const aValue = key.includes("Phieuxuathang")
+        ? a.Phieuxuathang[key.split(".")[1]]
+        : a[key];
+      const bValue = key.includes("Phieuxuathang")
+        ? b.Phieuxuathang[key.split(".")[1]]
+        : b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setExportData(sortedData);
+  };
   // // For deleting one import bill
   const deleteAImportBill = async (id) => {
-    const importResponse = await deleteImportBill(id);
+    const detailImportBill = await getImportBillDetail(id);
+    const detailInfo = [];
+    Object.keys(detailImportBill).forEach((index) => {
+      const dongianhap = detailImportBill[index].Chitiet_pnh.dongianhap;
+      const mact_pnh = detailImportBill[index].Chitiet_pnh.mact_pnh;
+      const mamathang = detailImportBill[index].Chitiet_pnh.mamathang;
+      const maphieunhap = detailImportBill[index].Chitiet_pnh.maphieunhap;
+      const soluongnhap = detailImportBill[index].Chitiet_pnh.soluongnhap;
+
+      detailInfo.push({
+        dongianhap,
+        mact_pnh,
+        mamathang,
+        maphieunhap,
+        soluongnhap,
+      });
+    });
+
+    const importResponse = await deleteImportBill(id, detailInfo);
 
     if (importResponse.message === "Xóa phiếu nhập hàng thất bại") {
       alert(importResponse.message);
@@ -183,7 +247,23 @@ function Warehouse() {
   };
   // // For deleting one export bill
   const deleteAExportBill = async (id) => {
-    const exportResponse = await deleteExportBill(id);
+    const detailExportBill = await getExportBillDetail(id);
+    const detailInfo = [];
+    Object.keys(detailExportBill).forEach((index) => {
+      const mact_pxh = detailExportBill[index].Chitiet_pxh.mact_pxh;
+      const mamathang = detailExportBill[index].Chitiet_pxh.mamathang;
+      const maphieuxuat = detailExportBill[index].Chitiet_pxh.maphieuxuat;
+      const soluongxuat = detailExportBill[index].Chitiet_pxh.soluongxuat;
+
+      detailInfo.push({
+        mact_pxh,
+        mamathang,
+        maphieuxuat,
+        soluongxuat,
+      });
+    });
+
+    const exportResponse = await deleteExportBill(id, detailInfo);
 
     if (exportResponse.message === "Xóa phiếu xuất hàng thất bại") {
       alert(exportResponse.message);
@@ -395,11 +475,25 @@ function Warehouse() {
                   <th className="border-r-2 py-5" scope="col">
                     {SF_WarehouseImport.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleImportSort("Phieunhaphang.tongtien")}
+                  >
                     {SF_WarehouseImport.Columns.Col2}
+                    {sortConfig.key === "Phieunhaphang.tongtien" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() =>
+                      handleImportSort("Phieunhaphang.tiendathanhtoan")
+                    }
+                  >
                     {SF_WarehouseImport.Columns.Col3}
+                    {sortConfig.key === "Phieunhaphang.tiendathanhtoan" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_WarehouseImport.Columns.Col4}
@@ -410,8 +504,14 @@ function Warehouse() {
                   <th className="border-r-2 py-5" scope="col">
                     {SF_WarehouseExport.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleExportSort("Phieuxuathang.tongtien")}
+                  >
                     {SF_WarehouseExport.Columns.Col2}
+                    {sortConfig.key === "Phieuxuathang.tongtien" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_WarehouseExport.Columns.Col3}
@@ -524,6 +624,6 @@ function Warehouse() {
       </div>
     </div>
   );
-}
+};
 
 export default Warehouse;
