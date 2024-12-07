@@ -72,12 +72,16 @@ export const updateImportBill = async (id, item) => {
   }
 };
 
-export const deleteImportBill = async (id) => {
+export const deleteImportBill = async (id, item) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieunhaphang/xoa/${id}`,
+      `http://127.0.0.1:8000/phieunhaphang/xoa/maphieunhap/${id}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json", // Indicate JSON payload
+        },
+        body: JSON.stringify({ items: item }), // Send item array as JSON
       }
     );
     const data = await response.json();
@@ -173,12 +177,16 @@ export const updateExportBill = async (id, customer) => {
   }
 };
 
-export const deleteExportBill = async (id) => {
+export const deleteExportBill = async (id, item) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieuxuathang/xoa/${id}`,
+      `http://127.0.0.1:8000/phieuxuathang/xoa/maphieuxuat/${id}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json", // Indicate JSON payload
+        },
+        body: JSON.stringify({ items: item }), // Send item array as JSON
       }
     );
     const data = await response.json();
