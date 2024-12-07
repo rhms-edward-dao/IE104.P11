@@ -64,6 +64,8 @@ const ProductCategorys = () => {
   );
   const [productCategoryFilterOption, setProductCategoryFilterOption] =
     useState(SF_ProductCategories.Columns.Col1);
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // // For getting all existing products and product categories
@@ -162,6 +164,27 @@ const ProductCategorys = () => {
   ]);
 
   // Functions here
+  // // Handle sorting
+  const handleSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...productData].sort((a, b) => {
+      const aValue = key.includes("Mathang")
+        ? a.Mathang[key.split(".")[1]]
+        : a[key];
+      const bValue = key.includes("Mathang")
+        ? b.Mathang[key.split(".")[1]]
+        : b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setProductData(sortedData);
+  };
   // // For deleting one product
   const deleteAProduct = async (id) => {
     const productResponse = await deleteProduct(id);
@@ -376,18 +399,29 @@ const ProductCategorys = () => {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>
               {isProductTab ? (
                 <>
                   <th scop="col" className="border-r-2 py-5"></th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Products.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleSort("Mathang.dongia")}
+                  >
                     {SF_Products.Columns.Col2}
+                    {sortConfig.key === "Mathang.dongia" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleSort("Mathang.soluongton")}
+                  >
                     {SF_Products.Columns.Col3}
+                    {sortConfig.key === "Mathang.soluongton" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Products.Columns.Col4}
@@ -417,9 +451,6 @@ const ProductCategorys = () => {
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     key={index}
                   >
-                    <td className="py-5 pl-3">
-                      <input type="checkbox" />
-                    </td>
                     {isProductTab ? (
                       <>
                         <td scope="row" className="border-r-2 py-5">

@@ -68,7 +68,7 @@ const Products = () => {
   const [productCategoryFilterOption, setProductCategoryFilterOption] =
     useState(SF_ProductCategories.Columns.Col1);
   // // For table sorting
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // // For getting all existing products and product categories
@@ -169,15 +169,24 @@ const Products = () => {
   const handleSort = (key) => {
     const direction =
       sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
     const sortedData = [...productData].sort((a, b) => {
-      if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
-      if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
+      const aValue = key.includes("Mathang")
+        ? a.Mathang[key.split(".")[1]]
+        : a[key];
+      const bValue = key.includes("Mathang")
+        ? b.Mathang[key.split(".")[1]]
+        : b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
       return 0;
     });
-    console.log(sortedData);
+
     setSortConfig({ key, direction });
     setProductData(sortedData);
   };
+
   // // For deleting one product
   const deleteAProduct = async (id) => {
     const productResponse = await deleteProduct(id);
@@ -394,19 +403,19 @@ const Products = () => {
                   <th
                     className="border-r-2 py-5"
                     scope="col"
-                    onClick={() => handleSort(`${SF_Products.Columns.Col2}`)}
+                    onClick={() => handleSort("Mathang.dongia")}
                   >
                     {SF_Products.Columns.Col2}
-                    {sortConfig.key === `${SF_Products.Columns.Col2}` &&
+                    {sortConfig.key === "Mathang.dongia" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
                     className="border-r-2 py-5"
                     scope="col"
-                    onClick={() => handleSort(`${SF_Products.Columns.Col3}`)}
+                    onClick={() => handleSort("Mathang.soluongton")}
                   >
                     {SF_Products.Columns.Col3}
-                    {sortConfig.key === `${SF_Products.Columns.Col3}` &&
+                    {sortConfig.key === "Mathang.soluongton" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th className="border-r-2 py-5" scope="col">
