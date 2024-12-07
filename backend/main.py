@@ -111,9 +111,7 @@ def account_login(
         # Account found, so i need to continuouslly trying to get CapDo
         # Check if account is activated or not
         if db_get_taikhoan.isactivated == False:
-            return {
-                "message": "Tài khoản chưa kích hoạt"
-            }
+            return {"message": "Tài khoản chưa kích hoạt"}
 
         db_get_nhanvien_capdo = crud.get_manhanvien_taikhoan_nhanvien_capdo(
             db, db_get_taikhoan.mataikhoan
@@ -155,22 +153,25 @@ from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 
 # Configure server for sending email
-SMTP_SERVER = 'smtp.gmail.com'
+SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-SENDER_EMAIL = 'anhkiet.nguyen798@gmail.com'
-SENDER_PASSWORD = 'qahd zxob ldon jmxs'
+SENDER_EMAIL = "anhkiet.nguyen798@gmail.com"
+SENDER_PASSWORD = "qahd zxob ldon jmxs"
+
 
 # Function for creating random OTP
 def generate_otp(length=4):
     characters = string.digits
-    otp = ''.join(random.choice(characters) for _ in range(length))
+    otp = "".join(random.choice(characters) for _ in range(length))
     return otp
 
 
 # Hàm gửi email OTP
 def send_otp(email: str):
     otp = generate_otp()  # Tạo OTP ngẫu nhiên
-    expires_at = datetime.utcnow() + timedelta(minutes=2)  # Hạn sử dụng OTP trong 2 phút
+    expires_at = datetime.utcnow() + timedelta(
+        minutes=2
+    )  # Hạn sử dụng OTP trong 2 phút
 
     # Tạo nội dung email
     subject = "Mã OTP của bạn"
@@ -178,10 +179,10 @@ def send_otp(email: str):
 
     # Tạo đối tượng email
     msg = MIMEMultipart()
-    msg['From'] = SENDER_EMAIL
-    msg['To'] = email
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
+    msg["From"] = SENDER_EMAIL
+    msg["To"] = email
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
 
     # Kết nối với máy chủ SMTP và gửi email
     try:
@@ -197,7 +198,7 @@ def send_otp(email: str):
     except Exception as e:
         print(f"Không thể gửi email. Lỗi: {e}")
         return None, None
-    
+
 
 @app.post("/signup")
 def account_sign_up(
@@ -206,7 +207,7 @@ def account_sign_up(
     pemail: str = Body(..., embed=True),
     db: Session = Depends(get_db),
 ):
-# Create new account
+    # Create new account
     db_add = crud.create_taikhoan(ptentaikhoan, pmatkhau)
 
     match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(db_add), re.DOTALL)
@@ -225,35 +226,42 @@ def account_sign_up(
     if db_check_email:
         # Add a record refer to relation between staff and account in taikhoan_nhavien
         crud.link_taikhoan_nhanvien(db_add, db_check_email.manhanvien)
-        # After create account for staff then send email for OTP verification        
-            # Send OTP via email
+        # After create account for staff then send email for OTP verification
+        # Send OTP via email
         otp, expired_time = send_otp(pemail)
         if otp == None and expired_time == None:
-            return {
-                "message": "Lỗi khi gửi email"
-            }
-        
-        # Save account            
-        get_db = crud.get_taikhoan_by_email(db, pemail)   
+            return {"message": "Lỗi khi gửi email"}
+
+        # Save account
+        get_db = crud.get_taikhoan_by_email(db, pemail)
         get_db.OTP = otp
         get_db.otp_expiration = expired_time
         db.commit()
         db.refresh(get_db)
 
         return {
-            "message": "Tài khoản đã tạo nhưng chưa xác nhận. OTP xác nhận đã được gửi đến email {}".format(pemail)
+            "message": "Tài khoản đã tạo nhưng chưa xác nhận. OTP xác nhận đã được gửi đến email {}".format(
+                pemail
+            )
         }
     else:
         return {"message": "Email không tồn tại trong database"}
 
 
 @app.post("/xacnhanotp-signup")
-def verify_otp(pemail: str = Body(..., embed=True), OTP: str = Body(..., embed=True), db: Session = Depends(get_db)):
+def verify_otp(
+    pemail: str = Body(..., embed=True),
+    OTP: str = Body(..., embed=True),
+    db: Session = Depends(get_db),
+):
     try:
         # Search OTP by email (using current OTP)
-        get_db = crud.get_taikhoan_by_email(db, pemail)  
+        get_db = crud.get_taikhoan_by_email(db, pemail)
         if get_db:
-            if get_db.otp_expiration and datetime.utcnow() - get_db.otp_expiration > timedelta(minutes=2):
+            if (
+                get_db.otp_expiration
+                and datetime.utcnow() - get_db.otp_expiration > timedelta(minutes=2)
+            ):
                 # Delete taikhoan if time of otp is expired
                 db.delete(get_db)
                 db.commit()
@@ -261,87 +269,73 @@ def verify_otp(pemail: str = Body(..., embed=True), OTP: str = Body(..., embed=T
                     "message": "OTP đã hết hạn (quá 2 phút).\n Tài khoản đã bị xóa.\n Hãy tạo lại"
                 }
             # Check OTP
-            if get_db.OTP == OTP:     
+            if get_db.OTP == OTP:
                 get_db.isactivated = True
                 db.commit()
-                db.refresh(get_db)       
-                return {
-                    "message": "Tài khoản đã được kích hoạt"
-                }
+                db.refresh(get_db)
+                return {"message": "Tài khoản đã được kích hoạt"}
             # Send message for frontend
             else:
-                return {
-                    "message": "Sai OTP"
-                }
+                return {"message": "Sai OTP"}
         else:
-            return {
-                    "message": "Không tìm thấy tài khoản như email cung cấp"
-                }
+            return {"message": "Không tìm thấy tài khoản như email cung cấp"}
     except Exception as e:
         print(e)
-        return {
-            "message": "Lỗi hệ thống"
-        }
-    
+        return {"message": "Lỗi hệ thống"}
+
 
 @app.put("/quenmatkhau")
 def reset_password(pemail: str = Body(..., embed=True), db: Session = Depends(get_db)):
     # Check if email exists or not ?
-    try:        
-        get_db = crud.get_taikhoan_by_email(db, pemail)       
-        if get_db:            
-            if get_db.otp_expiration and datetime.utcnow() - get_db.otp_expiration > timedelta(minutes=2):
+    try:
+        get_db = crud.get_taikhoan_by_email(db, pemail)
+        if get_db:
+            if (
+                get_db.otp_expiration
+                and datetime.utcnow() - get_db.otp_expiration > timedelta(minutes=2)
+            ):
                 return {
                     "message": "Không thể tạo OTP khi OTP mới nhất được tạo cách đây chưa đầy 2 phút.\nBạn hãy đợi sau 2 phút và thử lại."
                 }
             # Send OTP via email
             otp, expired_time = send_otp(pemail)
             if otp == None and expired_time == None:
-                return {
-                    "message": "Lỗi khi gửi email"
-                }
+                return {"message": "Lỗi khi gửi email"}
 
-            # Save account            
+            # Save account
             get_db.OTP = otp
             get_db.otp_expiration = expired_time
             db.commit()
             db.refresh(get_db)
             # Send message to frontend
-            return {                
-                "message": "Đã gửi OTP đến email {}".format(pemail)
-            }
-        return {
-            "message": "Không tìm thấy tài khoản"
-        }
+            return {"message": "Đã gửi OTP đến email {}".format(pemail)}
+        return {"message": "Không tìm thấy tài khoản"}
     except Exception as e:
         print(e)
-        return {
-            "message": "Lỗi hệ thống"
-        }
+        return {"message": "Lỗi hệ thống"}
 
 
 @app.post("/xacnhanotp")
-def verify_otp(pemail: str = Body(..., embed=True), pmatkhau: str = Body(..., embed=True), OTP: str = Body(..., embed=True), db: Session = Depends(get_db)):
+def verify_otp(
+    pemail: str = Body(..., embed=True),
+    pmatkhau: str = Body(..., embed=True),
+    OTP: str = Body(..., embed=True),
+    db: Session = Depends(get_db),
+):
     try:
         # Search OTP by email (using current OTP)
-        get_db = crud.get_taikhoan_by_email(db, pemail)   
+        get_db = crud.get_taikhoan_by_email(db, pemail)
         # Check OTP
         if get_db.OTP == OTP:
             get_db.matkhau = pmatkhau
             db.commit()
             db.refresh(get_db)
-            return {
-                "message": "Đổi mật khẩu thành công"
-            }
+            return {"message": "Đổi mật khẩu thành công"}
         # Send message for frontend
         else:
-            return {
-                "message": "Sai OTP"
-            }
+            return {"message": "Sai OTP"}
     except Exception as e:
-        return {
-            "message": "Lỗi hệ thống"
-        }
+        return {"message": "Lỗi hệ thống"}
 
 
 @app.get("/taikhoan")
@@ -1099,7 +1093,9 @@ async def add_new_daily(
         api_operations.add(
             db, models.DailyDiachi, "đại lý địa chỉ", **param_list_diachi
         )
+        return {"message": "Thêm đại lý thành công"}
     except Exception as e:
+        print(e)
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
@@ -1136,7 +1132,6 @@ async def add_new_daily(
                 return {"message": "Số điện thoại đã tồn tại"}
             else:
                 return {"message": "Thêm đại lý thất bại"}
-    return {"message": "Thêm đại lý thành công"}
 
 
 @app.put("/daily/capnhat/{madaily}")
@@ -1793,6 +1788,48 @@ def update_phieunhaphang(
         return {"success": False, "message": str(e)}
 
 
+# Define a Pydantic model to parse individual item data
+class DeleteImportItem(BaseModel):
+    dongianhap: int
+    mact_pnh: int
+    mamathang: int
+    maphieunhap: int
+    soluongnhap: int
+
+
+# Define another model for the request body
+class DeleteImportBill(BaseModel):
+    items: List[DeleteImportItem]  # A list of ImportItem
+
+
+@app.delete("/phieunhaphang/xoa/maphieunhap/{maphieunhap}")
+def delete_phieunhaphang(
+    maphieunhap: int,
+    delete_import_bill: DeleteImportBill,
+    db: Session = Depends(get_db),
+):
+    try:
+        phieunhaphang = (
+            db.query(models.Phieunhaphang).filter_by(maphieunhap=maphieunhap).first()
+        )
+        if phieunhaphang:
+            for item in delete_import_bill.items:
+                # Update soluongton in Mathang table
+                mathang = (
+                    db.query(models.Mathang).filter_by(mamathang=item.mamathang).first()
+                )
+                if mathang:
+                    mathang.soluongton -= item.soluongnhap
+        # Delete phieunhaphang
+        db.delete(phieunhaphang)
+        db.commit()
+        return {"success": True, "message": "Xóa phiếu nhập hàng thành công."}
+    except Exception as e:
+        db.rollback()
+        print(e)
+        return {"success": False, "message": str(e)}
+
+
 # PHIEUXUATHANG & CHITIET_PXH manipulating
 @app.get("/phieuxuathang")
 def get_phieuxuathang_all(db: Session = Depends(get_db)):
@@ -1936,6 +1973,47 @@ def update_phieuxuathang(
             phieuxuathang.makhachhang = update_export_bill.customerId
         db.commit()
         return {"success": True, "message": "Cập nhật phiếu xuất hàng thành công."}
+    except Exception as e:
+        db.rollback()
+        print(e)
+        return {"success": False, "message": str(e)}
+
+
+# Define a Pydantic model to parse individual item data
+class DeleteExportItem(BaseModel):
+    mact_pxh: int
+    mamathang: int
+    maphieuxuat: int
+    soluongxuat: int
+
+
+# Define another model for the request body
+class DeleteExportBill(BaseModel):
+    items: List[DeleteExportItem]  # A list of ImportItem
+
+
+@app.delete("/phieuxuathang/xoa/maphieuxuat/{maphieuxuat}")
+def delete_phieuxuathang(
+    maphieuxuat: int,
+    delete_export_bill: DeleteExportBill,
+    db: Session = Depends(get_db),
+):
+    try:
+        phieuxuathang = (
+            db.query(models.Phieuxuathang).filter_by(maphieuxuat=maphieuxuat).first()
+        )
+        if phieuxuathang:
+            for item in delete_export_bill.items:
+                # Update soluongton in Mathang table
+                mathang = (
+                    db.query(models.Mathang).filter_by(mamathang=item.mamathang).first()
+                )
+                if mathang:
+                    mathang.soluongton += item.soluongxuat
+        # Delete phieuxuathang
+        db.delete(phieuxuathang)
+        db.commit()
+        return {"success": True, "message": "Xóa phiếu xuất hàng thành công."}
     except Exception as e:
         db.rollback()
         print(e)
