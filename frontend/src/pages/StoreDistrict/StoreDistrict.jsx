@@ -45,6 +45,8 @@ function Districts() {
   const [selectedOption, setSelectedOption] = useState(
     SF_Districts.Columns.Col1
   );
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // Get data from server here - data must be fetched before this page has been loaded
@@ -104,8 +106,24 @@ function Districts() {
   }, [searchTerm, districtData, selectedOption]);
 
   // Functions here
+  // // Handle sorting
+  const handleSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...districtData].sort((a, b) => {
+      const aValue = a[key];
+      const bValue = b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setDistrictData(sortedData);
+  };
   // // For deleting one district
-  // Delete feature
   const deleteItem = async (id) => {
     const response = await deleteDistrict(id);
     if (response.success) {
@@ -202,15 +220,20 @@ function Districts() {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>
               <th className="border-r-2 py-5" scope="col">
                 {SF_Districts.Columns.Col1}
               </th>
               <th className="border-r-2 py-5" scope="col">
                 {SF_Districts.Columns.Col2}
               </th>
-              <th className="border-r-2 py-5" scope="col">
+              <th
+                className="border-r-2 py-5"
+                scope="col"
+                onClick={() => handleSort("tong_so_daily")}
+              >
                 {SF_Districts.Columns.Col3}
+                {sortConfig.key === "tong_so_daily" &&
+                  (sortConfig.direction === "asc" ? " ▲" : " ▼")}
               </th>
               <th scope="col"></th>
             </tr>
@@ -222,9 +245,6 @@ function Districts() {
                   className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                   key={index}
                 >
-                  <td className="py-5 pl-3">
-                    <input type="checkbox" />
-                  </td>
                   <td className="border-r-2 py-5" scope="row">
                     {list.tenquan}
                   </td>

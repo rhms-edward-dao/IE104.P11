@@ -62,13 +62,16 @@ function Stores() {
   const [currentStoreCategoryPage, setCurrentStoreCategoryPage] = useState(0);
   const itemsPerPage = 5;
 
-  // For tracking the search-filter option and placeholder text on daily & loaidaily
+  // // For tracking the search-filter option and placeholder text on daily & loaidaily
   const [storeFilterOption, setStoreFilterOption] = useState(
     SF_Stores.Columns.Col1
   );
   const [storeCategoryFilterOption, setStoreCategoryFilterOption] = useState(
     SF_StoreCategories.Columns.Col1
   );
+
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // // For getting all existing stores or store categories
@@ -177,6 +180,44 @@ function Stores() {
   ]);
 
   // Functions here
+  // // Handle store data sorting
+  const handleStoreSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...storeData].sort((a, b) => {
+      const aValue = key.includes("Daily")
+        ? a.Daily[key.split(".")[1]]
+        : a[key];
+      const bValue = key.includes("Daily")
+        ? b.Daily[key.split(".")[1]]
+        : b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setStoreData(sortedData);
+  };
+  // // Handle export data sorting
+  const handleStoreCategorySort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...storeCategoryData].sort((a, b) => {
+      const aValue = a[key];
+      const bValue = b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setStoreCategoryData(sortedData);
+  };
   // // For deleting one daily
   const deleteAStore = async (id) => {
     const storeResponse = await deleteStore(id);
@@ -380,7 +421,6 @@ function Stores() {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>
               {isStoreTab ? (
                 <>
                   <th className="border-r-2 py-5" scope="col"></th>
@@ -390,11 +430,23 @@ function Stores() {
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Stores.Columns.Col2}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleStoreSort("Daily.ngaytiepnhan")}
+                  >
                     {SF_Stores.Columns.Col3}
+                    {sortConfig.key === "Daily.ngaytiepnhan" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleStoreSort("Daily.sodienthoai")}
+                  >
                     {SF_Stores.Columns.Col4}
+                    {sortConfig.key === "Daily.sodienthoai" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Stores.Columns.Col5}
@@ -405,8 +457,14 @@ function Stores() {
                   <th className="border-r-2 py-5" scope="col">
                     {SF_StoreCategories.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleStoreCategorySort("sotiennotoida")}
+                  >
                     {SF_StoreCategories.Columns.Col2}
+                    {sortConfig.key === "sotiennotoida" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                 </>
               )}
@@ -421,9 +479,6 @@ function Stores() {
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     key={index}
                   >
-                    <td className="py-5 pl-3">
-                      <input type="checkbox" />
-                    </td>
                     {isStoreTab ? (
                       <>
                         <td scope="row" className="border-r-2 py-5">
