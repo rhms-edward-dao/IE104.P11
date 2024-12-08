@@ -90,6 +90,12 @@ function Sidebar() {
       title: Reports,
       animation: [0.8, 0.8, 0.85],
     },
+    {
+      to: "/login",
+      icon: LogoutIcon,
+      title: LogOut_Btn,
+      animation: [0.9, 0.9, 0.95],
+    },
   ];
 
   const staffSidebarButtons = [
@@ -124,16 +130,10 @@ function Sidebar() {
       animation: [0.6, 0.6, 0.65],
     },
     {
-      to: "/customer",
-      icon: CustomersIcon,
-      title: Customers,
+      to: "/login",
+      icon: LogoutIcon,
+      title: LogOut_Btn,
       animation: [0.7, 0.7, 0.75],
-    },
-    {
-      to: "/admin-report",
-      icon: ReportsIcon,
-      title: Reports,
-      animation: [0.8, 0.8, 0.85],
     },
   ];
 
@@ -199,100 +199,69 @@ function Sidebar() {
 
       {/* isLoggedIn */}
       {isLoggedIn ? (
-        <>
-          {userInfo.isAdmin === true ? (
-            <>
-              {adminSidebarButtons.map((button, index) => (
-                <NavLink key={index} to={button.to} className={linkStyles}>
-                  <motion.div
-                    className="flex w-full items-center gap-3"
-                    initial="hidden"
-                    animate="visible"
+        userInfo.isAdmin === true ? (
+          <>
+            {/* isAdmin */}
+            {adminSidebarButtons.map((button, index) => (
+              <NavLink key={index} to={button.to} className={linkStyles}>
+                <motion.div
+                  className="flex w-full items-center gap-3"
+                  initial="hidden"
+                  animate="visible"
+                  variants={itemVariants}
+                  custom={button.animation[0]}
+                  whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                >
+                  <motion.img
+                    src={button.icon}
+                    alt="Icon mặt hàng"
+                    className="mx-5 h-10 w-10"
                     variants={itemVariants}
-                    custom={button.animation[0]}
-                    whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-                  >
-                    <motion.img
-                      src={button.icon}
-                      alt="Icon mặt hàng"
-                      className="mx-5 h-10 w-10"
-                      variants={itemVariants}
-                      custom={button.animation[1]}
-                    />
-                    <motion.p
-                      className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
-                      variants={itemVariants}
-                      custom={button.animation[2]}
-                    >
-                      {button.title}
-                    </motion.p>
-                  </motion.div>
-                </NavLink>
-              ))}
-            </>
-          ) : (
-            <>
-              {/* isStaff */}
-              {staffSidebarButtons.map((button, index) => (
-                <NavLink key={index} to={button.to} className={linkStyles}>
-                  <motion.div
-                    className="flex w-full items-center gap-3"
-                    initial="hidden"
-                    animate="visible"
+                    custom={button.animation[1]}
+                  />
+                  <motion.p
+                    className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
                     variants={itemVariants}
-                    custom={button.animation[0]}
-                    whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                    custom={button.animation[2]}
                   >
-                    <motion.img
-                      src={button.icon}
-                      alt="Icon mặt hàng"
-                      className="mx-5 h-10 w-10"
-                      variants={itemVariants}
-                      custom={button.animation[1]}
-                    />
-                    <motion.p
-                      className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
-                      variants={itemVariants}
-                      custom={button.animation[2]}
-                    >
-                      {button.title}
-                    </motion.p>
-                  </motion.div>
-                </NavLink>
-              ))}
-            </>
-          )}
-          {/* Logout button */}
-          <NavLink
-            to="/login"
-            className={linkStyles}
-            onClick={() => handleLogout()}
-          >
-            <motion.div
-              className="flex w-full items-center gap-3"
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
-              custom={0.9}
-              whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-            >
-              <motion.img
-                src={LogoutIcon}
-                alt="Icon mặt hàng"
-                className="mx-5 h-10 w-10"
-                variants={itemVariants}
-                custom={0.9}
-              />
-              <motion.p
-                className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
-                variants={itemVariants}
-                custom={0.95}
-              >
-                {LogOut_Btn}
-              </motion.p>
-            </motion.div>
-          </NavLink>
-        </>
+                    {button.title}
+                  </motion.p>
+                </motion.div>
+              </NavLink>
+            ))}
+          </>
+        ) : (
+          <>
+            {/* isStaff */}
+            {staffSidebarButtons.map((button, index) => (
+              <NavLink key={index} to={button.to} className={linkStyles}>
+                <motion.div
+                  className="flex w-full items-center gap-3"
+                  initial="hidden"
+                  animate="visible"
+                  variants={itemVariants}
+                  custom={button.animation[0]}
+                  whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                >
+                  <motion.img
+                    src={button.icon}
+                    alt="Icon mặt hàng"
+                    className="mx-5 h-10 w-10"
+                    variants={itemVariants}
+                    custom={button.animation[1]}
+                  />
+                  <motion.p
+                    className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
+                    variants={itemVariants}
+                    custom={button.animation[2]}
+                  >
+                    {button.title}
+                  </motion.p>
+                </motion.div>
+              </NavLink>
+            ))}
+          </>
+        )
       ) : (
         <></>
       )}

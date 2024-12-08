@@ -51,7 +51,7 @@ const Header = (props) => {
   // Functions here
   useEffect(() => {
     const fetchData = async (id) => {
-      const userData = await getStaffById(id);      
+      const userData = await getStaffById(id);
       setAvatar(userData[0].Nhanvien.hinhanh);
     };
     fetchData(userInfo.userID);
@@ -73,7 +73,7 @@ const Header = (props) => {
   // Return here
   return (
     <div className="flex flex-wrap items-center justify-between bg-white p-5 transition-colors duration-300 dark:bg-[#363636]">
-      <h1 className="m-2 text-3xl font-bold text-black transition-colors duration-300 dark:text-white">
+      <h1 className="m-2 text-3xl font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
         {props.headerTitle}
       </h1>
       <div className="flex items-center justify-end gap-10">
