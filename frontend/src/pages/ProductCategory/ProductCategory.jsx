@@ -60,7 +60,7 @@ const ProductCategorys = () => {
   const itemsPerPage = 5;
   // // For tracking the search-filter option and placeholder text on products & product category
   const [productFilterOption, setProductFilterOption] = useState(
-    SF_Products.Columns.Col1
+    SF_Products.Columns.Col1,
   );
   const [productCategoryFilterOption, setProductCategoryFilterOption] =
     useState(SF_ProductCategories.Columns.Col1);
@@ -83,12 +83,12 @@ const ProductCategorys = () => {
             existedProduct.reduce(
               (sum, item) =>
                 sum + item.Mathang.dongia * item.Mathang.soluongton,
-              0
+              0,
             ),
             existedProduct.reduce(
               (count, item) =>
                 [0].includes(item.Mathang.soluongton) ? count + 1 : count,
-              0
+              0,
             ),
           ];
           setStatisticData({ card1: card1, card2: card2, card3: card3 });
@@ -194,7 +194,7 @@ const ProductCategorys = () => {
     } else {
       alert(productResponse.message);
       setProductData(
-        productData.filter((item) => item.Mathang.mamathang !== id)
+        productData.filter((item) => item.Mathang.mamathang !== id),
       );
     }
   };
@@ -207,7 +207,7 @@ const ProductCategorys = () => {
     } else {
       alert(productCategoryResponse.message);
       setProductCategoryData(
-        productCategoryData.filter((item) => item.maloaimathang !== id)
+        productCategoryData.filter((item) => item.maloaimathang !== id),
       );
     }
   };
@@ -264,7 +264,7 @@ const ProductCategorys = () => {
     productCategoryItems.length > 0
       ? productCategoryItems.slice(
           productCategoryOffset,
-          productCategoryOffset + itemsPerPage
+          productCategoryOffset + itemsPerPage,
         )
       : [];
   const productCategoryPageCount =
@@ -293,7 +293,7 @@ const ProductCategorys = () => {
               description={card.description}
               value={card.value}
             />
-          )
+          ),
         )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
@@ -302,7 +302,7 @@ const ProductCategorys = () => {
           <ul className="-mb-px flex flex-wrap">
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isProductTab
                     ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
                     : "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
@@ -314,7 +314,7 @@ const ProductCategorys = () => {
             </li>
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isProductTab
                     ? "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
                     : "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
@@ -328,7 +328,7 @@ const ProductCategorys = () => {
         </div>
         <div className="flex flex-wrap justify-between">
           <div className="flex flex-wrap items-center justify-start gap-5">
-            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -402,11 +402,14 @@ const ProductCategorys = () => {
               {isProductTab ? (
                 <>
                   <th scop="col" className="border-r-2 py-5"></th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Products.Columns.Col1}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleSort("Mathang.dongia")}
                   >
@@ -415,7 +418,7 @@ const ProductCategorys = () => {
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleSort("Mathang.soluongton")}
                   >
@@ -423,19 +426,31 @@ const ProductCategorys = () => {
                     {sortConfig.key === "Mathang.soluongton" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Products.Columns.Col4}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Products.Columns.Col5}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Products.Columns.Col6}
                   </th>
                 </>
               ) : (
                 <>
-                  <th className="border-r-2 py-5 text-lg" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_ProductCategories.Columns.Col1}
                   </th>
                 </>
@@ -453,7 +468,10 @@ const ProductCategorys = () => {
                   >
                     {isProductTab ? (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           <img
                             width="250px"
                             src={`data:image/jpeg;base64, ${list.Mathang.hinhanh}`}
@@ -461,36 +479,57 @@ const ProductCategorys = () => {
                             className="rounded 2xl:h-20 2xl:w-20"
                           />
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.tenmathang}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.dongia}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.soluongton}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.tendvt}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenloaimathang}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tendaily}
                         </td>
                       </>
                     ) : (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenloaimathang}
                         </td>
                       </>
                     )}
                     <td scope="row">
-                      <div className="flex flex-wrap justify-center gap-5 my-5">
+                      <div className="my-5 flex flex-wrap justify-center gap-5">
                         <NavLink
-                          className="flex flex-wrap items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                           to={
                             isProductTab
                               ? `product-edit-page/${list.Mathang.mamathang}`
@@ -506,7 +545,7 @@ const ProductCategorys = () => {
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
-                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360]"
                           onClick={() =>
                             isProductTab
                               ? deleteAProduct(list.Mathang.mamathang)

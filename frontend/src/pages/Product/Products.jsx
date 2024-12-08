@@ -63,7 +63,7 @@ const Products = () => {
   const itemsPerPage = 5;
   // // For tracking the search-filter option and placeholder text on products & product category
   const [productFilterOption, setProductFilterOption] = useState(
-    SF_Products.Columns.Col1
+    SF_Products.Columns.Col1,
   );
   const [productCategoryFilterOption, setProductCategoryFilterOption] =
     useState(SF_ProductCategories.Columns.Col1);
@@ -86,12 +86,12 @@ const Products = () => {
             existedProduct.reduce(
               (sum, item) =>
                 sum + item.Mathang.dongia * item.Mathang.soluongton,
-              0
+              0,
             ),
             existedProduct.reduce(
               (count, item) =>
                 [0].includes(item.Mathang.soluongton) ? count + 1 : count,
-              0
+              0,
             ),
           ];
           setStatisticData({ card1: card1, card2: card2, card3: card3 });
@@ -196,7 +196,7 @@ const Products = () => {
     } else {
       alert(productResponse.message);
       setProductData(
-        productData.filter((item) => item.Mathang.mamathang !== id)
+        productData.filter((item) => item.Mathang.mamathang !== id),
       );
     }
   };
@@ -209,7 +209,7 @@ const Products = () => {
     } else {
       alert(productCategoryResponse.message);
       setProductCategoryData(
-        productCategoryData.filter((item) => item.maloaimathang !== id)
+        productCategoryData.filter((item) => item.maloaimathang !== id),
       );
     }
   };
@@ -264,7 +264,7 @@ const Products = () => {
     productCategoryItems.length > 0
       ? productCategoryItems.slice(
           productCategoryOffset,
-          productCategoryOffset + itemsPerPage
+          productCategoryOffset + itemsPerPage,
         )
       : [];
   const productCategoryPageCount =
@@ -293,7 +293,7 @@ const Products = () => {
               description={card.description}
               value={card.value}
             />
-          )
+          ),
         )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
@@ -328,7 +328,7 @@ const Products = () => {
         </div>
         <div className="flex flex-wrap justify-between">
           <div className="flex flex-wrap items-center justify-start gap-5">
-            <p className="hover:cursor-default whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -510,9 +510,9 @@ const Products = () => {
                       </>
                     )}
                     <td scope="row">
-                      <div className="flex flex-wrap justify-center gap-5 my-5">
+                      <div className="my-5 flex flex-wrap justify-center gap-5">
                         <NavLink
-                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                           to={
                             isProductTab
                               ? `product-edit-page/${list.Mathang.mamathang}`
@@ -523,7 +523,7 @@ const Products = () => {
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
-                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
+                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360]"
                           onClick={() =>
                             isProductTab
                               ? deleteAProduct(list.Mathang.mamathang)
