@@ -373,7 +373,7 @@ const Warehouse = () => {
           <ul className="-mb-px flex flex-wrap">
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isWarehouseTab
                     ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
                     : "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
@@ -387,7 +387,7 @@ const Warehouse = () => {
             </li>
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isWarehouseTab
                     ? "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
                     : "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
@@ -403,7 +403,7 @@ const Warehouse = () => {
         </div>
         <div className="flex flex-wrap justify-between">
           <div className="flex flex-wrap items-center justify-start gap-5 my-5">
-            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white hover:cursor-default">
               {SearchBy}
             </p>
             <select
@@ -472,11 +472,14 @@ const Warehouse = () => {
             <tr className="text-lg">
               {isWarehouseTab ? (
                 <>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_WarehouseImport.Columns.Col1}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleImportSort("Phieunhaphang.tongtien")}
                   >
@@ -485,7 +488,7 @@ const Warehouse = () => {
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() =>
                       handleImportSort("Phieunhaphang.tiendathanhtoan")
@@ -495,17 +498,23 @@ const Warehouse = () => {
                     {sortConfig.key === "Phieunhaphang.tiendathanhtoan" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_WarehouseImport.Columns.Col4}
                   </th>
                 </>
               ) : (
                 <>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_WarehouseExport.Columns.Col1}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleExportSort("Phieuxuathang.tongtien")}
                   >
@@ -513,7 +522,10 @@ const Warehouse = () => {
                     {sortConfig.key === "Phieuxuathang.tongtien" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_WarehouseExport.Columns.Col3}
                   </th>
                 </>
@@ -531,28 +543,49 @@ const Warehouse = () => {
                   >
                     {isWarehouseTab ? (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Phieunhaphang.ngaylapphieu}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Phieunhaphang.tongtien}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Phieunhaphang.tiendathanhtoan}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Phieunhaphang.tinhtrang}
                         </td>
                       </>
                     ) : (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Phieuxuathang.ngaylapphieu}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Phieuxuathang.tongtien}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenkhachhang}
                         </td>
                       </>
@@ -560,7 +593,7 @@ const Warehouse = () => {
                     <td scope="row">
                       <div className="flex flex-wrap justify-center gap-5 my-5">
                         <NavLink
-                          className="flex flex-wrap items-center gap-2 rounded-lg bg-cyan-500 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#00b8e3] via-[#00cef1] to-[#00ecfa] hover:bg-gradient-to-l hover:from-[#00b8e3] hover:via-[#00cef1] hover:to-[#00ecfa] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
                           to={
                             isWarehouseTab
                               ? `warehouse-import-detail-page/${list.Phieunhaphang.maphieunhap}`
@@ -571,7 +604,7 @@ const Warehouse = () => {
                           <img src={DetailIcon} alt="Icon chi tiết" />
                         </NavLink>
                         <NavLink
-                          className="flex flex-wrap items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
                           to={
                             isWarehouseTab
                               ? `warehouse-import-edit-page/${list.Phieunhaphang.maphieunhap}`
@@ -582,7 +615,7 @@ const Warehouse = () => {
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
-                          className={`items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white ${
+                          className={`items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white ${
                             isWarehouseTab
                               ? list.Phieunhaphang.tongtien === 0
                                 ? "hidden"
