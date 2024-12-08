@@ -43,7 +43,7 @@ function Districts() {
   const itemsPerPage = 5;
   // // For tracking the search-filter option and placeholder text
   const [selectedOption, setSelectedOption] = useState(
-    SF_Districts.Columns.Col1
+    SF_Districts.Columns.Col1,
   );
   // // For table sorting
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
@@ -181,13 +181,13 @@ function Districts() {
               description={card.description}
               value={card.value}
             />
-          )
+          ),
         )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex flex-wrap justify-between">
-          <div className="flex flex-wrap items-center justify-start gap-5 my-5">
-            <p className="text-lg whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+          <div className="my-5 flex flex-wrap items-center justify-start gap-5">
+            <p className="whitespace-nowrap text-lg font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -220,14 +220,14 @@ function Districts() {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th className="border-r-2 py-5" scope="col">
+              <th className="border-r-2 py-5 hover:cursor-default" scope="col">
                 {SF_Districts.Columns.Col1}
               </th>
-              <th className="border-r-2 py-5" scope="col">
+              <th className="border-r-2 py-5 hover:cursor-default" scope="col">
                 {SF_Districts.Columns.Col2}
               </th>
               <th
-                className="border-r-2 py-5"
+                className="border-r-2 py-5 hover:cursor-pointer"
                 scope="col"
                 onClick={() => handleSort("tong_so_daily")}
               >
@@ -242,22 +242,31 @@ function Districts() {
             {districtItems.length > 0 ? (
               districtItems.map((list, index) => (
                 <tr
-                  className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                  className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                   key={index}
                 >
-                  <td className="border-r-2 py-5" scope="row">
+                  <td
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="row"
+                  >
                     {list.tenquan}
                   </td>
-                  <td className="border-r-2 py-5" scope="row">
+                  <td
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="row"
+                  >
                     {list.tenthanhpho}
                   </td>
-                  <td className="border-r-2 py-5" scope="row">
+                  <td
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="row"
+                  >
                     {list.tong_so_daily}
                   </td>
                   <td scope="row">
-                    <div className="flex flex-wrap justify-center gap-5 my-5">
+                    <div className="my-5 flex flex-wrap justify-center gap-5">
                       <NavLink
-                        className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                         to={`district-edit-page/${list.maquan}`}
                         state={{
                           existedData: districtData,
@@ -269,7 +278,7 @@ function Districts() {
                         <img src={EditIcon} alt="Icon chỉnh sửa" />
                       </NavLink>
                       <button
-                        className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360]"
                         onClick={() => deleteItem(list.maquan)}
                       >
                         <p className="hidden sm:hidden md:hidden lg:inline-block">

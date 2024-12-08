@@ -54,7 +54,7 @@ function Stores() {
   const [storeCategorySearchTerm, setStoreCategorySearchTerm] = useState("");
   const [storeSearchResults, setStoreSearchResults] = useState([]);
   const [storeCategorySearchResults, setStoreCategorySearchResults] = useState(
-    []
+    [],
   );
 
   // // For pagination daily & loaidaily
@@ -64,10 +64,10 @@ function Stores() {
 
   // // For tracking the search-filter option and placeholder text on daily & loaidaily
   const [storeFilterOption, setStoreFilterOption] = useState(
-    SF_Stores.Columns.Col1
+    SF_Stores.Columns.Col1,
   );
   const [storeCategoryFilterOption, setStoreCategoryFilterOption] = useState(
-    SF_StoreCategories.Columns.Col1
+    SF_StoreCategories.Columns.Col1,
   );
 
   // // For table sorting
@@ -93,11 +93,11 @@ function Stores() {
                 sum +
                 (item.Phieunhaphang.tongtien -
                   item.Phieunhaphang.tiendathanhtoan),
-              0
+              0,
             ),
             existedImport.reduce(
               (sum, item) => sum + item.Phieunhaphang.tongtien,
-              0
+              0,
             ),
           ];
           setStatisticData({ card1: card1, card2: card2, card3: card3 });
@@ -238,7 +238,7 @@ function Stores() {
     } else {
       alert(storeCategoryResponse.message);
       setStoreCategoryData(
-        storeCategoryData.filter((item) => item.maloaidaily !== id)
+        storeCategoryData.filter((item) => item.maloaidaily !== id),
       );
     }
   };
@@ -298,7 +298,7 @@ function Stores() {
     storeCategoryItems.length > 0
       ? storeCategoryItems.slice(
           storeCategoryOffset,
-          storeCategoryOffset + itemsPerPage
+          storeCategoryOffset + itemsPerPage,
         )
       : [];
   const storeCategoryPageCount =
@@ -335,7 +335,7 @@ function Stores() {
           <ul className="-mb-px flex flex-wrap">
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isStoreTab
                     ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
                     : "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
@@ -347,7 +347,7 @@ function Stores() {
             </li>
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isStoreTab
                     ? "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
                     : "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
@@ -360,8 +360,8 @@ function Stores() {
           </ul>
         </div>
         <div className="flex flex-wrap justify-between">
-          <div className="flex flex-wrap items-center justify-start gap-5 my-5">
-            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+          <div className="my-5 flex flex-wrap items-center justify-start gap-5">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -424,14 +424,20 @@ function Stores() {
               {isStoreTab ? (
                 <>
                   <th className="border-r-2 py-5" scope="col"></th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Stores.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Stores.Columns.Col2}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleStoreSort("Daily.ngaytiepnhan")}
                   >
@@ -440,7 +446,7 @@ function Stores() {
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleStoreSort("Daily.sodienthoai")}
                   >
@@ -448,17 +454,23 @@ function Stores() {
                     {sortConfig.key === "Daily.sodienthoai" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Stores.Columns.Col5}
                   </th>
                 </>
               ) : (
                 <>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_StoreCategories.Columns.Col1}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleStoreCategorySort("sotiennotoida")}
                   >
@@ -481,7 +493,10 @@ function Stores() {
                   >
                     {isStoreTab ? (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           <img
                             width="250px"
                             src={`data:image/jpeg;base64, ${list.Daily.hinhanh}`}
@@ -489,19 +504,34 @@ function Stores() {
                             className="rounded 2xl:h-20 2xl:w-20"
                           />
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Daily.tendaily}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenloaidaily}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Daily.ngaytiepnhan}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Daily.sodienthoai}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           <button
                             onClick={() =>
                               handleOpenModal(list.kinhdo, list.vido)
@@ -515,19 +545,25 @@ function Stores() {
                       </>
                     ) : (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenloaidaily}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.sotiennotoida}
                         </td>
                       </>
                     )}
                     <td scope="row">
-                      <div className="flex flex-wrap gap-5 m-3">
+                      <div className="m-3 flex flex-wrap gap-5">
                         {isStoreTab && (
                           <NavLink
-                            className="flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 font-bold text-white"
+                            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#00b8e3] via-[#00cef1] to-[#00ecfa] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#00b8e3] hover:via-[#00cef1] hover:to-[#00ecfa]"
                             to={`/store-maintainance/${list.Daily.madaily}`}
                           >
                             <p className="hidden lg:inline-block">Bảo trì</p>
@@ -535,7 +571,7 @@ function Stores() {
                           </NavLink>
                         )}
                         <NavLink
-                          className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                           to={
                             isStoreTab
                               ? `store-edit-page/${list.Daily.madaily}`
@@ -551,7 +587,7 @@ function Stores() {
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
-                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360]"
                           onClick={() =>
                             isStoreTab
                               ? deleteAStore(list.Daily.madaily)
