@@ -73,6 +73,8 @@ function Staff() {
   const [positionFilterOption, setPositionFilterOption] = useState(
     SF_Positions.Columns.Col1
   );
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
 
   // Use Effect here
   // // For getting all existing staffs or positions
@@ -183,6 +185,44 @@ function Staff() {
   ]);
 
   // Functions here
+  // // Handle import data sorting
+  const handleStaffSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...staffData].sort((a, b) => {
+      const aValue = key.includes("Nhanvien")
+        ? a.Nhanvien[key.split(".")[1]]
+        : a[key];
+      const bValue = key.includes("Nhanvien")
+        ? b.Nhanvien[key.split(".")[1]]
+        : b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setStaffData(sortedData);
+  };
+  // // Handle export data sorting
+  const handlePositionSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...positionData].sort((a, b) => {
+      const aValue = a[key];
+      const bValue = b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setPositionData(sortedData);
+  };
   // // For deleting one staff
   const deleteAStaff = async (id) => {
     const staffResponse = await deleteStaff(id);
@@ -384,15 +424,20 @@ function Staff() {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col"></th>
               {isStaffTab ? (
                 <>
                   <th className="border-r-2 py-5" scope="col"></th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Staffs.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handleStaffSort("Nhanvien.ngaysinh")}
+                  >
                     {SF_Staffs.Columns.Col2}
+                    {sortConfig.key === "Nhanvien.ngaysinh" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Staffs.Columns.Col3}
@@ -410,17 +455,41 @@ function Staff() {
                   <th className="border-r-2 py-5" scope="col">
                     {SF_Positions.Columns.Col1}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handlePositionSort("capdo")}
+                  >
                     {SF_Positions.Columns.Col2}
+                    {sortConfig.key === "capdo" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handlePositionSort("luong")}
+                  >
                     {SF_Positions.Columns.Col3}
+                    {sortConfig.key === "luong" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handlePositionSort("ngaytao")}
+                  >
                     {SF_Positions.Columns.Col4}
+                    {sortConfig.key === "ngaytao" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5"
+                    scope="col"
+                    onClick={() => handlePositionSort("ngaycapnhat")}
+                  >
                     {SF_Positions.Columns.Col5}
+                    {sortConfig.key === "ngaycapnhat" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                 </>
               )}
@@ -435,9 +504,6 @@ function Staff() {
                     className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     key={index}
                   >
-                    <td className="py-5 pl-3">
-                      <input type="checkbox" />
-                    </td>
                     {isStaffTab ? (
                       <>
                         <td scope="row" className="border-r-2 py-5">
