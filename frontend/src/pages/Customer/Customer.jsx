@@ -51,7 +51,7 @@ function Customer() {
   // State to track the selected option and placeholder text
   // // For tracking the search-filter option and placeholder text
   const [selectedOption, setSelectedOption] = useState(
-    SF_Customers.Columns.Col1
+    SF_Customers.Columns.Col1,
   );
   // // For table sorting
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
@@ -78,7 +78,7 @@ function Customer() {
           existedData.length,
           existedExport.reduce(
             (sum, item) => sum + item.Phieuxuathang.tongtien,
-            0
+            0,
           ),
           distinctDistricts.size,
         ];
@@ -183,7 +183,7 @@ function Customer() {
       <div>
         <Header headerTitle={Title.Customers} />
       </div>
-      <div className="flex flex-wrap gap-5 justify-center m-5">
+      <div className="m-5 flex flex-wrap justify-center gap-5">
         {CustomerDataCard(theme, DC_Customers, statisticData).map(
           (card, index) => (
             <Card
@@ -192,13 +192,13 @@ function Customer() {
               description={card.description}
               value={card.value}
             />
-          )
+          ),
         )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex flex-wrap justify-between">
-          <div className="flex flex-wrap items-center justify-start gap-5 my-5">
-            <p className="text-lg whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white hover:cursor-default">
+          <div className="my-5 flex flex-wrap items-center justify-start gap-5">
+            <p className="whitespace-nowrap text-lg font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -246,7 +246,7 @@ function Customer() {
                 {sortConfig.key === "Khachhang.sodienthoai" &&
                   (sortConfig.direction === "asc" ? " ▲" : " ▼")}
               </th>
-              <th scope="col" className="border-r-2 py-5 hover:cursor-pointer">
+              <th scope="col" className="border-r-2 py-5 hover:cursor-default">
                 {SF_Customers.Columns.Col3}
               </th>
               <th scope="col"></th>
@@ -257,7 +257,7 @@ function Customer() {
               CItems.map((list, index) => (
                 <tr
                   key={index}
-                  className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                  className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                 >
                   <td
                     scope="row"
@@ -283,9 +283,9 @@ function Customer() {
                     </button>
                   </td>
                   <td scope="row">
-                    <div className="flex flex-wrap justify-center gap-5 my-5 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
+                    <div className="my-5 flex flex-wrap justify-center gap-5 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
                       <NavLink
-                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
+                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                         to={`/customer/customer-edit-page/${list.Khachhang.makhachhang}`}
                         state={{ existedData: data }}
                       >
@@ -293,7 +293,7 @@ function Customer() {
                         <p className="hidden lg:inline-block">{Edit}</p>
                       </NavLink>
                       <button
-                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
+                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360]"
                         onClick={() => deleteItem(list.Khachhang.makhachhang)}
                       >
                         <img src={DeleteIcon} alt="Icon thùng rác" />

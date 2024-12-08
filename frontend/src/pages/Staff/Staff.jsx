@@ -68,10 +68,10 @@ function Staff() {
 
   // For tracking the search-filter option and placeholder text on staff & position
   const [staffFilterOption, setStaffFilterOption] = useState(
-    SF_Staffs.Columns.Col1
+    SF_Staffs.Columns.Col1,
   );
   const [positionFilterOption, setPositionFilterOption] = useState(
-    SF_Positions.Columns.Col1
+    SF_Positions.Columns.Col1,
   );
   // // For table sorting
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
@@ -338,7 +338,7 @@ function Staff() {
           <ul className="-mb-px flex flex-wrap">
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isStaffTab
                     ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
                     : "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
@@ -350,7 +350,7 @@ function Staff() {
             </li>
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isStaffTab
                     ? "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
                     : "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
@@ -363,8 +363,8 @@ function Staff() {
           </ul>
         </div>
         <div className="flex flex-wrap justify-between">
-          <div className="flex flex-wrap items-center justify-start gap-5 my-5">
-            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+          <div className="my-5 flex flex-wrap items-center justify-start gap-5">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -427,11 +427,14 @@ function Staff() {
               {isStaffTab ? (
                 <>
                   <th className="border-r-2 py-5" scope="col"></th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Staffs.Columns.Col1}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleStaffSort("Nhanvien.ngaysinh")}
                   >
@@ -439,24 +442,39 @@ function Staff() {
                     {sortConfig.key === "Nhanvien.ngaysinh" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Staffs.Columns.Col3}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Staffs.Columns.Col4}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Staffs.Columns.Col5}
                   </th>
-                  <th className="border-r-2 py-5" scope="col"></th>
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  ></th>
                 </>
               ) : (
                 <>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Positions.Columns.Col1}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handlePositionSort("capdo")}
                   >
@@ -465,7 +483,7 @@ function Staff() {
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handlePositionSort("luong")}
                   >
@@ -474,7 +492,7 @@ function Staff() {
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handlePositionSort("ngaytao")}
                   >
@@ -483,7 +501,7 @@ function Staff() {
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handlePositionSort("ngaycapnhat")}
                   >
@@ -506,7 +524,10 @@ function Staff() {
                   >
                     {isStaffTab ? (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           <img
                             width="250px"
                             src={`data:image/jpeg;base64, ${list.Nhanvien.hinhanh}`}
@@ -514,16 +535,28 @@ function Staff() {
                             className="rounded 2xl:h-20 2xl:w-20"
                           />
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Nhanvien.hoten}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Nhanvien.ngaysinh}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tendaily}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenchucvu}
                         </td>
                         <td scope="row" className="border-r-2 py-5">
@@ -539,14 +572,14 @@ function Staff() {
                         </td>
                         <td scope="row" className="border-r-2 px-3 py-5">
                           {list.mataikhoan ? (
-                            <div className="flex justify-center items-center">
+                            <div className="flex items-center justify-center">
                               <MdAccountCircle
                                 size={50}
                                 className="text-blue-400"
                               />
                             </div>
                           ) : (
-                            <div className="flex justify-center items-center">
+                            <div className="flex items-center justify-center">
                               <MdNoAccounts
                                 size={50}
                                 className="text-red-400"
@@ -557,28 +590,45 @@ function Staff() {
                       </>
                     ) : (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenchucvu}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.capdo}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.luong}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.ngaytao}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.ngaycapnhat}
                         </td>
                       </>
                     )}
                     <td scope="row">
-                      <div className="flex flex-wrap justify-center gap-5 my-5">
+                      <div className="my-5 flex flex-wrap justify-center gap-5">
                         <NavLink
                           className={`flex flex-wrap items-center gap-2 rounded-lg ${
-                            isStaffTab ? "bg-cyan-500" : "bg-green-500"
+                            isStaffTab
+                              ? "bg-gradient-to-r from-[#00b8e3] via-[#00cef1] to-[#00ecfa] transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#00b8e3] hover:via-[#00cef1] hover:to-[#00ecfa]"
+                              : "bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                           } px-4 py-2 font-bold text-white`}
                           to={
                             isStaffTab
@@ -602,7 +652,7 @@ function Staff() {
                           />
                         </NavLink>
                         <button
-                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360]"
                           onClick={() =>
                             isStaffTab
                               ? deleteAStaff(list.Nhanvien.manhanvien)
