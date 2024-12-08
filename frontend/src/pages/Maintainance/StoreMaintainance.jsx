@@ -30,6 +30,8 @@ function StoreMaintainance() {
   // // For Multi-Language
   const { t } = useTranslation();
   const { Edit } = t("Buttons");
+  // // For table sorting
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
   // Functions here
   // // For fetching Data
   useEffect(() => {
@@ -46,7 +48,23 @@ function StoreMaintainance() {
     };
     fetchData(storeId);
   }, []);
-  console.log(mtData);
+  // // Handle sorting
+  const handleSort = (key) => {
+    const direction =
+      sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+
+    const sortedData = [...mtData].sort((a, b) => {
+      const aValue = a[key];
+      const bValue = b[key];
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setSortConfig({ key, direction });
+    setMtData(sortedData);
+  };
   //   For updating date
   const addMaintainance = async (price, description, startDate, endDate) => {
     if (price < 100000) {
@@ -96,6 +114,7 @@ function StoreMaintainance() {
   const handleSelect = (ranges) => {
     setState([ranges.selection]);
   };
+
   // Return render here
   return (
     <>
@@ -104,9 +123,9 @@ function StoreMaintainance() {
       ) : (
         <div>
           <Header headerTitle="Bảo trì đại lý"></Header>
-          <div className="flex flex-wrap justify-between my-3">
-            <div className="m-5 w-full lg:w-7/12 bg-white dark:bg-[#363636] transition-colors duration-300 shadow-lg dark:text-white">
-              <div className="my-8 mx-5 space-y-8">
+          <div className="my-3 flex flex-wrap justify-between">
+            <div className="m-5 w-full bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white lg:w-7/12">
+              <div className="mx-5 my-8 space-y-8">
                 <div className="flex items-center space-x-10">
                   <img
                     src={`data:image/jpeg;base64, ${storeData.hinhanh}`}
@@ -117,7 +136,7 @@ function StoreMaintainance() {
                   <h2 className="text-xl font-bold">Tên đại lý</h2>
                   <h3 className="text-lg font-[400]">{storeData.tendaily}</h3>
                 </div>
-                <div className="flex flex-wrap gap-10 items-center">
+                <div className="flex flex-wrap items-center gap-10">
                   <label htmlFor="predictedPrice" className="text-lg font-bold">
                     Chi phí bảo trì (dự kiến)
                   </label>
@@ -127,7 +146,7 @@ function StoreMaintainance() {
                     type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                    className="border border-black rounded text-black p-2"
+                    className="rounded border border-black bg-white p-2 text-black transition-all duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                   ></input>
                 </div>
                 <div className>
@@ -142,7 +161,7 @@ function StoreMaintainance() {
                       type="text"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      className="w-full h-[200px] border border-black rounded text-black p-2 resize-none"
+                      className="h-[200px] w-full resize-none rounded border border-black bg-white p-2 text-black transition-all duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
                       placeholder="Nhập mô tả..."
                     />
                   </div>
@@ -150,7 +169,7 @@ function StoreMaintainance() {
               </div>
             </div>
             <div className="m-5 w-full lg:w-4/12">
-              <div className="p-5 bg-white dark:bg-[#363636] transition-colors duration-300 shadow-lg dark:text-white">
+              <div className="bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
                 <div className="flex justify-center">
                   <DateRange
                     editableDateInputs={true}
@@ -162,12 +181,12 @@ function StoreMaintainance() {
                   />
                 </div>
               </div>
-              <div className="mt-2 h-[5rem] bg-white dark:bg-[#363636] transition-colors duration-300 shadow-lg dark:text-white flex flex-wrap items-center justify-center gap-5">
+              <div className="mt-2 flex h-[5rem] flex-wrap items-center justify-center gap-5 bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
                 <button
                   onClick={() => handleReset()}
-                  className="p-3 rounded bg-red-500"
+                  className="rounded bg-gradient-to-tl from-red-600 via-[#ea4444] to-[#ee7272] p-3 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
                 >
-                  <p className="text-white font-bold">Đặt lại</p>
+                  <p className="font-bold text-white">Đặt lại</p>
                 </button>
                 <button
                   onClick={() =>
@@ -175,34 +194,52 @@ function StoreMaintainance() {
                       price,
                       description,
                       state[0].startDate,
-                      state[0].endDate
+                      state[0].endDate,
                     )
                   }
-                  className="p-3 rounded bg-green-500"
+                  className="rounded bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] p-3 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                 >
-                  <p className="text-white font-bold">Đặt bảo trì</p>
+                  <p className="font-bold text-white">Đặt bảo trì</p>
                 </button>
               </div>
             </div>
           </div>
-          <div className="mx-4 bg-white dark:bg-[#363636] transition-colors duration-300 shadow-lg">
+          <div className="mx-4 bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636]">
             <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
               <thead className="border-b-4 border-red-500">
                 <tr className="text-lg">
-                  <th className="border-r-2 p-2" scope="col">
-                    <input type="checkbox"></input>
-                  </th>
-                  <th className="border-r-2 p-2" scope="col">
+                  <th
+                    className="border-r-2 p-2 hover:cursor-default"
+                    scope="col"
+                  >
                     Mô tả
                   </th>
-                  <th className="border-r-2 p-2" scope="col">
+                  <th
+                    className="border-r-2 p-2 hover:cursor-pointer"
+                    scope="col"
+                    onClick={() => handleSort("thoidiembatdau")}
+                  >
                     Thời gian bắt đầu
+                    {sortConfig.key === "thoidiembatdau" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 p-2" scope="col">
+                  <th
+                    className="border-r-2 p-2 hover:cursor-pointer"
+                    scope="col"
+                    onClick={() => handleSort("thoidiemketthuc")}
+                  >
                     Thời gian kết thúc
+                    {sortConfig.key === "thoidiemketthuc" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="p-2" scope="col">
+                  <th
+                    className="p-2 hover:cursor-pointer"
+                    scope="col"
+                    onClick={() => handleSort("chiphibaotri")}
+                  >
                     Chi phí bảo trì
+                    {sortConfig.key === "chiphibaotri" &&
+                      (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                 </tr>
               </thead>
@@ -211,21 +248,27 @@ function StoreMaintainance() {
                   mtData.map((list, index) => (
                     <tr
                       key={index}
-                      className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
+                      className="text-md border-b border-slate-300 text-black transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                     >
-                      <td className="border-r-2 py-5 pl-3">
-                        <input type="checkbox" />
-                      </td>
-                      <td scope="row" className="border-r-2 py-5">
+                      <td
+                        scope="row"
+                        className="border-r-2 py-5 hover:cursor-default"
+                      >
                         {list.mota}
                       </td>
-                      <td scope="row" className="border-r-2 py-5">
+                      <td
+                        scope="row"
+                        className="border-r-2 py-5 hover:cursor-default"
+                      >
                         {list.thoidiembatdau}
                       </td>
-                      <td scope="row" className="border-r-2 py-5">
+                      <td
+                        scope="row"
+                        className="border-r-2 py-5 hover:cursor-default"
+                      >
                         {list.thoidiemketthuc}
                       </td>
-                      <td scope="row" className="py-5">
+                      <td scope="row" className="py-5 hover:cursor-default">
                         {list.chiphibaotri}
                       </td>
                     </tr>

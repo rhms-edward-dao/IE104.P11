@@ -64,10 +64,10 @@ const Warehouse = () => {
   const itemsPerPage = 5;
   // For tracking the search-filter option and placeholder text on import & export bills
   const [importFilterOption, setImportFilterOption] = useState(
-    SF_WarehouseImport.Columns.Col1
+    SF_WarehouseImport.Columns.Col1,
   );
   const [exportFilterOption, setExportFilterOption] = useState(
-    SF_WarehouseExport.Columns.Col1
+    SF_WarehouseExport.Columns.Col1,
   );
   // // For table sorting
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
@@ -98,13 +98,13 @@ const Warehouse = () => {
             ? 0
             : existedImport.reduce(
                 (sum, item) => sum + item.Phieunhaphang.tongtien,
-                0
+                0,
               ),
           existedExport.message === "Danh sách phiếu xuất hàng rỗng"
             ? 0
             : existedExport.reduce(
                 (sum, item) => sum + item.Phieuxuathang.tongtien,
-                0
+                0,
               ),
         ];
         setStatisticData({ card1: card1, card2: card2 });
@@ -241,7 +241,7 @@ const Warehouse = () => {
     } else {
       alert(importResponse.message);
       setImportData(
-        importData.filter((item) => item.Phieunhaphang.maphieunhap !== id)
+        importData.filter((item) => item.Phieunhaphang.maphieunhap !== id),
       );
     }
   };
@@ -270,7 +270,7 @@ const Warehouse = () => {
     } else {
       alert(exportResponse.message);
       setExportData(
-        exportData.filter((item) => item.Phieuxuathang.maphieuxuat !== id)
+        exportData.filter((item) => item.Phieuxuathang.maphieuxuat !== id),
       );
     }
   };
@@ -364,7 +364,7 @@ const Warehouse = () => {
               description={card.description}
               value={card.value}
             />
-          )
+          ),
         )}
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
@@ -402,8 +402,8 @@ const Warehouse = () => {
           </ul>
         </div>
         <div className="flex flex-wrap justify-between">
-          <div className="flex flex-wrap items-center justify-start gap-5 my-5">
-            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white hover:cursor-default">
+          <div className="my-5 flex flex-wrap items-center justify-start gap-5">
+            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 hover:cursor-default dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -591,9 +591,9 @@ const Warehouse = () => {
                       </>
                     )}
                     <td scope="row">
-                      <div className="flex flex-wrap justify-center gap-5 my-5">
+                      <div className="my-5 flex flex-wrap justify-center gap-5">
                         <NavLink
-                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#00b8e3] via-[#00cef1] to-[#00ecfa] hover:bg-gradient-to-l hover:from-[#00b8e3] hover:via-[#00cef1] hover:to-[#00ecfa] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#00b8e3] via-[#00cef1] to-[#00ecfa] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#00b8e3] hover:via-[#00cef1] hover:to-[#00ecfa]"
                           to={
                             isWarehouseTab
                               ? `warehouse-import-detail-page/${list.Phieunhaphang.maphieunhap}`
@@ -604,7 +604,7 @@ const Warehouse = () => {
                           <img src={DetailIcon} alt="Icon chi tiết" />
                         </NavLink>
                         <NavLink
-                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                           to={
                             isWarehouseTab
                               ? `warehouse-import-edit-page/${list.Phieunhaphang.maphieunhap}`
@@ -615,22 +615,14 @@ const Warehouse = () => {
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
-                          className={`items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white ${
-                            isWarehouseTab
-                              ? list.Phieunhaphang.tongtien === 0
-                                ? "hidden"
-                                : "flex"
-                              : list.Phieuxuathang.tongtien === 0
-                              ? "hidden"
-                              : "flex"
-                          }`}
+                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360]"
                           onClick={() =>
                             isWarehouseTab
                               ? deleteAImportBill(
-                                  list.Phieunhaphang.maphieunhap
+                                  list.Phieunhaphang.maphieunhap,
                                 )
                               : deleteAExportBill(
-                                  list.Phieuxuathang.maphieuxuat
+                                  list.Phieuxuathang.maphieuxuat,
                                 )
                           }
                         >
