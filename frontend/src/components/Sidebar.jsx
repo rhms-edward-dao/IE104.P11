@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 
 // Import Context Here
 import { useAuth } from "../contexts/AuthContext";
-import { ActiveButton } from "../contexts/ActiveButton";
 
 // Import Icons Here
 // Admin Sidebar Icons
@@ -24,32 +24,6 @@ function Sidebar() {
   // Variables here
   // Variables for controlling sidebar
   const { isLoggedIn, logout, userInfo } = useAuth();
-  const {
-    isQuan,
-    isDaily,
-    isMathang,
-    isBaocao,
-    isNhanvien,
-    isQuitac,
-    isCustomer,
-    isSanpham,
-    isQuanlykho,
-    isKhachhang,
-    isQuanlydaily,
-    isBaocaoStaff,
-    activateQuan,
-    activateDaily,
-    activateMathang,
-    activateBaocao,
-    activateNhanvien,
-    activateQuitac,
-    activateKhachhang,
-    activateSanpham,
-    activateQuanlykho,
-    activateKhachhangStaff,
-    activateQuanlydaily,
-    activateBaocaoStaff,
-  } = ActiveButton();
 
   const { t } = useTranslation();
   const {
@@ -71,443 +45,258 @@ function Sidebar() {
   const handleLogout = () => {
     logout();
   };
+
+  // Sidebar Buttons
+  const adminSidebarButtons = [
+    {
+      to: "/districts",
+      icon: DistrictsIcon,
+      title: Districts,
+      animation: [0.2, 0.2, 0.25],
+    },
+    {
+      to: "/stores",
+      icon: StoresIcon,
+      title: Stores,
+      animation: [0.3, 0.3, 0.35],
+    },
+    {
+      to: "/product-categorys",
+      icon: ProductsIcon,
+      title: ProductCategories,
+      animation: [0.4, 0.4, 0.45],
+    },
+    {
+      to: "/staff-management",
+      icon: StaffsIcon,
+      title: Staffs,
+      animation: [0.5, 0.5, 0.55],
+    },
+    {
+      to: "/rule-management",
+      icon: RulesIcon,
+      title: Rules,
+      animation: [0.6, 0.6, 0.65],
+    },
+    {
+      to: "/customer",
+      icon: CustomersIcon,
+      title: Customers,
+      animation: [0.7, 0.7, 0.75],
+    },
+    {
+      to: "/admin-report",
+      icon: ReportsIcon,
+      title: Reports,
+      animation: [0.8, 0.8, 0.85],
+    },
+  ];
+
+  const staffSidebarButtons = [
+    {
+      to: "/products",
+      icon: ProductsIcon,
+      title: Products,
+      animation: [0.2, 0.2, 0.25],
+    },
+    {
+      to: "/warehouse",
+      icon: WarehousesIcon,
+      title: Warehouses,
+      animation: [0.3, 0.3, 0.35],
+    },
+    {
+      to: "/customer",
+      icon: CustomersIcon,
+      title: Customers,
+      animation: [0.4, 0.4, 0.45],
+    },
+    {
+      to: "/store-management",
+      icon: StoresIcon,
+      title: StoreManagement,
+      animation: [0.5, 0.5, 0.55],
+    },
+    {
+      to: "/staff-report",
+      icon: ReportsIcon,
+      title: Reports,
+      animation: [0.6, 0.6, 0.65],
+    },
+    {
+      to: "/customer",
+      icon: CustomersIcon,
+      title: Customers,
+      animation: [0.7, 0.7, 0.75],
+    },
+    {
+      to: "/admin-report",
+      icon: ReportsIcon,
+      title: Reports,
+      animation: [0.8, 0.8, 0.85],
+    },
+  ];
+
+  // NavLink Global Classname Here
+  const linkStyles = ({ isActive }) =>
+    `my-4 flex items-center justify-center gap-3 py-4 text-left text-xl lg:justify-start ${
+      isActive
+        ? "bg-gradient-to-tr from-red-600 to-[#ee7272] font-bold text-white"
+        : "group transform-gpu text-white transition-all duration-300 ease-in-out hover:text-red-500"
+    }`;
+
+  const test = () => {
+    return <div className=""></div>;
+  };
+  // Animation here
+  const sidebarVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const itemVariants = {
+    hidden: { x: "-100%", opacity: 0 },
+    visible: (delay) => ({
+      x: 0,
+      opacity: 1,
+      transition: { delay, duration: 0.5, ease: "easeOut" },
+    }),
+  };
   // Function for change button's state
   // Render return here
   return (
-    <div className="bg-black w-full h-full ">
-      {/* If in login page, show only 'KietStore' */}
-      <div className="flex flex-wrap space-x-3 items-center justify-center pt-5">
-        <img
+    <motion.div
+      className="h-full w-full bg-black"
+      initial="hidden"
+      animate="visible"
+      variants={sidebarVariants}
+    >
+      {/* If in login page, show only 'BettaShop' */}
+      <motion.a
+        href={isLoggedIn ? (userInfo.isAdmin ? "/stores" : "/products") : "/"}
+        className="flex flex-wrap items-center justify-center space-x-5 py-5 hover:cursor-pointer"
+        variants={itemVariants}
+        custom={0.1}
+        whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+      >
+        <motion.img
           src={LogoIcon}
           alt="Logo"
-          className="w-[100px] h-[100px] rounded-full"
+          className="h-[100px] w-[100px] rounded-full"
+          variants={itemVariants}
+          custom={0.15}
         />
-        <p className="text-white font-bold text-xl lg:text-2xl italic">
+        <motion.p
+          className="bg-gradient-to-t from-red-700 via-[#f29f9f] to-white bg-clip-text text-2xl font-bold italic text-transparent transition-colors hover:bg-gradient-to-t hover:from-white hover:via-[#f29f9f] hover:to-red-500 lg:text-3xl"
+          initial="hidden"
+          animate="visible"
+          variants={itemVariants}
+          custom={0.2}
+        >
           BettaShop
-        </p>
-      </div>
+        </motion.p>
+      </motion.a>
 
-      {/* isAdmin */}
-      {isLoggedIn === true && userInfo.isAdmin === true ? (
+      {/* isLoggedIn */}
+      {isLoggedIn ? (
         <>
-          {isQuan ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/districts">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Districts}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateQuan()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/districts"
-              >
-                <img src={DistrictsIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Districts}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === true ? (
-        <>
-          {isDaily ? (
+          {userInfo.isAdmin === true ? (
             <>
-              <div className="my-4 py-4 bg-red-500">
-                <NavLink to="/stores">
-                  <div className="flex gap-3 items-center justify-center lg:justify-start">
-                    <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                    <p className="text-white font-bold hidden lg:block">
-                      {Stores}
-                    </p>
-                  </div>
+              {adminSidebarButtons.map((button, index) => (
+                <NavLink key={index} to={button.to} className={linkStyles}>
+                  <motion.div
+                    className="flex w-full items-center gap-3"
+                    initial="hidden"
+                    animate="visible"
+                    variants={itemVariants}
+                    custom={button.animation[0]}
+                    whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                  >
+                    <motion.img
+                      src={button.icon}
+                      alt="Icon mặt hàng"
+                      className="mx-5 h-10 w-10"
+                      variants={itemVariants}
+                      custom={button.animation[1]}
+                    />
+                    <motion.p
+                      className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
+                      variants={itemVariants}
+                      custom={button.animation[2]}
+                    >
+                      {button.title}
+                    </motion.p>
+                  </motion.div>
                 </NavLink>
-              </div>
+              ))}
             </>
           ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateDaily()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/stores"
-              >
-                <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">{Stores}</p>
-              </NavLink>
-            </div>
+            <>
+              {/* isStaff */}
+              {staffSidebarButtons.map((button, index) => (
+                <NavLink key={index} to={button.to} className={linkStyles}>
+                  <motion.div
+                    className="flex w-full items-center gap-3"
+                    initial="hidden"
+                    animate="visible"
+                    variants={itemVariants}
+                    custom={button.animation[0]}
+                    whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                  >
+                    <motion.img
+                      src={button.icon}
+                      alt="Icon mặt hàng"
+                      className="mx-5 h-10 w-10"
+                      variants={itemVariants}
+                      custom={button.animation[1]}
+                    />
+                    <motion.p
+                      className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
+                      variants={itemVariants}
+                      custom={button.animation[2]}
+                    >
+                      {button.title}
+                    </motion.p>
+                  </motion.div>
+                </NavLink>
+              ))}
+            </>
           )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === true ? (
-        <>
-          {isMathang ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/product-categorys">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {ProductCategories}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateMathang()}
+          {/* Logout button */}
+          <NavLink
+            to="/login"
+            className={linkStyles}
+            onClick={() => handleLogout()}
+          >
+            <motion.div
+              className="flex w-full items-center gap-3"
+              initial="hidden"
+              animate="visible"
+              variants={itemVariants}
+              custom={0.9}
+              whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
             >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/product-categorys"
+              <motion.img
+                src={LogoutIcon}
+                alt="Icon mặt hàng"
+                className="mx-5 h-10 w-10"
+                variants={itemVariants}
+                custom={0.9}
+              />
+              <motion.p
+                className="hidden w-fit bg-gradient-to-r from-red-700 via-[#ee7272] to-[#f6cdcd] bg-[length:0%_3px] bg-left-bottom bg-no-repeat font-bold transition-all duration-500 ease-out group-hover:bg-[length:100%_3px] lg:block"
+                variants={itemVariants}
+                custom={0.95}
               >
-                <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {ProductCategories}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === true ? (
-        <>
-          {isNhanvien ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/staff-management">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Staffs}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateNhanvien()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/staff-management"
-              >
-                <img src={StaffsIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">{Staffs}</p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === true ? (
-        <>
-          {isQuitac ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/rule-management">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Rules}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateQuitac()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/rule-management"
-              >
-                <img src={RulesIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">{Rules}</p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === true ? (
-        <>
-          {isCustomer ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/customer">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Customers}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateKhachhang()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/customer"
-              >
-                <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Customers}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === true ? (
-        <>
-          {isBaocao ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/admin-report">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Reports}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateBaocao()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/admin-report"
-              >
-                <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Reports}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {/* !isAdmin */}
-      {isLoggedIn === true && userInfo.isAdmin === false ? (
-        <>
-          {isSanpham ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/products">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Products}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateSanpham()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/products"
-              >
-                <img src={ProductsIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Products}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === false ? (
-        <>
-          {isQuanlykho ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/warehouse">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Warehouses}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateQuanlykho()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/warehouse"
-              >
-                <img src={WarehousesIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Warehouses}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-      {isLoggedIn === true && userInfo.isAdmin === false ? (
-        <>
-          {isKhachhang ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/customer">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Customers}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateKhachhangStaff()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/customer"
-              >
-                <img src={CustomersIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Customers}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === false ? (
-        <>
-          {isQuanlydaily ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/store-management">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {StoreManagement}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateQuanlydaily()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/store-management"
-              >
-                <img src={StoresIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {StoreManagement}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isLoggedIn === true && userInfo.isAdmin === false ? (
-        <>
-          {isBaocaoStaff ? (
-            <div className="my-4 py-4 bg-red-500">
-              <NavLink to="/staff-report">
-                <div className="flex gap-3 items-center justify-center lg:justify-start">
-                  <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                  <p className="text-white font-bold hidden lg:block">
-                    {Reports}
-                  </p>
-                </div>
-              </NavLink>
-            </div>
-          ) : (
-            <div
-              className="my-4 py-4 hover:bg-red-500"
-              onClick={() => activateBaocaoStaff()}
-            >
-              <NavLink
-                className="flex gap-3 justify-center items-center lg:justify-start"
-                to="/staff-report"
-              >
-                <img src={ReportsIcon} alt="" className="mx-5 h-10 w-10" />
-                <p className="text-white font-bold hidden lg:block">
-                  {Reports}
-                </p>
-              </NavLink>
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {/* Logout button */}
-      {isLoggedIn ? (
-        <div className="my-4 py-4 hover:bg-red-500">
-          <NavLink to="/login" onClick={() => handleLogout()}>
-            <div className="flex gap-3 items-center justify-center lg:justify-start">
-              <img src={LogoutIcon} alt="" className="mx-5 h-10 w-10" />
-              <p className="text-white font-bold hidden lg:block">
                 {LogOut_Btn}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           </NavLink>
-        </div>
+        </>
       ) : (
         <></>
       )}
-    </div>
+    </motion.div>
   );
 }
 
