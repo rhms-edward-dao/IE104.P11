@@ -198,7 +198,7 @@ function Customer() {
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
         <div className="flex flex-wrap justify-between">
           <div className="flex flex-wrap items-center justify-start gap-5 my-5">
-            <p className="text-lg whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+            <p className="text-lg whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white hover:cursor-default">
               {SearchBy}
             </p>
             <select
@@ -234,19 +234,19 @@ function Customer() {
         <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
           <thead className="border-b-4 border-red-500">
             <tr className="text-lg">
-              <th scope="col" className="border-r-2 py-5">
+              <th scope="col" className="border-r-2 py-5 hover:cursor-default">
                 {SF_Customers.Columns.Col1}
               </th>
               <th
                 scope="col"
-                className="border-r-2 py-5"
+                className="border-r-2 py-5 hover:cursor-pointer"
                 onClick={() => handleSort("Khachhang.sodienthoai")}
               >
                 {SF_Customers.Columns.Col2}
                 {sortConfig.key === "Khachhang.sodienthoai" &&
                   (sortConfig.direction === "asc" ? " ▲" : " ▼")}
               </th>
-              <th scope="col" className="border-r-2 py-5">
+              <th scope="col" className="border-r-2 py-5 hover:cursor-pointer">
                 {SF_Customers.Columns.Col3}
               </th>
               <th scope="col"></th>
@@ -259,10 +259,16 @@ function Customer() {
                   key={index}
                   className="border-b border-slate-300 text-black text-md transition-colors duration-300 hover:bg-slate-200 dark:border-white dark:text-white dark:hover:bg-slate-500"
                 >
-                  <td scope="row" className="border-r-2 py-5">
+                  <td
+                    scope="row"
+                    className="border-r-2 py-5 hover:cursor-default"
+                  >
                     {list.Khachhang.tenkhachhang}
                   </td>
-                  <td scope="row" className="border-r-2 py-5">
+                  <td
+                    scope="row"
+                    className="border-r-2 py-5 hover:cursor-default"
+                  >
                     {list.Khachhang.sodienthoai}
                   </td>
                   <td scope="row" className="border-r-2 py-5">
@@ -279,7 +285,7 @@ function Customer() {
                   <td scope="row">
                     <div className="flex flex-wrap justify-center gap-5 my-5 sm:gap-5 md:gap-5 lg:gap-10 xl:gap-16 2xl:gap-20">
                       <NavLink
-                        className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
                         to={`/customer/customer-edit-page/${list.Khachhang.makhachhang}`}
                         state={{ existedData: data }}
                       >
@@ -287,7 +293,7 @@ function Customer() {
                         <p className="hidden lg:inline-block">{Edit}</p>
                       </NavLink>
                       <button
-                        className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
                         onClick={() => deleteItem(list.Khachhang.makhachhang)}
                       >
                         <img src={DeleteIcon} alt="Icon thùng rác" />
