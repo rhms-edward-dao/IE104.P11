@@ -302,7 +302,7 @@ const Products = () => {
           <ul className="-mb-px flex flex-wrap">
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isProductTab
                     ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
                     : "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
@@ -314,7 +314,7 @@ const Products = () => {
             </li>
             <li className="me-2">
               <button
-                className={`inline-block rounded-t-lg border-b-2 p-2 transition-colors duration-300 ${
+                className={`inline-block rounded-t-lg border-b-2 p-2 transition-all duration-300 hover:scale-110 ${
                   isProductTab
                     ? "border-gray-300 hover:text-gray-800 dark:border-gray-800 dark:hover:text-white"
                     : "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
@@ -328,7 +328,7 @@ const Products = () => {
         </div>
         <div className="flex flex-wrap justify-between">
           <div className="flex flex-wrap items-center justify-start gap-5">
-            <p className="whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
+            <p className="hover:cursor-default whitespace-nowrap font-bold text-black transition-colors duration-300 dark:text-white">
               {SearchBy}
             </p>
             <select
@@ -397,11 +397,14 @@ const Products = () => {
               {isProductTab ? (
                 <>
                   <th scop="col" className="border-r-2 py-5"></th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Products.Columns.Col1}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleSort("Mathang.dongia")}
                   >
@@ -410,7 +413,7 @@ const Products = () => {
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
                   <th
-                    className="border-r-2 py-5"
+                    className="border-r-2 py-5 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleSort("Mathang.soluongton")}
                   >
@@ -418,16 +421,25 @@ const Products = () => {
                     {sortConfig.key === "Mathang.soluongton" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Products.Columns.Col4}
                   </th>
-                  <th className="border-r-2 py-5" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_Products.Columns.Col5}
                   </th>
                 </>
               ) : (
                 <>
-                  <th className="border-r-2 py-5 text-lg" scope="col">
+                  <th
+                    className="border-r-2 py-5 hover:cursor-default"
+                    scope="col"
+                  >
                     {SF_ProductCategories.Columns.Col1}
                   </th>
                 </>
@@ -445,7 +457,10 @@ const Products = () => {
                   >
                     {isProductTab ? (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           <img
                             width="250px"
                             src={`data:image/jpeg;base64, ${list.Mathang.hinhanh}`}
@@ -453,25 +468,43 @@ const Products = () => {
                             className="rounded 2xl:h-20 2xl:w-20"
                           />
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.tenmathang}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.dongia}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.soluongton}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.Mathang.tendvt}
                         </td>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenloaimathang}
                         </td>
                       </>
                     ) : (
                       <>
-                        <td scope="row" className="border-r-2 py-5">
+                        <td
+                          scope="row"
+                          className="border-r-2 py-5 hover:cursor-default"
+                        >
                           {list.tenloaimathang}
                         </td>
                       </>
@@ -479,7 +512,7 @@ const Products = () => {
                     <td scope="row">
                       <div className="flex flex-wrap justify-center gap-5 my-5">
                         <NavLink
-                          className="flex flex-wrap items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                          className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
                           to={
                             isProductTab
                               ? `product-edit-page/${list.Mathang.mamathang}`
@@ -490,7 +523,7 @@ const Products = () => {
                           <img src={EditIcon} alt="Icon chỉnh sửa" />
                         </NavLink>
                         <button
-                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 font-bold text-white"
+                          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#ff9f01] via-[#feb130] to-[#fdc360] hover:bg-gradient-to-l hover:from-[#ff9f01] hover:via-[#feb130] hover:to-[#fdc360] transition-all duration-300 hover:scale-105 px-4 py-2 font-bold text-white"
                           onClick={() =>
                             isProductTab
                               ? deleteAProduct(list.Mathang.mamathang)
