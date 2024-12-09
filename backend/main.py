@@ -605,8 +605,6 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
 @app.post("/mathang/them")
 async def add_new_mathang(
     tenmathang: str = Form(...),
-    dongia: int = Form(...),
-    soluongton: Decimal = Form(...),
     tendvt: str = Form(...),
     tenloaimathang: str = Form(...),
     tendaily: str = Form(...),
@@ -628,8 +626,6 @@ async def add_new_mathang(
         # Save data
         param_list = {
             "tenmathang": tenmathang,
-            "soluongton": soluongton,
-            "dongia": dongia,
             "tendvt": tendvt,
             "hinhanh": f"{IMAGEDIR}products/{hinhanh.filename}",
             "madaily": pmadaily,
@@ -694,8 +690,6 @@ async def add_new_mathang(
 async def update_mathang(
     mamathang: int,
     tenmathang: str = Form(...),
-    dongia: int = Form(...),
-    soluongton: Decimal = Form(...),
     tendvt: str = Form(...),
     tenloaimathang: str = Form(...),
     tendaily: str = Form(...),
@@ -722,8 +716,6 @@ async def update_mathang(
         param_list = {
             "mamathang": mamathang,
             "tenmathang": tenmathang,
-            "soluongton": soluongton,
-            "dongia": dongia,
             "tendvt": tendvt,
             "hinhanh": image_dir,
             "madaily": pmadaily,

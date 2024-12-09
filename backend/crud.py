@@ -176,7 +176,7 @@ def get_taikhoan_by_email(db: Session, pemail: str):
         .filter(
             models.Nhanvien.email == pemail,
             models.Nhanvien.manhanvien == models.t_taikhoan_nhavien.c.manhanvien,
-            models.t_taikhoan_nhavien.c.mataikhoan == models.Taikhoan.mataikhoan
+            models.t_taikhoan_nhavien.c.mataikhoan == models.Taikhoan.mataikhoan,
         )
         .first()
     )
@@ -342,8 +342,6 @@ def update_mathang(**param_list):
                     """
                 UPDATE MATHANG                
                 SET tenmathang = '{}',
-                    soluongton = {},
-                    dongia = {},
                     tendvt = '{}',
                     hinhanh = '{}',
                     madaily = {},
@@ -351,8 +349,6 @@ def update_mathang(**param_list):
                 WHERE mamathang = {}
             """.format(
                         param_list["tenmathang"],
-                        param_list["soluongton"],
-                        param_list["dongia"],
                         param_list["tendvt"],
                         param_list["hinhanh"],
                         param_list["madaily"],

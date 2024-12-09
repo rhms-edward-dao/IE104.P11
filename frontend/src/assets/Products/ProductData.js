@@ -11,7 +11,7 @@ export const getAllProducts = async () => {
 export const getProductById = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/mathang/mamathang/${id}`
+      `http://127.0.0.1:8000/mathang/mamathang/${id}`,
     );
     const data = await response.json();
     return data;
@@ -37,8 +37,6 @@ export const addProduct = async (item) => {
     formData.append("tenmathang", item.tenmathang);
     formData.append("tenloaimathang", item.tenloaimathang);
     formData.append("tendaily", item.tendaily);
-    formData.append("dongia", item.dongia);
-    formData.append("soluongton", item.soluongton);
     formData.append("tendvt", item.tendvt);
 
     const response = await fetch(`http://127.0.0.1:8000/mathang/them`, {
@@ -63,8 +61,6 @@ export const updateProduct = async (id, item) => {
     formData.append("tenmathang", item.tenmathang);
     formData.append("tenloaimathang", item.tenloaimathang);
     formData.append("tendaily", item.tendaily);
-    formData.append("dongia", item.dongia);
-    formData.append("soluongton", item.soluongton);
     formData.append("tendvt", item.tendvt);
 
     const response = await fetch(
@@ -72,7 +68,7 @@ export const updateProduct = async (id, item) => {
       {
         method: "PUT",
         body: formData,
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -132,7 +128,7 @@ export const updateProductOnlyStaff = async (id, item) => {
       {
         method: "PUT",
         body: formData,
-      }
+      },
     );
     const data = await response.json();
     return data;
