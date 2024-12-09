@@ -145,9 +145,6 @@ function Sidebar() {
         : "group transform-gpu text-white transition-all duration-300 ease-in-out hover:text-red-500"
     }`;
 
-  const test = () => {
-    return <div className=""></div>;
-  };
   // Animation here
   const sidebarVariants = {
     hidden: { x: "-100%" },
@@ -203,7 +200,14 @@ function Sidebar() {
           <>
             {/* isAdmin */}
             {adminSidebarButtons.map((button, index) => (
-              <NavLink key={index} to={button.to} className={linkStyles}>
+              <NavLink
+                key={index}
+                to={button.to}
+                className={linkStyles}
+                onClick={() =>
+                  button.to === "/login" ? handleLogout() : <></>
+                }
+              >
                 <motion.div
                   className="flex w-full items-center gap-3"
                   initial="hidden"
@@ -234,7 +238,14 @@ function Sidebar() {
           <>
             {/* isStaff */}
             {staffSidebarButtons.map((button, index) => (
-              <NavLink key={index} to={button.to} className={linkStyles}>
+              <NavLink
+                key={index}
+                to={button.to}
+                className={linkStyles}
+                onClick={() =>
+                  button.to === "/login" ? handleLogout() : <></>
+                }
+              >
                 <motion.div
                   className="flex w-full items-center gap-3"
                   initial="hidden"
