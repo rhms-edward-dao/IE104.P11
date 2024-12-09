@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from datetime import date, datetime
 from decimal import Decimal
 from fastapi import Form
+from typing import List
 
 # QUAN
 class QUAN(BaseModel):
@@ -149,6 +150,39 @@ class CHUCVU(BaseModel):
     luong: Decimal
     capdo: int
     thoihan: int
+
+    class Config:
+        orm_mode: True
+
+
+
+class PhieuNhapHangBase(BaseModel):
+    madaily: int
+    ngaylapphieu: date
+
+class PhieuNhapHangCreate(PhieuNhapHangBase):
+    pass
+
+class PhieuNhapHang(PhieuNhapHangBase):
+    maphieunhap: int
+    tongtien: float
+    tiendathanhtoan: float
+    tinhtrang: str
+
+    class Config:
+        orm_mode: True
+
+class PhieuXuatHangBase(BaseModel):
+    madaily: int
+    makhachhang: int
+    ngaylapphieu: date
+
+class PhieuXuatHangCreate(PhieuXuatHangBase):
+    pass
+
+class PhieuXuatHang(PhieuXuatHangBase):
+    maphieuxuat: int
+    tongtien: float
 
     class Config:
         orm_mode: True
