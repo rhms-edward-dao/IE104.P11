@@ -1674,6 +1674,41 @@ def get_phieunhaphang_by_madaily(madaily: int, db: Session = Depends(get_db)):
     return {"message": "Danh sách phiếu nhập hàng rỗng"}
 
 
+from datetime import date
+
+@app.get("/phieunhaphang/date/")
+def get_phieunhaphang_by_date(start_date: date, end_date: date, db: Session = Depends(get_db)):
+    get_all_phieunhaphang = crud.get_phieunhaphang_by_date(db, start_date, end_date)
+    result = []
+    if get_all_phieunhaphang:
+        for item in get_all_phieunhaphang:
+            Phieunhaphang_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Phieunhaphang": Phieunhaphang_dict,
+                    "tendaily": item[1],
+                }
+            )
+        return result
+    return {"message": "Không tìm thấy phiếu nhập hàng trong khoảng thời gian này"}
+
+@app.get("/phieunhaphang/madaily_date/")
+def get_phieunhaphang_by_madaily_and_date(madaily: int, start_date: date, end_date: date, db: Session = Depends(get_db)):
+    get_all_phieunhaphang = crud.get_phieunhaphang_by_madaily_and_date(db, madaily, start_date, end_date)
+    result = []
+    if get_all_phieunhaphang:
+        for item in get_all_phieunhaphang:
+            Phieunhaphang_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Phieunhaphang": Phieunhaphang_dict,
+                    "tendaily": item[1],
+                }
+            )
+        return result
+    return {"message": "Không tìm thấy phiếu nhập hàng của đại lý trong khoảng thời gian này"}
+
+
 @app.get("/phieunhaphang/ctphieunhap/{maphieunhap}")
 def get_chitiet_pnh_by_maphieunhap(maphieunhap: int, db: Session = Depends(get_db)):
     get_db = crud.get_chitiet_pnh_by_maphieunhap(db, maphieunhap)
@@ -1871,6 +1906,41 @@ def get_phieuxuathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
             )
         return result
     return {"message": "Danh sách phiếu xuất hàng rỗng"}
+
+@app.get("/phieuxuathang/date/")
+def get_phieuxuathang_by_date(start_date: date, end_date: date, db: Session = Depends(get_db)):
+    get_all_phieuxuathang = crud.get_phieuxuathang_by_date(db, start_date, end_date)
+    result = []
+    if get_all_phieuxuathang:
+        for item in get_all_phieuxuathang:
+            Phieuxuathang_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Phieuxuathang": Phieuxuathang_dict,
+                    "tendaily": item[1],
+                    "tenkhachhang": item[2],
+                }
+            )
+        return result
+    return {"message": "Không tìm thấy phiếu xuất hàng trong khoảng thời gian này"}
+
+
+@app.get("/phieuxuathang/madaily_date/")
+def get_phieuxuathang_by_madaily_and_date(madaily: int, start_date: date, end_date: date, db: Session = Depends(get_db)):
+    get_all_phieuxuathang = crud.get_phieuxuathang_by_madaily_and_date(db, madaily, start_date, end_date)
+    result = []
+    if get_all_phieuxuathang:
+        for item in get_all_phieuxuathang:
+            Phieuxuathang_dict = item[0].__dict__.copy()
+            result.append(
+                {
+                    "Phieuxuathang": Phieuxuathang_dict,
+                    "tendaily": item[1],
+                    "tenkhachhang": item[2],
+                }
+            )
+        return result
+    return {"message": "Không tìm thấy phiếu xuất hàng của đại lý trong khoảng thời gian này"}
 
 
 @app.get("/phieuxuathang/ctphieuxuat/{maphieuxuat}")
