@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../../components/Header'; 
-import { getAllStore } from '../../assets/Stores/StoreData'; 
-import { getProductByStoreId } from '../../assets/Products/ProductData'; 
+import Header from '../../components/Header';
+import { getAllStore } from '../../assets/Stores/StoreData';
+import { getProductByStoreId } from '../../assets/Products/ProductData';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const pageStyles = {
@@ -42,11 +42,18 @@ const pageStyles = {
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
     textAlign: 'center',
   },
+  cardTitle: {
+    fontWeight: 'bold', 
+  },
   tableSection: {
     backgroundColor: '#fff',
     padding: '20px',
     borderRadius: '8px',
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  },
+  sectionTitle: {
+    fontWeight: 'bold', 
+    marginBottom: '10px',
   },
   searchSection: {
     margin: '20px 0',
@@ -56,7 +63,7 @@ const pageStyles = {
     marginLeft: '25px',
   },
   label: {
-    fontWeight: 'bold',
+    fontWeight: 'bold', 
   },
   select: {
     padding: '10px',
@@ -66,35 +73,13 @@ const pageStyles = {
   },
 };
 
-const itemsPerPage = 5;
-const SF_Stores = {
-  Columns: {
-    Col1: 'col1',
-    Col2: 'col2',
-    Col3: 'col3',
-    Col4: 'col4',
-    Col5: 'col5',
-  }
-};
-
-
 const InventoryChart = ({ productData }) => {
   const chartData = productData.map(item => ({
-    name: item.Mathang.mamathang, 
+    name: item.Mathang.mamathang,
     id: item.Mathang.mamathang,
-    inventoryQuantity: item.Mathang.soluongton, 
-    productType: item.tenloaimathang 
+    inventoryQuantity: item.Mathang.soluongton,
+    productType: item.tenloaimathang,
   }));
-
-
-  const getBarColor = (productType) => {
-    switch(productType) {
-      case 'Koi': return '#3182ce'; 
-      case 'Halfmoon': return '#48bb78'; 
-      case 'Galaxy': return '#805ad5'; 
-      default: return '#cbd5e0'; 
-    }
-  };
 
   return (
     <div style={{ width: '100%', height: 400 }}>
@@ -104,30 +89,22 @@ const InventoryChart = ({ productData }) => {
           margin={{ top: 20, right: 30, left: 20, bottom: 100 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis 
-            dataKey="name" 
+          <XAxis
+            dataKey="name"
             interval={0}
-            angle={-45} 
+            angle={-45}
             textAnchor="end"
             height={150}
           />
           <YAxis label={{ value: 'Số lượng tồn kho', angle: -90, position: 'insideLeft' }} />
-          <Tooltip 
-            formatter={(value, name, props) => [value, 'Số lượng tồn kho']}
-            labelFormatter={(label) => `Mã sản phẩm: ${label}`} 
-          />
+          <Tooltip />
           <Legend />
-          <Bar 
-            dataKey="inventoryQuantity" 
-            fill="#8884d8" 
-            barSize={30}
-          />
+          <Bar dataKey="inventoryQuantity" fill="#8884d8" barSize={30} />
         </BarChart>
       </ResponsiveContainer>
     </div>
   );
 };
-
 
 const StockReport = () => {
   const [selectedAgent, setSelectedAgent] = useState('');
@@ -137,39 +114,33 @@ const StockReport = () => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [outOfStockProducts, setOutOfStockProducts] = useState(0);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllStore();
-        console.log("Fetched store data:", data); 
         setStoreData(data);
-        setStoreSearchResults(data.map(store => store.Daily.tendaily)); 
+        setStoreSearchResults(data.map(store => store.Daily.tendaily));
       } catch (error) {
-        console.error("Error fetching store data: ", error);
+        console.error('Error fetching store data: ', error);
       }
     };
     fetchData();
   }, []);
 
-
   const handleAgentChange = async (e) => {
     const selectedAgentName = e.target.value;
     setSelectedAgent(selectedAgentName);
-    console.log("Selected agent:", selectedAgentName); 
-
 
     const selectedStore = storeData.find(store => store.Daily.tendaily === selectedAgentName);
     if (selectedStore) {
       const selectedStoreId = selectedStore.Daily.madaily;
       try {
         const products = await getProductByStoreId(selectedStoreId);
-        console.log("Fetched product data for selected store:", products); 
         setProductData(products);
         setTotalProducts(products.length);
         setOutOfStockProducts(products.filter(product => product.Mathang.soluongton === 0).length);
       } catch (error) {
-        console.error("Error fetching product data for selected store: ", error);
+        console.error('Error fetching product data for selected store: ', error);
       }
     }
   };
@@ -195,33 +166,27 @@ const StockReport = () => {
         <div style={pageStyles.leftSection}>
           <div style={pageStyles.cardRow}>
             <div style={pageStyles.card}>
-              <h3>Tổng số sản phẩm</h3>
+              <h3 style={pageStyles.cardTitle}>Tổng số sản phẩm</h3>
               <h1 style={{ color: 'red' }}>{totalProducts}</h1>
             </div>
             <div style={pageStyles.card}>
-              <h3>Tổng số hết hàng</h3>
+              <h3 style={pageStyles.cardTitle}>Tổng số hết hàng</h3>
               <h1 style={{ color: 'red' }}>{outOfStockProducts}</h1>
             </div>
           </div>
           <div style={pageStyles.tableSection}>
-            <h3>Các sản phẩm có số lượng tồn kho thấp:</h3>
+            <h3 style={pageStyles.sectionTitle}>Các sản phẩm có số lượng tồn kho thấp:</h3>
             <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
               <thead>
                 <tr style={{ backgroundColor: '#f0f0f0' }}>
-                  <th style={{ padding: '10px', textAlign: 'left', border: '1px solid #ddd' }}>
-                    Mã sản phẩm
-                  </th>
-                  <th style={{ padding: '10px', textAlign: 'left', border: '1px solid #ddd' }}>
-                    Tên sản phẩm
-                  </th>
-                  <th style={{ padding: '10px', textAlign: 'left', border: '1px solid #ddd' }}>
-                    Số lượng tồn kho
-                  </th>
+                  <th style={{ padding: '10px', textAlign: 'left', border: '1px solid #ddd' }}>Mã sản phẩm</th>
+                  <th style={{ padding: '10px', textAlign: 'left', border: '1px solid #ddd' }}>Tên sản phẩm</th>
+                  <th style={{ padding: '10px', textAlign: 'left', border: '1px solid #ddd' }}>Số lượng tồn kho</th>
                 </tr>
               </thead>
               <tbody>
                 {productData
-                  .filter(product => product.Mathang.soluongton < 10) 
+                  .filter(product => product.Mathang.soluongton < 10)
                   .map((item, index) => (
                     <tr key={index}>
                       <td style={{ padding: '10px', border: '1px solid #ddd' }}>{item.Mathang.mamathang}</td>
@@ -234,7 +199,7 @@ const StockReport = () => {
           </div>
         </div>
         <div style={pageStyles.rightSection}>
-          <h3>Biểu đồ số lượng tồn kho của các sản phẩm</h3>
+          <h3 style={pageStyles.sectionTitle}>Biểu đồ số lượng tồn kho của các sản phẩm</h3>
           {productData.length > 0 ? (
             <InventoryChart productData={productData} />
           ) : (
@@ -257,4 +222,3 @@ const StockReport = () => {
 };
 
 export default StockReport;
-
