@@ -829,6 +829,36 @@ def get_phieunhaphang_by_madaily(db: Session, pMaDaiLy: int):
         .all()
     )
 
+from datetime import date
+
+# Get phieunhaphang by date range
+def get_phieunhaphang_by_date(db: Session, start_date: date, end_date: date):
+    return (
+        db.query(
+            models.Phieunhaphang,
+            models.Daily.tendaily,
+        )
+        .filter(
+            models.Phieunhaphang.madaily == models.Daily.madaily,
+            models.Phieunhaphang.ngaylapphieu >= start_date,
+            models.Phieunhaphang.ngaylapphieu <= end_date,
+        )
+        .all()
+    )
+
+# Get phieunhaphang by store's ID and date range
+def get_phieunhaphang_by_madaily_and_date(db: Session, pMaDaiLy: int, start_date: date, end_date: date):
+    return (
+        db.query(models.Phieunhaphang, models.Daily.tendaily)
+        .filter(
+            models.Phieunhaphang.madaily == models.Daily.madaily,
+            models.Phieunhaphang.madaily == pMaDaiLy,
+            models.Phieunhaphang.ngaylapphieu >= start_date,
+            models.Phieunhaphang.ngaylapphieu <= end_date,
+        )
+        .all()
+    )
+
 
 # Get all chitiet_pnh by phieunhaphang's id
 def get_chitiet_pnh_by_maphieunhap(db: Session, pMaPhieuNhap: int):
@@ -922,6 +952,37 @@ def get_phieuxuathang_by_madaily(db: Session, pMaDaiLy: int):
             models.Phieuxuathang.madaily == models.Daily.madaily,
             models.Phieuxuathang.makhachhang == models.Khachhang.makhachhang,
             models.Phieuxuathang.madaily == pMaDaiLy,
+        )
+        .all()
+    )
+
+# Get phieuxuathang by date range
+def get_phieuxuathang_by_date(db: Session, start_date: date, end_date: date):
+    return (
+        db.query(
+            models.Phieuxuathang,
+            models.Daily.tendaily,
+            models.Khachhang.tenkhachhang,
+        )
+        .filter(
+            models.Phieuxuathang.madaily == models.Daily.madaily,
+            models.Phieuxuathang.makhachhang == models.Khachhang.makhachhang,
+            models.Phieuxuathang.ngaylapphieu >= start_date,
+            models.Phieuxuathang.ngaylapphieu <= end_date,
+        )
+        .all()
+    )
+
+# Get phieuxuathang by store's ID and date range
+def get_phieuxuathang_by_madaily_and_date(db: Session, pMaDaiLy: int, start_date: date, end_date: date):
+    return (
+        db.query(models.Phieuxuathang, models.Daily.tendaily, models.Khachhang.tenkhachhang)
+        .filter(
+            models.Phieuxuathang.madaily == models.Daily.madaily,
+            models.Phieuxuathang.makhachhang == models.Khachhang.makhachhang,
+            models.Phieuxuathang.madaily == pMaDaiLy,
+            models.Phieuxuathang.ngaylapphieu >= start_date,
+            models.Phieuxuathang.ngaylapphieu <= end_date,
         )
         .all()
     )
