@@ -11,7 +11,7 @@ function AdminReport() {
   const { theme } = useTheme();
 
   const handleNavigation = (path) => {
-    navigate(`/admin-report${path}`);
+    navigate(`${path}`);
   };
 
   const pageStyle = {
