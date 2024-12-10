@@ -358,32 +358,25 @@ def update_mathang(**param_list):
                 )
             )
     else:
-        try:
-            with engine.connect().execution_options(autocommit=True) as connection:
-                connection.execute(
-                    text(
-                        """
-                    UPDATE MATHANG                
-                    SET tenmathang = '{}',
-                        soluongton = {},
-                        dongia = {},
-                        tendvt = '{}',
-                        madaily = {},
-                        maloaimathang = {}
-                    WHERE mamathang = {}
-                """.format(
-                            param_list["tenmathang"],
-                            param_list["soluongton"],
-                            param_list["dongia"],
-                            param_list["tendvt"],
-                            param_list["madaily"],
-                            param_list["maloaimathang"],
-                            param_list["mamathang"],
-                        )
+        with engine.connect().execution_options(autocommit=True) as connection:
+            connection.execute(
+                text(
+                    """
+                UPDATE MATHANG                
+                SET tenmathang = '{}',
+                    tendvt = '{}',
+                    madaily = {},
+                    maloaimathang = {}
+                WHERE mamathang = {}
+            """.format(
+                        param_list["tenmathang"],
+                        param_list["tendvt"],
+                        param_list["madaily"],
+                        param_list["maloaimathang"],
+                        param_list["mamathang"],
                     )
                 )
-        except Exception as e:
-            print(e)
+            )
 
 
 # QUITAC
