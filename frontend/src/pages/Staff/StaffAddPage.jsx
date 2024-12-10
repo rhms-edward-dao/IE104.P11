@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+// Import Contexts Here
+import { useTheme } from "../../contexts/ThemeContext";
+
+// Import Assets Here
+import { getAllCityName, getAllDistrictName } from "../../assets/StoreDistrict";
+import { addStaff, getAllPositionName } from "../../assets/Staffs/StaffData";
+import { getAllStoreName } from "../../assets/Stores/StoreData";
+
+// Import Components Here
+import Header from "../../components/Header";
 
 // Import icon here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
 
-import Header from "../../components/Header";
-
-import { getAllCityName, getAllDistrictName } from "../../assets/StoreDistrict";
-import { addStaff, getAllPositionName } from "../../assets/Staffs/StaffData";
-import { getAllStoreName } from "../../assets/Stores/StoreData";
-import { useTheme } from "../../contexts/ThemeContext";
-import { useTranslation } from "react-i18next";
 function StaffManagementAddPage() {
-
   // Variable for adding here
   // // For Them Mode
   const { theme } = useTheme();
@@ -21,8 +25,7 @@ function StaffManagementAddPage() {
   const { t } = useTranslation();
   const { AP_Staff } = t("AddPage");
   const { SF_Districts, SF_Staffs } = t("SearchFilter");
-  
-  console.log(AP_Staff);
+
   // // For other feature
   // For Dark Mode
   const [staffName, setStaffName] = useState("");
@@ -73,7 +76,7 @@ function StaffManagementAddPage() {
       var date = new Date();
       var today = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
         2,
-        "0"
+        "0",
       )}-${String(date.getDate()).padStart(2, "0")}`;
       setStaffBirthday(today);
     };
@@ -96,7 +99,7 @@ function StaffManagementAddPage() {
     tenthanhpho,
     tenquan,
     diachi,
-    hinhanh
+    hinhanh,
   ) => {
     let check_hoten = true;
     let check_sodienthoai = true;
@@ -218,6 +221,7 @@ function StaffManagementAddPage() {
       } else if (response.message === "Thêm nhân viên thất bại") {
         alert("Thêm nhân viên thất bại");
       } else {
+        console.log(response);
         alert("Thêm nhân viên thành công");
         navigate("/staff-management");
       }
@@ -238,7 +242,7 @@ function StaffManagementAddPage() {
                 <img
                   src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
                   alt="Icon trở lại"
-                  className="w-12 h-12"
+                  className="h-12 w-12"
                 />
               </button>
             </NavLink>
@@ -260,19 +264,19 @@ function StaffManagementAddPage() {
                   staffCityName,
                   staffDistrictName,
                   staffAddress,
-                  imageData
+                  imageData,
                 )
               }
             >
-              <p className="font-bold text-white text-lg">Thêm</p>
+              <p className="text-lg font-bold text-white">Thêm</p>
             </button>
           </div>
         </div>
-      
+
         <div className="m-5">
           <div className="block space-y-8">
             <div className="space-y-4">
-              <label htmlFor="staff-name-add" className="font-bold text-lg">
+              <label htmlFor="staff-name-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col1}
               </label>
               <br />
@@ -288,7 +292,7 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="birthdate-add" className="font-bold text-lg">
+              <label htmlFor="birthdate-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col2}
               </label>
               <br />
@@ -303,7 +307,7 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="staff-phone-add" className="font-bold text-lg">
+              <label htmlFor="staff-phone-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col6}
               </label>
               <br />
@@ -319,7 +323,7 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="staff-email-add" className="font-bold text-lg">
+              <label htmlFor="staff-email-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col7}
               </label>
               <br />
@@ -335,7 +339,7 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="store-name-add" className="font-bold text-lg">
+              <label htmlFor="store-name-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col3}
               </label>
               <br />
@@ -356,7 +360,7 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="position-name-add" className="font-bold text-lg">
+              <label htmlFor="position-name-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col4}
               </label>
               <br />
@@ -376,9 +380,9 @@ function StaffManagementAddPage() {
               </select>
             </div>
 
-            <div className="space-x-20 flex">
+            <div className="flex space-x-20">
               <div className="space-y-4">
-                <label htmlFor="city-name-add" className="font-bold text-lg">
+                <label htmlFor="city-name-add" className="text-lg font-bold">
                   {SF_Districts.Columns.Col2}
                 </label>
                 <br />
@@ -399,7 +403,10 @@ function StaffManagementAddPage() {
               </div>
 
               <div className="space-y-4">
-                <label htmlFor="district-name-add" className="font-bold text-lg">
+                <label
+                  htmlFor="district-name-add"
+                  className="text-lg font-bold"
+                >
                   {SF_Districts.Columns.Col1}
                 </label>
                 <br />
@@ -421,7 +428,7 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="address-add" className="font-bold text-lg">
+              <label htmlFor="address-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col5}
               </label>
               <br />
@@ -437,7 +444,7 @@ function StaffManagementAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="image-add" className="font-bold text-lg">
+              <label htmlFor="image-add" className="text-lg font-bold">
                 {SF_Staffs.Columns.Col8}
               </label>
               <br />

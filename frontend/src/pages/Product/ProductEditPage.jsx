@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
 import {
@@ -19,7 +20,6 @@ import Header from "../../components/Header";
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
-import { useAuth } from "../../contexts/AuthContext";
 
 const ProductStaffEditPage = () => {
   // Variable here
@@ -32,6 +32,9 @@ const ProductStaffEditPage = () => {
   const { EP_Products } = t("EditPage");
   const { SF_Products } = t("SearchFilter");
   const { Update } = t("Buttons");
+  // // For checking existed product category
+  const location = useLocation();
+  const { existedData } = location.state;
   // // For editing product
   const [currentProductName, setCurrentProductName] = useState("");
   const [currentUnit, setCurrentUnit] = useState("");
@@ -39,7 +42,7 @@ const ProductStaffEditPage = () => {
   const [currentProductCategoryName, setCurrentProductCategoryName] =
     useState("");
   const [existedProductCategoryName, setExistedProductCategoryName] = useState(
-    []
+    [],
   );
 
   const [existedStoreName, setExistedStoreName] = useState([]);
@@ -87,7 +90,7 @@ const ProductStaffEditPage = () => {
     tenmathang,
     tenloaimathang,
     tendvt,
-    hinhanh
+    hinhanh,
   ) => {
     let check_tenmathang = true;
     let check_tendvt = true;
@@ -157,13 +160,19 @@ const ProductStaffEditPage = () => {
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
             onClick={() =>
-              updateData(
-                productId,
-                currentProductName.trim(),
-                currentProductCategoryName,
-                currentUnit.trim(),
-                currentImage
+              existedData.some(
+                (item) => item.Mathang.tenmathang === currentProductName.trim(),
               )
+                ? alert(
+                    "Chỉnh sửa mặt hàng thất bại !!!\nTên mặt hàng đã tồn tại",
+                  )
+                : updateData(
+                    productId,
+                    currentProductName.trim(),
+                    currentProductCategoryName,
+                    currentUnit.trim(),
+                    currentImage,
+                  )
             }
           >
             {Update}

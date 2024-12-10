@@ -180,27 +180,27 @@ TRUNCATE KHACHHANG CASCADE;
 ALTER SEQUENCE KHACHHANG_makhachhang_seq RESTART WITH 1;
 
 ------------------------------------------------------------- Insert Into KHACHHANG_DIACHI ----------------------------------------------------------
-INSERT INTO KHACHHANG_DIACHI(MaKhachHang, MaQuan, DiaChi) VALUES
-('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh'),
-('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh'),
-('3', '3', '33 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh'),
-('4', '4', '25 Văn Cao, Phú Thạnh, Phú Nhuận, Hồ Chí Minh'),
-('5', '1', '26 Văn Cao, Phú Thạnh, Bình Tân, Hồ Chí Minh'),
-('6', '2', '27 Văn Cao, Phú Thạnh, Thủ Đức, Hồ Chí Minh'),
-('7', '3', '28 Văn Cao, Phú Thạnh, 1, Hồ Chí Minh'),
-('8', '4', '29 Văn Cao, Phú Thạnh, 2, Hồ Chí Minh'),
-('9', '1', '20 Văn Cao, Phú Thạnh, 3, Hồ Chí Minh'),
-('10', '2', '31 Văn Cao, Phú Thạnh, 4, Hồ Chí Minh'),
-('11', '3', '34 Văn Cao, Phú Thạnh, 5, Hồ Chí Minh'),
-('12', '4', '35 Văn Cao, Phú Thạnh, 6, Hồ Chí Minh'),
-('13', '1', '36 Văn Cao, Phú Thạnh, 7, Hồ Chí Minh'),
-('14', '2', '37 Văn Cao, Phú Thạnh, 8, Hồ Chí Minh'),
-('15', '3', '38 Văn Cao, Phú Thạnh, 9, Hồ Chí Minh'),
-('16', '4', '39 Văn Cao, Phú Thạnh, 10, Hồ Chí Minh'),
-('17', '1', '40 Văn Cao, Phú Thạnh, 11, Hồ Chí Minh'),
-('18', '2', '41 Văn Cao, Phú Thạnh, 12, Hồ Chí Minh'),
-('19', '4', '42 Văn Cao, Phú Thạnh, Gò Vấp, Hồ Chí Minh'),
-('20', '3', '43 Văn Cao, Phú Thạnh, Hóc Môn, Hồ Chí Minh');
+INSERT INTO KHACHHANG_DIACHI(MaKhachHang, MaQuan, DiaChi, KinhDo, ViDo) VALUES
+('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '123', '456'),
+('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '789', '101'),
+('3', '3', '33 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh', '121', '314'),
+('4', '4', '25 Văn Cao, Phú Thạnh, Phú Nhuận, Hồ Chí Minh', '151', '617'),
+('5', '1', '26 Văn Cao, Phú Thạnh, Bình Tân, Hồ Chí Minh', '181', '920'),
+('6', '2', '27 Văn Cao, Phú Thạnh, Thủ Đức, Hồ Chí Minh', '212', '223'),
+('7', '3', '28 Văn Cao, Phú Thạnh, 1, Hồ Chí Minh', '242', '526'),
+('8', '4', '29 Văn Cao, Phú Thạnh, 2, Hồ Chí Minh', '272', '829'),
+('9', '1', '20 Văn Cao, Phú Thạnh, 3, Hồ Chí Minh', '303', '132'),
+('10', '2', '31 Văn Cao, Phú Thạnh, 4, Hồ Chí Minh', '333', '435'),
+('11', '3', '34 Văn Cao, Phú Thạnh, 5, Hồ Chí Minh', '363', '738'),
+('12', '4', '35 Văn Cao, Phú Thạnh, 6, Hồ Chí Minh', '394', '041'),
+('13', '1', '36 Văn Cao, Phú Thạnh, 7, Hồ Chí Minh', '424', '344'),
+('14', '2', '37 Văn Cao, Phú Thạnh, 8, Hồ Chí Minh', '454', '647'),
+('15', '3', '38 Văn Cao, Phú Thạnh, 9, Hồ Chí Minh', '484', '950'),
+('16', '4', '39 Văn Cao, Phú Thạnh, 10, Hồ Chí Minh', '515', '253'),
+('17', '1', '40 Văn Cao, Phú Thạnh, 11, Hồ Chí Minh', '545', '556'),
+('18', '2', '41 Văn Cao, Phú Thạnh, 12, Hồ Chí Minh', '575', '859'),
+('19', '4', '42 Văn Cao, Phú Thạnh, Gò Vấp, Hồ Chí Minh', '606', '162'),
+('20', '3', '43 Văn Cao, Phú Thạnh, Hóc Môn, Hồ Chí Minh', '636', '465');
 SELECT * FROM KHACHHANG_DIACHI
 TRUNCATE KHACHHANG_DIACHI CASCADE
 

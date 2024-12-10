@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Import Context Here
@@ -27,6 +27,9 @@ const ProductCategoriesEditPage = () => {
   const { EP_ProductCategories } = t("EditPage");
   const { SF_ProductCategories } = t("SearchFilter");
   const { Update } = t("Buttons");
+  // // For checking existed product category
+  const location = useLocation();
+  const { existedData } = location.state;
   // // For adding product category
   const [currentProductCategoryName, setCurrentProductCategoryName] =
     useState("");
@@ -39,9 +42,8 @@ const ProductCategoriesEditPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       // Get current product category infomation by its id
-      const currentProductCategory = await getProductTypeById(
-        productCategoryId
-      );
+      const currentProductCategory =
+        await getProductTypeById(productCategoryId);
       setCurrentProductCategoryName(currentProductCategory.tenloaimathang);
     };
     fetchData();
@@ -84,7 +86,17 @@ const ProductCategoriesEditPage = () => {
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
             onClick={() =>
-              updateData(productCategoryId, currentProductCategoryName.trim())
+              existedData.some(
+                (item) =>
+                  item.tenloaimathang === currentProductCategoryName.trim(),
+              )
+                ? alert(
+                    "Chỉnh sửa loại mặt hàng thất bại !!!\nTên loại mặt hàng đã tồn tại",
+                  )
+                : updateData(
+                    productCategoryId,
+                    currentProductCategoryName.trim(),
+                  )
             }
           >
             {Update}

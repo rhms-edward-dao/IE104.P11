@@ -19,13 +19,14 @@ import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
 
 const ImportAddPage = () => {
   // Variable here
-  const { userInfo } = useAuth();
   // // For Theme Mode
   const { theme } = useTheme();
   // // For Multi-Language
   const { t } = useTranslation();
   const { AP_Import } = t("AddPage");
   const { Import, Confirm } = t("Buttons");
+  // // For Checking If Staff Account Or Not
+  const { userInfo } = useAuth();
   // // For Adding New Import Bill
   const [productData, setProductData] = useState([]);
   const [soLuongNhap, setSoLuongNhap] = useState({});
@@ -99,7 +100,7 @@ const ImportAddPage = () => {
     return productData.filter(
       (product) =>
         !selectedValues.includes(product.Mathang.mamathang) ||
-        dropdownValues[currentIndex] === product.Mathang.mamathang
+        dropdownValues[currentIndex] === product.Mathang.mamathang,
     );
   };
 
@@ -130,7 +131,7 @@ const ImportAddPage = () => {
       }
       if (!/^\d+$/.test(item.soluongnhap)) {
         alert(
-          `Số lượng nhập cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`
+          `Số lượng nhập cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`,
         );
         return false;
       }
@@ -140,7 +141,7 @@ const ImportAddPage = () => {
       }
       if (!/^\d+$/.test(item.dongianhap)) {
         alert(
-          `Đơn giá nhập cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`
+          `Đơn giá nhập cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`,
         );
         return false;
       }
@@ -218,7 +219,7 @@ const ImportAddPage = () => {
             />
             <button
               type="submit"
-              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:ring focus:ring-indigo-300 font-bold text-lg"
+              className="rounded bg-indigo-600 px-4 py-2 text-lg font-bold text-white hover:bg-indigo-700 focus:ring focus:ring-indigo-300"
             >
               {Confirm}
             </button>
@@ -226,7 +227,8 @@ const ImportAddPage = () => {
           <div className="space-y-10">
             {Array.from({ length: numDropdowns }).map((_, index) => {
               const selectedProduct = productData.find(
-                (product) => product.Mathang.mamathang === dropdownValues[index]
+                (product) =>
+                  product.Mathang.mamathang === dropdownValues[index],
               );
               return (
                 <div key={index} className="space-y-5 border-b pb-4">
@@ -259,7 +261,7 @@ const ImportAddPage = () => {
                     </select>
                   </div>
                   <div className="flex items-center space-x-5">
-                    <div className="flex space-x-5 items-center">
+                    <div className="flex items-center space-x-5">
                       <label
                         className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                         htmlFor={`soluongton-${index}`}
@@ -274,7 +276,7 @@ const ImportAddPage = () => {
                         readOnly
                       />
                     </div>
-                    <div className="flex space-x-5 items-center">
+                    <div className="flex items-center space-x-5">
                       <label
                         className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                         htmlFor={`soluongnhap-${index}`}
@@ -291,7 +293,7 @@ const ImportAddPage = () => {
                         }
                       />
                     </div>
-                    <div className="flex space-x-5 items-center">
+                    <div className="flex items-center space-x-5">
                       <label
                         className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                         htmlFor={`dongianhap-${index}`}

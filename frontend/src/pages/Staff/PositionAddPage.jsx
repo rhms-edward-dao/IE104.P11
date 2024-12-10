@@ -31,7 +31,9 @@ function PositionAddPage() {
   const { existedData } = location.state;
   // Functions here
   const addData = async (tenchucvu, capdo, luong) => {
-    const checkExistedData = existedData.some(item => item.tenchucvu === tenchucvu);
+    const checkExistedData = existedData.some(
+      (item) => item.tenchucvu === tenchucvu,
+    );
     if (checkExistedData) {
       alert("Tên chức vụ đã tồn tại");
     } else {
@@ -66,7 +68,9 @@ function PositionAddPage() {
           luong: luong,
         };
         const response = await addPosition(item);
-        if (response.message === "Thêm chức vụ thất bại do chức vụ đã tồn tại") {
+        if (
+          response.message === "Thêm chức vụ thất bại do chức vụ đã tồn tại"
+        ) {
           alert("Tên chức vụ đã tồn tại");
         } else if (response.message === "Thêm chức vụ thất bại") {
           alert("Thêm chức vụ thất bại");
@@ -103,10 +107,10 @@ function PositionAddPage() {
               </p>
               <div className="flex justify-end">
                 <button
-                  className="px-2 py-3 bg-red-500 rounded rounded-xl"
+                  className="rounded-xl bg-red-500 px-2 py-3"
                   onClick={() => addData(positionName, level, salary)}
                 >
-                  <p className="font-bold text-white text-lg">Thêm</p>
+                  <p className="text-lg font-bold text-white">Thêm</p>
                 </button>
               </div>
             </div>
@@ -115,7 +119,7 @@ function PositionAddPage() {
         <div>
           <div className="block space-y-8">
             <div className="space-y-4">
-              <label htmlFor="district-name-add" className="font-bold text-lg">
+              <label htmlFor="district-name-add" className="text-lg font-bold">
                 {SF_Positions.Columns.Col1}
               </label>
               <br />
@@ -131,7 +135,7 @@ function PositionAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="level-add" className="font-bold text-lg">
+              <label htmlFor="level-add" className="text-lg font-bold">
                 {SF_Positions.Columns.Col2}
               </label>
               <br />
@@ -147,7 +151,7 @@ function PositionAddPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="salary-add" className="font-bold text-lg">
+              <label htmlFor="salary-add" className="text-lg font-bold">
                 {SF_Positions.Columns.Col3}
               </label>
               <br />

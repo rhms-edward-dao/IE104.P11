@@ -59,6 +59,7 @@ import RevenueReport from "./pages/AdminReport/RevenueReport";
 import StaffReport from "./pages/Report/StaffReport";
 
 import Customer from "./pages/Customer/Customer";
+import CustomerAddPage from "./pages/Customer/CustomerAddPage";
 import CustomerEditPage from "./pages/Customer/CustomerEditPage";
 
 // import Management from "./pages/Management";
@@ -68,15 +69,14 @@ import MyAccountEditPage from "./pages/MyAccount/MyAccountEditPage";
 
 import Warehouse from "./pages/Warehouse/Warehouse";
 import ImportAddPage from "./pages/Warehouse/ImportAddPage";
+import ImportEditPage from "./pages/Warehouse/ImportEditPage";
 import WarehouseImportPage from "./pages/Warehouse/WarehouseImportPage";
 import ExportAddPage from "./pages/Warehouse/ExportAddPage";
+import ExportEditPage from "./pages/Warehouse/ExportEditPage";
 import WarehouseExportPage from "./pages/Warehouse/WarehouseExportPage";
 
 import StoreManagement from "./pages/StoreManagement/StoreManagement";
 import StoreManagementEditPage from "./pages/StoreManagement/StoreManagementEditPage";
-import ImportEditPage from "./pages/Warehouse/ImportEditPage";
-import ExportEditPage from "./pages/Warehouse/ExportEditPage";
-import CustomerAddPage from "./pages/Customer/CustomerAddPage";
 
 // Component bảo vệ route
 function ProtectedRoute({ element }) {
@@ -110,7 +110,10 @@ function App() {
                             <Route path="/" element={<Login />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/sign-up" element={<SignUp />} />
-                            <Route path="/forget-password" element={<ForgetPassword />}/>
+                            <Route
+                              path="/forget-password"
+                              element={<ForgetPassword />}
+                            />
                             {/* Routes for My Account */}
                             <Route
                               path="/my-account"

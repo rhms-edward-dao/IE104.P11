@@ -129,6 +129,23 @@ function Districts() {
     if (response.message === "Xóa quận thành công") {
       alert(response.message);      
       setDistrictData(districtData.filter((item) => item.maquan !== id));
+      // Set data for statistics
+      let totalDistrict = new Set();
+      let totalCity = new Set();
+      districtData
+        .filter((item) => item.maquan !== id)
+        .forEach((item) => {
+          if (item.maquan) {
+            totalDistrict.add(item.maquan);
+          }
+          if (item.tenthanhpho) {
+            totalCity.add(item.tenthanhpho);
+          }
+        });
+      setStatistics({
+        totalDistrict: totalDistrict.size,
+        totalCity: totalCity.size,
+      });
     } else {
       alert(response.message);
     }

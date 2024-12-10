@@ -13,7 +13,7 @@ export const getAllImportBill = async () => {
 export const getImportBillByBillId = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieunhaphang/maphieunhap/${id}`
+      `http://127.0.0.1:8000/phieunhaphang/maphieunhap/${id}`,
     );
     const data = await response.json();
     return data;
@@ -25,7 +25,7 @@ export const getImportBillByBillId = async (id) => {
 export const getImportBillByStoreId = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieunhaphang/madaily/${id}`
+      `http://127.0.0.1:8000/phieunhaphang/madaily/${id}`,
     );
     const data = await response.json();
     return data;
@@ -44,7 +44,7 @@ export const addImportBill = async (id, item) => {
           "Content-Type": "application/json", // Indicate JSON payload
         },
         body: JSON.stringify({ items: item }), // Send item array as JSON
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -53,17 +53,17 @@ export const addImportBill = async (id, item) => {
   }
 };
 
-export const updateImportBill = async (id, item) => {
+export const updateImportBill = async (id, storeID, item) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieunhaphang/capnhat/maphieunhap/${id}`,
+      `http://127.0.0.1:8000/phieunhaphang/capnhat/maphieunhap/${id}/${storeID}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json", // Indicate JSON payload
         },
         body: JSON.stringify({ items: item }), // Send item array as JSON
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -72,17 +72,17 @@ export const updateImportBill = async (id, item) => {
   }
 };
 
-export const deleteImportBill = async (id, item) => {
+export const deleteImportBill = async (id, storeID, item, debt) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieunhaphang/xoa/maphieunhap/${id}`,
+      `http://127.0.0.1:8000/phieunhaphang/xoa/maphieunhap/${id}/${storeID}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json", // Indicate JSON payload
         },
-        body: JSON.stringify({ items: item }), // Send item array as JSON
-      }
+        body: JSON.stringify({ items: item, debt: debt }), // Send item array as JSON
+      },
     );
     const data = await response.json();
     return data;
@@ -95,7 +95,7 @@ export const deleteImportBill = async (id, item) => {
 export const getImportBillDetail = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieunhaphang/ctphieunhap/${id}`
+      `http://127.0.0.1:8000/phieunhaphang/ctphieunhap/${id}`,
     );
     const data = await response.json();
     return data;
@@ -118,7 +118,7 @@ export const getAllExportBill = async () => {
 export const getExportBillByBillId = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieuxuathang/maphieuxuat/${id}`
+      `http://127.0.0.1:8000/phieuxuathang/maphieuxuat/${id}`,
     );
     const data = await response.json();
     return data;
@@ -130,7 +130,7 @@ export const getExportBillByBillId = async (id) => {
 export const getExportBillByStoreId = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieuxuathang/madaily/${id}`
+      `http://127.0.0.1:8000/phieuxuathang/madaily/${id}`,
     );
     const data = await response.json();
     return data;
@@ -149,7 +149,7 @@ export const addExportBill = async (id, customer, item) => {
           "Content-Type": "application/json", // Indicate JSON payload
         },
         body: JSON.stringify({ customerId: customer, items: item }), // Send item array as JSON
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -168,7 +168,7 @@ export const updateExportBill = async (id, customer) => {
           "Content-Type": "application/json", // Indicate JSON payload
         },
         body: JSON.stringify({ customerId: customer }), // Send item array as JSON
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -187,7 +187,7 @@ export const deleteExportBill = async (id, item) => {
           "Content-Type": "application/json", // Indicate JSON payload
         },
         body: JSON.stringify({ items: item }), // Send item array as JSON
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -200,7 +200,7 @@ export const deleteExportBill = async (id, item) => {
 export const getExportBillDetail = async (id) => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/phieuxuathang/ctphieuxuat/${id}`
+      `http://127.0.0.1:8000/phieuxuathang/ctphieuxuat/${id}`,
     );
     const data = await response.json();
     return data;

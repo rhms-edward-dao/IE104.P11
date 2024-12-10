@@ -232,6 +232,33 @@ function Staff() {
     } else {
       alert(staffResponse.message);
       setStaffData(staffData.filter((item) => item.Nhanvien.manhanvien !== id));
+      // Statistics here
+      // Staff count
+      let distinctStaff = new Set();
+      let totalIncome = 0.0;
+      // Get distinct staffs
+      staffData
+        .filter((item) => item.Nhanvien.manhanvien !== id)
+        .forEach((item) => {
+          if (item.Nhanvien.manhanvien) {
+            distinctStaff.add(item.Nhanvien.manhanvien);
+          }
+        });
+      // For total salary
+      distinctStaff.forEach((item) => {
+        staffData
+          .filter((item) => item.Nhanvien.manhanvien !== id)
+          .filter((sitem) => {
+            if (sitem.Nhanvien.manhanvien === item) {
+              totalIncome += sitem.luong;
+            }
+          });
+      });
+      setStatistics({
+        totalStaff: distinctStaff.size,
+        totalPosition: statistics.totalPosition,
+        totalSalary: totalIncome,
+      });
     }
   };
   // // For deleting one position
@@ -243,6 +270,23 @@ function Staff() {
     } else {
       alert(positionResponse.message);
       setPositionData(positionData.filter((item) => item.machucvu !== id));
+      // Statistics here
+      // Staff count
+      let distinctPosition = new Set();
+      // Get distinct positions
+      positionData
+        .filter((item) => item.machucvu !== id)
+        .forEach((item) => {
+          if (item.machucvu) {
+            distinctPosition.add(item.machucvu);
+          }
+        });
+
+      setStatistics({
+        totalStaff: statistics.totalStaff,
+        totalPosition: distinctPosition.size,
+        totalSalary: statistics.totalSalary,
+      });
     }
   };
 

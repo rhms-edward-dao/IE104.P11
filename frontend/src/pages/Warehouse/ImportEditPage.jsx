@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 // Import Context Here
 import { useTheme } from "../../contexts/ThemeContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
 import {
@@ -20,6 +21,7 @@ import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
 
 const ImportEditPage = () => {
   // Variable here
+  const { userInfo } = useAuth();
   // // For Theme Mode
   const { theme } = useTheme();
   // // For Multi-Language
@@ -69,14 +71,14 @@ const ImportEditPage = () => {
       alert("Tiền đã thanh toán chỉ được có ký tự chữ số");
       check_tiendathanhtoan = false;
     }
-    if (tiendathanhtoan) {
+    if (check_tiendathanhtoan) {
       let item = [
         {
           tiendathanhtoan: tiendathanhtoan,
           tinhtrang: tinhtrang,
         },
       ];
-      const data = await updateImportBill(importId, item);
+      const data = await updateImportBill(importId, userInfo.storeID, item);
       if (data.message === "Cập nhật phiếu nhập hàng thất bại") {
         alert(data.message);
       } else if (data.message === "Cập nhật phiếu nhập hàng thành công.") {

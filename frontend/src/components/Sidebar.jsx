@@ -203,7 +203,11 @@ function Sidebar() {
               <NavLink
                 key={index}
                 to={button.to}
-                className={linkStyles}
+                className={
+                  button.to === "/login"
+                    ? "group my-4 flex transform-gpu items-center justify-center gap-3 py-4 text-left text-xl text-white transition-all duration-300 ease-in-out hover:text-red-500 lg:justify-start"
+                    : linkStyles
+                }
                 onClick={() =>
                   button.to === "/login" ? handleLogout() : <></>
                 }
@@ -241,7 +245,11 @@ function Sidebar() {
               <NavLink
                 key={index}
                 to={button.to}
-                className={linkStyles}
+                className={
+                  button.to === "/login"
+                    ? "group my-4 flex transform-gpu items-center justify-center gap-3 py-4 text-left text-xl text-white transition-all duration-300 ease-in-out hover:text-red-500 lg:justify-start"
+                    : linkStyles
+                }
                 onClick={() =>
                   button.to === "/login" ? handleLogout() : <></>
                 }

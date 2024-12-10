@@ -196,6 +196,23 @@ const ProductCategorys = () => {
       setProductData(
         productData.filter((item) => item.Mathang.mamathang !== id),
       );
+      const [card1, card2, card3] = [
+        productData.filter((item) => item.Mathang.mamathang !== id).length,
+        productData
+          .filter((item) => item.Mathang.mamathang !== id)
+          .reduce(
+            (sum, item) => sum + item.Mathang.dongia * item.Mathang.soluongton,
+            0,
+          ),
+        productData
+          .filter((item) => item.Mathang.mamathang !== id)
+          .reduce(
+            (count, item) =>
+              [0].includes(item.Mathang.soluongton) ? count + 1 : count,
+            0,
+          ),
+      ];
+      setStatisticData({ card1: card1, card2: card2, card3: card3 });
     }
   };
   // // For deleting one product category

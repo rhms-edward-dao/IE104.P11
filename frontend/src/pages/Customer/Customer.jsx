@@ -140,6 +140,24 @@ function Customer() {
     } else {
       alert("Xóa khách hàng thành công");
       setData(data.filter((item) => item.Khachhang.makhachhang !== id));
+      let distinctDistricts = new Set();
+      data
+        .filter((item) => item.Khachhang.makhachhang !== id)
+        .forEach((item) => {
+          if (item.Diachi.maquan) {
+            distinctDistricts.add(item.Diachi.maquan);
+          }
+        });
+      const [card1, card3] = [
+        data.filter((item) => item.Khachhang.makhachhang !== id).length,
+
+        distinctDistricts.size,
+      ];
+      setStatisticData({
+        card1: card1,
+        card2: statisticData.card2,
+        card3: card3,
+      });
     }
   };
 

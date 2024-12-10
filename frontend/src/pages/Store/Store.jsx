@@ -80,25 +80,21 @@ function Stores() {
       try {
         // Get Existed Stores
         const existedStore = await getAllStore();
-        // Get Existed Import Bills
-        const existedImport = await getAllImportBill();
         if (existedStore.message === "Danh sách đại lý rỗng") {
           setStatisticData({ card1: 0, card2: 0, card3: 0 });
           setStoreData([]);
         } else {
+          // Get Existed Import Bills
+          const existedImport = await getAllImportBill();
           const [card1, card2, card3] = [
             existedStore.length,
-            existedImport.reduce(
-              (sum, item) =>
-                sum +
-                (item.Phieunhaphang.tongtien -
-                  item.Phieunhaphang.tiendathanhtoan),
-              0,
-            ),
-            existedImport.reduce(
-              (sum, item) => sum + item.Phieunhaphang.tongtien,
-              0,
-            ),
+            existedStore.reduce((sum, item) => sum + item.Daily.sotienno, 0),
+            existedImport.message === "Danh sách phiếu nhập hàng rỗng"
+              ? 0
+              : existedImport.reduce(
+                  (sum, item) => sum + item.Phieunhaphang.tongtien,
+                  0,
+                ),
           ];
           setStatisticData({ card1: card1, card2: card2, card3: card3 });
           setStoreData(existedStore);
@@ -227,6 +223,17 @@ function Stores() {
     } else {
       alert(storeResponse.message);
       setStoreData(storeData.filter((item) => item.Daily.madaily !== id));
+      const [card1, card2] = [
+        storeData.filter((item) => item.Daily.madaily !== id).length,
+        storeData
+          .filter((item) => item.Daily.madaily !== id)
+          .reduce((sum, item) => sum + item.Daily.sotienno, 0),
+      ];
+      setStatisticData({
+        card1: card1,
+        card2: card2,
+        card3: statisticData.card3,
+      });
     }
   };
   // // For deleting one loaidaily

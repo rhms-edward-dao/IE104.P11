@@ -18,6 +18,7 @@ import {
   getImportBillByStoreId,
   getImportBillDetail,
 } from "../../assets/Warehouses/WarehouseData";
+import { getProductByStoreId } from "../../assets/Products/ProductData";
 import { WarehouseDataCard } from "../../assets/Warehouses/WarehouseDataCard";
 
 // Import Components Here
@@ -53,6 +54,7 @@ const Warehouse = () => {
   // // For fetching import & export bills data
   const [importData, setImportData] = useState([]);
   const [exportData, setExportData] = useState([]);
+  const [productData, setProductData] = useState([]);
   // // For searching import & export bills
   const [importSearchTerm, setImportSearchTerm] = useState("");
   const [exportSearchTerm, setExportSearchTerm] = useState("");
@@ -93,6 +95,14 @@ const Warehouse = () => {
         } else {
           setExportData(existedExport);
         }
+        // Get Existed Products By Store's ID
+        const existedProduct = await getProductByStoreId(userInfo.storeID); // Just get products for only one store - not for all stores
+        if (existedProduct.message === "Danh sách mặt hàng rỗng") {
+          setProductData([]);
+        } else {
+          setProductData(existedProduct);
+        }
+        // Calculate Statistic Data Card
         const [card1, card2] = [
           existedImport.message === "Danh sách phiếu nhập hàng rỗng"
             ? 0
@@ -214,8 +224,19 @@ const Warehouse = () => {
     setSortConfig({ key, direction });
     setExportData(sortedData);
   };
+  // // For Checking If There Is At Least 1 Product To Import or Export
+  const handleNavLinkClick = (e) => {
+    if (productData.length === 0) {
+      e.preventDefault(); // Prevent navigation to the import or export add page
+      alert(
+        isWarehouseTab
+          ? "Chưa có mặt hàng để tạo phiếu nhập hàng !!!\nHãy thêm mặt hàng từ trang Sản phẩm trước."
+          : "Chưa có mặt hàng để tạo phiếu xuất hàng !!!\nHãy thêm mặt hàng từ trang Sản phẩm trước.",
+      );
+    }
+  };
   // // For deleting one import bill
-  const deleteAImportBill = async (id) => {
+  const deleteAImportBill = async (id, debt) => {
     const detailImportBill = await getImportBillDetail(id);
     const detailInfo = [];
     Object.keys(detailImportBill).forEach((index) => {
@@ -233,16 +254,28 @@ const Warehouse = () => {
         soluongnhap,
       });
     });
-
-    const importResponse = await deleteImportBill(id, detailInfo);
+    const importResponse = await deleteImportBill(
+      id,
+      userInfo.storeID,
+      detailInfo,
+      debt,
+    );
 
     if (importResponse.message === "Xóa phiếu nhập hàng thất bại") {
       alert(importResponse.message);
     } else {
       alert(importResponse.message);
+      // Updating Import Data After Deleting One
       setImportData(
         importData.filter((item) => item.Phieunhaphang.maphieunhap !== id),
       );
+      // Updating Statistic Data Card After Deleting One
+      const [card1] = [
+        importData
+          .filter((item) => item.Phieunhaphang.maphieunhap !== id)
+          .reduce((sum, item) => sum + item.Phieunhaphang.tongtien, 0),
+      ];
+      setStatisticData({ card1: card1, card2: statisticData.card2 });
     }
   };
   // // For deleting one export bill
@@ -269,9 +302,17 @@ const Warehouse = () => {
       alert(exportResponse.message);
     } else {
       alert(exportResponse.message);
+      // Updating Export Data After Deleting One
       setExportData(
         exportData.filter((item) => item.Phieuxuathang.maphieuxuat !== id),
       );
+      // Updating Statistic Data Card After Deleting One
+      const [card2] = [
+        exportData
+          .filter((item) => item.Phieuxuathang.maphieuxuat !== id)
+          .reduce((sum, item) => sum + item.Phieuxuathang.tongtien, 0),
+      ];
+      setStatisticData({ card1: statisticData.card1, card2: card2 });
     }
   };
   // // For changing placeholder text base on the selected search-filter option
@@ -463,6 +504,7 @@ const Warehouse = () => {
                 ? "warehouse-import-add-page"
                 : "warehouse-export-add-page"
             }
+            onClick={handleNavLinkClick}
           >
             <Button addBtn={Add} />
           </NavLink>
@@ -620,6 +662,8 @@ const Warehouse = () => {
                             isWarehouseTab
                               ? deleteAImportBill(
                                   list.Phieunhaphang.maphieunhap,
+                                  list.Phieunhaphang.tongtien -
+                                    list.Phieunhaphang.tiendathanhtoan,
                                 )
                               : deleteAExportBill(
                                   list.Phieuxuathang.maphieuxuat,
