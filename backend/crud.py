@@ -577,6 +577,24 @@ def delete_daily_daily_diachi(**param_list):
 
 # Get all nhanvien
 def get_all_nhanvien(db: Session):
+    # return (
+    #     db.query(
+    #         models.Nhanvien,
+    #         models.Chucvu.tenchucvu,
+    #         models.NhanvienDiachi.diachi,
+    #         models.Daily.tendaily,
+    #         models.NhanvienDiachi.kinhdo,
+    #         models.NhanvienDiachi.vido,
+    #         models.Chucvu.luong,
+    #     )
+    #     .filter(
+    #         models.Nhanvien.manhanvien == models.NhanvienChucvu.manhanvien,
+    #         models.NhanvienChucvu.machucvu == models.Chucvu.machucvu,
+    #         models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien,
+    #         models.Nhanvien.madaily == models.Daily.madaily,
+    #     )
+    #     .all()
+    # )
     return (
         db.query(
             models.Nhanvien,
@@ -586,13 +604,13 @@ def get_all_nhanvien(db: Session):
             models.NhanvienDiachi.kinhdo,
             models.NhanvienDiachi.vido,
             models.Chucvu.luong,
+            models.t_taikhoan_nhavien.c.mataikhoan
         )
-        .filter(
-            models.Nhanvien.manhanvien == models.NhanvienChucvu.manhanvien,
-            models.NhanvienChucvu.machucvu == models.Chucvu.machucvu,
-            models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien,
-            models.Nhanvien.madaily == models.Daily.madaily,
-        )
+        .join(models.NhanvienChucvu, models.Nhanvien.manhanvien == models.NhanvienChucvu.manhanvien)
+        .join(models.Chucvu, models.NhanvienChucvu.machucvu == models.Chucvu.machucvu)
+        .join(models.NhanvienDiachi, models.Nhanvien.manhanvien == models.NhanvienDiachi.manhanvien)
+        .join(models.Daily, models.Nhanvien.madaily == models.Daily.madaily)
+        .outerjoin(models.t_taikhoan_nhavien, models.Nhanvien.manhanvien == models.t_taikhoan_nhavien.c.manhanvien)  # LEFT JOIN
         .all()
     )
 
@@ -766,10 +784,20 @@ def get_all_khachhang(db: Session):
         .all()
     )
 
+def get_khachhang_by_id(db: Session, pMaKhachHang: int):
+    return (
+        db.query(
+            models.Khachhang,
+            models.KhachhangDiachi,
+        )
+        .filter(
+            models.Khachhang.makhachhang == models.KhachhangDiachi.makhachhang,
+            models.Khachhang.makhachhang == pMaKhachHang
+            )
+        .first()
+    )
 
-def update_khachhang(
-    db: Session, makhachhang: int, tenkhachhang: str, sodienthoai: str
-):
+def update_khachhang_crud(**param_list):
     with engine.connect().execution_options(autocommit=True) as connection:
         connection.execute(
             """
@@ -779,9 +807,26 @@ def update_khachhang(
                         sodienthoai= (%s)
             WHERE makhachhang = (%s);
         """,
-            tenkhachhang,
-            sodienthoai,
-            makhachhang,
+            param_list["tenkhachhang"],
+            param_list["sodienthoai"],
+            param_list["makhachhang"],
+        )
+
+        connection.execute(
+            """
+            UPDATE KHACHHANG_DIACHI
+                        SET
+                        maquan = (%s),
+                        diachi = (%s),
+                        kinhdo = (%s),
+                        vido = (%s)
+            WHERE makhachhang = (%s);
+        """,
+            param_list["maquan"],
+            param_list["diachi"],
+            param_list["kinhdo"],
+            param_list["vido"],
+            param_list["makhachhang"],
         )
 
 

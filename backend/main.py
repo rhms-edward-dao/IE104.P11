@@ -14,8 +14,8 @@ from opencage.geocoder import OpenCageGeocode
 from pprint import pprint
 import re, os, base64
 
-IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images/"
-# IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
+# IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images/"
+IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
 
 # from security import validate_token
 app = FastAPI()
@@ -828,9 +828,10 @@ def get_all_khachhang(db: Session = Depends(get_db)):
 
 @app.get("/khachhang/{makhachhang}")
 def get_khachhang_by_makhachhang(makhachhang: int, db: Session = Depends(get_db)):
-    return api_operations.get_one_parameter(
-        db, models.Khachhang, models.Khachhang.makhachhang, makhachhang, "khách hàng"
-    )
+    get_db = crud.get_khachhang_by_id(db, makhachhang)
+    if get_db:
+        return {"success": True, "Khachhang": get_db}
+    return {"success": False}
 
 
 # Define a Pydantic model to parse individual item data
@@ -847,12 +848,21 @@ class AddCustomer(BaseModel):
 
 
 @app.post("/khachhang/them")
-def add_new_phieunhaphang(
+def add_new_khachhang(
     add_customer: AddCustomer,  # Parse the JSON body into this Pydantic model
     db: Session = Depends(get_db),
 ):
-    try:
+    try:                
         for item in add_customer.items:
+            print(item.diachi)
+            # Get longtitude and latitude
+            key = "dd56554106174942acce0b3bd660a32a"
+            geocoder = OpenCageGeocode(key)
+            query = "{}".format(item.diachi)
+            results = geocoder.geocode(query, language="vi")
+            kinhdo_get = results[0]["geometry"]["lng"]
+            vido_get = results[0]["geometry"]["lat"]
+
             khachhang = models.Khachhang(
                 tenkhachhang=item.tenkhachhang,
                 sodienthoai=item.sodienthoai,
@@ -864,37 +874,56 @@ def add_new_phieunhaphang(
                 makhachhang=khachhang.makhachhang,
                 maquan=item.maquan,
                 diachi=item.diachi,
+                kinhdo=kinhdo_get,
+                vido=vido_get
             )
             db.add(khachhang_diachi)
-
-        db.commit()
-
+            db.commit()
         return {"success": True, "message": "Thêm khách hàng thành công."}
 
     except Exception as e:
-        db.rollback()
-        print(e)
+        match = re.search(r"CONTEXT:\s*(.*?)(?= line )", str(e), re.DOTALL)
+        detail = match.group(0).strip()
+        if detail == "CONTEXT:  PL/pgSQL function check_khachhang_daily_nhanvien_phone_number()":
+            return {"success": False, "message": "Số điện thoại đã được sử dụng"}
         return {"success": False, "message": str(e)}
-
 
 @app.put("/khachhang/capnhat/{makhachhang}")
 def update_khachhang(
     makhachhang: int,
     tenkhachhang: str = Body(..., embed=True),
     sodienthoai: str = Body(..., embed=True),
+    diachi: str = Body(..., embed=True),
+    maquan: str = Body(..., embed=True),
     db: Session = Depends(get_db),
 ):
     try:
-        update_db = crud.update_khachhang(db, makhachhang, tenkhachhang, sodienthoai)
-    except Exception as e:
-        match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
-        detail = match.group(0).strip()
+        # Get longtitude and latitude
+        key = "dd56554106174942acce0b3bd660a32a"
+        geocoder = OpenCageGeocode(key)
+        query = "{}".format(diachi)
+        results = geocoder.geocode(query, language="vi")
+        kinhdo_get = results[0]["geometry"]["lng"]
+        vido_get = results[0]["geometry"]["lat"]
 
-        if detail == "DETAIL:  Key (sodienthoai)=({}) already exists.".format(
-            sodienthoai
-        ):
-            return {"message": "Số điện thoại đã tồn tại"}
-    return {"message": "Cập nhật khách hàng thành công"}
+        param_list = {
+            "makhachhang": makhachhang,
+            "tenkhachhang": tenkhachhang, 
+            "sodienthoai": sodienthoai,
+            "diachi": diachi,                
+            "maquan": maquan,
+            "kinhdo": kinhdo_get,
+            "vido": vido_get
+        }
+        crud.update_khachhang_crud(**param_list)        
+        return {"success": True, "message": "Cập nhật khách hàng thành công."}
+    except Exception as e:
+        match = re.search(r"CONTEXT:\s*(.*?)(?= line )", str(e), re.DOTALL)
+        detail = match.group(0).strip()
+        if detail == "CONTEXT:  PL/pgSQL function check_khachhang_daily_nhanvien_phone_number()":
+            return {"success": False, "message": "Số điện thoại đã được sử dụng"}
+        return {"success": False}
+        
 
 
 @app.delete("/khachhang/xoa/{makhachhang}")
@@ -1289,6 +1318,7 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
                     "kinhdo": item[4],
                     "vido": item[5],
                     "luong": item[6],
+                    "mataikhoan": item[7],
                 }
             )
         return result
