@@ -126,8 +126,8 @@ function Districts() {
   // // For deleting one district
   const deleteItem = async (id) => {
     const response = await deleteDistrict(id);
-    if (response.success) {
-      alert(response.message);
+    if (response.message === "Xóa quận thành công") {
+      alert(response.message);      
       setDistrictData(districtData.filter((item) => item.maquan !== id));
     } else {
       alert(response.message);
