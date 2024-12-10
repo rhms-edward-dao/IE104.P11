@@ -182,7 +182,9 @@
       "Columns": {
         "Col1": "Customer Name",
         "Col2": "Phone Number",
-        "Col3": "Address"
+        "Col3": "Address",
+        "Col4": "District",
+        "Col5": "City"
       },
       "Placeholders": {
         "Text1": "Search by Customer Name ...",
@@ -254,6 +256,9 @@
     "AP_Position": {
       "Title": "Add position"
     },
+    "AP_Customer": {
+      "Title": "Add customer"
+    },
     "AP_Import": {
       "Title": "Add goods received note",
       "Labels": {
@@ -307,6 +312,9 @@
     },
     "EP_Position": {
       "Title": "Edit position"
+    },
+    "EP_Customer": {
+      "Title": "Update customer"
     }
   },
   "DetailPage": {
