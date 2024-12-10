@@ -34,7 +34,7 @@ export const addCustomer = async (item) => {
   }
 };
 
-export const updateCustomer = async (id, tenkhachhang, sodienthoai) => {
+export const updateCustomer = async (id, item) => {
   try {
     const response = await fetch(
       `http://127.0.0.1:8000/khachhang/capnhat/${id}`,
@@ -44,8 +44,10 @@ export const updateCustomer = async (id, tenkhachhang, sodienthoai) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          tenkhachhang: tenkhachhang,
-          sodienthoai: sodienthoai,
+          "tenkhachhang": item.tenkhachhang,
+          "sodienthoai": item.sodienthoai,
+          "diachi": item.diachi,
+          "maquan": item.maquan
         }),
       }
     );

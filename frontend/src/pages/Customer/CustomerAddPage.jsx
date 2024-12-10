@@ -14,7 +14,7 @@ import Header from "../../components/Header";
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
-import { getAllDistrict } from "../../assets/StoreDistrict";
+import { getAllCityName, getAllDistrict } from "../../assets/StoreDistrict";
 
 const CustomerAddPage = () => {
   // Variable here
@@ -33,6 +33,9 @@ const CustomerAddPage = () => {
   const [newDistrictName, setNewDistrictName] = useState("");
   const [newDistrictId, setNewDistrictId] = useState(0);
   const [existedDistrictName, setExistedDistrictName] = useState([]);
+  
+  const [newCityName, setNewCityName] = useState("");
+  const [existedCityName, setExistedCityName] = useState([]);
   // // For navigating
   const navigate = useNavigate();
 
@@ -46,18 +49,27 @@ const CustomerAddPage = () => {
         setExistedDistrictName([]);
       } else {
         setExistedDistrictName(existedDistrict);
+        setNewDistrictName(existedDistrict[0].tenquan);
         setNewDistrictId(existedDistrict[0].maquan);
+      }
+      // Get all existed cities
+      const existedCity = await getAllCityName();
+      if (existedCity.message === "Danh sách quận rỗng") {
+        setExistedCityName([]);
+      } else {
+        setExistedCityName(existedCity);
+        setNewCityName(existedCity[0]);
       }
     };
     fetchData();
   }, []);
   // Function here
   // // For editing current district
-  const addData = async (tenkhachhang, sodienthoai, quan, diachi) => {
+  const addData = async (tenkhachhang, sodienthoai, quan, tenquan, thanhpho, diachi) => {
     let check_tenkhachhang = true;
     let check_sodienthoai = true;
     let check_diachi = true;
-
+    
     // Constraints for checking format
     const isOnlyDigit = (input) => /^\d+$/.test(input);
 
@@ -123,18 +135,20 @@ const CustomerAddPage = () => {
         }
       }
     }
-
+    console.log(diachi.split(', '))
+    return
     if (check_tenkhachhang && check_sodienthoai && check_diachi) {
       let item = [
         {
           tenkhachhang: tenkhachhang,
-          sodienthoai: sodienthoai,
+          sodienthoai: sodienthoai,          
           maquan: quan,
+          tenquan: tenquan,
+          tenthanhpho: thanhpho,
           diachi: diachi,
         },
       ];
       const data = await addCustomer(item);
-      console.log(data);
       if (data.message === "Thêm khách hàng thất bại") {
         alert(data.message);
       } else if (data.message === "Thêm khách hàng thành công.") {
@@ -179,6 +193,8 @@ const CustomerAddPage = () => {
                     newCustomerName.trim(),
                     newPhoneNumber.trim(),
                     newDistrictId,
+                    newDistrictName,
+                    newCityName,
                     newAddress.trim()
                   )
             }
@@ -226,35 +242,59 @@ const CustomerAddPage = () => {
             />
           </div>
           {/* Select district name */}
-          <div className="space-y-4">
-            <label
-              className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="district-name-add"
-            >
-              Quận
-            </label>
-            <select
-              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="district-name-add"
-              name="district-name-add"
-              value={newDistrictId}
-              onChange={(e) => {
-                const selectedDistrictId = e.target.value;
-                const selectedDistrictName =
-                  e.target.options[e.target.selectedIndex].text; // Get the text (district name)
-                setNewDistrictId(selectedDistrictId); // Update ID
-                setNewDistrictName(selectedDistrictName); // Update Name
-              }}
-            >
-              {existedDistrictName.map((item) => (
-                <>
+          <div className="space-x-20 flex">
+            <div>
+              <label
+                className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+                htmlFor="district-name-add"
+              >
+                Quận
+              </label>
+              <select
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                id="district-name-add"
+                name="district-name-add"
+                value={newDistrictId}
+                onChange={(e) => {
+                  const selectedDistrictId = e.target.value;
+                  const selectedDistrictName =
+                    e.target.options[e.target.selectedIndex].text; // Get the text (district name)
+                  setNewDistrictId(selectedDistrictId); // Update ID
+                  setNewDistrictName(selectedDistrictName); // Update Name
+                }}
+              >
+                {existedDistrictName.map((item) => (                  
                   <option key={item.maquan} value={item.maquan}>
                     {item.tenquan}
                   </option>
-                </>
-              ))}
-            </select>
+                ))}
+              </select>
+            </div>
+            {/* Select city name */}
+            <div>
+              <label 
+                className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
+                htmlFor="city-name-add" 
+              >
+                Thành phố
+              </label>
+              {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
+              <select
+                id="city-name-add"
+                name="city-name-add"
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                value={newCityName}
+                onChange={(e) => setNewCityName(e.target.value)}
+              >
+                {existedCityName.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
+
           {/* Type customer address */}
           <div className="space-y-4">
             <label
