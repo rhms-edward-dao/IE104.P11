@@ -182,7 +182,9 @@
       "Columns": {
         "Col1": "Kundenname",
         "Col2": "Telefonnummer",
-        "Col3": "Adresse"
+        "Col3": "Adresse",
+        "Col4": "Bezirk",
+        "Col5": "Stadt"
       },
       "Placeholders": {
         "Text1": "Suche nach Kundenname ...",
@@ -254,6 +256,9 @@
     "AP_Position": {
       "Title": "Position hinzufügen"
     },
+    "AP_Customer": {
+      "Title": "Kunde hinzufügen"
+    },
     "AP_Import": {
       "Title": "Wareneingangsschein hinzufügen",
       "Labels": {
@@ -307,6 +312,9 @@
     },
     "EP_Position": {
       "Title": "Position bearbeiten"
+    },
+    "EP_Customer": {
+      "Title": "Kunde aktualisieren"
     }
   },
   "DetailPage": {
