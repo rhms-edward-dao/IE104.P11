@@ -124,7 +124,7 @@ const ProductStaffEditPage = () => {
         tendvt: tendvt,
         hinhanh: hinhanh,
       };
-      const data = await updateProductOnlyStaff(mamathang, item);
+      const data = await updateProductOnlyStaff(mamathang, item);      
       if (data.message === "Cập nhật mặt hàng thất bại") {
         alert("Cập nhật mặt hàng thất bại");
       } else if (data.message === "Tên mặt hàng đã tồn tại") {
@@ -160,13 +160,7 @@ const ProductStaffEditPage = () => {
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
             onClick={() =>
-              existedData.some(
-                (item) => item.Mathang.tenmathang === currentProductName.trim(),
-              )
-                ? alert(
-                    "Chỉnh sửa mặt hàng thất bại !!!\nTên mặt hàng đã tồn tại",
-                  )
-                : updateData(
+                updateData(
                     productId,
                     currentProductName.trim(),
                     currentProductCategoryName,
