@@ -197,7 +197,9 @@
       "Columns": {
         "Col1": "Tên khách hàng",
         "Col2": "Số điện thoại",
-        "Col3": "Địa chỉ"
+        "Col3": "Địa chỉ",
+        "Col4": "Quận",
+        "Col5": "Thành phố "
       },
       "Placeholders": {
         "Text1": "Tìm kiếm theo tên khách hàng ...",
@@ -269,6 +271,9 @@
     "AP_Position": {
       "Title": "Thêm chức vụ"
     },
+    "AP_Customer": {
+      "Title": "Thêm khách hàng"
+    },
     "AP_Import": {
       "Title": "Thêm phiếu nhập hàng",
       "Labels": {
@@ -322,6 +327,9 @@
     },
     "EP_Position": {
       "Title": "Chỉnh sửa chức vụ"
+    },
+    "AP_Customer": {
+      "Title": "Cập nhật khách hàng"
     }
   },
   "DetailPage": {
