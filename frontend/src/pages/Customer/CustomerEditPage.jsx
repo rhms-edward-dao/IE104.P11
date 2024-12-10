@@ -26,6 +26,8 @@ const CustomerEditPage = () => {
   // // For Multi-Language
   const { t } = useTranslation();
   const { Update } = t("Buttons");
+  const { SF_Customers } = t("SearchFilter");
+  const { EP_Customer } = t("EditPage");
   // // For checking existed customers
   const location = useLocation();
   const { existedData } = location.state;
@@ -51,14 +53,14 @@ const CustomerEditPage = () => {
       setName(currentCustomer.Khachhang.Khachhang.tenkhachhang);
       setPhoneNumber(currentCustomer.Khachhang.Khachhang.sodienthoai);
       setAddress(currentCustomer.Khachhang.KhachhangDiachi.diachi.split(', ').slice(0, 2).join(', '));
+      setNewDistrictName(currentCustomer.Khachhang.KhachhangDiachi.diachi.split(', ').slice(2, 3).join(', ').trim());
+      setNewDistrictId(currentCustomer.Khachhang.KhachhangDiachi.maquan);
       // Get all existed districts
       const existedDistrict = await getAllDistrict();
       if (existedDistrict.message === "Danh sách quận rỗng") {
         setExistedDistrictName([]);
       } else {
-        setExistedDistrictName(existedDistrict);
-        setNewDistrictName(existedDistrict[0].tenquan);
-        setNewDistrictId(existedDistrict[0].maquan);
+        setExistedDistrictName(existedDistrict);        
       }
       // Get all existed cities
       const existedCity = await getAllCityName();
@@ -185,7 +187,7 @@ const CustomerEditPage = () => {
         </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
-            Chỉnh sửa khách hàng
+            {EP_Customer.Title}
           </p>
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
@@ -202,7 +204,7 @@ const CustomerEditPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="customer-name-edit"
             >
-              Tên khách hàng
+              {SF_Customers.Columns.Col1}
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -219,7 +221,7 @@ const CustomerEditPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="customer-phone-edit"
             >
-              Số điện thoại
+              {SF_Customers.Columns.Col2}
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -238,7 +240,7 @@ const CustomerEditPage = () => {
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                 htmlFor="district-name-add"
               >
-                Quận
+                {SF_Customers.Columns.Col4}
               </label>
               <select
                 className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -266,7 +268,7 @@ const CustomerEditPage = () => {
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                 htmlFor="city-name-add" 
               >
-                Thành phố
+                {SF_Customers.Columns.Col5}
               </label>
               {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
               <select
@@ -289,7 +291,7 @@ const CustomerEditPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="address-edit"
             >
-              Địa chỉ
+              {SF_Customers.Columns.Col3}
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
