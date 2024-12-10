@@ -23,6 +23,8 @@ const CustomerAddPage = () => {
   // // For Multi-Language
   const { t } = useTranslation();
   const { Add } = t("Buttons");
+  const { SF_Customers } = t("SearchFilter");
+  const { AP_Customer } = t("AddPage");
   // // For checking existed customers
   const location = useLocation();
   const { existedData } = location.state;
@@ -135,16 +137,13 @@ const CustomerAddPage = () => {
         }
       }
     }
-    console.log(diachi.split(', '))
-    return
+    diachi = diachi + ', ' + tenquan + ', ' + thanhpho;
     if (check_tenkhachhang && check_sodienthoai && check_diachi) {
       let item = [
         {
           tenkhachhang: tenkhachhang,
           sodienthoai: sodienthoai,          
           maquan: quan,
-          tenquan: tenquan,
-          tenthanhpho: thanhpho,
           diachi: diachi,
         },
       ];
@@ -180,7 +179,7 @@ const CustomerAddPage = () => {
         </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
-            Thêm khách hàng
+            {AP_Customer.Title}
           </p>
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
@@ -209,7 +208,7 @@ const CustomerAddPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="product-name-add"
             >
-              Tên khách hàng
+              {SF_Customers.Columns.Col1}
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -228,7 +227,7 @@ const CustomerAddPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="phone-number-add"
             >
-              Số điện thoại
+              {SF_Customers.Columns.Col2}
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -248,7 +247,7 @@ const CustomerAddPage = () => {
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                 htmlFor="district-name-add"
               >
-                Quận
+                {SF_Customers.Columns.Col4}
               </label>
               <select
                 className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -276,7 +275,7 @@ const CustomerAddPage = () => {
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                 htmlFor="city-name-add" 
               >
-                Thành phố
+                {SF_Customers.Columns.Col5}
               </label>
               {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
               <select
@@ -301,7 +300,7 @@ const CustomerAddPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="address-add"
             >
-              Địa chỉ
+              {SF_Customers.Columns.Col3}
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
