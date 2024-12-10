@@ -181,7 +181,9 @@
       "Columns": {
         "Col1": "Nom du client",
         "Col2": "Numéro de téléphone",
-        "Col3": "Adresse"
+        "Col3": "Adresse",
+        "Col4": "Quartier",
+        "Col5": "Ville"
       },
       "Placeholders": {
         "Text1": "Rechercher par nom du client...",
@@ -253,6 +255,9 @@
     "AP_Position": {
       "Title": "Ajouter un poste"
     },
+    "AP_Customer": {
+      "Title": "Ajouter un client"
+    },
     "AP_Import": {
       "Title": "Ajouter un bon de réception de marchandises",
       "Labels": {
@@ -306,6 +311,9 @@
     },
     "EP_Position": {
       "Title": "Modifier un poste"
+    },
+    "EP_Customer": {
+      "Title": "Mettre à jour un client"
     }
   },
   "DetailPage": {
