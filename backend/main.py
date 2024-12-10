@@ -292,7 +292,7 @@ def reset_password(pemail: str = Body(..., embed=True), db: Session = Depends(ge
         if get_db:
             if (
                 get_db.otp_expiration
-                and datetime.utcnow() - get_db.otp_expiration > timedelta(minutes=2)
+                and datetime.utcnow() - get_db.otp_expiration < timedelta(minutes=2)
             ):
                 return {
                     "message": "Không thể tạo OTP khi OTP mới nhất được tạo cách đây chưa đầy 2 phút.\nBạn hãy đợi sau 2 phút và thử lại."
