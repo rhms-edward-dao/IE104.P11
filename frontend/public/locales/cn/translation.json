@@ -179,7 +179,9 @@
       "Columns": {
         "Col1": "客戶名稱",
         "Col2": "電話號碼",
-        "Col3": "地址"
+        "Col3": "地址",
+        "Col4": "区",
+        "Col5": "城市"
       },
       "Placeholders": {
         "Text1": "按客戶名稱搜尋...",
@@ -251,6 +253,9 @@
     "AP_Position": {
       "Title": "添加职位"
     },
+    "AP_Customer": {
+      "Title": "添加客户"
+    },
     "AP_Import": {
       "Title": "新增收貨備註",
       "Labels": {
@@ -304,6 +309,9 @@
     },
     "EP_Position": {
       "Title": "编辑职位"
+    },
+    "EP_Customer": {
+      "Title": "更新客户"
     }
   },
   "DetailPage": {
