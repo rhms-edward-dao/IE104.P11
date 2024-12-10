@@ -4,7 +4,6 @@ import { useTheme } from '../../contexts/ThemeContext';
 import Header from '../../components/Header';
 import ProfitIcon from '../../images/icons/total-budget.png';
 import StockIcon from '../../images/icons/total-product.png';
-import RevenueIcon from '../../images/icons/revenue.png';
 
 function AdminReport() {
   const navigate = useNavigate();
@@ -46,7 +45,7 @@ function AdminReport() {
     display: 'flex',
     justifyContent: 'center',
     gap: '100px',
-    marginTop: '-100px',    
+    marginTop: '-100px',
   };
 
   const reportCardStyle = (width, height) => ({
@@ -61,7 +60,7 @@ function AdminReport() {
     boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)', 
     textAlign: 'left',
     padding: '20px',
-    cursor: 'pointer',    
+    cursor: 'pointer',
   });
 
   const titleStyle = {
@@ -81,7 +80,7 @@ function AdminReport() {
         <Header headerTitle="Báo cáo" />
       </div>
       <div style={contentStyle}>
-        <div style={reportOptionsStyle} className='flex-wrap'>
+        <div style={reportOptionsStyle}>
           <div style={reportCardStyle(365, 153)} onClick={() => handleNavigation('/profit-report')}>
             <p style={titleStyle}>Báo Cáo Lợi Nhuận</p>
             <img src={ProfitIcon} alt="Lợi Nhuận" style={iconStyle} />
@@ -89,10 +88,6 @@ function AdminReport() {
           <div style={reportCardStyle(344, 153)} onClick={() => handleNavigation('/stock-report')}>
             <p style={titleStyle}>Báo Cáo Tồn Kho</p>
             <img src={StockIcon} alt="Tồn Kho" style={iconStyle} />
-          </div>
-          <div style={reportCardStyle(365, 153)} onClick={() => handleNavigation('/revenue-report')}>
-            <p style={titleStyle}>Báo Cáo Doanh thu</p>
-            <img src={RevenueIcon} alt="Doanh Thu" style={iconStyle} />
           </div>
         </div>
       </div>
