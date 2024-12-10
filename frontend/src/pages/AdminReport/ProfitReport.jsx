@@ -6,109 +6,10 @@ import { vi } from 'date-fns/locale';
 import Header from '../../components/Header';
 import ProfitIcon from '../../images/icons/total-budget.png';
 import { getAllStore } from '../../assets/Stores/StoreData';
-import { format } from 'date-fns';
-
-const pageStyles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100vh',
-    backgroundColor: '#f5f5f5',
-  },
-  mainContent: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'row',
-    gap: '10px',
-    padding: '10px',
-  },
-  section: {
-    backgroundColor: '#fff',
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  datePickerSection: {
-    minHeight: '120px',
-    padding: '10px',
-  },
-  datePickerButton: {
-    padding: '10px 20px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-  agencySelector: {
-    marginBottom: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-  },
-  select: {
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ddd',
-    fontSize: '16px',
-  },
-  profitCard: {
-    container: {
-      height: '120px',
-      padding: '15px',
-      borderRadius: '8px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: '#fff',
-    },
-    title: {
-      fontFamily: 'Inter, sans-serif',
-      fontSize: '24px',
-      fontWeight: 'bold',
-      marginBottom: '5px',
-    },
-    profitValue: {
-      color: 'red',
-      fontSize: '24px',
-      fontWeight: 'bold',
-    },
-    icon: {
-      width: '40px',
-      height: '40px',
-    },
-  },
-  tableContainer: {
-    backgroundColor: '#fff', 
-    padding: '20px', 
-    borderRadius: '8px', 
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)', 
-    marginTop: '20px',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  th: {
-    padding: '10px',
-    border: '1px solid #ddd',
-    textAlign: 'left',
-    backgroundColor: '#f0f0f0',
-    fontWeight: 'bold',
-  },
-  td: {
-    padding: '10px',
-    border: '1px solid #ddd',
-  },
-  sectionTitle: {
-    fontWeight: 'bold', 
-    marginBottom: '10px',
-  },
-};
-
+import { useTheme } from '../../contexts/ThemeContext';
 
 const ProfitReport = () => {
+  const { theme } = useTheme(); 
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -196,6 +97,111 @@ const ProfitReport = () => {
     }
   };
 
+  const pageStyles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      backgroundColor: theme === 'dark' ? '#121212' : '#f5f5f5', 
+      color: theme === 'dark' ? 'white' : 'black',
+    },
+    mainContent: {
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'row',
+      gap: '10px',
+      padding: '10px',
+    },
+    section: {
+      backgroundColor: theme === 'dark' ? '#424242' : '#fff', 
+      color: theme === 'dark' ? 'white' : 'black', 
+      padding: '20px',
+      borderRadius: '8px',
+      boxShadow: theme === 'dark' ? '0 4px 8px rgba(0,0,0,0.4)' : '0 2px 8px rgba(0,0,0,0.1)', 
+    },
+    datePickerSection: {
+      minHeight: '120px',
+      padding: '10px',
+    },
+    datePickerButton: {
+      padding: '10px 20px',
+      backgroundColor: theme === 'dark' ? '#007bff' : '#007bff',
+      color: theme === 'dark' ? '#fff' : '#fff',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+    },
+    agencySelector: {
+      marginBottom: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      color: theme === 'dark' ? 'white' : 'black', 
+    },
+    select: {
+      padding: '10px',
+      borderRadius: '5px',
+      border: '1px solid #ddd',
+      fontSize: '16px',
+      backgroundColor: theme === 'dark' ? '#424242' : '#fff', 
+      color: theme === 'dark' ? 'white' : 'black', 
+    },
+    profitCard: {
+      container: {
+        height: '120px',
+        padding: '15px',
+        borderRadius: '8px',
+        boxShadow: theme === 'dark' ? '0 4px 8px rgba(0,0,0,0.4)' : '0 2px 8px rgba(0,0,0,0.1)', 
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: theme === 'dark' ? '#424242' : '#fff', 
+      },
+      title: {
+        fontFamily: 'Inter, sans-serif',
+        fontSize: '24px',
+        fontWeight: 'bold',
+        marginBottom: '5px',
+      },
+      profitValue: {
+        color: 'red',
+        fontSize: '24px',
+        fontWeight: 'bold',
+      },
+      icon: {
+        width: '40px',
+        height: '40px',
+      },
+    },
+    tableContainer: {
+      backgroundColor: theme === 'dark' ? '#424242' : '#fff', 
+      color: theme === 'dark' ? 'white' : 'black',
+      padding: '20px',
+      borderRadius: '8px',
+      boxShadow: theme === 'dark' ? '0 4px 8px rgba(0,0,0,0.4)' : '0 2px 8px rgba(0,0,0,0.1)',
+      marginTop: '20px',
+    },
+    table: {
+      width: '100%',
+      borderCollapse: 'collapse',
+    },
+    th: {
+      padding: '10px',
+      border: '1px solid #ddd',
+      textAlign: 'left',
+      backgroundColor: theme === 'dark'? 'black' : '#f0f0f0',
+      fontWeight: 'bold',
+    },
+    td: {
+      padding: '10px',
+      border: '1px solid #ddd',
+    },
+    sectionTitle: {
+      fontWeight: 'bold', 
+      marginBottom: '10px',
+    },
+  };
+  
   return (
     <div style={pageStyles.container}>
       <Header headerTitle="Báo Cáo Lợi Nhuận" />
