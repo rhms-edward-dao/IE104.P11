@@ -54,9 +54,8 @@ const StoreDistrictEditPage = () => {
   }, []);  
   // Function here
   // // For editing current district
-  const updateData = async (id, tenquan, tenthanhpho) => {
-    const checkExistedData = existedData.some(item => item.tenquan === tenquan && item.tenthanhpho === tenthanhpho);
-    console.log(checkExistedData)
+  const updateData = async (id, tenquan, tenthanhpho) => {  
+    const checkExistedData = existedData.some(item => item.tenquan === tenquan && item.tenthanhpho === tenthanhpho && parseInt(id) !== parseInt(item.maquan));
     if (checkExistedData) {
       alert("(Quận, Thành phố) đã tồn tại");
     } else {

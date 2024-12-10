@@ -52,7 +52,7 @@ const ProductCategorysEditPage = () => {
   // Functions here
   // // For editing current product category
   const updateData = async (id, tenloaimathang) => {
-    const checkExistedData = existedData.some(item => item.tenloaimathang === tenloaimathang);
+    const checkExistedData = existedData.some(item => item.tenloaimathang === tenloaimathang && parseInt(id) !== parseInt(item.maloaimathang));
     if (checkExistedData) {
       alert("Loại mặt hàng đã tồn tài");
     } else {

@@ -47,7 +47,7 @@ const StoreCategoryEditPage = () => {
   // Functions here
   // For editing current store category
   const updateData = async (id, tenloaidaily, sotiennotoida) => {
-    const checkExistedData = existedData.some(item => item.tenloaidaily === tenloaidaily);
+    const checkExistedData = existedData.some(item => item.tenloaidaily === tenloaidaily && parseInt(id) !== parseInt(item.maloaidaily));
     if (checkExistedData) {
       alert("Tên loại đại lý đã tồn tại");
     } else {
