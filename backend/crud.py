@@ -395,8 +395,10 @@ def get_all_quitac(db: Session):
     ).first()
 
 
-def update_quitac(db: Session, pItems: schemas.QUITACupdate):
+def update_quitac(db: Session, pItems: schemas.QUITACupdate):    
     try:
+        from datetime import datetime
+        current_timestamp = datetime.now()
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(
                 """
@@ -404,11 +406,13 @@ def update_quitac(db: Session, pItems: schemas.QUITACupdate):
                     SET
                     sothietbitoidataikhoan = (%s),
                     sodailytoidamoiquan = (%s),
-                    tiledongiaban = (%s)
+                    tiledongiaban = (%s),
+                    thoidiemcapnhat = (%s)
             """,
                 pItems.sothietbitoidataikhoan,
                 pItems.sodailytoidamoiquan,
                 pItems.tiledongiaban,
+                current_timestamp
             )
     except:
         return "cập nhật thất bại"
