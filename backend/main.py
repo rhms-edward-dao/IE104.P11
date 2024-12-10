@@ -754,18 +754,29 @@ async def update_mathang(
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
                 file.write(contents)
-        # crud.update_mathang(**param_list)
+        
+        param_list = {
+            "mamathang": mamathang,
+            "tenmathang": tenmathang,
+            "tendvt": tendvt,
+            "hinhanh": image_dir,
+            "madaily": madaily,
+            "maloaimathang": pmaloaimathang,
+        }
+        print(param_list)
+        crud.update_mathang(**param_list)
 
-        mathang = db.query(models.Mathang).filter_by(mamathang=mamathang).first()
-        if mathang:
-            mathang.tenmathang = tenmathang
-            mathang.tendvt = tendvt
-            mathang.hinhanh = image_dir
-            mathang.madaily = madaily
-            mathang.maloaimathang = pmaloaimathang
-            mathang.dongia = 0
-        db.commit()
-        return {"success": True, "message": "Cập nhật mặt hàng thành công."}
+        # print(param_list)
+        # mathang = db.query(models.Mathang).filter_by(mamathang=mamathang).first()
+        # if mathang:
+        #     mathang.tenmathang = tenmathang
+        #     mathang.tendvt = tendvt
+        #     mathang.hinhanh = image_dir
+        #     mathang.madaily = madaily
+        #     mathang.maloaimathang = pmaloaimathang
+        #     mathang.dongia = 0
+        # db.commit()
+        # return {"success": True, "message": "Cập nhật mặt hàng thành công."}
 
     except Exception as e:
         print(e)
@@ -778,7 +789,6 @@ async def update_mathang(
         ):
             return {"message": "Tên mặt hàng đã tồn tại"}
     return {"message": "Cập nhật mặt hàng thành công"}
-
 
 @app.delete("/mathang/xoa/{mamathang}")
 def delete_mathang(mamathang: int, db: Session = Depends(get_db)):
