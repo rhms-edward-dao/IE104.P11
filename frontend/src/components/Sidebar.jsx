@@ -255,7 +255,7 @@ function Sidebar() {
                 }
               >
                 <motion.div
-                  className="flex w-full items-center gap-3"
+                  className="flex w-full items-center justify-center lg:justify-start gap-3"
                   initial="hidden"
                   animate="visible"
                   variants={itemVariants}
