@@ -28,14 +28,11 @@ const ProductAdminAddPage = () => {
   const { Add } = t("Buttons");
   // // For adding product
   const [newProductName, setNewProductName] = useState("");
-
-  const [newUnitPrice, setNewUnitPrice] = useState("");
-  const [newStockQuantity, setNewStockQuantity] = useState("");
   const [newUnit, setNewUnit] = useState("");
 
   const [newProductCategoryName, setNewProductCategoryName] = useState("");
   const [existedProductCategoryName, setExistedProductCategoryName] = useState(
-    []
+    [],
   );
 
   const [newStoreName, setNewStoreName] = useState("");
@@ -76,19 +73,12 @@ const ProductAdminAddPage = () => {
     tenmathang,
     tenloaimathang,
     tendaily,
-    dongia,
-    soluongton,
     tendvt,
-    hinhanh
+    hinhanh,
   ) => {
     let check_tenmathang = true;
-    let check_dongia = true;
-    let check_soluongton = true;
     let check_tendvt = true;
     let check_hinhanh = true;
-
-    // Constraints for checking format
-    const isOnlyDigit = (input) => /^\d+$/.test(input);
 
     // Checking before calling add api
     // // Check tenmathang
@@ -98,22 +88,6 @@ const ProductAdminAddPage = () => {
     } else if (tendaily.length > 200) {
       alert("Tên mặt hàng quá dài");
       check_tenmathang = false;
-    }
-    // // Check dongia
-    if (dongia < 1000) {
-      alert("Đơn giá tối thiểu là 1000 đồng");
-      check_dongia = false;
-    } else if (!isOnlyDigit(dongia)) {
-      alert("Đơn giá chỉ được có ký tự chữ số");
-      check_dongia = false;
-    }
-    // // Check soluongton
-    if (soluongton < 1) {
-      alert("Số lượng tồn không âm");
-      check_soluongton = false;
-    } else if (!isOnlyDigit(soluongton)) {
-      alert("Số lượng tồn chỉ được có ký tự chữ số");
-      check_soluongton = false;
     }
     // // Check tendvt
     if (tendvt.length < 1) {
@@ -129,19 +103,11 @@ const ProductAdminAddPage = () => {
       check_hinhanh = false;
     }
 
-    if (
-      check_tenmathang &&
-      check_dongia &&
-      check_soluongton &&
-      check_tendvt &&
-      check_hinhanh
-    ) {
+    if (check_tenmathang && check_tendvt && check_hinhanh) {
       let item = {
         tenmathang: tenmathang,
         tenloaimathang: tenloaimathang,
         tendaily: tendaily,
-        dongia: dongia,
-        soluongton: soluongton,
         tendvt: tendvt,
         hinhanh: hinhanh,
       };
@@ -186,10 +152,8 @@ const ProductAdminAddPage = () => {
                 newProductName,
                 newProductCategoryName,
                 newStoreName,
-                newUnitPrice,
-                newStockQuantity,
                 newUnit,
-                newImage
+                newImage,
               )
             }
           >
@@ -213,44 +177,6 @@ const ProductAdminAddPage = () => {
               placeholder={`${SF_Products.Columns.Col1} ...`}
               values={newProductName}
               onChange={(e) => setNewProductName(e.target.value)}
-              required
-            />
-          </div>
-          {/* Type unit price */}
-          <div className="space-y-4">
-            <label
-              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="unit-price-add"
-            >
-              {SF_Products.Columns.Col2}
-            </label>
-            <input
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="unit-price-add"
-              name="unit-price-add"
-              type="number"
-              placeholder={`${SF_Products.Columns.Col2} ...`}
-              values={newUnitPrice}
-              onChange={(e) => setNewUnitPrice(e.target.value)}
-              required
-            />
-          </div>
-          {/* Type stock quantity */}
-          <div className="space-y-4">
-            <label
-              className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-              htmlFor="stock-quantity-add"
-            >
-              {SF_Products.Columns.Col3}
-            </label>
-            <input
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              id="stock-quantity-add"
-              name="stock-quantity-add"
-              type="number"
-              placeholder={`${SF_Products.Columns.Col3} ...`}
-              values={newStockQuantity}
-              onChange={(e) => setNewStockQuantity(e.target.value)}
               required
             />
           </div>

@@ -76,10 +76,12 @@ function Customer() {
 
         const [card1, card2, card3] = [
           existedData.length,
-          existedExport.reduce(
-            (sum, item) => sum + item.Phieuxuathang.tongtien,
-            0,
-          ),
+          existedExport.message === "Danh sách phiếu xuất hàng rỗng"
+            ? 0
+            : existedExport.reduce(
+                (sum, item) => sum + item.Phieuxuathang.tongtien,
+                0,
+              ),
           distinctDistricts.size,
         ];
         setStatisticData({ card1: card1, card2: card2, card3: card3 });
