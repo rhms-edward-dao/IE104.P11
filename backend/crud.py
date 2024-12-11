@@ -354,7 +354,8 @@ def update_mathang(**param_list):
                     )
                 )
             )
-            connection.commit()
+            if os.name == "nt":
+                connection.commit()
 
     else:
         with engine.connect().execution_options(autocommit=True) as connection:
@@ -376,7 +377,8 @@ def update_mathang(**param_list):
                     )
                 )
             )
-            connection.commit()
+            if os.name == "nt":
+                connection.commit()
 
 
 # QUITAC

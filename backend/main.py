@@ -575,7 +575,7 @@ def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
             try:
                 # Get images in different computers
                 target_dir = "IE104.P11"
-                spath = str(item.Mathang.hinhanh)
+                spath = str(get_db.Mathang.hinhanh)
                 if os.name == "posix":
                     spath = spath.replace("\\", "/")
                 elif os.name == "nt":
@@ -613,15 +613,21 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
                 try:
                     # Get images in different computers
                     target_dir = "IE104.P11"
-                    full_path = Path(item.Mathang.hinhanh)
+                    spath = str(item.Mathang.hinhanh)
+                    if os.name == "posix":
+                        spath = spath.replace("\\", "/")
+                    elif os.name == "nt":
+                        spath = spath.replace("/", "\\")
+                    full_path = Path(spath)
                     relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                     relative_path_str = Path(*relative_path).as_posix()
-                    final_path = BASEDIR + relative_path_str
+                    final_path = BASEDIR + relative_path_str     
+                    print('\n \n\n')               
                     with open(final_path, "rb") as f:
                         data = f.read()
                         data_to_base64 = base64.b64encode(data)
                     item_dict["hinhanh"] = data_to_base64
-                except:
+                except Exception as e:
                     item_dict["hinhanh"] = None
             result.append(
                 {
@@ -808,11 +814,10 @@ async def update_mathang(
         #     mathang.maloaimathang = pmaloaimathang
         #     mathang.dongia = 0
         # db.commit()
-        # return {"success": True, "message": "Cập nhật mặt hàng thành công."}
+        return {"success": True, "message": "Cập nhật mặt hàng thành công"}
 
     except Exception as e:
         print(e)
-        db.rollback()
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         detail = match.group(0).strip()
 
