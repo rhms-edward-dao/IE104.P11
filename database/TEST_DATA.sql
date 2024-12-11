@@ -282,6 +282,7 @@ SELECT * FROM CHITIET_PXH;
 TRUNCATE CHITIET_PXH CASCADE;
 ALTER SEQUENCE CHITIET_PXH_mact_pxh_seq RESTART WITH 1;
 
+select * from nhanvien
 -------------------------------------------------------------- Insert Into BAOCAODOANHSO ------------------------------------------------------------
 INSERT INTO BAOCAODOANHSO(Thang, MaDaiLy) VALUES
 ('10', '1'),

@@ -67,17 +67,17 @@ def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(
                 text(
-                    """
-                    INSERT INTO taikhoan_nhavien VALUES
-                    ( {}, {} )
-                """.format(
-                        (pMaNhanVien, pMaTaiKhoan),
-                    )
-                )
+                    """ 
+                    INSERT INTO taikhoan_nhavien (MaNhanVien, MaTaiKhoan) 
+                    VALUES (:pMaNhanVien, :pMaTaiKhoan)
+                    """,
+                ),
+                {"pMaNhanVien": pMaNhanVien, "pMaTaiKhoan": pMaTaiKhoan}
             )
             if os.name == "nt":
                 connection.commit()
     except Exception as e:
+        print(e)
         return e
     return None
 
