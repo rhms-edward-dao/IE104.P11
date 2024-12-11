@@ -28,18 +28,15 @@ const CustomerEditPage = () => {
   const { Update } = t("Buttons");
   const { SF_Customers } = t("SearchFilter");
   const { EP_Customer } = t("EditPage");
-  // // For checking existed customers
-  const location = useLocation();
-  const { existedData } = location.state;
   // // For editing customer
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [newDistrictId, setNewDistrictId] = useState(0);
-  const [newDistrictName, setNewDistrictName] = useState('');
+  const [newDistrictName, setNewDistrictName] = useState("");
   const [existedDistrictName, setExistedDistrictName] = useState([]);
   // City
-  const [newCityName, setNewCityName] = useState('');
+  const [newCityName, setNewCityName] = useState("");
   const [existedCityName, setExistedCityName] = useState([]);
   // // For navigating
   const navigate = useNavigate();
@@ -50,17 +47,25 @@ const CustomerEditPage = () => {
     const fetchData = async () => {
       // Get data for current customer
       const currentCustomer = await getCustomerById(customerId);
-      setName(currentCustomer.Khachhang.Khachhang.tenkhachhang);
-      setPhoneNumber(currentCustomer.Khachhang.Khachhang.sodienthoai);
-      setAddress(currentCustomer.Khachhang.KhachhangDiachi.diachi.split(', ').slice(0, 2).join(', '));
-      setNewDistrictName(currentCustomer.Khachhang.KhachhangDiachi.diachi.split(', ').slice(2, 3).join(', ').trim());
-      setNewDistrictId(currentCustomer.Khachhang.KhachhangDiachi.maquan);
+      setName(currentCustomer[0].Khachhang.tenkhachhang);
+      setPhoneNumber(currentCustomer[0].Khachhang.sodienthoai);
+      setAddress(
+        currentCustomer[0].Diachi.diachi.split(", ").slice(0, 2).join(", "),
+      );
+      setNewDistrictName(
+        currentCustomer[0].Diachi.diachi
+          .split(", ")
+          .slice(2, 3)
+          .join(", ")
+          .trim(),
+      );
+      setNewDistrictId(currentCustomer[0].Diachi.maquan);
       // Get all existed districts
       const existedDistrict = await getAllDistrict();
       if (existedDistrict.message === "Danh sách quận rỗng") {
         setExistedDistrictName([]);
       } else {
-        setExistedDistrictName(existedDistrict);        
+        setExistedDistrictName(existedDistrict);
       }
       // Get all existed cities
       const existedCity = await getAllCityName();
@@ -75,10 +80,18 @@ const CustomerEditPage = () => {
   }, []);
   // Function here
   // // For editing current district
-  const updateData = async (id, tenkhachhang, sodienthoai, quan, tenquan, thanhpho, diachi) => {
+  const updateData = async (
+    id,
+    tenkhachhang,
+    sodienthoai,
+    quan,
+    tenquan,
+    thanhpho,
+    diachi,
+  ) => {
     let check_tenkhachhang = true;
     let check_sodienthoai = true;
-    let check_diachi = true;    
+    let check_diachi = true;
     // Constraints for checking format
     const isOnlyDigit = (input) => /^\d+$/.test(input);
 
@@ -143,18 +156,17 @@ const CustomerEditPage = () => {
           check_diachi = false;
         }
       }
-    }      
-    diachi = diachi + ', ' + tenquan + ', ' + thanhpho;
+    }
+    diachi = diachi + ", " + tenquan + ", " + thanhpho;
     if (check_tenkhachhang && check_sodienthoai && check_diachi) {
-      let item =
-        {
-          tenkhachhang: tenkhachhang,
-          sodienthoai: sodienthoai,
-          maquan: quan.toString(),
-          diachi: diachi,
-        };
+      let item = {
+        tenkhachhang: tenkhachhang,
+        sodienthoai: sodienthoai,
+        maquan: quan.toString(),
+        diachi: diachi,
+      };
       const data = await updateCustomer(id, item);
-    
+
       if (data.success === true) {
         alert("Cập nhật khách hàng thành công");
         navigate("/customer");
@@ -164,8 +176,8 @@ const CustomerEditPage = () => {
         } else {
           alert("Cập nhật khách hàng thất bại");
         }
-      };
-    };
+      }
+    }
   };
   // Return render here
   return (
@@ -191,8 +203,16 @@ const CustomerEditPage = () => {
           </p>
           <button
             className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
-            onClick={() =>              
-                updateData(customerId, name.trim(), phoneNumber.trim(), newDistrictId, newDistrictName, newCityName, address)
+            onClick={() =>
+              updateData(
+                customerId,
+                name.trim(),
+                phoneNumber.trim(),
+                newDistrictId,
+                newDistrictName,
+                newCityName,
+                address,
+              )
             }
           >
             {Update}
@@ -234,7 +254,7 @@ const CustomerEditPage = () => {
             />
           </div>
           {/* Select district name */}
-          <div className="space-x-20 flex">
+          <div className="flex space-x-20">
             <div>
               <label
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
@@ -264,9 +284,9 @@ const CustomerEditPage = () => {
             </div>
             {/* Select city name */}
             <div>
-              <label 
+              <label
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-                htmlFor="city-name-add" 
+                htmlFor="city-name-add"
               >
                 {SF_Customers.Columns.Col5}
               </label>

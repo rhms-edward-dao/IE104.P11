@@ -55,7 +55,7 @@ function PositionEditPage() {
       alert("Chỉ có cấp độ 1 - nhân viên và cấp độ 2 - quản lý");
       check_capdo = false;
     }
-    // Check luong  
+    // Check luong
     if (luong < 3000000) {
       alert("Lương tối thiểu là 3000000");
       check_luong = false;
@@ -101,17 +101,15 @@ function PositionEditPage() {
               </NavLink>
             </div>
             <div className="my-5 flex flex-wrap items-center justify-between">
-              <p className="text-2xl font-bold italic">
-                {EP_Position.Title}  
-              </p>
+              <p className="text-2xl font-bold italic">{EP_Position.Title}</p>
               <div className="flex justify-end">
                 <button
-                  className="px-2 py-3 bg-red-500 rounded rounded-xl"
+                  className="rounded-xl bg-red-500 px-2 py-3"
                   onClick={() =>
                     updateData(positionId, positionName, level, salary)
                   }
                 >
-                  <p className="font-bold text-white text-lg">Cập nhật</p>
+                  <p className="text-lg font-bold text-white">Cập nhật</p>
                 </button>
               </div>
             </div>
@@ -120,7 +118,7 @@ function PositionEditPage() {
         <div>
           <div className="block space-y-8">
             <div className="space-y-4">
-              <label htmlFor="district-name-add" className="font-bold text-lg">
+              <label htmlFor="district-name-add" className="text-lg font-bold">
                 {SF_Positions.Columns.Col1}
               </label>
               <br />
@@ -136,7 +134,7 @@ function PositionEditPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="level-add" className="font-bold text-lg">
+              <label htmlFor="level-add" className="text-lg font-bold">
                 {SF_Positions.Columns.Col2}
               </label>
               <br />
@@ -152,7 +150,7 @@ function PositionEditPage() {
             </div>
 
             <div className="space-y-4">
-              <label htmlFor="salary-add" className="font-bold text-lg">
+              <label htmlFor="salary-add" className="text-lg font-bold">
                 {SF_Positions.Columns.Col3}
               </label>
               <br />
