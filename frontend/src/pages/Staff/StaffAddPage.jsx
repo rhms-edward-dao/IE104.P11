@@ -220,6 +220,8 @@ function StaffManagementAddPage() {
         alert("Email này đã tồn tại");
       } else if (response.message === "Thêm nhân viên thất bại") {
         alert("Thêm nhân viên thất bại");
+      } else if (response.message === "Địa chỉ không tồn tại") {
+        alert("Địa chỉ không tồn tại")
       } else {
         console.log(response);
         alert("Thêm nhân viên thành công");

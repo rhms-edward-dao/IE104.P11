@@ -696,14 +696,13 @@ def get_nhanvien_chitiet_by_manhanvien(db: Session, pMaNhanVien: int):
 
 # Add new Staff
 def add_nhanvien(**param_list):
-    print(param_list)
     with engine.connect().execution_options(auto_commit=True) as connection:
         result = connection.execute(
             text(
                 """
             INSERT INTO NHANVIEN (madaily, hoten, ngaysinh, sodienthoai, email, hinhanh)
             VALUES
-            ( {}, '{}', '{}', {}, '{}', '{}')
+            ( {}, '{}', '{}', '{}', '{}', '{}')
             RETURNING manhanvien;
         """.format(
                     param_list["madaily"],
@@ -745,7 +744,8 @@ def update_nhanvien(manhanvien: int, **param_list):
                     )
                 )
             )
-            connection.commit()
+            if os.name == "nt":
+                connection.commit()
     else:
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(
@@ -769,7 +769,8 @@ def update_nhanvien(manhanvien: int, **param_list):
                     )
                 )
             )
-            connection.commit()
+            if os.name == "nt":
+                connection.commit()
 
 
 # CHUCVU

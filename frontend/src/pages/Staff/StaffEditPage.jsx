@@ -226,6 +226,8 @@ function StaffManagementEditPage() {
         alert("Email này đã tồn tại");
       } else if (response.message === "Cập nhật nhân viên thất bại") {
         alert("Cập nhật nhân viên thất bại");
+      } else if (response.message === "Địa chỉ không tồn tại") {
+        alert("Địa chỉ không tồn tại");
       } else {
         alert("Cập nhật nhân viên thành công");
         navigate("/staff-management");

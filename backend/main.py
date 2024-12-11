@@ -89,7 +89,7 @@ class api_operations:
 
             return {"message": "Đã cập nhật"}
         return {"message": "{} không tồn tại".format(name_in_mes)}
-
+        
     def delete(db, model_name, model_param, param, name_in_mes):
         delete_db = crud.crud_operations.delete(db, model_name, model_param, param)
         message_success = "Xóa {} thành công".format(name_in_mes)
@@ -1528,12 +1528,20 @@ async def add_new_nhanvien(
         geocoder = OpenCageGeocode(key)
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
+        if results == []:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
         kinhdo = results[0]["geometry"]["lng"]
         vido = results[0]["geometry"]["lat"]
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
         pmachuvu = crud.get_machucvu_by_tenchucvu(db, tenchucvu)
-        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
+        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)        
+        if pmaquan == None:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
         # Save image
         contents = await hinhanh.read()
         with open(f"{IMAGEDIR}staffs/{hinhanh.filename}", "wb") as file:
@@ -1549,8 +1557,10 @@ async def add_new_nhanvien(
         }
         # Getting id of currently inserted staff
         pmanhanvien = crud.add_nhanvien(**param_list_nhanvien)
+        print(pmanhanvien)
         # Add staff's address information
         diachi = diachi + "," + tenquan + ", " + tenthanhpho
+        print(pmaquan)
         param_list_diachi = {
             "manhanvien": pmanhanvien,
             "maquan": pmaquan,
@@ -1558,6 +1568,7 @@ async def add_new_nhanvien(
             "kinhdo": kinhdo,
             "vido": vido,
         }
+        print(param_list_diachi)
         api_operations.add(
             db, models.NhanvienDiachi, "nhân viên địa chỉ", **param_list_diachi
         )
@@ -1619,13 +1630,21 @@ async def update_nhanvien(
         key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
         query = "{}".format(diachi)
-        results = geocoder.geocode(query, language="vi")
+        results = geocoder.geocode(query, language="vi")        
+        if results == []:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
         kinhdo = results[0]["geometry"]["lng"]
         vido = results[0]["geometry"]["lat"]
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
         pmachuvu = crud.get_machucvu_by_tenchucvu(db, tenchucvu)
-        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
+        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)   
+        if pmaquan == None:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
         # Save image
         image_dir = ""
         if hinhanh != "null":
@@ -1646,21 +1665,13 @@ async def update_nhanvien(
         # Getting id of currently inserted staff
         crud.update_nhanvien(manhanvien, **param_list_nhanvien)
         # Add staff's address information
-        diachi = diachi + "," + tenquan + ", " + tenthanhpho
+        diachi = diachi + ", " + tenquan + ", " + tenthanhpho
         param_list_diachi = {
             "maquan": pmaquan,
             "diachi": diachi,
             "kinhdo": kinhdo,
             "vido": vido,
         }
-        api_operations.update(
-            db,
-            models.NhanvienDiachi,
-            models.NhanvienDiachi.manhanvien,
-            manhanvien,
-            "nhân viên",
-            **param_list_diachi,
-        )
         # Prepare data for staff's position
         param_list_position = {
             "machucvu": pmachuvu,
@@ -1673,7 +1684,17 @@ async def update_nhanvien(
             "nhân viên",
             **param_list_position,
         )
+        api_operations.update(
+            db,
+            models.NhanvienDiachi,
+            models.NhanvienDiachi.manhanvien,
+            manhanvien,
+            "nhân viên",
+            **param_list_diachi,
+        )
+        
     except Exception as e:
+        print(e)
         # Check non-trigger constraint
         match = re.search(r"DETAIL\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
