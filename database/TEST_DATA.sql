@@ -36,9 +36,9 @@ ALTER SEQUENCE QUAN_maquan_seq RESTART WITH 1;
 
 ---------------------------------------------------------------- Insert Into LOAIDAILY --------------------------------------------------------------
 INSERT INTO LOAIDAILY(TenLoaiDaiLy, SoTienNoToiDa) VALUES
-('Đại lý cấp 1', 20000000),
-('Đại lý cấp 2', 35000000),
-('Đại lý cấp 3', 50000000);
+('Đại lý cấp 1', 50000000),
+('Đại lý cấp 2', 65000000),
+('Đại lý cấp 3', 80000000);
 SELECT * FROM LOAIDAILY;
 TRUNCATE LOAIDAILY CASCADE;
 ALTER SEQUENCE LOAIDAILY_maloaidaily_seq RESTART WITH 1;
@@ -57,7 +57,7 @@ TRUNCATE LOAIMATHANG CASCADE;
 ALTER SEQUENCE LOAIMATHANG_maloaimathang_seq RESTART WITH 1;
 
 ------------------------------------------------------------------ Insert Into DAILY ----------------------------------------------------------------
-INSERT INTO DAILY (MaLoaiDaiLy, TenDaiLy, SoDienThoai) VALUES
+INSERT INTO DAILY (MaLoaiDaiLy, TenDaiLy, SoDienThoai, HinhAnh) VALUES
 ('1', 'Đại lý Bình Tân 1', '0857434243'),
 ('1', 'Đại lý Bình Tân 2', '0857434242'),
 ('2', 'Đại lý Tân Phú 1', '0857434241');
@@ -83,43 +83,43 @@ TRUNCATE BAOTRIDAILY CASCADE;
 ALTER SEQUENCE BAOTRIDAILY_mabaotri_seq RESTART WITH 1;
 
 ----------------------------------------------------------------- Insert Into MATHANG ---------------------------------------------------------------
-INSERT INTO MATHANG(TenMatHang, DonGia, TenDVT, MaDaiLy, MaLoaiMatHang) VALUES
-('Cá betta 1254 – Mái koi nemo tiger baby butterfly', 0, 'con', '1', '1'),
-('Cá betta 1586 – Mái koi nemo tiger butterfly guardian', 0, 'con', '1', '1'),
-('Cá betta 1648 – Koi nemo tiger body sumo itzamna', 0, 'con', '2', '1'),
-('Cá betta 1108 – Red fancy white star fin giống tốt', 0, 'con', '1', '1'),
-('Cá betta 1862 – Mái yellow fancy soulreaver hanuman', 0, 'con', '3', '1'),
-('Cá betta 1745 – Koi nemo candy copper multicolor first-defender ganesha', 0, 'con', '1', '1'),
-('Cá betta 1450 – Mái koi nemo candy butterfly athena', 0, 'con', '1', '1'),
-('Cá betta 1766 – Yellow fancy đại đế oathkeeper morpheus', 0, 'con', '3', '1'),
-('Cá betta 1115 – Koi nemo candy pinky colorfull Kakia', 0, 'con', '2', '1'),
-('Cá betta 1452 – Mái koi nemo candy nền đỏ aphrodite', 0, 'con', '1', '1'),
-('Cá betta 1449 – Mái koi nemo candy multicolor 7 sắc', 0, 'con', '3', '1'),
-('Cá betta 1496 – Mái koi red galaxy defender venus', 0, 'con', '2', '1'),
-('Cá betta 1711 – Koi nemo candy vũ tướng conqueror janus', 0, 'con', '3', '1'),
-('Cá betta 1823 – Yellow fancy blue star the stalwart yum kaax', 0, 'con', '2', '1'),
-('Cá betta 1494 – Mái koi nemo tiger classic color juno', 0, 'con', '1', '1'),
+INSERT INTO MATHANG(TenMatHang, SoLuongTon, DonGia, TenDVT, MaDaiLy, MaLoaiMatHang) VALUES
+('Cá betta 1254 – Mái koi nemo tiger baby butterfly', 7, 110000, 'con', '1', '1'),
+('Cá betta 1586 – Mái koi nemo tiger butterfly guardian', 10, 110000, 'con', '1', '1'),
+('Cá betta 1648 – Koi nemo tiger body sumo itzamna', 30, 140000, 'con', '2', '1'),
+('Cá betta 1108 – Red fancy white star fin giống tốt', 11, 150000, 'con', '1', '1'),
+('Cá betta 1862 – Mái yellow fancy soulreaver hanuman', 13, 110000, 'con', '3', '1'),
+('Cá betta 1745 – Koi nemo candy copper multicolor first-defender ganesha', 12, 180000, 'con', '1', '1'),
+('Cá betta 1450 – Mái koi nemo candy butterfly athena', 40, 110000, 'con', '1', '1'),
+('Cá betta 1766 – Yellow fancy đại đế oathkeeper morpheus', 56, 150000, 'con', '3', '1'),
+('Cá betta 1115 – Koi nemo candy pinky colorfull Kakia', 14, 280000, 'con', '2', '1'),
+('Cá betta 1452 – Mái koi nemo candy nền đỏ aphrodite', 33, 110000, 'con', '1', '1'),
+('Cá betta 1449 – Mái koi nemo candy multicolor 7 sắc', 21, 110000, 'con', '3', '1'),
+('Cá betta 1496 – Mái koi red galaxy defender venus', 42, 110000, 'con', '2', '1'),
+('Cá betta 1711 – Koi nemo candy vũ tướng conqueror janus', 19, 180000, 'con', '3', '1'),
+('Cá betta 1823 – Yellow fancy blue star the stalwart yum kaax', 55, 180000, 'con', '2', '1'),
+('Cá betta 1494 – Mái koi nemo tiger classic color juno', 48, 110000, 'con', '1', '1'),
 
-('Cá betta 1791 – Halfmoon red dragon thái cực chaosbreaker apollo', 0, 'con', '1', '2'),
-('Cá betta 1299 – Red fancy copper lotus Aker form đẹp', 0, 'con', '2', '2'),
-('Cá betta 1445 – Halfmoon combtail dumbo lavender odin', 0, 'con', '3', '2'),
-('Cá betta 1633 – Mái halfmoon super red dragon alom', 0, 'con', '2', '2'),
-('Cá betta 1808 – Halfmoon rồng lửa wayguard morpheus', 0, 'con', '1', '2'),
-('Cá betta 1197 – Mái halfmoon blue red super star Hatshepsut', 0, 'con', '1', '2'),
-('Cá betta 1214 – Mái halfmoon blue red star Hatshepsut', 0, 'con', '3', '2'),
-('Cá betta 1320 – Halfmoon samurai super star Oda Nobunaga', 0, 'con', '2', '2'),
-('Cá betta 1325 – Halfmoon samurai butterfly illusion', 0, 'con', '2', '2'),
-('Cá betta 1327 – Halfmoon mustard gas koi nền xanh vàng đẹp', 0, 'con', '3', '2'),
-('Cá betta 1286 – Halfmoon samurai super star hàng hiếm Vip', 0, 'con', '1', '2'),
-('Cá betta 1850 – Halfmoon blue red butterfly stormchaser huitzilopochtli', 0, 'con', '3', '2'),
-('Cá betta 1529 – Halfmoon blue white đại dương xanh', 0, 'con', '2', '2'),
-('Cá betta 1438 – Halfmoon samurai super star siêu hiếm 2024', 0, 'con', '1', '2'),
-('Cá betta 1474 – Halfmoon koi super white butterfly rama', 0, 'con', '3', '2'),
+('Cá betta 1791 – Halfmoon red dragon thái cực chaosbreaker apollo', 23, 80000, 'con', '1', '2'),
+('Cá betta 1299 – Red fancy copper lotus Aker form đẹp', 67, 180000, 'con', '2', '2'),
+('Cá betta 1445 – Halfmoon combtail dumbo lavender odin', 67, 110000, 'con', '3', '2'),
+('Cá betta 1633 – Mái halfmoon super red dragon alom', 42, 40000, 'con', '2', '2'),
+('Cá betta 1808 – Halfmoon rồng lửa wayguard morpheus', 69, 110000, 'con', '1', '2'),
+('Cá betta 1197 – Mái halfmoon blue red super star Hatshepsut', 23, 40000, 'con', '1', '2'),
+('Cá betta 1214 – Mái halfmoon blue red star Hatshepsut', 42, 40000, 'con', '3', '2'),
+('Cá betta 1320 – Halfmoon samurai super star Oda Nobunaga', 22, 180000, 'con', '2', '2'),
+('Cá betta 1325 – Halfmoon samurai butterfly illusion', 67, 180000, 'con', '2', '2'),
+('Cá betta 1327 – Halfmoon mustard gas koi nền xanh vàng đẹp', 55, 80000, 'con', '3', '2'),
+('Cá betta 1286 – Halfmoon samurai super star hàng hiếm Vip', 9, 180000, 'con', '1', '2'),
+('Cá betta 1850 – Halfmoon blue red butterfly stormchaser huitzilopochtli', 12, 80000, 'con', '3', '2'),
+('Cá betta 1529 – Halfmoon blue white đại dương xanh', 66, 80000, 'con', '2', '2'),
+('Cá betta 1438 – Halfmoon samurai super star siêu hiếm 2024', 34, 180000, 'con', '1', '2'),
+('Cá betta 1474 – Halfmoon koi super white butterfly rama', 52, 80000, 'con', '3', '2'),
 
-('Cá betta 1521 – Koi nemo galaxy dãi ngân hà avenger', 0, 'con', '1', '3'),
-('Cá betta 1583 – Koi nemo galaxy tiger hổ rừng xanh', 0, 'con', '3', '3'),
-('Cá betta 1206 – Koi nemo candy galaxy Tilphousia', 0, 'con', '3', '3'),
-('Cá betta 1844 – Koi nemo galaxy butterfly champion of freedom zeus', 0, 'con', '2', '3');
+('Cá betta 1521 – Koi nemo galaxy dãi ngân hà avenger', 60, 140000, 'con', '1', '3'),
+('Cá betta 1583 – Koi nemo galaxy tiger hổ rừng xanh', 23, 180000, 'con', '3', '3'),
+('Cá betta 1206 – Koi nemo candy galaxy Tilphousia', 85, 140000, 'con', '3', '3'),
+('Cá betta 1844 – Koi nemo galaxy butterfly champion of freedom zeus', 28, 180000, 'con', '2', '3');
 SELECT * FROM MATHANG;
 TRUNCATE MATHANG CASCADE;
 ALTER SEQUENCE MATHANG_mamathang_seq RESTART WITH 1;
@@ -205,17 +205,17 @@ SELECT * FROM KHACHHANG_DIACHI
 TRUNCATE KHACHHANG_DIACHI CASCADE
 
 -------------------------------------------------------------- Insert Into PHIEUNHAPHANG ------------------------------------------------------------
-INSERT INTO PHIEUNHAPHANG(MaDaiLy) VALUES
-('1'),
-('1'),
-('3'),
-('3'),
-('1'),
-('2'),
-('3'),
-('3'),
-('2'),
-('3');
+INSERT INTO PHIEUNHAPHANG(MaDaiLy, TongTien) VALUES
+('1', 1728000),
+('1', 18472000),
+('3', 14256000),
+('3', 20392000),
+('1', 17016000),
+('2', 9088000),
+('3', 12320000),
+('3', 12256000),
+('2', 5280000),
+('3', 16576000);
 SELECT * FROM PHIEUNHAPHANG;
 TRUNCATE PHIEUNHAPHANG CASCADE;
 ALTER SEQUENCE PHIEUNHAPHANG_maphieunhap_seq RESTART WITH 1;
@@ -236,36 +236,36 @@ INSERT INTO CHITIET_PNH(MaPhieuNhap, MaMatHang, SoLuongNhap, DonGiaNhap) VALUES
 ('10', '12', 54, 88000),
 ('8', '13', 19, 144000),
 ('7', '14', 55, 144000),
-('2', '15', 86, 88000),
+('2', '15', 48, 88000),
 
 ('3', '16', 23, 64000),
 ('5', '17', 67, 144000),
 ('6', '18', 67, 88000),
 ('6', '19', 42, 32000),
-('5', '20', 96, 88000),
+('5', '20', 69, 88000),
 ('10', '21', 23, 32000),
 ('9', '22', 42, 32000),
 ('9', '23', 22, 144000),
 ('4', '24', 67, 144000),
 ('7', '25', 55, 64000),
-('5', '26', 79, 144000),
+('5', '26', 9, 144000),
 ('9', '27', 12, 64000),
 ('3', '28', 66, 64000),
-('2', '29', 54, 144000),
+('2', '29', 34, 144000),
 ('8', '30', 52, 64000),
 
 ('10', '31', 63, 112000),
-('2', '32', 53, 144000),
+('2', '32', 23, 144000),
 ('8', '33', 85, 112000),
-('10', '34', 82, 144000);
+('10', '34', 28, 144000);
 SELECT * FROM CHITIET_PNH;
 TRUNCATE CHITIET_PNH CASCADE;
 ALTER SEQUENCE CHITIET_PNH_mact_pnh_seq RESTART WITH 1;
 
 -------------------------------------------------------------- Insert Into PHIEUXUATHANG ------------------------------------------------------------
-INSERT INTO PHIEUXUATHANG(MaDaiLy, MaKhachHang) VALUES
-('1', '1'),
-('3', '1');
+INSERT INTO PHIEUXUATHANG(MaDaiLy, MaKhachHang, TongTien) VALUES
+('1', '1', 3640000),
+('3', '1', 6900000);
 SELECT * FROM PHIEUXUATHANG;
 TRUNCATE PHIEUXUATHANG CASCADE;
 ALTER SEQUENCE PHIEUXUATHANG_maphieuxuat_seq RESTART WITH 1;
