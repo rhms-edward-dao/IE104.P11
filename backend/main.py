@@ -540,7 +540,12 @@ def get_mathang_all(db: Session = Depends(get_db)):
             if item.Mathang.hinhanh:
                 # Get images in different computers
                 target_dir = 'IE104.P11'
-                full_path=Path(item.Mathang.hinhanh)
+                spath = str(item.Mathang.hinhanh)
+                if os.name == "posix":
+                    spath = spath.replace('\\', '/')
+                elif os.name == "nt":
+                    spath = spath.replace('/', '\\')
+                full_path = Path(spath)
                 relative_path = full_path.parts[full_path.parts.index(target_dir):]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
@@ -570,7 +575,12 @@ def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
             try:
                 # Get images in different computers
                 target_dir = 'IE104.P11'
-                full_path=Path(get_db.Mathang.hinhanh)
+                spath = str(item.Mathang.hinhanh)
+                if os.name == "posix":
+                    spath = spath.replace('\\', '/')
+                elif os.name == "nt":
+                    spath = spath.replace('/', '\\')
+                full_path = Path(spath)
                 relative_path = full_path.parts[full_path.parts.index(target_dir):]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
@@ -1035,7 +1045,12 @@ def get_daily_all(db: Session = Depends(get_db)):
             if item.Daily.hinhanh:
                 # Get images in different computers
                 target_dir = 'IE104.P11'
-                full_path=Path(item.Daily.hinhanh)
+                spath = str(item.Daily.hinhanh)
+                if os.name == "posix":
+                    spath = spath.replace('\\', '/')
+                elif os.name == "nt":
+                    spath = spath.replace('/', '\\')
+                full_path=Path(spath)
                 relative_path = full_path.parts[full_path.parts.index(target_dir):]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
@@ -1075,7 +1090,12 @@ def get_daily_by_madaily(madaily, db: Session = Depends(get_db)):
             if item[7]:
                 # Get images in different computers
                 target_dir = 'IE104.P11'
-                full_path=Path(item[7])
+                spath = str(item[7])
+                if os.name == "posix":
+                    spath = spath.replace('\\', '/')
+                elif os.name == "nt":
+                    spath = spath.replace('/', '\\')
+                full_path=Path(spath)
                 relative_path = full_path.parts[full_path.parts.index(target_dir):]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
@@ -1350,10 +1370,16 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
             if item.Nhanvien.hinhanh:
                 # Get images in different computers
                 target_dir = 'IE104.P11'
-                full_path=Path(item.Nhanvien.hinhanh)
+                spath = str(item.Nhanvien.hinhanh)
+                if os.name == "posix":
+                    spath = spath.replace('\\', '/')
+                elif os.name == "nt":
+                    spath = spath.replace('/', '\\')
+                full_path = Path(spath)
                 relative_path = full_path.parts[full_path.parts.index(target_dir):]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
+                print(final_path)
                 with open(final_path, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
@@ -1382,8 +1408,13 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
     if get_db:
         if get_db[0].hinhanh:
             # Get images in different computers
-            target_dir = 'IE104.P11'
-            full_path=Path(get_db[0].hinhanh)
+            target_dir = 'IE104.P11'    
+            spath = str(get_db[0].hinhanh)
+            if os.name == "posix":
+                spath = spath.replace('\\', '/')
+            elif os.name == "nt":
+                spath = spath.replace('/', '\\')
+            full_path=Path(spath)
             relative_path = full_path.parts[full_path.parts.index(target_dir):]
             relative_path_str = Path(*relative_path).as_posix()
             final_path = BASEDIR + relative_path_str
@@ -1414,7 +1445,12 @@ def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
         if get_db[0]:
             # Get images in different computers
             target_dir = 'IE104.P11'
-            full_path=Path(get_db[0])
+            spath = str(get_db[0])
+            if os.name == "posix":
+                spath = spath.replace('\\', '/')
+            elif os.name == "nt":
+                spath = spath.replace('/', '\\')
+            full_path = Path(spath)
             relative_path = full_path.parts[full_path.parts.index(target_dir):]
             relative_path_str = Path(*relative_path).as_posix()
             final_path = BASEDIR + relative_path_str
@@ -1464,17 +1500,18 @@ async def add_new_nhanvien(
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
         kinhdo = results[0]["geometry"]["lng"]
-        vido = results[0]["geometry"]["lat"]
-
+        vido = results[0]["geometry"]["lat"]        
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
         pmachuvu = crud.get_machucvu_by_tenchucvu(db, tenchucvu)
         pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
         # Save image
+        print(hinhanh)
         contents = await hinhanh.read()
         with open(f"{IMAGEDIR}staffs/{hinhanh.filename}", "wb") as file:
             file.write(contents)
         # Prepare data and add new nhanvien
+        print(f"{IMAGEDIR}staffs/{hinhanh.filename}")
         param_list_nhanvien = {
             "hoten": tennhanvien,
             "madaily": pmadaily,
@@ -1483,6 +1520,7 @@ async def add_new_nhanvien(
             "email": email,
             "hinhanh": f"{IMAGEDIR}staffs/{hinhanh.filename}",
         }
+        print(param_list_nhanvien)
         # Getting id of currently inserted staff
         pmanhanvien = crud.add_nhanvien(**param_list_nhanvien)
         # Add staff's address information
