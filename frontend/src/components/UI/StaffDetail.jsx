@@ -27,17 +27,19 @@ const StaffDetail = () => {
         <div
           id="popup-modal"
           tabIndex="-1"
-          className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-75"
         >
-          <div className="relative p-4 w-full max-w-4xl max-h-4xl bg-white rounded-lg shadow-lg">
-            <h1 className="text-2xl font-bold mb-4">Thông tin nhân viên</h1>
+          <div className="max-h-4xl relative w-full max-w-4xl rounded-lg bg-white p-4 shadow-lg dark:bg-[#363636]">
+            <h1 className="mb-4 text-2xl font-bold text-black dark:text-white">
+              Thông tin nhân viên
+            </h1>
             <button
               type="button"
               onClick={closePopup}
-              className="absolute top-3 right-3 text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center"
+              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-lg text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
             >
               <svg
-                className="w-3 h-3"
+                className="h-3 w-3"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -57,75 +59,77 @@ const StaffDetail = () => {
               <p>Loading ...</p>
             ) : (
               <div className="flex justify-between">
-                <div className="w-1/2 mx-5">
+                <div className="mx-5 w-1/2">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-center font-bold text-xl mt-5 mb-8">
+                    <h2 className="mb-8 mt-5 text-center text-xl font-bold text-black dark:text-white">
                       Thông tin cá nhân
                     </h2>
                     <div className="flex justify-end">
                       <NavLink
-                        className="w-[100px] h-[40px] flex justify-center items-center bg-green-500"
+                        className="flex h-[40px] w-[100px] items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                         onClick={closePopup}
                         to={`staff-management/staff-management-edit-page/${popupData}`}
                       >
-                        <p className="font-bold text-white">Cập nhật</p>
+                        <p>Cập nhật</p>
                       </NavLink>
                     </div>
                   </div>
-                  <div className="flex justify-between items-center lg:mx-14 my-10">
-                    <p className="font-bold">Ảnh đại diện:</p>
+                  <div className="my-10 flex items-center justify-between lg:mx-14">
+                    <p className="font-bold text-black dark:text-white">
+                      Ảnh đại diện:
+                    </p>
                     <img
                       width="60px"
                       src={`data:images/jpeg;base64, ${staffDataDetail.avatar}`}
                       alt="Ảnh đại diện"
                     />
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Họ tên: </p>
                     <p>{staffDataDetail.hoten}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Ngày sinh: </p>
                     <p>{staffDataDetail.ngaysinh}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Số điện thoại: </p>
                     <p>{staffDataDetail.sodienthoai}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Email: </p>
                     <p>{staffDataDetail.email}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Địa chỉ: </p>
                     <p>{staffDataDetail.diachi}</p>
                   </div>
                 </div>
-                <div className="w-1/2 mx-5">
-                  <h2 className="text-center text-xl font-bold mt-5 mb-8">
+                <div className="mx-5 w-1/2">
+                  <h2 className="mb-8 mt-5 text-center text-xl font-bold text-black dark:text-white">
                     Thông tin công việc
                   </h2>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Đại lý:</p>
                     <p>{staffDataDetail.tendaily}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Chức vụ:</p>
                     <p>{staffDataDetail.tenchucvu}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Cấp độ:</p>
                     <p>{staffDataDetail.capdo}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Lương:</p>
                     <p>{staffDataDetail.luong}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Ngày bắt đầu:</p>
                     <p>{staffDataDetail.ngaybatdau}</p>
                   </div>
-                  <div className="flex justify-between lg:mx-14 my-8">
+                  <div className="my-8 flex justify-between text-black dark:text-white lg:mx-14">
                     <p className="font-bold">Thời hạn:</p>
                     <p>{staffDataDetail.thoihan}</p>
                   </div>
