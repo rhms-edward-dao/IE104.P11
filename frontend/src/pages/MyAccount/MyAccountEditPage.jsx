@@ -72,7 +72,7 @@ const MyAccountEditPage = () => {
     sodienthoai,
     email,
     diachi,
-    hinhanh
+    hinhanh,
   ) => {
     let check_hoten = true;
     let check_ngaysinh = true;
@@ -98,7 +98,6 @@ const MyAccountEditPage = () => {
         diachi: diachi,
       };
       const response = await updateAccount(userInfo.userID, item);
-      console.log(response);
       if (response.success === true) {
         alert(response.message);
         navigate("/my-account");
@@ -114,7 +113,7 @@ const MyAccountEditPage = () => {
       ) : (
         <div>
           <Header></Header>
-          <div className="flex items-center gap-40 mx-8 my-4">
+          <div className="mx-8 my-4 flex items-center gap-40">
             <NavLink to={"/my-account"}>
               <button>
                 <img
@@ -125,15 +124,15 @@ const MyAccountEditPage = () => {
               </button>
             </NavLink>
           </div>
-          <div className="mx-8 my-4 p-4 bg-white dark:bg-[#363636] transition-colors duration-300 rounded-lg shadow-lg">
-            <h1 className="p-2 text-3xl font-bold text-black dark:text-white transition-colors duration-300">
+          <div className="mx-8 my-4 rounded-lg bg-white p-4 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
+            <h1 className="p-2 text-3xl font-bold text-black transition-colors duration-300 dark:text-white">
               {EP_Account.Title}
             </h1>
-            <div className="flex p-4 items-center">
-              <h3 className="w-1/6 text-xl font-semibold text-black dark:text-white transition-colors duration-300">
+            <div className="flex items-center p-4">
+              <h3 className="w-1/6 text-xl font-semibold text-black transition-colors duration-300 dark:text-white">
                 {Section1.Label1}:
               </h3>
-              <div className="w-5/6 flex flex-col justify-center">
+              <div className="flex w-5/6 flex-col justify-center">
                 <div className="flex justify-center">
                   {imageForUpload === undefined ? (
                     <img
@@ -144,7 +143,7 @@ const MyAccountEditPage = () => {
                     <img alt="Hình đại diện" src={imageForShow}></img>
                   )}
                 </div>
-                <div className="rounded-full flex items-center justify-center transition-colors duration-300 my-10">
+                <div className="my-10 flex items-center justify-center rounded-full transition-colors duration-300">
                   <input
                     type="file"
                     accept=".jpeg,.jpg,.png,.gif,.raw"
@@ -154,72 +153,72 @@ const MyAccountEditPage = () => {
                   />
                   <label
                     htmlFor="file-upload"
-                    className="flex flex-col items-center justify-center cursor-pointer"
+                    className="flex cursor-pointer flex-col items-center justify-center"
                   >
-                    <span className="text-blue-400 font-bold hover:text-blue-600 text-base max-w-24 text-center">
+                    <span className="max-w-24 text-center text-base font-bold text-blue-400 hover:text-blue-600">
                       {UploadImage}
                     </span>
                   </label>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
-              <h3 className="h-1/4 text-xl font-semibold justify-center">
+            <div className="flex flex-col gap-2 p-4 text-black transition-colors duration-300 dark:text-white">
+              <h3 className="h-1/4 justify-center text-xl font-semibold">
                 {Section1.Label2}:
               </h3>
               <input
-                className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
+                className="h-3/4 rounded-md border border-black bg-white p-2 dark:border-white dark:bg-[#363636]"
                 type="text"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
-            <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
-              <h3 className="h-1/4 text-xl font-semibold justify-center">
+            <div className="flex flex-col gap-2 p-4 text-black transition-colors duration-300 dark:text-white">
+              <h3 className="h-1/4 justify-center text-xl font-semibold">
                 {Section1.Label3}:
               </h3>
               <input
-                className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
+                className="h-3/4 rounded-md border border-black bg-white p-2 dark:border-white dark:bg-[#363636]"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
               />
             </div>
-            <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
-              <h3 className="h-1/4 text-xl font-semibold justify-center">
+            <div className="flex flex-col gap-2 p-4 text-black transition-colors duration-300 dark:text-white">
+              <h3 className="h-1/4 justify-center text-xl font-semibold">
                 {Section1.Label4}:
               </h3>
               <input
-                className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
+                className="h-3/4 rounded-md border border-black bg-white p-2 dark:border-white dark:bg-[#363636]"
                 type="text"
                 value={currentAccount.sodienthoai}
                 disabled="true"
               />
             </div>
-            <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
-              <h3 className="h-1/4 text-xl font-semibold justify-center">
+            <div className="flex flex-col gap-2 p-4 text-black transition-colors duration-300 dark:text-white">
+              <h3 className="h-1/4 justify-center text-xl font-semibold">
                 {Section1.Label5}:
               </h3>
               <input
-                className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
+                className="h-3/4 rounded-md border border-black bg-white p-2 dark:border-white dark:bg-[#363636]"
                 type="text"
                 value={currentAccount.email}
                 disabled="true"
               />
             </div>
-            <div className="flex flex-col p-4 gap-2 text-black dark:text-white transition-colors duration-300">
-              <h3 className="h-1/4 text-xl font-semibold justify-center">
+            <div className="flex flex-col gap-2 p-4 text-black transition-colors duration-300 dark:text-white">
+              <h3 className="h-1/4 justify-center text-xl font-semibold">
                 {Section1.Label6}:
               </h3>
               <input
-                className="h-3/4 p-2 border border-black bg-white rounded-md dark:border-white dark:bg-[#363636]"
+                className="h-3/4 rounded-md border border-black bg-white p-2 dark:border-white dark:bg-[#363636]"
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
           </div>
-          <div className="w-full mx-8 my-4 flex items-center justify-center">
+          <div className="mx-8 my-4 flex w-full items-center justify-center">
             <button
               onClick={() => {
                 handleUpdate(
@@ -228,13 +227,13 @@ const MyAccountEditPage = () => {
                   currentAccount.sodienthoai,
                   currentAccount.email,
                   address,
-                  imageForUpload
+                  imageForUpload,
                 );
               }}
             >
-              <div className="flex gap-2 bg-red-500 p-2 rounded-lg items-center m-2">
+              <div className="m-2 flex items-center gap-2 rounded-lg bg-red-500 p-2">
                 <img src={SaveIcon} alt="Icon lưu" />
-                <p className="font-bold text-white hidden sm:hidden md:hidden lg:inline-block">
+                <p className="hidden font-bold text-white sm:hidden md:hidden lg:inline-block">
                   {Save}
                 </p>
               </div>

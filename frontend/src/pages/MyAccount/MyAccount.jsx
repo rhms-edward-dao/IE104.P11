@@ -56,14 +56,14 @@ function MyAccount() {
       ) : (
         <div>
           <Header headerTitle={Title.Account}></Header>
-          <div className="my-8 mx-4 grid grid-cols-2 bg-white dark:bg-[#363636] transition-colors duration-300 rounded-lg shadow-lg">
+          <div className="mx-4 my-8 grid grid-cols-2 rounded-lg bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636]">
             <div className="border-r-2 border-gray-200 p-4 pr-6">
-              <div className="flex justify-between items-center">
-                <h1 className="m-2 text-2xl font-bold text-black dark:text-white transition-colors duration-300">
+              <div className="flex items-center justify-between">
+                <h1 className="m-2 text-2xl font-bold text-black transition-colors duration-300 dark:text-white">
                   {Section1.Title}
                 </h1>
                 <NavLink
-                  className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                  className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                   to="my-account-edit-page"
                 >
                   <p className="hidden sm:hidden md:hidden lg:inline-block">
@@ -73,67 +73,67 @@ function MyAccount() {
                 </NavLink>
               </div>
               <div className="mx-2 my-8 flex items-center">
-                <h3 className="w-1/4 text-xl font-semibold text-black dark:text-white transition-colors duration-300">
+                <h3 className="w-1/4 text-xl font-semibold text-black transition-colors duration-300 dark:text-white">
                   {Section1.Label1}:
                 </h3>
-                <div className="relative w-3/4 flex justify-center">
-                  <div className="w-32 h-32 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center transition-colors duration-300">
+                <div className="relative flex w-3/4 justify-center">
+                  <div className="flex h-32 w-32 items-center justify-center rounded-full bg-gray-300 transition-colors duration-300 dark:bg-gray-600">
                     <img
                       alt="Ảnh đại diện"
                       src={`data:images/jpeg;base64, ${accountData.avatar}`}
-                      className="w-full h-full rounded-lg"
+                      className="h-full w-full rounded-lg"
                     />
                   </div>
                 </div>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section1.Label2}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.hoten}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section1.Label3}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.ngaysinh}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section1.Label4}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.sodienthoai}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section1.Label5}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.email}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section1.Label6}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.diachi}
                 </p>
               </div>
             </div>
             <div className="p-4 pl-6">
               <div className="flex justify-between">
-                <h1 className="m-2 text-2xl font-bold text-black dark:text-white transition-colors duration-300">
+                <h1 className="m-2 text-2xl font-bold text-black transition-colors duration-300 dark:text-white">
                   {Section2.Title}
                 </h1>
                 <NavLink
-                  className="items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white hidden"
+                  className="hidden items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
                   to="#"
                 >
                   <p className="hidden sm:hidden md:hidden lg:inline-block">
@@ -142,43 +142,43 @@ function MyAccount() {
                   <img src={EditIcon} alt="Icon chỉnh sửa" />
                 </NavLink>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section2.Label1}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.tenchucvu}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section2.Label2}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.capdo}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section2.Label3}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.luong}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section2.Label4}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.ngaybatdau}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex text-black dark:text-white transition-colors duration-300 items-center">
-                <h3 className="w-1/3 text-xl font-semibold justify-center">
+              <div className="mx-2 my-8 flex items-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/3 justify-center text-xl font-semibold">
                   {Section2.Label5}:
                 </h3>
-                <p className="w-2/3 italic justify-start">
+                <p className="w-2/3 justify-start italic">
                   {accountData.thoihan}
                 </p>
               </div>
