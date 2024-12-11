@@ -203,6 +203,7 @@ const StoreAddPage = () => {
         hinhanh: hinhanh,
       };
       const data = await addStore(item);
+      console.log(data)
       if (data.message === "Thêm đại lý thất bại") {
         alert("Thêm đại lý thất bại");
       } else if (data.message === "Tên đại lý đã tồn tại") {
@@ -211,6 +212,8 @@ const StoreAddPage = () => {
         alert("Số điện thoại đã tồn tại");
       } else if (data.message === "Địa chỉ đã tồn tại") {
         alert("Địa chỉ đã tồn tại");
+      } else if (data.message === "Địa chỉ không tồn tại") {
+        alert("Địa chỉ không tồn tại");
       } else if (data.message === "Thêm đại lý thành công") {
         alert("Thêm đại lý thành công");
         navigate("/stores");

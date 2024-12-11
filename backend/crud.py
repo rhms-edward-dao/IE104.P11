@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 from database import engine
 import models, schemas
-
+import os
 
 # Crud Operation class for the same crud tasks
 class crud_operations:
@@ -13,15 +13,10 @@ class crud_operations:
         return db.query(model_name).filter(model_param == param).first()
 
     def add(db, new_db_item):
-        try:
-            db.add(new_db_item)
-            db.commit()
-            db.refresh(new_db_item)
-            return new_db_item
-        except Exception as e:
-            print(e)
-            return e
-        return None
+        db.add(new_db_item)
+        db.commit()
+        db.flush()
+        db.refresh(new_db_item)
 
     def delete(db, model_name, model_param, param):
         try:
@@ -29,8 +24,7 @@ class crud_operations:
             db.delete(get_db)
             db.commit()
             return {"message": "Đã xóa"}
-        except Exception as e:
-            print(e)
+        except Exception as e:            
             return {"message": "Xóa thất bại"}
 
 
@@ -216,13 +210,16 @@ def get_quan_by_tenquan_tenthanhpho(db: Session, pTenQuan: str, pTenThanhPho: st
 
 
 def get_maquan_by_tenquan_tenthanhpho(db: Session, pTenQuan: str, pTenThanhPho: str):
-    return (
-        db.query(models.Quan.maquan)
-        .filter(
-            models.Quan.tenquan == pTenQuan, models.Quan.tenthanhpho == pTenThanhPho
+    try:
+        return (
+            db.query(models.Quan.maquan)
+            .filter(
+                models.Quan.tenquan == pTenQuan, models.Quan.tenthanhpho == pTenThanhPho
+            )
+            .first()[0]
         )
-        .first()[0]
-    )
+    except Exception as e:
+        print(e)
 
 
 def get_summary_quan() -> list:
@@ -511,7 +508,7 @@ def add_daily(**param_list):
             INSERT INTO Daily
             (tendaily, maloaidaily, ngaytiepnhan, sodienthoai, hinhanh) 
             VALUES
-            ( '{}', {}, '{}', {}, '{}' );
+            ( '{}', {}, '{}', '{}', '{}' );
         """.format(
                     param_list["tendaily"],
                     param_list["maloaidaily"],
@@ -521,7 +518,8 @@ def add_daily(**param_list):
                 )
             )
         )
-        connection.commit()
+        if os.name == "nt":
+            connection.commit()    
 
 
 def update_daily(**param_list):
@@ -535,7 +533,7 @@ def update_daily(**param_list):
                     tendaily = '{}',
                     maloaidaily = {},
                     ngaytiepnhan = '{}',
-                    sodienthoai = {}
+                    sodienthoai = '{}'
                 WHERE madaily = {};
             """.format(
                         param_list["tendaily"],
@@ -546,7 +544,8 @@ def update_daily(**param_list):
                     )
                 )
             )
-            connection.commit()
+            if os.name == "nt":
+                connection.commit()
     else:
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(

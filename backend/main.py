@@ -1138,15 +1138,18 @@ async def add_new_daily(
     hinhanh: UploadFile = File(...),
     db: Session = Depends(get_db),
 ):
-    try:
+    try:               
         # Get longtitude and latitude
         key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
-        query = "{}".format(diachi)
-        results = geocoder.geocode(query, language="vi")
+        query = "{}".format(diachi)        
+        results = geocoder.geocode(query, language="vi")        
+        if results == []:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
         kinhdo = results[0]["geometry"]["lng"]
-        vido = results[0]["geometry"]["lat"]
-
+        vido = results[0]["geometry"]["lat"]          
         # Save image
         contents = await hinhanh.read()
         with open(f"{IMAGEDIR}stores/{hinhanh.filename}", "wb") as file:
@@ -1162,18 +1165,23 @@ async def add_new_daily(
             "sodienthoai": sodienthoai,
             "hinhanh": f"{IMAGEDIR}stores/{hinhanh.filename}",
         }
-
+        
         crud.add_daily(**param_list)
 
         # Add address for daily_diachi
-        # Find madaily by tendaily, maquan by tenquan, tenthanhpho
+        # Find madaily by tendaily, maquan by tenquan, tenthanhpho        
         db_get_madaily = api_operations.get_one_parameter(
             db, models.Daily, models.Daily.tendaily, tendaily, "đại lý"
         )
+        
         db_get_maquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
-
+        if db_get_maquan == None:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
         # Solving address information before adding
         diachi = diachi + ", " + tenquan + ", " + tenthanhpho
+        
         param_list_diachi = {
             "madaily": db_get_madaily.madaily,
             "maquan": db_get_maquan,
@@ -1184,12 +1192,12 @@ async def add_new_daily(
         api_operations.add(
             db, models.DailyDiachi, "đại lý địa chỉ", **param_list_diachi
         )
-        return {"message": "Thêm đại lý thành công"}
+        return {"message": "Thêm đại lý thành công"}        
     except Exception as e:
-        print(e)
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
+
             if detail == "DETAIL:  Key (tendaily)=({}) already exists.".format(
                 tendaily
             ):
@@ -1199,6 +1207,7 @@ async def add_new_daily(
             ):
                 return {"message": "Số điện thoại đã tồn tại"}
             elif detail == "DETAIL:  Key (diachi)=({}) already exists.".format(diachi):
+                db.rollback()
                 api_operations.delete(
                     db,
                     models.Daily,
@@ -1206,7 +1215,7 @@ async def add_new_daily(
                     db_get_madaily.madaily,
                     "đại lý",
                 )
-                db.commit()
+
                 return {"message": "Địa chỉ đã tồn tại"}
             else:
                 return {"message": "Thêm đại lý thất bại"}
@@ -1244,6 +1253,10 @@ async def update_daily(
         geocoder = OpenCageGeocode(key)
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
+        if results == []:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
         kinhdo = results[0]["geometry"]["lng"]
         vido = results[0]["geometry"]["lat"]
 
@@ -1275,7 +1288,11 @@ async def update_daily(
         # Update DailyDiachi
         # Get maquan by tenquan, tenthanhpho
         get_maquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
-
+        if get_maquan == None:
+            return {
+                "message": "Địa chỉ không tồn tại"
+            }
+        
         diachi = diachi + ", " + tenquan + ", " + tenthanhpho
         param_list_dc = {
             "madaily": madaily,
@@ -1298,6 +1315,7 @@ async def update_daily(
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
+            print(detail)
             # Send error message to Client
             if detail == "DETAIL:  Key (tendaily)=({}) already exists.".format(
                 tendaily
