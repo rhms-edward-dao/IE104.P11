@@ -14,8 +14,11 @@ from opencage.geocoder import OpenCageGeocode
 from pprint import pprint
 import re, os, base64
 
+from pathlib import Path
 # IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images/"
-IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/Github/IE104.P11/backend/images/"
+# IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/onGithub/IE104.P11/backend/images/"
+BASEDIR = str(Path(__file__).resolve().parent.parent.parent) + '/'
+IMAGEDIR = str(Path(__file__).resolve().parent) + '/images/'
 
 # from security import validate_token
 app = FastAPI()
@@ -104,6 +107,7 @@ def account_login(
     pmatkhau: str = Body(..., embed=True),
     db: Session = Depends(get_db),
 ):
+    print(IMAGEDIR)
     db_get_taikhoan = crud.get_taikhoan_by_tentaikhoan_and_matkhau(
         db, pTenTaiKhoan=ptentaikhoan, pMatKhau=pmatkhau
     )
@@ -534,8 +538,14 @@ def get_mathang_all(db: Session = Depends(get_db)):
     if get_db:
         for item in get_db:
             if item.Mathang.hinhanh:
-                with open(item.Mathang.hinhanh, "rb") as f:
-                    data = f.read()
+                # Get images in different computers
+                target_dir = 'IE104.P11'
+                full_path=Path(item.Mathang.hinhanh)
+                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path_str = Path(*relative_path).as_posix()
+                final_path = BASEDIR + relative_path_str
+                with open(final_path, "rb") as f:
+                    data = f.read()                
                     data_to_base64 = base64.b64encode(data)
                 item.Mathang.hinhanh = data_to_base64
             Mathang_dict = item[0].__dict__.copy()
@@ -558,7 +568,13 @@ def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
         db_dict = get_db.Mathang.__dict__.copy()
         if get_db.Mathang.hinhanh:
             try:
-                with open(get_db.Mathang.hinhanh, "rb") as f:
+                # Get images in different computers
+                target_dir = 'IE104.P11'
+                full_path=Path(get_db.Mathang.hinhanh)
+                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path_str = Path(*relative_path).as_posix()
+                final_path = BASEDIR + relative_path_str
+                with open(final_path, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
                     db_dict["hinhanh"] = data_to_base64
@@ -585,7 +601,13 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
             item_dict = item.Mathang.__dict__.copy()
             if item.Mathang.hinhanh:
                 try:
-                    with open(item.Mathang.hinhanh, "rb") as f:
+                    # Get images in different computers
+                    target_dir = 'IE104.P11'
+                    full_path=Path(item.Mathang.hinhanh)
+                    relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                    relative_path_str = Path(*relative_path).as_posix()
+                    final_path = BASEDIR + relative_path_str
+                    with open(final_path, "rb") as f:
                         data = f.read()
                         data_to_base64 = base64.b64encode(data)
                     item_dict["hinhanh"] = data_to_base64
@@ -1011,7 +1033,13 @@ def get_daily_all(db: Session = Depends(get_db)):
     if get_all_daily:
         for item in get_all_daily:
             if item.Daily.hinhanh:
-                with open(item.Daily.hinhanh, "rb") as f:
+                # Get images in different computers
+                target_dir = 'IE104.P11'
+                full_path=Path(item.Daily.hinhanh)
+                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path_str = Path(*relative_path).as_posix()
+                final_path = BASEDIR + relative_path_str
+                with open(final_path, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
                 item.Daily.hinhanh = data_to_base64
@@ -1045,7 +1073,13 @@ def get_daily_by_madaily(madaily, db: Session = Depends(get_db)):
     if get_db != []:
         for item in get_db:
             if item[7]:
-                with open(item[7], "rb") as f:
+                # Get images in different computers
+                target_dir = 'IE104.P11'
+                full_path=Path(item[7])
+                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path_str = Path(*relative_path).as_posix()
+                final_path = BASEDIR + relative_path_str
+                with open(final_path, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
             else:
@@ -1314,7 +1348,13 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
     if get_db:
         for item in get_db:
             if item.Nhanvien.hinhanh:
-                with open(item.Nhanvien.hinhanh, "rb") as f:
+                # Get images in different computers
+                target_dir = 'IE104.P11'
+                full_path=Path(item.Nhanvien.hinhanh)
+                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path_str = Path(*relative_path).as_posix()
+                final_path = BASEDIR + relative_path_str
+                with open(final_path, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
                 item.Nhanvien.hinhanh = data_to_base64
@@ -1341,7 +1381,13 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
     result = []
     if get_db:
         if get_db[0].hinhanh:
-            with open(get_db[0].hinhanh, "rb") as f:
+            # Get images in different computers
+            target_dir = 'IE104.P11'
+            full_path=Path(get_db[0].hinhanh)
+            relative_path = full_path.parts[full_path.parts.index(target_dir):]
+            relative_path_str = Path(*relative_path).as_posix()
+            final_path = BASEDIR + relative_path_str
+            with open(final_path, "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
             get_db[0].hinhanh = data_to_base64
@@ -1366,7 +1412,13 @@ def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
     response_data = []
     if get_db:
         if get_db[0]:
-            with open(get_db[0], "rb") as f:
+            # Get images in different computers
+            target_dir = 'IE104.P11'
+            full_path=Path(get_db[0])
+            relative_path = full_path.parts[full_path.parts.index(target_dir):]
+            relative_path_str = Path(*relative_path).as_posix()
+            final_path = BASEDIR + relative_path_str
+            with open(final_path, "rb") as f:
                 data = f.read()
                 data_to_base64 = base64.b64encode(data)
         else:
