@@ -118,7 +118,7 @@ DECLARE
 BEGIN
     -- Get value for SoLuongXuat & SoLuongTon
     vSoLuongXuat := NEW.SoLuongXuat;
-    SELECT SoLuongTon INTO vSoLuongTon FROM SoLuongTon WHERE MaMatHang = NEW.MaMatHang;
+    SELECT SoLuongTon INTO vSoLuongTon FROM Mathang WHERE MaMatHang = NEW.MaMatHang;
 
     -- Check condition
     IF vSoLuongXuat > vSoLuongTon THEN
