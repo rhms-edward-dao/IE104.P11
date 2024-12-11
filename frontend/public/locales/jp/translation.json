@@ -292,7 +292,7 @@
       "Title": "地区を編集します"
     },
     "EP_Stores": {
-      "Titile": "エージェントを編集します"
+      "Title": "エージェントを編集します"
     },
     "EP_StoreCategories": {
       "Title": "エージェントの種類を編集します"
@@ -349,7 +349,7 @@
     }
   },
   "RulePage": {
-    "Header": "ルール",
+    "Title": "ルール",
     "CurrentValue": "現在の価値",
     "Rule1": {
       "Title": "従業員のデバイスの最大数",

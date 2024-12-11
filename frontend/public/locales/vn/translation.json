@@ -308,7 +308,7 @@
       "Title": "Chỉnh sửa quận"
     },
     "EP_Stores": {
-      "Titile": "Chỉnh sửa đại lý"
+      "Title": "Chỉnh sửa đại lý"
     },
     "EP_StoreCategories": {
       "Title": "Chỉnh sửa loại đại lý"
@@ -328,7 +328,7 @@
     "EP_Position": {
       "Title": "Chỉnh sửa chức vụ"
     },
-    "AP_Customer": {
+    "EP_Customer": {
       "Title": "Cập nhật khách hàng"
     }
   },
@@ -365,7 +365,7 @@
     }
   },
   "RulePage": {
-    "Header": "Các quy tắc",
+    "Title": "Các quy tắc",
     "CurrentValue": "Giá trị hiện tại",
     "Rule1": {
       "Title": "Số lượng thiết bị tối đa của nhân viên",

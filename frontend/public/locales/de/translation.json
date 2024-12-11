@@ -293,7 +293,7 @@
       "Title": "Bezirk bearbeiten"
     },
     "EP_Stores": {
-      "Titile": "Agent bearbeiten"
+      "Title": "Agent bearbeiten"
     },
     "EP_StoreCategories": {
       "Title": "Agententyp bearbeiten"
@@ -350,7 +350,7 @@
     }
   },
   "RulePage": {
-    "Header": "Regeln",
+    "Title": "Regeln",
     "CurrentValue": "Barwert",
     "Rule1": {
       "Title": "Maximale Anzahl von Geräten pro Mitarbeiter",

@@ -293,7 +293,7 @@
       "Title": "Edit district"
     },
     "EP_Stores": {
-      "Titile": "Edit agent"
+      "Title": "Edit agent"
     },
     "EP_StoreCategories": {
       "Title": "Edit agent type"
@@ -350,7 +350,7 @@
     }
   },
   "RulePage": {
-    "Header": "Rules",
+    "Title": "Rules",
     "CurrentValue": "Present value",
     "Rule1": {
       "Title": "Maximum number of devices for employee",

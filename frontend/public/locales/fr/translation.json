@@ -292,7 +292,7 @@
       "Title": "Modifier le quartier"
     },
     "EP_Stores": {
-      "Titile": "Modifier un agent"
+      "Title": "Modifier un agent"
     },
     "EP_StoreCategories": {
       "Title": "Modifier un type d'agent"
@@ -349,7 +349,7 @@
     }
   },
   "RulePage": {
-    "Header": "Règles",
+    "Title": "Règles",
     "CurrentValue": "Valeur actuelle",
     "Rule1": {
       "Title": "Nombre maximal d'appareils pour un employé",

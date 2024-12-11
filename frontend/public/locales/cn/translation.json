@@ -290,7 +290,7 @@
       "Title": "編輯區"
     },
     "EP_Stores": {
-      "Titile": "編輯代理"
+      "Title": "編輯代理"
     },
     "EP_StoreCategories": {
       "Title": "編輯代理類型"
@@ -347,7 +347,7 @@
     }
   },
   "RulePage": {
-    "Header": "規則",
+    "Title": "規則",
     "CurrentValue": "現值",
     "Rule1": {
       "Title": "S員工的最大設備數量",
