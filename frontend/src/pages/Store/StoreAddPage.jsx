@@ -98,7 +98,7 @@ const StoreAddPage = () => {
     tenquan,
     tenthanhpho,
     diachi,
-    hinhanh
+    hinhanh,
   ) => {
     let check_tendaily = true;
     let check_tenloaidaily = true;
@@ -221,7 +221,6 @@ const StoreAddPage = () => {
     }
   };
 
-
   // Return render here
   return (
     <div>
@@ -255,7 +254,7 @@ const StoreAddPage = () => {
                 newDistrictName,
                 newCityName,
                 newAddress,
-                newImage
+                newImage,
               )
             }
           >

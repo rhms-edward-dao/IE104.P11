@@ -54,7 +54,6 @@ import StoreMaintainance from "./pages/Maintainance/StoreMaintainance";
 import AdminReport from "./pages/AdminReport/AdminReport";
 import ProfitReport from "./pages/AdminReport/ProfitReport";
 import StockReport from "./pages/AdminReport/StockReport";
-// import RevenueReport from "./pages/AdminReport/RevenueReport";
 
 import StaffReport from "./pages/Report/StaffReport";
 
@@ -334,14 +333,6 @@ function App() {
                                 <ProtectedRoute element={<StockReport />} />
                               }
                             />
-                            {/*
-                            <Route
-                              path="/revenue-report"
-                              element={
-                                <ProtectedRoute element={<RevenueReport />} />
-                              }
-                            />
-                            */}
                             {/* Routes for Report - only for Staff */}
                             <Route
                               path="/staff-report"
