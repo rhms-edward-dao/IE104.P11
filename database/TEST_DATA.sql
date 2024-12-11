@@ -58,9 +58,9 @@ ALTER SEQUENCE LOAIMATHANG_maloaimathang_seq RESTART WITH 1;
 
 ------------------------------------------------------------------ Insert Into DAILY ----------------------------------------------------------------
 INSERT INTO DAILY (MaLoaiDaiLy, TenDaiLy, SoDienThoai, HinhAnh) VALUES
-('1', 'Đại lý Bình Tân 1', '0857434243'),
-('1', 'Đại lý Bình Tân 2', '0857434242'),
-('2', 'Đại lý Tân Phú 1', '0857434241');
+('1', 'Đại lý Bình Tân 1', '0857434243', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-1.jpeg'),
+('1', 'Đại lý Bình Tân 2', '0857434242', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-2.jpeg'),
+('2', 'Đại lý Tân Phú 1', '0857434241', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-3.jpeg');
 SELECT * FROM DAILY;
 TRUNCATE DAILY CASCADE;
 ALTER SEQUENCE DAILY_madaily_seq RESTART WITH 1;
@@ -83,51 +83,51 @@ TRUNCATE BAOTRIDAILY CASCADE;
 ALTER SEQUENCE BAOTRIDAILY_mabaotri_seq RESTART WITH 1;
 
 ----------------------------------------------------------------- Insert Into MATHANG ---------------------------------------------------------------
-INSERT INTO MATHANG(TenMatHang, SoLuongTon, DonGia, TenDVT, MaDaiLy, MaLoaiMatHang) VALUES
-('Cá betta 1254 – Mái koi nemo tiger baby butterfly', 7, 110000, 'con', '1', '1'),
-('Cá betta 1586 – Mái koi nemo tiger butterfly guardian', 10, 110000, 'con', '1', '1'),
-('Cá betta 1648 – Koi nemo tiger body sumo itzamna', 30, 140000, 'con', '2', '1'),
-('Cá betta 1108 – Red fancy white star fin giống tốt', 11, 150000, 'con', '1', '1'),
-('Cá betta 1862 – Mái yellow fancy soulreaver hanuman', 13, 110000, 'con', '3', '1'),
-('Cá betta 1745 – Koi nemo candy copper multicolor first-defender ganesha', 12, 180000, 'con', '1', '1'),
-('Cá betta 1450 – Mái koi nemo candy butterfly athena', 40, 110000, 'con', '1', '1'),
-('Cá betta 1766 – Yellow fancy đại đế oathkeeper morpheus', 56, 150000, 'con', '3', '1'),
-('Cá betta 1115 – Koi nemo candy pinky colorfull Kakia', 14, 280000, 'con', '2', '1'),
-('Cá betta 1452 – Mái koi nemo candy nền đỏ aphrodite', 33, 110000, 'con', '1', '1'),
-('Cá betta 1449 – Mái koi nemo candy multicolor 7 sắc', 21, 110000, 'con', '3', '1'),
-('Cá betta 1496 – Mái koi red galaxy defender venus', 42, 110000, 'con', '2', '1'),
-('Cá betta 1711 – Koi nemo candy vũ tướng conqueror janus', 19, 180000, 'con', '3', '1'),
-('Cá betta 1823 – Yellow fancy blue star the stalwart yum kaax', 55, 180000, 'con', '2', '1'),
-('Cá betta 1494 – Mái koi nemo tiger classic color juno', 48, 110000, 'con', '1', '1'),
+INSERT INTO MATHANG(TenMatHang, SoLuongTon, DonGia, TenDVT, MaDaiLy, MaLoaiMatHang, HinhAnh) VALUES
+('Cá betta 1254 – Mái koi nemo tiger baby butterfly', 7, 110000, 'con', '1', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1254.jpg'),
+('Cá betta 1586 – Mái koi nemo tiger butterfly guardian', 10, 110000, 'con', '1', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1586.jpg'),
+('Cá betta 1648 – Koi nemo tiger body sumo itzamna', 30, 140000, 'con', '2', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1648.jpg'),
+('Cá betta 1108 – Red fancy white star fin giống tốt', 11, 150000, 'con', '1', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1108.jpg'),
+('Cá betta 1862 – Mái yellow fancy soulreaver hanuman', 13, 110000, 'con', '3', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1862.jpg'),
+('Cá betta 1745 – Koi nemo candy copper multicolor first-defender ganesha', 12, 180000, 'con', '1', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1745.jpg'),
+('Cá betta 1450 – Mái koi nemo candy butterfly athena', 40, 110000, 'con', '1', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1450.jpg'),
+('Cá betta 1766 – Yellow fancy đại đế oathkeeper morpheus', 56, 150000, 'con', '3', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1766.jpg'),
+('Cá betta 1115 – Koi nemo candy pinky colorfull Kakia', 14, 280000, 'con', '2', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1115.jpg'),
+('Cá betta 1452 – Mái koi nemo candy nền đỏ aphrodite', 33, 110000, 'con', '1', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1452.jpg'),
+('Cá betta 1449 – Mái koi nemo candy multicolor 7 sắc', 21, 110000, 'con', '3', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1449.jpg'),
+('Cá betta 1496 – Mái koi red galaxy defender venus', 42, 110000, 'con', '2', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1496.jpg'),
+('Cá betta 1711 – Koi nemo candy vũ tướng conqueror janus', 19, 180000, 'con', '3', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1711.jpg'),
+('Cá betta 1823 – Yellow fancy blue star the stalwart yum kaax', 55, 180000, 'con', '2', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1823.jpg'),
+('Cá betta 1494 – Mái koi nemo tiger classic color juno', 48, 110000, 'con', '1', '1', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1494.jpg'),
 
-('Cá betta 1791 – Halfmoon red dragon thái cực chaosbreaker apollo', 23, 80000, 'con', '1', '2'),
-('Cá betta 1299 – Red fancy copper lotus Aker form đẹp', 67, 180000, 'con', '2', '2'),
-('Cá betta 1445 – Halfmoon combtail dumbo lavender odin', 67, 110000, 'con', '3', '2'),
-('Cá betta 1633 – Mái halfmoon super red dragon alom', 42, 40000, 'con', '2', '2'),
-('Cá betta 1808 – Halfmoon rồng lửa wayguard morpheus', 69, 110000, 'con', '1', '2'),
-('Cá betta 1197 – Mái halfmoon blue red super star Hatshepsut', 23, 40000, 'con', '1', '2'),
-('Cá betta 1214 – Mái halfmoon blue red star Hatshepsut', 42, 40000, 'con', '3', '2'),
-('Cá betta 1320 – Halfmoon samurai super star Oda Nobunaga', 22, 180000, 'con', '2', '2'),
-('Cá betta 1325 – Halfmoon samurai butterfly illusion', 67, 180000, 'con', '2', '2'),
-('Cá betta 1327 – Halfmoon mustard gas koi nền xanh vàng đẹp', 55, 80000, 'con', '3', '2'),
-('Cá betta 1286 – Halfmoon samurai super star hàng hiếm Vip', 9, 180000, 'con', '1', '2'),
-('Cá betta 1850 – Halfmoon blue red butterfly stormchaser huitzilopochtli', 12, 80000, 'con', '3', '2'),
-('Cá betta 1529 – Halfmoon blue white đại dương xanh', 66, 80000, 'con', '2', '2'),
-('Cá betta 1438 – Halfmoon samurai super star siêu hiếm 2024', 34, 180000, 'con', '1', '2'),
-('Cá betta 1474 – Halfmoon koi super white butterfly rama', 52, 80000, 'con', '3', '2'),
+('Cá betta 1791 – Halfmoon red dragon thái cực chaosbreaker apollo', 23, 80000, 'con', '1', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1791.jpg'),
+('Cá betta 1299 – Red fancy copper lotus Aker form đẹp', 67, 180000, 'con', '2', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1299.jpg'),
+('Cá betta 1445 – Halfmoon combtail dumbo lavender odin', 67, 110000, 'con', '3', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1445.jpg'),
+('Cá betta 1808 – Mái halfmoon super red dragon alom', 42, 40000, 'con', '2', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1808.jpg'),
+('Cá betta 1808 – Halfmoon rồng lửa wayguard morpheus', 69, 110000, 'con', '1', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1808.jpg'),
+('Cá betta 1197 – Mái halfmoon blue red super star Hatshepsut', 23, 40000, 'con', '1', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1197.jpg'),
+('Cá betta 1214 – Mái halfmoon blue red star Hatshepsut', 42, 40000, 'con', '3', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1214.jpg'),
+('Cá betta 1320 – Halfmoon samurai super star Oda Nobunaga', 22, 180000, 'con', '2', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1320.jpg'),
+('Cá betta 1325 – Halfmoon samurai butterfly illusion', 67, 180000, 'con', '2', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1325.jpg'),
+('Cá betta 1327 – Halfmoon mustard gas koi nền xanh vàng đẹp', 55, 80000, 'con', '3', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1327.jpg'),
+('Cá betta 1286 – Halfmoon samurai super star hàng hiếm Vip', 9, 180000, 'con', '1', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1286.jpg'),
+('Cá betta 1850 – Halfmoon blue red butterfly stormchaser huitzilopochtli', 12, 80000, 'con', '3', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1850.jpg'),
+('Cá betta 1529 – Halfmoon blue white đại dương xanh', 66, 80000, 'con', '2', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1529.jpg'),
+('Cá betta 1438 – Halfmoon samurai super star siêu hiếm 2024', 34, 180000, 'con', '1', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1438.jpg'),
+('Cá betta 1474 – Halfmoon koi super white butterfly rama', 52, 80000, 'con', '3', '2', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1474.jpg'),
 
-('Cá betta 1521 – Koi nemo galaxy dãi ngân hà avenger', 60, 140000, 'con', '1', '3'),
-('Cá betta 1583 – Koi nemo galaxy tiger hổ rừng xanh', 23, 180000, 'con', '3', '3'),
-('Cá betta 1206 – Koi nemo candy galaxy Tilphousia', 85, 140000, 'con', '3', '3'),
-('Cá betta 1844 – Koi nemo galaxy butterfly champion of freedom zeus', 28, 180000, 'con', '2', '3');
+('Cá betta 1521 – Koi nemo galaxy dãi ngân hà avenger', 60, 140000, 'con', '1', '3', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1521.jpg'),
+('Cá betta 1583 – Koi nemo galaxy tiger hổ rừng xanh', 23, 180000, 'con', '3', '3', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1583.jpg'),
+('Cá betta 1206 – Koi nemo candy galaxy Tilphousia', 85, 140000, 'con', '3', '3', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1206.jpg'),
+('Cá betta 1844 – Koi nemo galaxy butterfly champion of freedom zeus', 28, 180000, 'con', '2', '3', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1844.jpg');
 SELECT * FROM MATHANG;
 TRUNCATE MATHANG CASCADE;
 ALTER SEQUENCE MATHANG_mamathang_seq RESTART WITH 1;
 
 ---------------------------------------------------------------- Insert Into NHANVIEN ---------------------------------------------------------------
-INSERT INTO NHANVIEN(MaDaiLy, HoTen, NgaySinh, SoDienThoai, Email) VALUES
-('1', 'Nguyễn Văn A', '1999/1/20', '01263341260', '123456789@gmail.com'),
-('1', 'Nguyễn Văn B', '2000/5/22', '01263341266', '123456798@gmail.com');
+INSERT INTO NHANVIEN(MaDaiLy, HoTen, NgaySinh, SoDienThoai, Email, HinhAnh) VALUES
+('1', 'Nguyễn Văn A', '1999/1/20', '01263341260', '123456789@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-1.jpeg'),
+('1', 'Nguyễn Văn B', '2000/5/22', '01263341266', '123456798@gmail.com', '"D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-2.jpeg"');
 SELECT * FROM NHANVIEN
 TRUNCATE NHANVIEN CASCADE
 ALTER SEQUENCE NHANVIEN_manhanvien_seq RESTART WITH 1

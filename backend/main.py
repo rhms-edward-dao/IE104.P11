@@ -15,10 +15,11 @@ from pprint import pprint
 import re, os, base64
 
 from pathlib import Path
+
 # IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images/"
 # IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/onGithub/IE104.P11/backend/images/"
-BASEDIR = str(Path(__file__).resolve().parent.parent.parent) + '/'
-IMAGEDIR = str(Path(__file__).resolve().parent) + '/images/'
+BASEDIR = str(Path(__file__).resolve().parent.parent.parent) + "/"
+IMAGEDIR = str(Path(__file__).resolve().parent) + "/images/"
 
 # from security import validate_token
 app = FastAPI()
@@ -85,8 +86,8 @@ class api_operations:
                     setattr(get_db, get_db_key[idx], get_db_value[idx])
 
             db.commit()
-            return {"message": "Đã cập nhật"}
 
+            return {"message": "Đã cập nhật"}
         return {"message": "{} không tồn tại".format(name_in_mes)}
 
     def delete(db, model_name, model_param, param, name_in_mes):
@@ -107,7 +108,6 @@ def account_login(
     pmatkhau: str = Body(..., embed=True),
     db: Session = Depends(get_db),
 ):
-    print(IMAGEDIR)
     db_get_taikhoan = crud.get_taikhoan_by_tentaikhoan_and_matkhau(
         db, pTenTaiKhoan=ptentaikhoan, pMatKhau=pmatkhau
     )
@@ -539,18 +539,18 @@ def get_mathang_all(db: Session = Depends(get_db)):
         for item in get_db:
             if item.Mathang.hinhanh:
                 # Get images in different computers
-                target_dir = 'IE104.P11'
+                target_dir = "IE104.P11"
                 spath = str(item.Mathang.hinhanh)
                 if os.name == "posix":
-                    spath = spath.replace('\\', '/')
+                    spath = spath.replace("\\", "/")
                 elif os.name == "nt":
-                    spath = spath.replace('/', '\\')
+                    spath = spath.replace("/", "\\")
                 full_path = Path(spath)
-                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
                 with open(final_path, "rb") as f:
-                    data = f.read()                
+                    data = f.read()
                     data_to_base64 = base64.b64encode(data)
                 item.Mathang.hinhanh = data_to_base64
             Mathang_dict = item[0].__dict__.copy()
@@ -574,14 +574,14 @@ def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
         if get_db.Mathang.hinhanh:
             try:
                 # Get images in different computers
-                target_dir = 'IE104.P11'
+                target_dir = "IE104.P11"
                 spath = str(item.Mathang.hinhanh)
                 if os.name == "posix":
-                    spath = spath.replace('\\', '/')
+                    spath = spath.replace("\\", "/")
                 elif os.name == "nt":
-                    spath = spath.replace('/', '\\')
+                    spath = spath.replace("/", "\\")
                 full_path = Path(spath)
-                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
                 with open(final_path, "rb") as f:
@@ -612,9 +612,9 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
             if item.Mathang.hinhanh:
                 try:
                     # Get images in different computers
-                    target_dir = 'IE104.P11'
-                    full_path=Path(item.Mathang.hinhanh)
-                    relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                    target_dir = "IE104.P11"
+                    full_path = Path(item.Mathang.hinhanh)
+                    relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                     relative_path_str = Path(*relative_path).as_posix()
                     final_path = BASEDIR + relative_path_str
                     with open(final_path, "rb") as f:
@@ -755,6 +755,7 @@ async def update_mathang(
         }
         crud.update_mathang(**param_list)
     except Exception as e:
+        print(e)
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         detail = match.group(0).strip()
 
@@ -786,7 +787,7 @@ async def update_mathang(
             contents = await hinhanh.read()
             with open(f"{IMAGEDIR}products/{hinhanh.filename}", "wb") as file:
                 file.write(contents)
-        
+
         param_list = {
             "mamathang": mamathang,
             "tenmathang": tenmathang,
@@ -795,7 +796,6 @@ async def update_mathang(
             "madaily": madaily,
             "maloaimathang": pmaloaimathang,
         }
-        print(param_list)
         crud.update_mathang(**param_list)
 
         # print(param_list)
@@ -821,6 +821,7 @@ async def update_mathang(
         ):
             return {"message": "Tên mặt hàng đã tồn tại"}
     return {"message": "Cập nhật mặt hàng thành công"}
+
 
 @app.delete("/mathang/xoa/{mamathang}")
 def delete_mathang(mamathang: int, db: Session = Depends(get_db)):
@@ -894,9 +895,8 @@ def add_new_khachhang(
     add_customer: AddCustomer,  # Parse the JSON body into this Pydantic model
     db: Session = Depends(get_db),
 ):
-    try:                
+    try:
         for item in add_customer.items:
-            print(item.diachi)
             # Get longtitude and latitude
             key = "dd56554106174942acce0b3bd660a32a"
             geocoder = OpenCageGeocode(key)
@@ -917,7 +917,7 @@ def add_new_khachhang(
                 maquan=item.maquan,
                 diachi=item.diachi,
                 kinhdo=kinhdo_get,
-                vido=vido_get
+                vido=vido_get,
             )
             db.add(khachhang_diachi)
             db.commit()
@@ -926,9 +926,13 @@ def add_new_khachhang(
     except Exception as e:
         match = re.search(r"CONTEXT:\s*(.*?)(?= line )", str(e), re.DOTALL)
         detail = match.group(0).strip()
-        if detail == "CONTEXT:  PL/pgSQL function check_khachhang_daily_nhanvien_phone_number()":
+        if (
+            detail
+            == "CONTEXT:  PL/pgSQL function check_khachhang_daily_nhanvien_phone_number()"
+        ):
             return {"success": False, "message": "Số điện thoại đã được sử dụng"}
         return {"success": False, "message": str(e)}
+
 
 @app.put("/khachhang/capnhat/{makhachhang}")
 def update_khachhang(
@@ -950,22 +954,24 @@ def update_khachhang(
 
         param_list = {
             "makhachhang": makhachhang,
-            "tenkhachhang": tenkhachhang, 
+            "tenkhachhang": tenkhachhang,
             "sodienthoai": sodienthoai,
-            "diachi": diachi,                
+            "diachi": diachi,
             "maquan": maquan,
             "kinhdo": kinhdo_get,
-            "vido": vido_get
+            "vido": vido_get,
         }
-        crud.update_khachhang_crud(**param_list)        
+        crud.update_khachhang_crud(**param_list)
         return {"success": True, "message": "Cập nhật khách hàng thành công."}
     except Exception as e:
         match = re.search(r"CONTEXT:\s*(.*?)(?= line )", str(e), re.DOTALL)
         detail = match.group(0).strip()
-        if detail == "CONTEXT:  PL/pgSQL function check_khachhang_daily_nhanvien_phone_number()":
+        if (
+            detail
+            == "CONTEXT:  PL/pgSQL function check_khachhang_daily_nhanvien_phone_number()"
+        ):
             return {"success": False, "message": "Số điện thoại đã được sử dụng"}
         return {"success": False}
-        
 
 
 @app.delete("/khachhang/xoa/{makhachhang}")
@@ -1044,14 +1050,14 @@ def get_daily_all(db: Session = Depends(get_db)):
         for item in get_all_daily:
             if item.Daily.hinhanh:
                 # Get images in different computers
-                target_dir = 'IE104.P11'
+                target_dir = "IE104.P11"
                 spath = str(item.Daily.hinhanh)
                 if os.name == "posix":
-                    spath = spath.replace('\\', '/')
+                    spath = spath.replace("\\", "/")
                 elif os.name == "nt":
-                    spath = spath.replace('/', '\\')
-                full_path=Path(spath)
-                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                    spath = spath.replace("/", "\\")
+                full_path = Path(spath)
+                relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
                 with open(final_path, "rb") as f:
@@ -1089,14 +1095,14 @@ def get_daily_by_madaily(madaily, db: Session = Depends(get_db)):
         for item in get_db:
             if item[7]:
                 # Get images in different computers
-                target_dir = 'IE104.P11'
+                target_dir = "IE104.P11"
                 spath = str(item[7])
                 if os.name == "posix":
-                    spath = spath.replace('\\', '/')
+                    spath = spath.replace("\\", "/")
                 elif os.name == "nt":
-                    spath = spath.replace('/', '\\')
-                full_path=Path(spath)
-                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                    spath = spath.replace("/", "\\")
+                full_path = Path(spath)
+                relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
                 with open(final_path, "rb") as f:
@@ -1148,7 +1154,6 @@ async def add_new_daily(
 
         # Get maloaidaily through tenloaidaily
         pmaloaidaily = crud.get_maloaidaily_by_tenloaidaily(db, tenloaidaily)
-
         # Prepare data and add new daily
         param_list = {
             "tendaily": tendaily,
@@ -1157,6 +1162,7 @@ async def add_new_daily(
             "sodienthoai": sodienthoai,
             "hinhanh": f"{IMAGEDIR}stores/{hinhanh.filename}",
         }
+
         crud.add_daily(**param_list)
 
         # Add address for daily_diachi
@@ -1287,6 +1293,7 @@ async def update_daily(
             **param_list_dc,
         )
     except Exception as e:
+        print(e)
         # Get error from server
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
@@ -1369,17 +1376,16 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
         for item in get_db:
             if item.Nhanvien.hinhanh:
                 # Get images in different computers
-                target_dir = 'IE104.P11'
+                target_dir = "IE104.P11"
                 spath = str(item.Nhanvien.hinhanh)
                 if os.name == "posix":
-                    spath = spath.replace('\\', '/')
+                    spath = spath.replace("\\", "/")
                 elif os.name == "nt":
-                    spath = spath.replace('/', '\\')
+                    spath = spath.replace("/", "\\")
                 full_path = Path(spath)
-                relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                 relative_path_str = Path(*relative_path).as_posix()
                 final_path = BASEDIR + relative_path_str
-                print(final_path)
                 with open(final_path, "rb") as f:
                     data = f.read()
                     data_to_base64 = base64.b64encode(data)
@@ -1408,14 +1414,14 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
     if get_db:
         if get_db[0].hinhanh:
             # Get images in different computers
-            target_dir = 'IE104.P11'    
+            target_dir = "IE104.P11"
             spath = str(get_db[0].hinhanh)
             if os.name == "posix":
-                spath = spath.replace('\\', '/')
+                spath = spath.replace("\\", "/")
             elif os.name == "nt":
-                spath = spath.replace('/', '\\')
-            full_path=Path(spath)
-            relative_path = full_path.parts[full_path.parts.index(target_dir):]
+                spath = spath.replace("/", "\\")
+            full_path = Path(spath)
+            relative_path = full_path.parts[full_path.parts.index(target_dir) :]
             relative_path_str = Path(*relative_path).as_posix()
             final_path = BASEDIR + relative_path_str
             with open(final_path, "rb") as f:
@@ -1444,14 +1450,14 @@ def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
     if get_db:
         if get_db[0]:
             # Get images in different computers
-            target_dir = 'IE104.P11'
+            target_dir = "IE104.P11"
             spath = str(get_db[0])
             if os.name == "posix":
-                spath = spath.replace('\\', '/')
+                spath = spath.replace("\\", "/")
             elif os.name == "nt":
-                spath = spath.replace('/', '\\')
+                spath = spath.replace("/", "\\")
             full_path = Path(spath)
-            relative_path = full_path.parts[full_path.parts.index(target_dir):]
+            relative_path = full_path.parts[full_path.parts.index(target_dir) :]
             relative_path_str = Path(*relative_path).as_posix()
             final_path = BASEDIR + relative_path_str
             with open(final_path, "rb") as f:
@@ -1500,18 +1506,16 @@ async def add_new_nhanvien(
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
         kinhdo = results[0]["geometry"]["lng"]
-        vido = results[0]["geometry"]["lat"]        
+        vido = results[0]["geometry"]["lat"]
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
         pmachuvu = crud.get_machucvu_by_tenchucvu(db, tenchucvu)
         pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
         # Save image
-        print(hinhanh)
         contents = await hinhanh.read()
         with open(f"{IMAGEDIR}staffs/{hinhanh.filename}", "wb") as file:
             file.write(contents)
         # Prepare data and add new nhanvien
-        print(f"{IMAGEDIR}staffs/{hinhanh.filename}")
         param_list_nhanvien = {
             "hoten": tennhanvien,
             "madaily": pmadaily,
@@ -1520,7 +1524,6 @@ async def add_new_nhanvien(
             "email": email,
             "hinhanh": f"{IMAGEDIR}staffs/{hinhanh.filename}",
         }
-        print(param_list_nhanvien)
         # Getting id of currently inserted staff
         pmanhanvien = crud.add_nhanvien(**param_list_nhanvien)
         # Add staff's address information
