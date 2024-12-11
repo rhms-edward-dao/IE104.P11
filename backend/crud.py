@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from database import engine
-import models, schemas
-import os
+import models, schemas, os
+
 
 # Crud Operation class for the same crud tasks
 class crud_operations:
@@ -24,7 +24,7 @@ class crud_operations:
             db.delete(get_db)
             db.commit()
             return {"message": "Đã xóa"}
-        except Exception as e:            
+        except Exception as e:
             return {"message": "Xóa thất bại"}
 
 
@@ -66,12 +66,17 @@ def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
     try:
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(
-                """
+                text(
+                    """
                     INSERT INTO taikhoan_nhavien VALUES
-                    ( (%s), (%s) )
-                """,
-                (pMaNhanVien, pMaTaiKhoan),
+                    ( {}, {} )
+                """.format(
+                        (pMaNhanVien, pMaTaiKhoan),
+                    )
+                )
             )
+            if os.name == "nt":
+                connection.commit()
     except Exception as e:
         return e
     return None
@@ -80,43 +85,58 @@ def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
 def update_taikhoan(**param_list):
     with engine.connect().execution_options(autocommit=True) as connection:
         connection.execute(
-            """
-                UPDATE NHANVIEN
-                SET
-                   hoten = (%s),
-                   ngaysinh = (%s)
-                WHERE manhanvien = (%s)
-            """,
-            param_list["hoten"],
-            param_list["ngaysinh"],
-            param_list["manhanvien"],
-        )
-        connection.execute(
-            """
-                UPDATE NHANVIEN_DIACHI
-                SET
-                   diachi = (%s),
-                   kinhdo = (%s),
-                   vido = (%s)
-                WHERE manhanvien = (%s)
-            """,
-            param_list["diachi"],
-            param_list["kinhdo"],
-            param_list["vido"],
-            param_list["manhanvien"],
-        )
-    if param_list["hinhanh"] != "":
-        with engine.connect().execution_options(autocommit=True) as connection:
-            connection.execute(
+            text(
                 """
                 UPDATE NHANVIEN
                 SET
-                   hinhanh = (%s)
-                WHERE manhanvien = (%s)
-            """,
-                param_list["hinhanh"],
-                param_list["manhanvien"],
+                   hoten = '{}',
+                   ngaysinh = '{}'
+                WHERE manhanvien = {}
+            """.format(
+                    param_list["hoten"],
+                    param_list["ngaysinh"],
+                    param_list["manhanvien"],
+                )
             )
+        )
+        if os.name == "nt":
+            connection.commit()
+        connection.execute(
+            text(
+                """
+                UPDATE NHANVIEN_DIACHI
+                SET
+                   diachi = '{}',
+                   kinhdo = '{}',
+                   vido = '{}'
+                WHERE manhanvien = {}
+            """.format(
+                    param_list["diachi"],
+                    param_list["kinhdo"],
+                    param_list["vido"],
+                    param_list["manhanvien"],
+                )
+            )
+        )
+        if os.name == "nt":
+            connection.commit()
+    if param_list["hinhanh"] != "":
+        with engine.connect().execution_options(autocommit=True) as connection:
+            connection.execute(
+                text(
+                    """
+                UPDATE NHANVIEN
+                SET
+                   hinhanh = '{}'
+                WHERE manhanvien = {}
+            """.format(
+                        param_list["hinhanh"],
+                        param_list["manhanvien"],
+                    )
+                )
+            )
+            if os.name == "nt":
+                connection.commit()
 
 
 def get_manhanvien_taikhoan_nhanvien_capdo(db: Session, pMaTaiKhoan: int):
@@ -397,19 +417,24 @@ def update_quitac(db: Session, pItems: schemas.QUITACupdate):
         current_timestamp = datetime.now()
         with engine.connect().execution_options(autocommit=True) as connection:
             connection.execute(
-                """
+                text(
+                    """
                 UPDATE QUITAC
                     SET
-                    sothietbitoidataikhoan = (%s),
-                    sodailytoidamoiquan = (%s),
-                    tiledongiaban = (%s),
-                    thoidiemcapnhat = (%s)
-            """,
-                pItems.sothietbitoidataikhoan,
-                pItems.sodailytoidamoiquan,
-                pItems.tiledongiaban,
-                current_timestamp,
+                    sothietbitoidataikhoan = {},
+                    sodailytoidamoiquan = {},
+                    tiledongiaban = {},
+                    thoidiemcapnhat = '{}'
+            """.format(
+                        pItems.sothietbitoidataikhoan,
+                        pItems.sodailytoidamoiquan,
+                        pItems.tiledongiaban,
+                        current_timestamp,
+                    )
+                )
             )
+            if os.name == "nt":
+                connection.commit()
     except:
         return "cập nhật thất bại"
     return "Cập nhật thành công"
@@ -521,7 +546,7 @@ def add_daily(**param_list):
             )
         )
         if os.name == "nt":
-            connection.commit()    
+            connection.commit()
 
 
 def update_daily(**param_list):
@@ -558,7 +583,7 @@ def update_daily(**param_list):
                         tendaily = '{}',
                         maloaidaily = {},
                         ngaytiepnhan = '{}',
-                        sodienthoai = {},
+                        sodienthoai = '{}',
                         hinhanh = '{}'
                     WHERE madaily = {};
                 """.format(
@@ -571,7 +596,8 @@ def update_daily(**param_list):
                     )
                 )
             )
-            connection.commit()
+            if os.name == "nt":
+                connection.commit()
 
 
 def delete_daily_daily_diachi(**param_list):
@@ -714,7 +740,12 @@ def add_nhanvien(**param_list):
                 )
             )
         )
-        return result.fetchone()[0]
+        if os.name == "nt":
+            row = result.fetchone()
+            connection.commit()
+            return row[0] if row else None
+        else:
+            return result.fetchone()[0]
 
 
 # Update Nhanvien
@@ -729,7 +760,7 @@ def update_nhanvien(manhanvien: int, **param_list):
                         hoten = '{}',
                         madaily = {},
                         ngaysinh = '{}',
-                        sodienthoai = {},
+                        sodienthoai = '{}',
                         email = '{}',
                         hinhanh = '{}'
                     WHERE manhanvien = {};
@@ -756,7 +787,7 @@ def update_nhanvien(manhanvien: int, **param_list):
                         hoten = '{}',
                         madaily = {},
                         ngaysinh = '{}',
-                        sodienthoai = {},
+                        sodienthoai = '{}',
                         email = '{}'
                     WHERE manhanvien = {};
             """.format(
@@ -810,7 +841,8 @@ def update_chucvu(machucvu: int, **param_list):
                 )
             )
         )
-        connection.commit()
+        if os.name == "nt":
+            connection.commit()
 
 
 # Khachhang
@@ -835,41 +867,51 @@ def get_khachhang_by_id(db: Session, pMaKhachHang: int):
             models.Khachhang.makhachhang == models.KhachhangDiachi.makhachhang,
             models.Khachhang.makhachhang == pMaKhachHang,
         )
-        .first()
+        .all()
     )
 
 
 def update_khachhang_crud(**param_list):
     with engine.connect().execution_options(autocommit=True) as connection:
         connection.execute(
-            """
+            text(
+                """
             UPDATE KHACHHANG
                         SET
-                        tenkhachhang = (%s),
-                        sodienthoai= (%s)
-            WHERE makhachhang = (%s);
-        """,
-            param_list["tenkhachhang"],
-            param_list["sodienthoai"],
-            param_list["makhachhang"],
+                        tenkhachhang = '{}',
+                        sodienthoai= '{}'
+            WHERE makhachhang = {};
+        """.format(
+                    param_list["tenkhachhang"],
+                    param_list["sodienthoai"],
+                    param_list["makhachhang"],
+                )
+            )
         )
+        if os.name == "nt":
+            connection.commit()
 
         connection.execute(
-            """
+            text(
+                """
             UPDATE KHACHHANG_DIACHI
                         SET
-                        maquan = (%s),
-                        diachi = (%s),
-                        kinhdo = (%s),
-                        vido = (%s)
-            WHERE makhachhang = (%s);
-        """,
-            param_list["maquan"],
-            param_list["diachi"],
-            param_list["kinhdo"],
-            param_list["vido"],
-            param_list["makhachhang"],
+                        maquan = {},
+                        diachi = '{}',
+                        kinhdo = '{}',
+                        vido = '{}'
+            WHERE makhachhang = {};
+        """.format(
+                    param_list["maquan"],
+                    param_list["diachi"],
+                    param_list["kinhdo"],
+                    param_list["vido"],
+                    param_list["makhachhang"],
+                )
+            )
         )
+        if os.name == "nt":
+            connection.commit()
 
 
 # Baotri

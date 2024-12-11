@@ -877,8 +877,15 @@ def get_all_khachhang(db: Session = Depends(get_db)):
 @app.get("/khachhang/{makhachhang}")
 def get_khachhang_by_makhachhang(makhachhang: int, db: Session = Depends(get_db)):
     get_db = crud.get_khachhang_by_id(db, makhachhang)
+    result = []
     if get_db:
-        return {"success": True, "Khachhang": get_db}
+        for item in get_db:
+            Khachhang_dict = item[0].__dict__.copy()
+            Khachhang_Diachi_dict = item[1].__dict__.copy()
+            result.append(
+                {"Khachhang": Khachhang_dict, "Diachi": Khachhang_Diachi_dict}
+            )
+        return result
     return {"success": False}
 
 
