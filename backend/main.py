@@ -1962,7 +1962,7 @@ def add_new_phieunhaphang(
                 db.query(models.Mathang).filter_by(mamathang=item.mamathang).first()
             )
             if mathang:
-                mathang.soluongton += item.soluongnhap
+                # mathang.soluongton += item.soluongnhap
                 mathang.dongia = item.dongianhap / quytac.tiledongiaban
 
         # Update total amount in the phieunhaphang
@@ -2220,8 +2220,8 @@ def add_new_phieuxuathang(
             mathang = (
                 db.query(models.Mathang).filter_by(mamathang=item.mamathang).first()
             )
-            if mathang:
-                mathang.soluongton -= item.soluongxuat
+            # if mathang:
+                # mathang.soluongton -= item.soluongxuat
 
         # Update total amount in the phieuxuathang
         phieuxuat.tongtien = total_amount
