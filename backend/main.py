@@ -227,7 +227,8 @@ def account_sign_up(
     db_check_email = api_operations.get_one_parameter(
         db, models.Nhanvien, models.Nhanvien.email, pemail, "nhân viên"
     )
-    if db_check_email:
+
+    if isinstance(db_check_email, dict) == False:
         # Add a record refer to relation between staff and account in taikhoan_nhavien
         crud.link_taikhoan_nhanvien(db_add, db_check_email.manhanvien)
         # After create account for staff then send email for OTP verification
@@ -249,6 +250,10 @@ def account_sign_up(
             )
         }
     else:
+        db_get_taikhoan = api_operations.get_one_parameter(db, models.Taikhoan, models.Taikhoan.tentaikhoan, ptentaikhoan, 'Tài khoản')
+        if db_get_taikhoan:
+            db.delete(db_get_taikhoan)
+            db.commit()
         return {"message": "Email không tồn tại trong database"}
 
 
@@ -621,8 +626,7 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
                     full_path = Path(spath)
                     relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                     relative_path_str = Path(*relative_path).as_posix()
-                    final_path = BASEDIR + relative_path_str     
-                    print('\n \n\n')               
+                    final_path = BASEDIR + relative_path_str                                   
                     with open(final_path, "rb") as f:
                         data = f.read()
                         data_to_base64 = base64.b64encode(data)
@@ -1327,7 +1331,6 @@ async def update_daily(
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
             detail = match.group(0).strip()
-            print(detail)
             # Send error message to Client
             if detail == "DETAIL:  Key (tendaily)=({}) already exists.".format(
                 tendaily
@@ -1564,10 +1567,8 @@ async def add_new_nhanvien(
         }
         # Getting id of currently inserted staff
         pmanhanvien = crud.add_nhanvien(**param_list_nhanvien)
-        print(pmanhanvien)
         # Add staff's address information
         diachi = diachi + "," + tenquan + ", " + tenthanhpho
-        print(pmaquan)
         param_list_diachi = {
             "manhanvien": pmanhanvien,
             "maquan": pmaquan,
@@ -1575,7 +1576,6 @@ async def add_new_nhanvien(
             "kinhdo": kinhdo,
             "vido": vido,
         }
-        print(param_list_diachi)
         api_operations.add(
             db, models.NhanvienDiachi, "nhân viên địa chỉ", **param_list_diachi
         )
@@ -2221,7 +2221,8 @@ def add_new_phieuxuathang(
                 db.query(models.Mathang).filter_by(mamathang=item.mamathang).first()
             )
             # if mathang:
-                # mathang.soluongton -= item.soluongxuat
+            #     if os.name == "nt":
+            #         mathang.soluongton -= item.soluongxuat
 
         # Update total amount in the phieuxuathang
         phieuxuat.tongtien = total_amount
@@ -2230,6 +2231,7 @@ def add_new_phieuxuathang(
         return {"success": True, "message": "Thêm phiếu xuất hàng thành công."}
 
     except Exception as e:
+        print(e)
         db.rollback()
         return {"success": False, "message": str(e)}
 
