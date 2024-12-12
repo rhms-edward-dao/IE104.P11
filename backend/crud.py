@@ -13,10 +13,14 @@ class crud_operations:
         return db.query(model_name).filter(model_param == param).first()
 
     def add(db, new_db_item):
-        db.add(new_db_item)
-        db.commit()
-        db.flush()
-        db.refresh(new_db_item)
+        try:
+            db.add(new_db_item)
+            db.commit()
+            db.flush()
+            db.refresh(new_db_item)
+            return new_db_item
+        except Exception as e:
+            return None
 
     def delete(db, model_name, model_param, param):
         try:
