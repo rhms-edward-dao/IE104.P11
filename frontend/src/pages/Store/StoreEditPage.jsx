@@ -69,7 +69,7 @@ const StoreEditPage = () => {
         setCurrentDistrictName(currentStore[0].tenquan);
         setCurrentCityName(currentStore[0].tenthanhpho);
         setCurrentAddress(
-          currentStore[0].diachi.split(",").slice(0, 2).join(", ")
+          currentStore[0].diachi.split(", ").slice(0, 2).join(", ")
         );
         if (currentStore[0].hinhanh !== null) {
           setCurrentImage(currentStore[0].hinhanh);
