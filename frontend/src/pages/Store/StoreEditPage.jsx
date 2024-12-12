@@ -221,7 +221,7 @@ const StoreEditPage = () => {
         alert("Địa chỉ đã tồn tại");
       } else if (data.message === "Đại lý cập nhật thất bại") {
         alert("Đại lý cập nhật thất bại");
-      } else if (data.message = "Địa chỉ không tồn tại") {
+      } else if (data.message === "Địa chỉ không tồn tại") {
         alert("Địa chỉ không tồn tại");
       } else if (data.message === "Đại lý cập nhật thành công") {
         alert("Đại lý cập nhật thành công");
