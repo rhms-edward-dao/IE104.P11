@@ -1963,7 +1963,7 @@ def add_new_phieunhaphang(
             )
             if mathang:
                 # mathang.soluongton += item.soluongnhap
-                mathang.dongia = item.dongianhap / quytac.tiledongiaban
+                mathang.dongia = item.dongianhap * (1 + quytac.tiledongiaban)
 
         # Update total amount in the phieunhaphang
         phieunhap.tongtien = total_amount
