@@ -89,7 +89,7 @@ class api_operations:
 
             return {"message": "Đã cập nhật"}
         return {"message": "{} không tồn tại".format(name_in_mes)}
-        
+
     def delete(db, model_name, model_param, param, name_in_mes):
         delete_db = crud.crud_operations.delete(db, model_name, model_param, param)
         message_success = "Xóa {} thành công".format(name_in_mes)
@@ -250,7 +250,9 @@ def account_sign_up(
             )
         }
     else:
-        db_get_taikhoan = api_operations.get_one_parameter(db, models.Taikhoan, models.Taikhoan.tentaikhoan, ptentaikhoan, 'Tài khoản')
+        db_get_taikhoan = api_operations.get_one_parameter(
+            db, models.Taikhoan, models.Taikhoan.tentaikhoan, ptentaikhoan, "Tài khoản"
+        )
         if db_get_taikhoan:
             db.delete(db_get_taikhoan)
             db.commit()
@@ -626,7 +628,7 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
                     full_path = Path(spath)
                     relative_path = full_path.parts[full_path.parts.index(target_dir) :]
                     relative_path_str = Path(*relative_path).as_posix()
-                    final_path = BASEDIR + relative_path_str                                   
+                    final_path = BASEDIR + relative_path_str
                     with open(final_path, "rb") as f:
                         data = f.read()
                         data_to_base64 = base64.b64encode(data)
@@ -1154,18 +1156,16 @@ async def add_new_daily(
     hinhanh: UploadFile = File(...),
     db: Session = Depends(get_db),
 ):
-    try:               
+    try:
         # Get longtitude and latitude
         key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
-        query = "{}".format(diachi)        
-        results = geocoder.geocode(query, language="vi")        
+        query = "{}".format(diachi)
+        results = geocoder.geocode(query, language="vi")
         if results == []:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
+            return {"message": "Địa chỉ không tồn tại"}
         kinhdo = results[0]["geometry"]["lng"]
-        vido = results[0]["geometry"]["lat"]          
+        vido = results[0]["geometry"]["lat"]
         # Save image
         contents = await hinhanh.read()
         with open(f"{IMAGEDIR}stores/{hinhanh.filename}", "wb") as file:
@@ -1181,23 +1181,21 @@ async def add_new_daily(
             "sodienthoai": sodienthoai,
             "hinhanh": f"{IMAGEDIR}stores/{hinhanh.filename}",
         }
-        
+
         crud.add_daily(**param_list)
 
         # Add address for daily_diachi
-        # Find madaily by tendaily, maquan by tenquan, tenthanhpho        
+        # Find madaily by tendaily, maquan by tenquan, tenthanhpho
         db_get_madaily = api_operations.get_one_parameter(
             db, models.Daily, models.Daily.tendaily, tendaily, "đại lý"
         )
-        
+
         db_get_maquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
         if db_get_maquan == None:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
+            return {"message": "Địa chỉ không tồn tại"}
         # Solving address information before adding
         diachi = diachi + ", " + tenquan + ", " + tenthanhpho
-        
+
         param_list_diachi = {
             "madaily": db_get_madaily.madaily,
             "maquan": db_get_maquan,
@@ -1208,7 +1206,7 @@ async def add_new_daily(
         api_operations.add(
             db, models.DailyDiachi, "đại lý địa chỉ", **param_list_diachi
         )
-        return {"message": "Thêm đại lý thành công"}        
+        return {"message": "Thêm đại lý thành công"}
     except Exception as e:
         match = re.search(r"DETAIL:\s*(.*?)(?=\n|$)", str(e), re.DOTALL)
         if match != None:
@@ -1270,9 +1268,7 @@ async def update_daily(
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
         if results == []:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
+            return {"message": "Địa chỉ không tồn tại"}
         kinhdo = results[0]["geometry"]["lng"]
         vido = results[0]["geometry"]["lat"]
 
@@ -1305,10 +1301,8 @@ async def update_daily(
         # Get maquan by tenquan, tenthanhpho
         get_maquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
         if get_maquan == None:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
-        
+            return {"message": "Địa chỉ không tồn tại"}
+
         diachi = diachi + ", " + tenquan + ", " + tenthanhpho
         param_list_dc = {
             "madaily": madaily,
@@ -1539,19 +1533,15 @@ async def add_new_nhanvien(
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
         if results == []:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
+            return {"message": "Địa chỉ không tồn tại"}
         kinhdo = results[0]["geometry"]["lng"]
         vido = results[0]["geometry"]["lat"]
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
         pmachuvu = crud.get_machucvu_by_tenchucvu(db, tenchucvu)
-        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)        
+        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
         if pmaquan == None:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
+            return {"message": "Địa chỉ không tồn tại"}
         # Save image
         contents = await hinhanh.read()
         with open(f"{IMAGEDIR}staffs/{hinhanh.filename}", "wb") as file:
@@ -1637,21 +1627,17 @@ async def update_nhanvien(
         key = "dd56554106174942acce0b3bd660a32a"
         geocoder = OpenCageGeocode(key)
         query = "{}".format(diachi)
-        results = geocoder.geocode(query, language="vi")        
+        results = geocoder.geocode(query, language="vi")
         if results == []:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
+            return {"message": "Địa chỉ không tồn tại"}
         kinhdo = results[0]["geometry"]["lng"]
         vido = results[0]["geometry"]["lat"]
         # Getting madaily & machucvu & maquan using tendaily + tenquan
         pmadaily = crud.get_madaily_by_tendaily(db, tendaily)
         pmachuvu = crud.get_machucvu_by_tenchucvu(db, tenchucvu)
-        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)   
+        pmaquan = crud.get_maquan_by_tenquan_tenthanhpho(db, tenquan, tenthanhpho)
         if pmaquan == None:
-            return {
-                "message": "Địa chỉ không tồn tại"
-            }
+            return {"message": "Địa chỉ không tồn tại"}
         # Save image
         image_dir = ""
         if hinhanh != "null":
@@ -1699,7 +1685,7 @@ async def update_nhanvien(
             "nhân viên",
             **param_list_diachi,
         )
-        
+
     except Exception as e:
         print(e)
         # Check non-trigger constraint
@@ -2007,9 +1993,13 @@ def update_phieunhaphang(
         )
         if phieunhaphang and daily:
             for item in update_import_bill.items:
+                if item.tiendathanhtoan != 0:
+                    daily.sotienno -= item.tiendathanhtoan
+                else:
+                    daily.sotienno += phieunhaphang.tiendathanhtoan
+
                 phieunhaphang.tiendathanhtoan = item.tiendathanhtoan
                 phieunhaphang.tinhtrang = item.tinhtrang
-                daily.sotienno -= item.tiendathanhtoan
 
         db.commit()
         return {"success": True, "message": "Cập nhật phiếu nhập hàng thành công."}
