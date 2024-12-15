@@ -264,7 +264,8 @@
         "Lb1": "Saisissez la quantité de produits à importer",
         "Lb2": "Produit",
         "Lb3": "Quantité en stock",
-        "Lb4": "Quantité à importer"
+        "Lb4": "Quantité à importer",
+        "Lb5": "Prix importé"
       },
       "Placeholders": {
         "Text1": "Saisissez la quantité à partir de ",
@@ -278,7 +279,8 @@
         "Lb2": "Saisissez la quantité de produits à exporter",
         "Lb3": "Produit",
         "Lb4": "Quantité en stock",
-        "Lb5": "Quantité à exporter"
+        "Lb5": "Prix ​​à l'exportation",
+        "Lb6": "Quantité à exporter"
       },
       "Placeholders": {
         "Text1": "Sélectionnez le nom du client",
@@ -313,10 +315,26 @@
       "Title": "Modifier un poste"
     },
     "EP_Customer": {
-      "Title": "Mettre à jour un client"
+      "Title": "Modifier le client"
+    },
+    "EP_Import": {
+      "Title": "Modifier le bon de réception des marchandises",
+      "Labels": {
+        "Lb1": "Dette totale",
+        "Lb2": "Argent payé"
+      },
+      "Status": "Statut"
+    },
+    "EP_Export": {
+      "Title": "Modifier le bon de livraison des marchandises",
+      "Label": "Nom du client"
     }
   },
   "DetailPage": {
+    "DP_Staff": {
+      "Title": "Informations sur l'employé",
+      "Store": "Agent"
+    },
     "DP_WarehouseImport": {
       "Title": "Note détaillée de réception des marchandises",
       "Column1": "Nom du produit",
@@ -362,6 +380,26 @@
     "Rule3": {
       "Title": "Ratio du prix unitaire de vente",
       "Description": "Le prix unitaire d'exportation sera calculé selon la formule : prix unitaire d'exportation = prix unitaire d'importation + (prix unitaire d'importation / ratio du prix unitaire d'exportation)."
+    }
+  },
+  "StorePage": {
+    "Title": "Informations sur l'agent",
+    "Avatar": "Avatar de l'agent"
+  },
+  "StoreMaintainance": {
+    "Information": {
+      "Title": "Maintenance de l'agent",
+      "Name": "Nom de l'agent",
+      "Cost": "Coût de maintenance",
+      "Note": "(prévu)",
+      "Description": "Description",
+      "Placeholder": "Entrez la description...",
+      "Start": "Heure de début",
+      "End": "Heure de fin"
+    },
+    "Buttons": {
+      "Reset": "Réinitialiser",
+      "Set": "Définir la maintenance"
     }
   }
 }

@@ -251,7 +251,7 @@
       "Title": "Add product type"
     },
     "AP_Staff": {
-      "Title": "Add staff"
+      "Title": "Add employee"
     },
     "AP_Position": {
       "Title": "Add position"
@@ -265,7 +265,8 @@
         "Lb1": "Enter the quantity of products to be imported",
         "Lb2": "Product",
         "Lb3": "Stock quantity",
-        "Lb4": "Import quantity"
+        "Lb4": "Import quantity",
+        "Lb5": "Import price"
       },
       "Placeholders": {
         "Text1": "Enter the quantity from ",
@@ -279,7 +280,8 @@
         "Lb2": "Enter the quantity of products to be exported",
         "Lb3": "Product",
         "Lb4": "Stock quantity",
-        "Lb5": "Export quantity"
+        "Lb5": "Export price",
+        "Lb6": "Export quantity"
       },
       "Placeholders": {
         "Text1": "Select the customer name",
@@ -308,20 +310,36 @@
       "Title": "Edit personal information"
     },
     "EP_Staff": {
-      "Title": "Edit staff"
+      "Title": "Edit employee"
     },
     "EP_Position": {
       "Title": "Edit position"
     },
     "EP_Customer": {
-      "Title": "Update customer"
+      "Title": "Edit customer"
+    },
+    "EP_Import": {
+      "Title": "Edit goods received note",
+      "Labels": {
+        "Lb1": "Total debt",
+        "Lb2": "Money paid"
+      },
+      "Status": "Status"
+    },
+    "EP_Export": {
+      "Title": "Edit goods delivery note",
+      "Label": "Customer name"
     }
   },
   "DetailPage": {
+    "DP_Staff": {
+      "Title": "Employee Information",
+      "Store": "Agent"
+    },
     "DP_WarehouseImport": {
       "Title": "Goods received detail note",
       "Column1": "Product name",
-      "Column2": "Import price",
+      "Column2": "Import quantity",
       "Column3": "Import price"
     },
     "DP_WarehouseExport": {
@@ -363,6 +381,26 @@
     "Rule3": {
       "Title": "Sale unit price ratio",
       "Description": "The export unit price will be calculated according to the formula: export unit price = import unit price + (import unit price / export unit price ratio)."
+    }
+  },
+  "StorePage": {
+    "Title": "Agent information",
+    "Avatar": "Agent avatar"
+  },
+  "StoreMaintainance": {
+    "Information": {
+      "Title": "Agent Maintenance",
+      "Name": "Agent Name",
+      "Cost": "Maintenance Cost",
+      "Note": "(expected)",
+      "Description": "Description",
+      "Placeholder": "Enter Description ...",
+      "Start": "Start Time",
+      "End": "End Time"
+    },
+    "Buttons": {
+      "Reset": "Reset",
+      "Set": "Set Maintenance"
     }
   }
 }

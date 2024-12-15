@@ -248,7 +248,7 @@
       "Title": "新增產品類型"
     },
     "AP_Staff": {
-      "Title": "添加员工"
+      "Title": "新增員工"
     },
     "AP_Position": {
       "Title": "添加职位"
@@ -262,7 +262,8 @@
         "Lb1": "輸入要進口的產品數量",
         "Lb2": "產品",
         "Lb3": "庫存數量",
-        "Lb4": "進口數量"
+        "Lb4": "進口數量",
+        "Lb5": "進口價格"
       },
       "Placeholders": {
         "Text1": "輸入數量 ",
@@ -276,7 +277,8 @@
         "Lb2": "輸入要出口的產品數量",
         "Lb3": "產品",
         "Lb4": "庫存數量",
-        "Lb5": "出口數量"
+        "Lb5": "出口價格",
+        "Lb6": "出口數量"
       },
       "Placeholders": {
         "Text1": "選擇客戶名稱",
@@ -305,16 +307,32 @@
       "Title": "編輯個人資訊"
     },
     "EP_Staff": {
-      "Title": "编辑员工"
+      "Title": "編輯員工"
     },
     "EP_Position": {
       "Title": "编辑职位"
     },
     "EP_Customer": {
-      "Title": "更新客户"
+      "Title": "編輯客戶"
+    },
+    "EP_Import": {
+      "Title": "編輯收貨單",
+      "Labels": {
+        "Lb1": "總債務",
+        "Lb2": "錢已付"
+      },
+      "Status": "地位"
+    },
+    "EP_Export": {
+      "Title": "編輯貨物交貨單",
+      "Label": "客戶姓名"
     }
   },
   "DetailPage": {
+    "DP_Staff": {
+      "Title": "員工資訊",
+      "Store": "代理人"
+    },
     "DP_WarehouseImport": {
       "Title": "貨物收到詳細說明",
       "Column1": "產品名稱",
@@ -360,6 +378,26 @@
     "Rule3": {
       "Title": "銷售單價比率",
       "Description": "出口單價依下列公式計算：出口單價=進口單價+（進口單價/出口單價比）。"
+    }
+  },
+  "StorePage": {
+    "Title": "代理人資訊",
+    "Avatar": "特工頭像"
+  },
+  "StoreMaintainance": {
+    "Information": {
+      "Title": "代理維護",
+      "Name": "代理人姓名",
+      "Cost": "維護成本",
+      "Note": "（預期的）",
+      "Description": "描述",
+      "Placeholder": "輸入描述...",
+      "Start": "開始時間",
+      "End": "結束時間"
+    },
+    "Buttons": {
+      "Reset": "重置",
+      "Set": "設定維護"
     }
   }
 }

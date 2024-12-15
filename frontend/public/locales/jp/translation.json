@@ -250,7 +250,7 @@
       "Title": "製品タイプを追加します"
     },
     "AP_Staff": {
-      "Title": "スタッフを追加"
+      "Title": "従業員を追加します"
     },
     "AP_Position": {
       "Title": "職位を追加"
@@ -264,7 +264,8 @@
         "Lb1": "輸入する製品の数量を入力します",
         "Lb2": "製品",
         "Lb3": "在庫数量",
-        "Lb4": "輸入数量"
+        "Lb4": "輸入数量",
+        "Lb5": "輸入価格"
       },
       "Placeholders": {
         "Text1": "数量を入力します ",
@@ -278,7 +279,8 @@
         "Lb2": "輸出する製品の数量を入力します",
         "Lb3": "製品",
         "Lb4": "在庫数量",
-        "Lb5": "輸出数量"
+        "Lb5": "輸出価格",
+        "Lb6": "輸出数量"
       },
       "Placeholders": {
         "Text1": "顧客名を選択します",
@@ -307,16 +309,32 @@
       "Title": "個人情報を編集します"
     },
     "EP_Staff": {
-      "Title": "スタッフを編集"
+      "Title": "従業員を編集します"
     },
     "EP_Position": {
       "Title": "職位を編集"
     },
     "EP_Customer": {
-      "Title": "顧客を更新"
+      "Title": "顧客を編集します"
+    },
+    "EP_Import": {
+      "Title": "商品受領書を編集します",
+      "Labels": {
+        "Lb1": "負債総額",
+        "Lb2": "支払金額"
+      },
+      "Status": "ステータス"
+    },
+    "EP_Export": {
+      "Title": "商品納品書を編集します",
+      "Label": "顧客名"
     }
   },
   "DetailPage": {
+    "DP_Staff": {
+      "Title": "従業員情報",
+      "Store": "エージェント"
+    },
     "DP_WarehouseImport": {
       "Title": "商品受領明細メモ",
       "Column1": "商品名",
@@ -362,6 +380,26 @@
     "Rule3": {
       "Title": "販売単価比率",
       "Description": "輸出単価は、次の式に従って計算されます: 輸出単価 = 輸入単価 + (輸入単価 / 輸出単価比率)。"
+    }
+  },
+  "StorePage": {
+    "Title": "エージェント情報",
+    "Avatar": "エージェントのアバター"
+  },
+  "StoreMaintainance": {
+    "Information": {
+      "Title": "エージェントのメンテナンス",
+      "Name": "エージェント名",
+      "Cost": "メンテナンス費用",
+      "Note": "(予想)",
+      "Description": "説明",
+      "Placeholder": "説明を入力...",
+      "Start": "開始時刻",
+      "End": "終了時刻"
+    },
+    "Buttons": {
+      "Reset": "リセット",
+      "Set": "メンテナンスの設定"
     }
   }
 }

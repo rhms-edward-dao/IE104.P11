@@ -265,7 +265,8 @@
         "Lb1": "Geben Sie die Menge der zu importierenden Produkte ein",
         "Lb2": "Produkt",
         "Lb3": "Lagermenge",
-        "Lb4": "Importmenge"
+        "Lb4": "Importmenge",
+        "Lb5": "Importpreis"
       },
       "Placeholders": {
         "Text1": "Geben Sie die Menge von ein ",
@@ -279,7 +280,8 @@
         "Lb2": "Geben Sie die Menge der zu exportierenden Produkte ein",
         "Lb3": "Produkt",
         "Lb4": "Lagermenge",
-        "Lb5": "Exportmenge"
+        "Lb5": "Exportpreis",
+        "Lb6": "Exportmenge"
       },
       "Placeholders": {
         "Text1": "Wählen Sie den Kundennamen aus",
@@ -314,10 +316,26 @@
       "Title": "Position bearbeiten"
     },
     "EP_Customer": {
-      "Title": "Kunde aktualisieren"
+      "Title": "Kunden bearbeiten"
+    },
+    "EP_Import": {
+      "Title": "Wareneingangsschein bearbeiten",
+      "Labels": {
+        "Lb1": "Gesamtschuld",
+        "Lb2": "Gezahlter Betrag"
+      },
+      "Status": "Status"
+    },
+    "EP_Export": {
+      "Title": "Warenlieferschein bearbeiten",
+      "Label": "Kundenname"
     }
   },
   "DetailPage": {
+    "DP_Staff": {
+      "Title": "Mitarbeiterinformationen",
+      "Store": "Agent"
+    },
     "DP_WarehouseImport": {
       "Title": "Detaillierter Hinweis zum Wareneingang",
       "Column1": "Produktname",
@@ -363,6 +381,26 @@
     "Rule3": {
       "Title": "Verkaufsstückpreisverhältnis",
       "Description": "Der Exportstückpreis wird nach der Formel berechnet: Exportstückpreis = Importstückpreis + (Importstückpreis / Exportstückpreisverhältnis)."
+    }
+  },
+  "StorePage": {
+    "Title": "Agenteninformationen",
+    "Avatar": "Agenten-Avatar"
+  },
+  "StoreMaintainance": {
+    "Information": {
+      "Title": "Agentenwartung",
+      "Name": "Agentenname",
+      "Cost": "Wartungskosten",
+      "Note": "(erwartet)",
+      "Description": "Beschreibung",
+      "Placeholder": "Beschreibung eingeben ...",
+      "Start": "Startzeit",
+      "End": "Endzeit"
+    },
+    "Buttons": {
+      "Reset": "Zurücksetzen",
+      "Set": "Wartung festlegen"
     }
   }
 }

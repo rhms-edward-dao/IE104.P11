@@ -280,7 +280,8 @@
         "Lb1": "Nhập số lượng mặt hàng cần nhập kho",
         "Lb2": "Mặt hàng",
         "Lb3": "Số lượng tồn",
-        "Lb4": "Số lượng nhập"
+        "Lb4": "Số lượng nhập",
+        "Lb5": "Đơn giá nhập"
       },
       "Placeholders": {
         "Text1": "Nhập số lượng từ ",
@@ -294,7 +295,8 @@
         "Lb2": "Nhập số lượng mặt hàng cần xuất kho",
         "Lb3": "Mặt hàng",
         "Lb4": "Số lượng tồn",
-        "Lb5": "Số lượng xuất"
+        "Lb5": "Đơn giá bán",
+        "Lb6": "Số lượng xuất"
       },
       "Placeholders": {
         "Text1": "Chọn tên khách hàng",
@@ -329,10 +331,26 @@
       "Title": "Chỉnh sửa chức vụ"
     },
     "EP_Customer": {
-      "Title": "Cập nhật khách hàng"
+      "Title": "Chỉnh sửa khách hàng"
+    },
+    "EP_Import": {
+      "Title": "Chỉnh sửa phiếu nhập hàng",
+      "Labels": {
+        "Lb1": "Tổng tiền nợ",
+        "Lb2": "Tiền đã thanh toán"
+      },
+      "Status": "Tình trạng"
+    },
+    "EP_Export": {
+      "Title": "Chỉnh sửa phiếu xuất hàng",
+      "Label": "Tên khách hàng"
     }
   },
   "DetailPage": {
+    "DP_Staff": {
+      "Title": "Thông tin nhân viên",
+      "Store": "Đại lý"
+    },
     "DP_WarehouseImport": {
       "Title": "Chi tiết phiếu nhập hàng",
       "Column1": "Tên mặt hàng",
@@ -378,6 +396,26 @@
     "Rule3": {
       "Title": "Tỷ lệ đơn giá xuất",
       "Description": "Đơn giá xuất hàng sẽ được tính theo công thức: đơn giá xuất = đơn giá nhập + (đơn giá nhập / tỷ lệ đơn giá xuất)."
+    }
+  },
+  "StorePage": {
+    "Title": "Thông tin đại lý",
+    "Avatar": "Ảnh đại lý"
+  },
+  "StoreMaintainance": {
+    "Information": {
+      "Title": "Bảo trì đại lý",
+      "Name": "Tên đại lý",
+      "Cost": "Chi phí bảo trì",
+      "Note": "(dự kiến)",
+      "Description": "Mô tả",
+      "Placeholder": "Nhập mô tả ...",
+      "Start": "Thời gian bắt đầu",
+      "End": "Thời gian kết thúc"
+    },
+    "Buttons": {
+      "Reset": "Đặt lại",
+      "Set": "Đặt bảo trì"
     }
   }
 }
