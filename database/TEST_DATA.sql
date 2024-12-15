@@ -57,19 +57,19 @@ TRUNCATE LOAIMATHANG CASCADE;
 ALTER SEQUENCE LOAIMATHANG_maloaimathang_seq RESTART WITH 1;
 
 ------------------------------------------------------------------ Insert Into DAILY ----------------------------------------------------------------
-INSERT INTO DAILY (MaLoaiDaiLy, TenDaiLy, SoDienThoai, HinhAnh) VALUES
-('1', 'Đại lý Bình Tân 1', '0857434243', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-1.jpeg'),
-('1', 'Đại lý Bình Tân 2', '0857434242', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-2.jpeg'),
-('2', 'Đại lý Tân Phú 1', '0857434241', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-3.jpeg');
+INSERT INTO DAILY (MaLoaiDaiLy, TenDaiLy, SoDienThoai, SoTienNo, HinhAnh) VALUES
+('1', 'Đại lý Bình Tân 1', '0857434243', 78848000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-1.jpeg'),
+('1', 'Đại lý Bình Tân 2', '0857434242', 14368000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-2.jpeg'),
+('2', 'Đại lý Tân Phú 1', '0857434241', 59224000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-3.jpeg');
 SELECT * FROM DAILY;
 TRUNCATE DAILY CASCADE;
 ALTER SEQUENCE DAILY_madaily_seq RESTART WITH 1;
 
 ------------------------------------------------------------- Insert Into DAILY_DIACHI -----------------------------------------------------------
 INSERT INTO DAILY_DIACHI(MaDaiLy, MaQuan, DiaChi, KinhDo, ViDo) VALUES
-('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '123', '456'),
-('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '123', '456'),
-('3', '3', '32 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh', '123', '456');
+('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.62095714790', '10.783482810216'),
+('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.60016282535', '10.766853008727'),
+('3', '3', '32 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh', '106.62140136767', '10.784799436739');
 SELECT * FROM DAILY_DIACHI
 TRUNCATE NHANVIEN_DIACHI CASCADE
 
@@ -127,10 +127,10 @@ ALTER SEQUENCE MATHANG_mamathang_seq RESTART WITH 1;
 ---------------------------------------------------------------- Insert Into NHANVIEN ---------------------------------------------------------------
 INSERT INTO NHANVIEN(MaDaiLy, HoTen, NgaySinh, SoDienThoai, Email, HinhAnh) VALUES
 ('1', 'Nguyễn Văn A', '1999/1/20', '01263341260', '123456789@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-1.jpeg'),
-('1', 'Nguyễn Văn B', '2000/5/22', '01263341266', '123456798@gmail.com', '"D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-2.jpeg"');
+('1', 'Nguyễn Văn B', '2000/5/22', '01263341266', '123456798@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-2.jpeg');
 SELECT * FROM NHANVIEN
-TRUNCATE NHANVIEN CASCADE
-ALTER SEQUENCE NHANVIEN_manhanvien_seq RESTART WITH 1
+TRUNCATE NHANVIEN CASCADE;
+ALTER SEQUENCE NHANVIEN_manhanvien_seq RESTART WITH 1;
 
 ------------------------------------------------------------ Insert Into TAIKHOAN_NHANVIEN ----------------------------------------------------------
 INSERT INTO TAIKHOAN_NHAVIEN(MaNhanVien, MaTaiKhoan) VALUES
@@ -148,8 +148,8 @@ TRUNCATE NHANVIEN_CHUCVU CASCADE
 
 ------------------------------------------------------------- Insert Into NHANVIEN_DIACHI -----------------------------------------------------------
 INSERT INTO NHANVIEN_DIACHI(MaNhanVien, MaQuan, DiaChi, KinhDo, ViDo) VALUES
-('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '123', '456'),
-('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '123', '456');
+('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.62095714790', '10.783482810216'),
+('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.60016282535', '10.766853008727');
 SELECT * FROM NHANVIEN_DIACHI
 TRUNCATE NHANVIEN_DIACHI CASCADE
 
@@ -181,26 +181,26 @@ ALTER SEQUENCE KHACHHANG_makhachhang_seq RESTART WITH 1;
 
 ------------------------------------------------------------- Insert Into KHACHHANG_DIACHI ----------------------------------------------------------
 INSERT INTO KHACHHANG_DIACHI(MaKhachHang, MaQuan, DiaChi, KinhDo, ViDo) VALUES
-('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '123', '456'),
-('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '789', '101'),
-('3', '3', '33 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh', '121', '314'),
-('4', '4', '25 Văn Cao, Phú Thạnh, Phú Nhuận, Hồ Chí Minh', '151', '617'),
-('5', '1', '26 Văn Cao, Phú Thạnh, Bình Tân, Hồ Chí Minh', '181', '920'),
-('6', '2', '27 Văn Cao, Phú Thạnh, Thủ Đức, Hồ Chí Minh', '212', '223'),
-('7', '3', '28 Văn Cao, Phú Thạnh, 1, Hồ Chí Minh', '242', '526'),
-('8', '4', '29 Văn Cao, Phú Thạnh, 2, Hồ Chí Minh', '272', '829'),
-('9', '1', '20 Văn Cao, Phú Thạnh, 3, Hồ Chí Minh', '303', '132'),
-('10', '2', '31 Văn Cao, Phú Thạnh, 4, Hồ Chí Minh', '333', '435'),
-('11', '3', '34 Văn Cao, Phú Thạnh, 5, Hồ Chí Minh', '363', '738'),
-('12', '4', '35 Văn Cao, Phú Thạnh, 6, Hồ Chí Minh', '394', '041'),
-('13', '1', '36 Văn Cao, Phú Thạnh, 7, Hồ Chí Minh', '424', '344'),
-('14', '2', '37 Văn Cao, Phú Thạnh, 8, Hồ Chí Minh', '454', '647'),
-('15', '3', '38 Văn Cao, Phú Thạnh, 9, Hồ Chí Minh', '484', '950'),
-('16', '4', '39 Văn Cao, Phú Thạnh, 10, Hồ Chí Minh', '515', '253'),
-('17', '1', '40 Văn Cao, Phú Thạnh, 11, Hồ Chí Minh', '545', '556'),
-('18', '2', '41 Văn Cao, Phú Thạnh, 12, Hồ Chí Minh', '575', '859'),
-('19', '4', '42 Văn Cao, Phú Thạnh, Gò Vấp, Hồ Chí Minh', '606', '162'),
-('20', '3', '43 Văn Cao, Phú Thạnh, Hóc Môn, Hồ Chí Minh', '636', '465');
+('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.62095714790', '10.783482810216'),
+('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.60016282535', '10.766853008727'),
+('3', '3', '12 C18, Phường 12, Tân Bình, Hồ Chí Minh', '106.65072041839932', '10.800018008993169'),
+('4', '4', '101/2 Nguyễn Trọng Tuyển, Phường 15, Phú Nhuận, Hồ Chí Minh', '106.68092412615425', '10.796797612675485'),
+('5', '1', '87/6 số 3, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh', '106.61524242210419', '10.78289726738737'),
+('6', '2', '293 Linh Đông, Linh Đông, Thủ Đức, Hồ Chí Minh', '106.74969516966705', '10.856155908079364'),
+('7', '3', '35H Hồ Hảo Hớn, Phường Cô Giang, Quận 1, Hồ Chí Minh', '106.69258490095353', '10.760963713689431'),
+('8', '4', '23 31A, Quận 2, Hồ Chí Minh', '106.74306440418113', '10.792228046128676'),
+('9', '1', '1 Đỗ Thị Lời, Phường 11, Quận 3, Hồ Chí Minh', '106.67446127276905', '10.783794172968351'),
+('10', '2', '132/165 Đoàn Văn Bơ, Phường 14, Quận 4, Hồ Chí Minh', '106.70778858749343', '10.75725823940814'),
+('11', '3', '156 Phùng Hưng, Phường 14, Quận 5, Hồ Chí Minh', '106.6575151962693', '10.751619607620388'),
+('12', '4', '419A Hậu Giang, Phường 11, Quận 6, Hồ Chí Minh', '106.63812766295632', '10.748521800638573'),
+('13', '1', 'Tân Mỹ/Hẻm 75 Tổ 6, Khu Phố 4, Quận 7, Hồ Chí Minh', '106.71963934512958', '10.751354529891584'),
+('14', '2', 'Đường Hoàng Ngân/91A 80, Khu Phố 4, Quận 8, Hồ Chí Minh', '106.62682789249801', '10.725030137868915'),
+('15', '3', '15-44 Hẻm 55, Trường Thạnh, Quận 9, Hồ Chí Minh', '106.81017171261931', '10.82731435597328'),
+('16', '4', '199/1 3 tháng 2 Tổ 52 Khu phố 6, Phường 11, Quận 10, Hồ Chí Minh', '106.67445324790499', '10.771774757840035'),
+('17', '1', '144/12 Bình Thới, Phường 14, Quận 11, Hồ Chí Minh', '106.64875719607555', '10.767353794832887'),
+('18', '2', '51/4 Tổ 51 Kp4, Tân Chánh Hiệp, Quận 12, Hồ Chí Minh', '106.62707836156424', '10.87037122819741'),
+('19', '4', '142B Số 2, Phường 16, Gò Vấp, Hồ Chí Minh', '106.66200265187607', '10.849433445853384'),
+('20', '3', '1/1 Ấp 3, Xuân Thới Thượng, Hóc Môn, Hồ Chí Minh', '106.58981578187519', '10.856337732503121');
 SELECT * FROM KHACHHANG_DIACHI
 TRUNCATE KHACHHANG_DIACHI CASCADE
 
