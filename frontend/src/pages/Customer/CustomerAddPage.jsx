@@ -35,7 +35,7 @@ const CustomerAddPage = () => {
   const [newDistrictName, setNewDistrictName] = useState("");
   const [newDistrictId, setNewDistrictId] = useState(0);
   const [existedDistrictName, setExistedDistrictName] = useState([]);
-  
+
   const [newCityName, setNewCityName] = useState("");
   const [existedCityName, setExistedCityName] = useState([]);
   // // For navigating
@@ -67,11 +67,18 @@ const CustomerAddPage = () => {
   }, []);
   // Function here
   // // For editing current district
-  const addData = async (tenkhachhang, sodienthoai, quan, tenquan, thanhpho, diachi) => {
+  const addData = async (
+    tenkhachhang,
+    sodienthoai,
+    quan,
+    tenquan,
+    thanhpho,
+    diachi,
+  ) => {
     let check_tenkhachhang = true;
     let check_sodienthoai = true;
     let check_diachi = true;
-    
+
     // Constraints for checking format
     const isOnlyDigit = (input) => /^\d+$/.test(input);
 
@@ -137,12 +144,12 @@ const CustomerAddPage = () => {
         }
       }
     }
-    diachi = diachi + ', ' + tenquan + ', ' + thanhpho;
+    diachi = diachi + ", " + tenquan + ", " + thanhpho;
     if (check_tenkhachhang && check_sodienthoai && check_diachi) {
       let item = [
         {
           tenkhachhang: tenkhachhang,
-          sodienthoai: sodienthoai,          
+          sodienthoai: sodienthoai,
           maquan: quan,
           diachi: diachi,
         },
@@ -163,29 +170,18 @@ const CustomerAddPage = () => {
   return (
     <div className="h-screen">
       <div>
-        <Header></Header>
+        <Header path="/customer"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex items-center gap-40">
-          <NavLink to={"/customer"}>
-            <button>
-              <img
-                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                alt="Icon trở lại"
-                className="h-12 w-12"
-              />
-            </button>
-          </NavLink>
-        </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
             {AP_Customer.Title}
           </p>
           <button
-            className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+            className="rounded-md bg-gradient-to-tr from-red-600 via-[#ea4444] to-[#ee7272] px-4 py-3 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
             onClick={() =>
               existedData.some(
-                (item) => item.Khachhang.sodienthoai === newPhoneNumber.trim()
+                (item) => item.Khachhang.sodienthoai === newPhoneNumber.trim(),
               )
                 ? alert("Thêm khách hàng thất bại !!! Số điện thoại đã tồn tại")
                 : addData(
@@ -194,7 +190,7 @@ const CustomerAddPage = () => {
                     newDistrictId,
                     newDistrictName,
                     newCityName,
-                    newAddress.trim()
+                    newAddress.trim(),
                   )
             }
           >
@@ -215,7 +211,7 @@ const CustomerAddPage = () => {
               id="customer-name-add"
               name="customer-name-add"
               type="text"
-              placeholder={`Tên khách hàng ...`}
+              placeholder={`${SF_Customers.Columns.Col1} ...`}
               values={newCustomerName}
               onChange={(e) => setNewCustomerName(e.target.value)}
               required
@@ -234,14 +230,14 @@ const CustomerAddPage = () => {
               id="phone-number-add"
               name="phone-number-add"
               type="text"
-              placeholder={`Số điện thoại ...`}
+              placeholder={`${SF_Customers.Columns.Col2} ...`}
               values={newPhoneNumber}
               onChange={(e) => setNewPhoneNumber(e.target.value)}
               required
             />
           </div>
           {/* Select district name */}
-          <div className="space-x-20 flex">
+          <div className="flex space-x-20">
             <div>
               <label
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
@@ -262,7 +258,7 @@ const CustomerAddPage = () => {
                   setNewDistrictName(selectedDistrictName); // Update Name
                 }}
               >
-                {existedDistrictName.map((item) => (                  
+                {existedDistrictName.map((item) => (
                   <option key={item.maquan} value={item.maquan}>
                     {item.tenquan}
                   </option>
@@ -271,9 +267,9 @@ const CustomerAddPage = () => {
             </div>
             {/* Select city name */}
             <div>
-              <label 
+              <label
                 className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
-                htmlFor="city-name-add" 
+                htmlFor="city-name-add"
               >
                 {SF_Customers.Columns.Col5}
               </label>
@@ -307,7 +303,7 @@ const CustomerAddPage = () => {
               id="address-add"
               name="address-add"
               type="text"
-              placeholder={`Địa chỉ ...`}
+              placeholder={`${SF_Customers.Columns.Col3} ...`}
               values={newAddress}
               onChange={(e) => setNewAddress(e.target.value)}
               required

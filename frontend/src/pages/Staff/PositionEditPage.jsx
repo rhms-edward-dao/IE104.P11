@@ -84,27 +84,16 @@ function PositionEditPage() {
   return (
     <div>
       <div>
-        <Header></Header>
+        <Header path="/staff-management"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
         <div>
           <div>
-            <div className="flex items-center gap-40">
-              <NavLink to={"/staff-management"}>
-                <button>
-                  <img
-                    src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                    alt="Icon trở lại"
-                    className="w-15 h-12"
-                  />
-                </button>
-              </NavLink>
-            </div>
             <div className="my-5 flex flex-wrap items-center justify-between">
               <p className="text-2xl font-bold italic">{EP_Position.Title}</p>
               <div className="flex justify-end">
                 <button
-                  className="rounded-xl bg-red-500 px-2 py-3"
+                  className="rounded-md bg-gradient-to-tr from-red-600 via-[#ea4444] to-[#ee7272] px-4 py-3 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
                   onClick={() =>
                     updateData(positionId, positionName, level, salary)
                   }

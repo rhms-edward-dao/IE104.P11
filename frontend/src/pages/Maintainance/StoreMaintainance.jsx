@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 // Import elements for translation
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../contexts/LanguageContext";
 // Import elements for Calendar
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
 import { DateRange } from "react-date-range";
 import addDays from "date-fns/addDays";
-import { vi } from "date-fns/locale";
+import { vi, enUS, de, zhCN, fr, ja } from "date-fns/locale";
 // Import css for styling the calendar
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -19,6 +20,7 @@ import {
   addMaintainanceApi,
   getMaintainanceApi,
 } from "../../assets/Stores/StoreData";
+
 function StoreMaintainance() {
   // Variables here
   const { storeId } = useParams();
@@ -29,7 +31,8 @@ function StoreMaintainance() {
   const [loading, setLoading] = useState(true);
   // // For Multi-Language
   const { t } = useTranslation();
-  const { Edit } = t("Buttons");
+  const { selectedLanguage } = useLanguage();
+  const { Information, Buttons } = t("StoreMaintainance");
   // // For table sorting
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" }); // Table Columns Header Sorting A-Z and Z-A
   // Functions here
@@ -122,7 +125,10 @@ function StoreMaintainance() {
         <p>Loading...</p>
       ) : (
         <div>
-          <Header headerTitle="Bảo trì đại lý"></Header>
+          <Header
+            headerTitle={Information.Title}
+            path="/store-management"
+          ></Header>
           <div className="my-3 flex flex-wrap justify-between">
             <div className="m-5 w-full bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white lg:w-7/12">
               <div className="mx-5 my-8 space-y-8">
@@ -133,12 +139,12 @@ function StoreMaintainance() {
                   ></img>
                 </div>
                 <div className="flex flex-wrap gap-10">
-                  <h2 className="text-xl font-bold">Tên đại lý</h2>
+                  <h2 className="text-xl font-bold">{Information.Name}</h2>
                   <h3 className="text-lg font-[400]">{storeData.tendaily}</h3>
                 </div>
                 <div className="flex flex-wrap items-center gap-10">
                   <label htmlFor="predictedPrice" className="text-lg font-bold">
-                    Chi phí bảo trì (dự kiến)
+                    {Information.Cost} {Information.Note}
                   </label>
                   <input
                     id="predictedPrice"
@@ -151,7 +157,7 @@ function StoreMaintainance() {
                 </div>
                 <div className>
                   <label htmlFor="description" className="text-lg font-bold">
-                    Mô tả
+                    {Information.Description}
                   </label>
                   <br></br>
                   <div className="mt-5">
@@ -162,7 +168,7 @@ function StoreMaintainance() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       className="h-[200px] w-full resize-none rounded border border-black bg-white p-2 text-black transition-all duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-                      placeholder="Nhập mô tả..."
+                      placeholder={Information.Placeholder}
                     />
                   </div>
                 </div>
@@ -176,8 +182,23 @@ function StoreMaintainance() {
                     onChange={handleSelect}
                     moveRangeOnFirstSelection={false}
                     ranges={state}
-                    locale={vi}
+                    locale={
+                      selectedLanguage === "vi"
+                        ? vi
+                        : selectedLanguage === "en"
+                          ? enUS
+                          : selectedLanguage === "de"
+                            ? de
+                            : selectedLanguage === "fr"
+                              ? fr
+                              : selectedLanguage === "jp"
+                                ? ja
+                                : selectedLanguage === "cn"
+                                  ? zhCN
+                                  : vi
+                    }
                     rangeColors={["#f33e5b"]}
+                    color="black"
                   />
                 </div>
               </div>
@@ -186,7 +207,7 @@ function StoreMaintainance() {
                   onClick={() => handleReset()}
                   className="rounded bg-gradient-to-tl from-red-600 via-[#ea4444] to-[#ee7272] p-3 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
                 >
-                  <p className="font-bold text-white">Đặt lại</p>
+                  <p className="font-bold text-white">{Buttons.Reset}</p>
                 </button>
                 <button
                   onClick={() =>
@@ -199,27 +220,27 @@ function StoreMaintainance() {
                   }
                   className="rounded bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] p-3 transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                 >
-                  <p className="font-bold text-white">Đặt bảo trì</p>
+                  <p className="font-bold text-white">{Buttons.Set}</p>
                 </button>
               </div>
             </div>
           </div>
           <div className="mx-4 bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-            <table className="mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
+            <table className="mb-10 mt-5 w-full text-center text-black transition-colors duration-300 dark:text-white">
               <thead className="border-b-4 border-red-500">
                 <tr className="text-lg">
                   <th
                     className="border-r-2 p-2 hover:cursor-default"
                     scope="col"
                   >
-                    Mô tả
+                    {Information.Description}
                   </th>
                   <th
                     className="border-r-2 p-2 hover:cursor-pointer"
                     scope="col"
                     onClick={() => handleSort("thoidiembatdau")}
                   >
-                    Thời gian bắt đầu
+                    {Information.Start}
                     {sortConfig.key === "thoidiembatdau" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
@@ -228,7 +249,7 @@ function StoreMaintainance() {
                     scope="col"
                     onClick={() => handleSort("thoidiemketthuc")}
                   >
-                    Thời gian kết thúc
+                    {Information.End}
                     {sortConfig.key === "thoidiemketthuc" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>
@@ -237,7 +258,7 @@ function StoreMaintainance() {
                     scope="col"
                     onClick={() => handleSort("chiphibaotri")}
                   >
-                    Chi phí bảo trì
+                    {Information.Cost}
                     {sortConfig.key === "chiphibaotri" &&
                       (sortConfig.direction === "asc" ? " ▲" : " ▼")}
                   </th>

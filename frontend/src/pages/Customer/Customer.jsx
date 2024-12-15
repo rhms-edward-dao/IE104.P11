@@ -199,7 +199,7 @@ function Customer() {
   const CItems = searchTerm ? searchResults : currentItems;
   // Return here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header headerTitle={Title.Customers} />
       </div>

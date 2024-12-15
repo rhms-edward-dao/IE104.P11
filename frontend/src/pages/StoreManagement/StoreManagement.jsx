@@ -26,7 +26,8 @@ function StoreManagement() {
   // // For Multi-Language
   const { t } = useTranslation();
   const { StoreManagement } = t("Sidebar");
-  const { StoreManagementP } = t("StoreManagementP");
+  const { SF_Stores } = t("SearchFilter");
+  const { Title, Avatar } = t("StorePage");
   const { Edit, Maintain } = t("Buttons");
   // // For fetching Data
   const [storeData, setStoreData] = useState({});
@@ -47,15 +48,15 @@ function StoreManagement() {
       {loading ? (
         <p>Loading ...</p>
       ) : (
-        <div>
+        <div className="h-screen">
           <div>
             <Header headerTitle={StoreManagement}></Header>
           </div>
-          <div className="my-8 mx-4 bg-white dark:bg-[#363636] transition-colors duration-300 rounded-lg shadow-lg">
+          <div className="mx-4 my-8 rounded-lg bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636]">
             <div className="p-4 pr-6">
               <div className="flex justify-between">
-                <h1 className="m-2 text-2xl font-bold text-black dark:text-white transition-colors duration-300">
-                  Thông tin đại lý
+                <h1 className="m-2 text-2xl font-bold text-black transition-colors duration-300 dark:text-white">
+                  {Title}
                 </h1>
                 <NavLink
                   className="hidden items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
@@ -68,63 +69,63 @@ function StoreManagement() {
                 </NavLink>
               </div>
               <div className="mx-2 my-8 flex items-center justify-center">
-                <h3 className="w-1/4 text-xl font-semibold text-black dark:text-white transition-colors duration-300">
-                  Ảnh đại lý:
+                <h3 className="w-1/4 text-xl font-semibold text-black transition-colors duration-300 dark:text-white">
+                  {Avatar}:
                 </h3>
-                <div className="w-1/4 flex justify-start">
-                  <div className="w-32 h-32 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center transition-colors duration-300">
+                <div className="flex w-1/4 justify-start">
+                  <div className="flex h-32 w-32 items-center justify-center rounded-full bg-gray-300 transition-colors duration-300 dark:bg-gray-600">
                     <img
                       alt="Ảnh đại diện"
                       src={`data:image/jpeg;base64, ${storeData[0].hinhanh}`}
-                      className="w-full h-full rounded-full"
+                      className="h-full w-full rounded-full"
                     />
                   </div>
                 </div>
               </div>
-              <div className="mx-2 my-8 flex justify-center text-black dark:text-white transition-colors duration-300">
-                <h3 className="w-1/4 text-xl font-semibold justify-center">
-                  Tên đại lý:
+              <div className="mx-2 my-8 flex justify-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/4 justify-center text-xl font-semibold">
+                  {SF_Stores.Columns.Col1}:
                 </h3>
-                <p className="w-1/4 italic justify-start">
+                <p className="w-1/4 justify-start italic">
                   {storeData[0].tendaily}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex justify-center text-black dark:text-white transition-colors duration-300">
-                <h3 className="w-1/4 text-xl font-semibold justify-center">
-                  Loại đại lý:
+              <div className="mx-2 my-8 flex justify-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/4 justify-center text-xl font-semibold">
+                  {SF_Stores.Columns.Col2}:
                 </h3>
-                <p className="w-1/4 italic justify-start">
+                <p className="w-1/4 justify-start italic">
                   {storeData[0].tenloaidaily}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex justify-center text-black dark:text-white transition-colors duration-300">
-                <h3 className="w-1/4 text-xl font-semibold justify-center">
-                  Ngày tiếp nhận:
+              <div className="mx-2 my-8 flex justify-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/4 justify-center text-xl font-semibold">
+                  {SF_Stores.Columns.Col3}:
                 </h3>
-                <p className="w-1/4 italic justify-start">
+                <p className="w-1/4 justify-start italic">
                   {storeData[0].ngaytiepnhan}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex justify-center text-black dark:text-white transition-colors duration-300">
-                <h3 className="w-1/4 text-xl font-semibold justify-center">
-                  Số điện thoại:
+              <div className="mx-2 my-8 flex justify-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/4 justify-center text-xl font-semibold">
+                  {SF_Stores.Columns.Col4}:
                 </h3>
-                <p className="w-1/4 italic justify-start">
+                <p className="w-1/4 justify-start italic">
                   {storeData[0].sodienthoai}
                 </p>
               </div>
-              <div className="mx-2 my-8 flex justify-center text-black dark:text-white transition-colors duration-300">
-                <h3 className="w-1/4 text-xl font-semibold justify-center">
-                  Địa chỉ
+              <div className="mx-2 my-8 flex justify-center text-black transition-colors duration-300 dark:text-white">
+                <h3 className="w-1/4 justify-center text-xl font-semibold">
+                  {SF_Stores.Columns.Col5}:
                 </h3>
-                <p className="w-1/4 italic justify-start">
+                <p className="w-1/4 justify-start italic">
                   {storeData[0].diachi}
                 </p>
               </div>
               <div className="my-8 flex justify-center">
-                <div className="w-1/2 flex">
+                <div className="flex w-1/2">
                   <NavLink
-                    className="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2 font-bold text-white"
+                    className="flex flex-wrap items-center gap-2 rounded-lg bg-gradient-to-r from-[#03DF04] via-[#2AED2D] to-[#62F163] px-4 py-2 font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-l hover:from-[#03DF04] hover:via-[#2AED2D] hover:to-[#62F163]"
                     to={`/store-maintainance/${userInfo.storeID}`}
                   >
                     <p className="hidden sm:hidden md:hidden lg:inline-block">

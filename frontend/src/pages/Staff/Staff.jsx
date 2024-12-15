@@ -360,7 +360,7 @@ function Staff() {
   const SItems = staffSearchTerm ? staffSearchResults : currentStaffItems;
   // Return here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header
           headerTitle={isStaffTab ? Title.Staffs : Title.Positions}

@@ -102,7 +102,7 @@ function StaffManagementEditPage() {
     tenthanhpho,
     tenquan,
     diachi,
-    hinhanh
+    hinhanh,
   ) => {
     let check_hoten = true;
     let check_sodienthoai = true;
@@ -239,236 +239,228 @@ function StaffManagementEditPage() {
   return (
     <div>
       <div>
-        <Header></Header>
+        <Header path="/staff-management"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
-          <div className="flex items-center gap-40">
-            <NavLink to={"/staff-management"}>
-              <button>
-                <img
-                  src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                  alt="Icon trở lại"
-                  className="w-15 h-12"
-                />
-              </button>
-            </NavLink>
-          </div>
-          <div className="my-5 flex flex-wrap items-center justify-between">
-            <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
-              {EP_Staff.Title}
-            </p>
-            <button
-              className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
-              onClick={() =>
-                updateData(
-                  staffId,
-                  staffName,
-                  staffBirthday,
-                  staffPhone,
-                  staffEmail,
-                  staffStore,
-                  staffPosition,
-                  staffCityName,
-                  staffDistrictName,
-                  staffAddress,
-                  imageData
-                )
-              }
-            >
-              <p className="font-bold text-white text-lg">Cập nhật</p>
-            </button>
-          </div>
-      <div className="m-5">
-        <div className="block space-y-8">
-          <div className="space-y-4">
-            <label htmlFor="staff-name-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col1}
-            </label>
-            <br />
-            <input
-              id="staff-name-add"
-              name="staff-name-add"
-              type="text"
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              placeholder={`${SF_Staffs.Columns.Col2} ...`}
-              value={staffName}
-              onChange={(e) => setStaffName(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="birthdate-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col2}
-            </label>
-            <br />
-            <input
-              id="birthdate-add"
-              name="birthdate-add"
-              type="date"
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              value={staffBirthday}
-              onChange={(e) => setStaffBirthday(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="staff-phone-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col6}
-            </label>
-            <br />
-            <input
-              id="staff-phone-add"
-              name="staff-phone-add"
-              type="text"
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              placeholder={`${SF_Staffs.Columns.Col6} ...`}
-              value={staffPhone}
-              onChange={(e) => setStaffPhone(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="staff-email-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col7}
-            </label>
-            <br />
-            <input
-              id="staff-email-add"
-              name="staff-email-add"
-              type="email"
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              placeholder={`${SF_Staffs.Columns.Col7} ...`}
-              value={staffEmail}
-              onChange={(e) => setStaffEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="store-name-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col3}
-            </label>
-            <br />
-            <select
-              id="store-name-add"
-              name="store-name-add"
-              type="email"
-              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              value={staffStore}
-              onChange={(e) => setStaffStore(e.target.value)}
-            >
-              {staffStoreData.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="position-name-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col4}
-            </label>
-            <br />
-            <select
-              id="position-name-add"
-              name="position-name-add"
-              type="email"
-              className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              value={staffPosition}
-              onChange={(e) => setStaffPosition(e.target.value)}
-            >
-              {staffPositionData.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="space-x-20 flex">
+        <div className="my-5 flex flex-wrap items-center justify-between">
+          <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
+            {EP_Staff.Title}
+          </p>
+          <button
+            className="rounded-md bg-gradient-to-tr from-red-600 via-[#ea4444] to-[#ee7272] px-4 py-3 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
+            onClick={() =>
+              updateData(
+                staffId,
+                staffName,
+                staffBirthday,
+                staffPhone,
+                staffEmail,
+                staffStore,
+                staffPosition,
+                staffCityName,
+                staffDistrictName,
+                staffAddress,
+                imageData,
+              )
+            }
+          >
+            <p className="text-lg font-bold text-white">Cập nhật</p>
+          </button>
+        </div>
+        <div className="m-5">
+          <div className="block space-y-8">
             <div className="space-y-4">
-              <label htmlFor="city-name-add" className="font-bold text-lg">
-                {SF_Districts.Columns.Col2}
+              <label htmlFor="staff-name-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col1}
               </label>
               <br />
-              {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
-              <select
-                id="city-name-add"
-                name="city-name-add"
-                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-                value={staffCityName}
-                onChange={(e) => setStaffCityName(e.target.value)}
-              >
-                {staffCityData.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-4">
-              <label htmlFor="district-name-add" className="font-bold text-lg">
-                {SF_Districts.Columns.Col1}
-              </label>
-              <br />
-              {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
-              <select
-                id="district-name-add"
-                name="district-name-add"
-                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-                value={staffDistrictName}
-                onChange={(e) => setStaffDistrictName(e.target.value)}
-              >
-                {staffDistrictData.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="address-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col5}
-            </label>
-            <br />
-            <input
-              id="address-add"
-              name="address-add"
-              type="email"
-              className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
-              placeholder={`${SF_Staffs.Columns.Col5} ...`}
-              value={staffAddress}
-              onChange={(e) => setStaffAddress(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <label htmlFor="image-add" className="font-bold text-lg">
-              {SF_Staffs.Columns.Col8}
-            </label>
-            <br />
-            <input
-              id="image-add"
-              name="image-add"
-              type="file"
-              accept="images/*"
-              onChange={handleUploadImage}
-            />
-
-            {image !== undefined ? (
-              <img src={image} alt="Hình đại diện" />
-            ) : (
-              <img
-                src={`data:images/jpeg;base64, ${imageData}`}
-                alt="Hình đại diện"
+              <input
+                id="staff-name-add"
+                name="staff-name-add"
+                type="text"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col2} ...`}
+                value={staffName}
+                onChange={(e) => setStaffName(e.target.value)}
               />
-            )}
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="birthdate-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col2}
+              </label>
+              <br />
+              <input
+                id="birthdate-add"
+                name="birthdate-add"
+                type="date"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                value={staffBirthday}
+                onChange={(e) => setStaffBirthday(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="staff-phone-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col6}
+              </label>
+              <br />
+              <input
+                id="staff-phone-add"
+                name="staff-phone-add"
+                type="text"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col6} ...`}
+                value={staffPhone}
+                onChange={(e) => setStaffPhone(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="staff-email-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col7}
+              </label>
+              <br />
+              <input
+                id="staff-email-add"
+                name="staff-email-add"
+                type="email"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col7} ...`}
+                value={staffEmail}
+                onChange={(e) => setStaffEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="store-name-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col3}
+              </label>
+              <br />
+              <select
+                id="store-name-add"
+                name="store-name-add"
+                type="email"
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                value={staffStore}
+                onChange={(e) => setStaffStore(e.target.value)}
+              >
+                {staffStoreData.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="position-name-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col4}
+              </label>
+              <br />
+              <select
+                id="position-name-add"
+                name="position-name-add"
+                type="email"
+                className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                value={staffPosition}
+                onChange={(e) => setStaffPosition(e.target.value)}
+              >
+                {staffPositionData.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex space-x-20">
+              <div className="space-y-4">
+                <label htmlFor="city-name-add" className="text-lg font-bold">
+                  {SF_Districts.Columns.Col2}
+                </label>
+                <br />
+                {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
+                <select
+                  id="city-name-add"
+                  name="city-name-add"
+                  className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                  value={staffCityName}
+                  onChange={(e) => setStaffCityName(e.target.value)}
+                >
+                  {staffCityData.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-4">
+                <label
+                  htmlFor="district-name-add"
+                  className="text-lg font-bold"
+                >
+                  {SF_Districts.Columns.Col1}
+                </label>
+                <br />
+                {/* It must be a combobox -> selecting which city you need - fetch all city name from server for showing options */}
+                <select
+                  id="district-name-add"
+                  name="district-name-add"
+                  className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                  value={staffDistrictName}
+                  onChange={(e) => setStaffDistrictName(e.target.value)}
+                >
+                  {staffDistrictData.map((item) => (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="address-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col5}
+              </label>
+              <br />
+              <input
+                id="address-add"
+                name="address-add"
+                type="email"
+                className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
+                placeholder={`${SF_Staffs.Columns.Col5} ...`}
+                value={staffAddress}
+                onChange={(e) => setStaffAddress(e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-4">
+              <label htmlFor="image-add" className="text-lg font-bold">
+                {SF_Staffs.Columns.Col8}
+              </label>
+              <br />
+              <input
+                id="image-add"
+                name="image-add"
+                type="file"
+                accept="images/*"
+                onChange={handleUploadImage}
+              />
+
+              {image !== undefined ? (
+                <img src={image} alt="Hình đại diện" />
+              ) : (
+                <img
+                  src={`data:images/jpeg;base64, ${imageData}`}
+                  alt="Hình đại diện"
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

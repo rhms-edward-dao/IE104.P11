@@ -127,7 +127,7 @@ function Districts() {
   const deleteItem = async (id) => {
     const response = await deleteDistrict(id);
     if (response.message === "Xóa quận thành công") {
-      alert(response.message);      
+      alert(response.message);
       setDistrictData(districtData.filter((item) => item.maquan !== id));
       // Set data for statistics
       let totalDistrict = new Set();
@@ -185,7 +185,7 @@ function Districts() {
   const districtItems = searchTerm ? searchResults : currentItems;
   // Return here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header headerTitle={Title.Districts}></Header>
       </div>
