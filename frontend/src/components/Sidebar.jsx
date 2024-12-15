@@ -123,17 +123,17 @@ function Sidebar() {
       title: StoreManagement,
       animation: [0.5, 0.5, 0.55],
     },
-    {
-      to: "/staff-report",
-      icon: ReportsIcon,
-      title: Reports,
-      animation: [0.6, 0.6, 0.65],
-    },
+    // {
+    //   to: "/staff-report",
+    //   icon: ReportsIcon,
+    //   title: Reports,
+    //   animation: [0.6, 0.6, 0.65],
+    // },
     {
       to: "/login",
       icon: LogoutIcon,
       title: LogOut_Btn,
-      animation: [0.7, 0.7, 0.75],
+      animation: [0.6, 0.6, 0.65],
     },
   ];
 
@@ -163,7 +163,7 @@ function Sidebar() {
   // Render return here
   return (
     <motion.div
-      className="h-full w-full bg-black"
+      className="h-screen w-full bg-black"
       initial="hidden"
       animate="visible"
       variants={sidebarVariants}
@@ -213,7 +213,7 @@ function Sidebar() {
                 }
               >
                 <motion.div
-                  className="flex w-full items-center justify-center lg:justify-start gap-3"
+                  className="flex w-full items-center justify-center gap-3 lg:justify-start"
                   initial="hidden"
                   animate="visible"
                   variants={itemVariants}
@@ -255,7 +255,7 @@ function Sidebar() {
                 }
               >
                 <motion.div
-                  className="flex w-full items-center justify-center lg:justify-start gap-3"
+                  className="flex w-full items-center justify-center gap-3 lg:justify-start"
                   initial="hidden"
                   animate="visible"
                   variants={itemVariants}
