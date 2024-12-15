@@ -8,6 +8,8 @@ import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
 import { getProductByStoreId } from "../../assets/Products/ProductData";
+import { getAllCustomer } from "../../assets/Customers/CustomerData";
+import { addExportBill } from "../../assets/Warehouses/WarehouseData";
 
 // Import Components Here
 import Header from "../../components/Header";
@@ -15,8 +17,6 @@ import Header from "../../components/Header";
 // Import Icons Here
 import GoBackIcon from "../../images/icons/button/GoBack.svg";
 import GoBackDarkIcon from "../../images/icons/button/GoBack_Dark.svg";
-import { getAllCustomer } from "../../assets/Customers/CustomerData";
-import { addExportBill } from "../../assets/Warehouses/WarehouseData";
 
 const ExportAddPage = () => {
   // Variable here
@@ -95,7 +95,7 @@ const ExportAddPage = () => {
   // // For handling the ammount of product to export
   const handleSoLuongXuatChange = (index, value) => {
     const selectedProduct = productData.find(
-      (product) => product.Mathang.mamathang === dropdownValues[index]
+      (product) => product.Mathang.mamathang === dropdownValues[index],
     );
 
     const maxQuantity = selectedProduct?.Mathang.soluongton || 0;
@@ -116,7 +116,7 @@ const ExportAddPage = () => {
     return productData.filter(
       (product) =>
         !selectedValues.includes(product.Mathang.mamathang) ||
-        dropdownValues[currentIndex] === product.Mathang.mamathang
+        dropdownValues[currentIndex] === product.Mathang.mamathang,
     );
   };
 
@@ -131,7 +131,7 @@ const ExportAddPage = () => {
       const soluongxuat = soLuongXuat[index]; // Inputted quantity
 
       const product = productData.find(
-        (product) => product.Mathang.mamathang === mamathang
+        (product) => product.Mathang.mamathang === mamathang,
       );
 
       if (product) {
@@ -153,7 +153,7 @@ const ExportAddPage = () => {
       }
       if (!/^\d+$/.test(item.soluongxuat)) {
         alert(
-          `Số lượng xuất cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`
+          `Số lượng xuất cho mặt hàng ${item.mamathang} chỉ được có ký tự chữ số.`,
         );
         return false;
       }
@@ -169,7 +169,7 @@ const ExportAddPage = () => {
       const data = await addExportBill(
         userInfo.storeID,
         selectedCustomer,
-        itemsToExport
+        itemsToExport,
       );
 
       // Handle response
@@ -189,26 +189,15 @@ const ExportAddPage = () => {
   return (
     <div>
       <div>
-        <Header></Header>
+        <Header path="/warehouse"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex items-center gap-40">
-          <NavLink to={"/warehouse"}>
-            <button>
-              <img
-                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                alt="Icon trở lại"
-                className="h-12 w-12"
-              />
-            </button>
-          </NavLink>
-        </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
             {AP_Export.Title}
           </p>
           <button
-            className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+            className="rounded-md bg-gradient-to-tr from-red-600 via-[#ea4444] to-[#ee7272] px-4 py-3 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
             onClick={addData}
           >
             {Export}
@@ -261,7 +250,7 @@ const ExportAddPage = () => {
               />
               <button
                 type="submit"
-                className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:ring focus:ring-indigo-300 font-bold text-lg"
+                className="rounded bg-indigo-600 px-4 py-2 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-indigo-700 focus:ring focus:ring-indigo-300"
               >
                 {Confirm}
               </button>
@@ -270,7 +259,8 @@ const ExportAddPage = () => {
           <div className="space-y-10">
             {Array.from({ length: numDropdowns }).map((_, index) => {
               const selectedProduct = productData.find(
-                (product) => product.Mathang.mamathang === dropdownValues[index]
+                (product) =>
+                  product.Mathang.mamathang === dropdownValues[index],
               );
               return (
                 <div key={index} className="space-y-5 border-b pb-4">
@@ -303,7 +293,7 @@ const ExportAddPage = () => {
                     </select>
                   </div>
                   <div className="flex items-center space-x-5">
-                    <div className="flex space-x-5 items-center">
+                    <div className="flex items-center space-x-5">
                       <label
                         className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                         htmlFor={`soluongton-${index}`}
@@ -318,12 +308,12 @@ const ExportAddPage = () => {
                         readOnly
                       />
                     </div>
-                    <div className="flex space-x-5 items-center">
+                    <div className="flex items-center space-x-5">
                       <label
                         className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                         htmlFor={`dongiaban-${index}`}
                       >
-                        Đơn giá bán:
+                        {AP_Export.Labels.Lb5}:
                       </label>
                       <input
                         className="w-fit rounded-md border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -333,12 +323,12 @@ const ExportAddPage = () => {
                         readOnly
                       />
                     </div>
-                    <div className="flex space-x-5 items-center">
+                    <div className="flex items-center space-x-5">
                       <label
                         className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
                         htmlFor={`soluongxuat-${index}`}
                       >
-                        {AP_Export.Labels.Lb5}:
+                        {AP_Export.Labels.Lb6}:
                       </label>
                       <input
                         className="w-fit rounded-md border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"

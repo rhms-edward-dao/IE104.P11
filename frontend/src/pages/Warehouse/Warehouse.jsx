@@ -128,18 +128,19 @@ const Warehouse = () => {
   useEffect(() => {
     // Filtering import bills base on filter option and input text
     if (importSearchTerm.trim() !== "") {
+      console.log(importData);
       const results = importData.filter((item) => {
         if (importFilterOption === SF_WarehouseImport.Columns.Col1) {
           return item.Phieunhaphang.ngaylapphieu
             .toLowerCase()
             .includes(importSearchTerm.toLowerCase());
-        } else if (importFilterOption === SF_WarehouseImport.Columns.Col3) {
+        } else if (importFilterOption === SF_WarehouseImport.Columns.Col2) {
           return item.Phieunhaphang.tongtien
-            .toLowerCase()
+            .toString()
             .includes(importSearchTerm.toLowerCase());
-        } else if (importFilterOption === SF_WarehouseImport.Columns.Col4) {
+        } else if (importFilterOption === SF_WarehouseImport.Columns.Col3) {
           return item.Phieunhaphang.tiendathanhtoan
-            .toLowerCase()
+            .toString()
             .includes(importSearchTerm.toLowerCase());
         } else if (importFilterOption === SF_WarehouseImport.Columns.Col4) {
           return item.Phieunhaphang.tinhtrang
@@ -162,9 +163,9 @@ const Warehouse = () => {
           return item.Phieuxuathang.tongtien
             .toString()
             .includes(exportSearchTerm.toLowerCase());
-        } else {
+        } else if (exportFilterOption === SF_WarehouseExport.Columns.Col3) {
           return item.tenkhachhang
-            .toString()
+            .toLowerCase()
             .includes(exportSearchTerm.toLowerCase());
         }
       });
@@ -388,7 +389,7 @@ const Warehouse = () => {
   const EItems = exportSearchTerm ? exportSearchResults : currentExportItems;
   // Return render here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header
           headerTitle={

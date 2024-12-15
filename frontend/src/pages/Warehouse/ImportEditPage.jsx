@@ -26,6 +26,7 @@ const ImportEditPage = () => {
   const { theme } = useTheme();
   // // For Multi-Language
   const { t } = useTranslation();
+  const { EP_Import } = t("EditPage");
   const { Update } = t("Buttons");
   // // For Editing Import Bill
   const [currentDebt, setCurrentDebt] = useState(0);
@@ -93,26 +94,15 @@ const ImportEditPage = () => {
   return (
     <div>
       <div>
-        <Header></Header>
+        <Header path="/warehouse"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex items-center gap-40">
-          <NavLink to={"/warehouse"}>
-            <button>
-              <img
-                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                alt="Icon trở lại"
-                className="h-12 w-12"
-              />
-            </button>
-          </NavLink>
-        </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
-            Cập nhật phiếu nhập hàng
+            {EP_Import.Title}
           </p>
           <button
-            className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+            className="rounded-md bg-gradient-to-tr from-red-600 via-[#ea4444] to-[#ee7272] px-4 py-3 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
             onClick={() => updateData(currentPaid, currentStatus)}
           >
             {Update}
@@ -124,7 +114,7 @@ const ImportEditPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="tong-tien-no"
             >
-              Tổng tiền nợ:
+              {EP_Import.Labels.Lb1}:
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -140,7 +130,7 @@ const ImportEditPage = () => {
               className="text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="money-paid-edit"
             >
-              Tiền đã thanh toán:
+              {EP_Import.Labels.Lb2}:
             </label>
             <input
               className="w-full rounded-lg border border-black bg-white px-5 py-2 text-lg text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"
@@ -158,7 +148,7 @@ const ImportEditPage = () => {
               className="block text-lg font-bold text-black transition-colors duration-300 dark:text-white"
               htmlFor="money-paid-edit"
             >
-              Tình trạng:
+              {EP_Import.Status}:
             </label>
             <select
               className="rounded-md border border-black bg-white px-3 py-3 text-lg font-semibold text-black transition-colors duration-300 dark:border-white dark:bg-[#363636] dark:text-white"

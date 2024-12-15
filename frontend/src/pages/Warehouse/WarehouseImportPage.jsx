@@ -42,20 +42,9 @@ function WarehouseImportPage() {
   return (
     <div>
       <div>
-        <Header></Header>
+        <Header path="/warehouse"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white">
-        <div className="flex items-center gap-40">
-          <NavLink to={"/warehouse"}>
-            <button>
-              <img
-                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                alt="Icon trở lại"
-                className="w-12 h-12"
-              />
-            </button>
-          </NavLink>
-        </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
             {DP_WarehouseImport.Title}
