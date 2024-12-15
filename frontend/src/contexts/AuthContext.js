@@ -4,22 +4,30 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   // Variables here
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false);
+  // const [userInfo, setUserInfo] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [userInfo, setUserInfo] = useState({
+    userName: "Nguyễn Văn B",
+    userID: 2,
+    storeID: 1,
+    isAdmin: false,
+  });
 
   // Initialize the context state based on sessionStorage when the app is loaded
-  useEffect(() => {
-    const storedIsLoggedIn = sessionStorage.getItem("isLoggedIn");
-    const storedUserInfo = sessionStorage.getItem("userInfo");
+  // useEffect(() => {
+  //   const storedIsLoggedIn = sessionStorage.getItem("isLoggedIn");
+  //   const storedUserInfo = sessionStorage.getItem("userInfo");
 
-    if (storedIsLoggedIn === "true" && storedUserInfo) {
-      setIsLoggedIn(true);
-      setUserInfo(JSON.parse(storedUserInfo));
-    } else {
-      setIsLoggedIn(false);  // If hasnt been logged yet, this value will be false
-    }
-  }, []);
+  //   if (storedIsLoggedIn === "true" && storedUserInfo) {
+  //     setIsLoggedIn(true);
+  //     setUserInfo(JSON.parse(storedUserInfo));
+  //   } else {
+  //     setIsLoggedIn(false); // If hasnt been logged yet, this value will be false
+  //   }
+  // }, []);
 
   // Functions here
   const login = (userData) => {

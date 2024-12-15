@@ -99,7 +99,7 @@ function App() {
                 <StoreTabProvider>
                   <PopupProvider>
                     <ModalProvider>
-                      <div className="flex h-full w-full bg-gray-200 transition-colors duration-300 dark:bg-[#0d1117]">
+                      <div className="flex h-screen w-full bg-gray-200 transition-colors duration-300 dark:bg-[#0d1117]">
                         <div className="left-0 w-3/12 md:w-1/6">
                           <Sidebar></Sidebar>
                         </div>
