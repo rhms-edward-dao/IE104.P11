@@ -126,7 +126,7 @@ const Products = () => {
             .includes(productSearchTerm.toLowerCase());
         } else if (productFilterOption === SF_Products.Columns.Col3) {
           return item.Mathang.soluongton
-            .toLowerCase()
+            .toString()
             .includes(productSearchTerm.toLowerCase());
         } else if (productFilterOption === SF_Products.Columns.Col5) {
           return item.tenloaimathang
@@ -295,7 +295,7 @@ const Products = () => {
     : currentProductCategoryItems;
   // Return here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header
           headerTitle={isProductTab ? Title.Products : Title.ProductCategories}

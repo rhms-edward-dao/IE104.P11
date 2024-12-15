@@ -31,12 +31,14 @@ const ProductCategorysAddPage = () => {
   // // Get existed data
   const location = useLocation();
   const { existedData } = location.state;
-  // Functions here 
+  // Functions here
   const addData = async (tenloaimathang) => {
-    const checkExistedData = existedData.some(item => item.tenloaimathang === tenloaimathang);
+    const checkExistedData = existedData.some(
+      (item) => item.tenloaimathang === tenloaimathang,
+    );
     if (checkExistedData) {
       alert("Loại mặt hàng đã tồn tại");
-    } else {    
+    } else {
       // Variables here for condition to call addProductCategoryApi
       let checkName = true;
       // Functions for checking string format tenloaimathang
@@ -44,7 +46,7 @@ const ProductCategorysAddPage = () => {
       // Check tenloaimathang: non-special-letter, length in [1, 200]
       if (tenloaimathang.length < 1 || tenloaimathang.length > 200) {
         alert(
-          "Độ dài tên loại mặt hàng không hợp lệ. Tên loại mặt hàng không được rỗng và không dài quá 200 ký tự"
+          "Độ dài tên loại mặt hàng không hợp lệ. Tên loại mặt hàng không được rỗng và không dài quá 200 ký tự",
         );
         checkName = false;
       } else if (isSpecicalLetter(tenloaimathang)) {
@@ -63,33 +65,22 @@ const ProductCategorysAddPage = () => {
           navigate("/product-categorys");
         }
       }
-    };
+    }
   };
 
   // Return render here
   return (
     <div>
       <div>
-        <Header></Header>
+        <Header path="/product-categorys"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex items-center gap-40">
-          <NavLink to={"/product-categorys"}>
-            <button>
-              <img
-                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                alt="Icon trở lại"
-                className="h-12 w-12"
-              />
-            </button>
-          </NavLink>
-        </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
             {AP_ProductCategories.Title}
           </p>
           <button
-            className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+            className="rounded-md bg-gradient-to-tr from-red-600 via-[#ea4444] to-[#ee7272] px-4 py-3 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
             onClick={() => addData(newProductCategoryName)}
           >
             {Add}

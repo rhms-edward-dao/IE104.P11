@@ -295,7 +295,7 @@ const ProductCategorys = () => {
     : currentProductCategoryItems;
   // Return here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header
           headerTitle={isProductTab ? Title.Products : Title.ProductCategories}

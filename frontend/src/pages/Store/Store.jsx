@@ -320,7 +320,7 @@ function Stores() {
     : currentStoreCategoryItems;
   // Return here
   return (
-    <div>
+    <div className="h-screen">
       <div>
         <Header
           headerTitle={isStoreTab ? Title.Stores : Title.StoreCategories}

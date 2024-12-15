@@ -47,7 +47,11 @@ const StoreCategoryEditPage = () => {
   // Functions here
   // For editing current store category
   const updateData = async (id, tenloaidaily, sotiennotoida) => {
-    const checkExistedData = existedData.some(item => item.tenloaidaily === tenloaidaily && parseInt(id) !== parseInt(item.maloaidaily));
+    const checkExistedData = existedData.some(
+      (item) =>
+        item.tenloaidaily === tenloaidaily &&
+        parseInt(id) !== parseInt(item.maloaidaily),
+    );
     if (checkExistedData) {
       alert("Tên loại đại lý đã tồn tại");
     } else {
@@ -60,7 +64,7 @@ const StoreCategoryEditPage = () => {
       // Check tenloaidaily: non-special-letter, length in [1, 100]
       if (tenloaidaily.length < 1 || tenloaidaily.length > 100) {
         alert(
-          "Độ dài tên loại đại lý không hợp lệ. Tên loại đại lý không được rỗng và không dài quá 100 ký tự"
+          "Độ dài tên loại đại lý không hợp lệ. Tên loại đại lý không được rỗng và không dài quá 100 ký tự",
         );
         checkName = false;
       } else if (isSpecicalLetter(tenloaidaily)) {
@@ -72,7 +76,7 @@ const StoreCategoryEditPage = () => {
       if (sotiennotoida < 0) {
         alert("Số tiền nợ tối đa phải là số dương");
         checkMaxDepth = false;
-      };
+      }
       if (sotiennotoida >= Math.pow(10, 8)) {
         alert("Số tiền nợ tối đa là 99999999");
         checkMaxDepth = false;
@@ -86,38 +90,27 @@ const StoreCategoryEditPage = () => {
           alert("Cập nhật loại đại lý thành công");
           navigate("/stores");
         }
-      }    
+      }
     }
   };
   // Return render here
   return (
     <div>
       <div>
-        <Header></Header>
+        <Header path="/stores"></Header>
       </div>
       <div className="m-5 bg-white p-5 shadow-lg transition-colors duration-300 dark:bg-[#363636]">
-        <div className="flex items-center gap-40">
-          <NavLink to={"/stores"}>
-            <button>
-              <img
-                src={theme === "light" ? GoBackIcon : GoBackDarkIcon}
-                alt="Icon trở lại"
-                className="h-12 w-12"
-              />
-            </button>
-          </NavLink>
-        </div>
         <div className="my-5 flex flex-wrap items-center justify-between">
           <p className="w-1/2 text-2xl font-bold italic text-black transition-colors duration-300 dark:text-white">
             {EP_StoreCategories.Title}
           </p>
           <button
-            className="rounded-xl bg-red-500 px-2 py-3 text-lg font-bold text-white"
+            className="rounded-md bg-gradient-to-tr from-red-600 via-[#ea4444] to-[#ee7272] px-4 py-3 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-gradient-to-br hover:from-red-600 hover:via-[#ea4444] hover:to-[#ee7272]"
             onClick={() =>
               updateData(
                 storeCategoryId,
                 currentStoreCategoryName,
-                currentMaxDebt
+                currentMaxDebt,
               )
             }
           >
