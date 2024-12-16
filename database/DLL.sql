@@ -33,7 +33,7 @@ create table MATHANG (
 	SoLuongTon int default 0, -- Amount left of product in store , constraint 'SoLuongTon >= 0' will be checked in frontend
 	Dongia decimal(12, 4) not null,
 	TenDVT character varying(50) not null, -- This field must be checked before being inserted
-	HinhAnh character varying(100),
+	HinhAnh character varying(200),
 	MaDaiLy smallint not null,
 	MaLoaiMatHang smallint not null,
 	constraint pk_mathang primary key(MaMatHang),
@@ -83,6 +83,8 @@ create table TAIKHOAN (
 	TenTaiKhoan character varying(100) unique not null,
 	MatKhau character varying(200) not null,
 	isActivated bool default FALSE,
+	OTP character varying(4),
+	otp_expiration datetime default current_timestamp,
 	constraint pk_taikhoan primary key(MaTaiKhoan)
 );
 
@@ -140,6 +142,8 @@ create table KHACHHANG_DIACHI (
 	MaKhachHang smallint not null,
 	MaQuan smallint not null,
 	DiaChi varchar(200) not null,
+	KinhDo varchar(15) not null,
+	ViDo varchar(15) not null,
 	constraint pk_khachhang_diachi primary key(MaKhachHang, MaQuan),
 	constraint fk_khachhang_diachi_to_khachhang foreign key(MaKhachHang) references KHACHHANG(MaKhachHang) on delete cascade,
 	constraint fk_khachhang_diachi_to_quan foreign key(MaQuan) references QUAN(MaQuan)
