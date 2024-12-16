@@ -11,3 +11,4 @@ starlette==0.39.2
 typing_extensions==4.12.2
 alembic==1.13.2
 psycopg2-binary==2.9.9
+uvicorn==0.30.4
