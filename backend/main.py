@@ -920,9 +920,12 @@ def add_new_khachhang(
             geocoder = OpenCageGeocode(key)
             query = "{}".format(item.diachi)
             results = geocoder.geocode(query, language="vi")
+            if results == []:
+                return {"message": "Địa chỉ không tồn tại"}
+            
             kinhdo_get = results[0]["geometry"]["lng"]
-            vido_get = results[0]["geometry"]["lat"]
-
+            vido_get = results[0]["geometry"]["lat"]            
+        
             khachhang = models.Khachhang(
                 tenkhachhang=item.tenkhachhang,
                 sodienthoai=item.sodienthoai,
@@ -967,6 +970,9 @@ def update_khachhang(
         geocoder = OpenCageGeocode(key)
         query = "{}".format(diachi)
         results = geocoder.geocode(query, language="vi")
+        if results == []:
+            return {"message": "Địa chỉ không tồn tại"}
+        
         kinhdo_get = results[0]["geometry"]["lng"]
         vido_get = results[0]["geometry"]["lat"]
 
