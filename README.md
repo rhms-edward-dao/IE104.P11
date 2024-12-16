@@ -1,5 +1,17 @@
 # IE104.P11
-# Libs requirement
+# OUR's TEAM MEMBERs:
+<table>
+  <thead>
+    <th>Full Name</th>
+    <th>MSSV</th>
+  </thead>
+  <tbody>
+    <td>Đào Nguyên Nhật Minh - 21522824</td>
+    <td>Nguyễn Anh Kiệt - 21522822</td>
+    <td>Trần Hoàng Nguyên - 21522396</td>
+  </tbody>
+</table>
+# HOW TO RUN THIS WEBSITE
 <h1>FE</h1>
   <br/>
   Before starting website, run this command: <i>npm install</i>
@@ -17,7 +29,7 @@
   <i>sqlalchemy.url</i> in file alembic.init
   <i>SQLALCHEMY_DATABASE_URL</i> in file database.py
   <br/>
-  After editing alembic.init and database.py, open postgreSQL and run DLL.sql, Function.sql, Trigger.sql and Test_data.sql respectively
+  After editing alembic.init and database.py, open postgreSQL and execute the following files DLL.sql, Function.sql, Trigger.sql and Test_data.sql
   Next, use these command to sync data between postgreSQL database and model.py in FastAPI
   <i>alembic revision --autogenerate -m "Initial migration"</i>
   <i>alembic upgrade head</i>
