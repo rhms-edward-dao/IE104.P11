@@ -1964,6 +1964,7 @@ def add_new_phieunhaphang(
         return {"success": True, "message": "Thêm phiếu nhập hàng thành công."}
 
     except Exception as e:
+        print(e)
         db.rollback()
         return {"success": False, "message": str(e)}
 

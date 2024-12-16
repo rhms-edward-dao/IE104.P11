@@ -58,7 +58,7 @@ ALTER SEQUENCE LOAIMATHANG_maloaimathang_seq RESTART WITH 1;
 
 ------------------------------------------------------------------ Insert Into DAILY ----------------------------------------------------------------
 INSERT INTO DAILY (MaLoaiDaiLy, TenDaiLy, SoDienThoai, SoTienNo, HinhAnh) VALUES
-('1', 'Đại lý Bình Tân 1', '0857434243', 78848000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-1.jpeg'),
+('1', 'Đại lý Bình Tân 1', '0857434243', 37216000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-1.jpeg'),
 ('1', 'Đại lý Bình Tân 2', '0857434242', 14368000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-2.jpeg'),
 ('2', 'Đại lý Tân Phú 1', '0857434241', 59224000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-3.jpeg');
 SELECT * FROM DAILY;
@@ -126,8 +126,8 @@ ALTER SEQUENCE MATHANG_mamathang_seq RESTART WITH 1;
 
 ---------------------------------------------------------------- Insert Into NHANVIEN ---------------------------------------------------------------
 INSERT INTO NHANVIEN(MaDaiLy, HoTen, NgaySinh, SoDienThoai, Email, HinhAnh) VALUES
-('1', 'Nguyễn Văn A', '1999/1/20', '01263341260', '123456789@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-1.jpeg'),
-('1', 'Nguyễn Văn B', '2000/5/22', '01263341266', '123456798@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-2.jpeg');
+('1', 'Nguyễn Văn A', '1999/1/20', '01263341260', '21522822@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-1.jpeg'),
+('1', 'Nguyễn Văn B', '2000/5/22', '01263341266', '21522824@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-2.jpeg');
 SELECT * FROM NHANVIEN
 TRUNCATE NHANVIEN CASCADE;
 ALTER SEQUENCE NHANVIEN_manhanvien_seq RESTART WITH 1;

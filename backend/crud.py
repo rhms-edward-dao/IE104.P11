@@ -50,17 +50,24 @@ def create_taikhoan(pTenTaiKhoan: str, pMatKhau: str):
     try:
         with engine.connect().execution_options(autocommit=True) as connection:
             result = connection.execute(
-                """
+                text(
+                    """
                     INSERT INTO Taikhoan 
                         (tentaikhoan, matkhau, isactivated) 
                     VALUES
-                    ( (%s), (%s), (%s) )
+                    ( '{}', '{}', {} )
                     RETURNING mataikhoan
-                """,
-                (pTenTaiKhoan, pMatKhau, True),
+                """.format(
+                        pTenTaiKhoan, pMatKhau, True
+                    ),
+                )
             )
-            mataikhoan = result.fetchone()[0]
-            return mataikhoan
+            if os.name == "nt":
+                row = result.fetchone()
+                connection.commit()
+                return row[0] if row else None
+            else:
+                return result.fetchone()[0]
     except Exception as e:
         return e
     return None
@@ -76,7 +83,7 @@ def link_taikhoan_nhanvien(pMaTaiKhoan: str, pMaNhanVien: str):
                     VALUES (:pMaNhanVien, :pMaTaiKhoan)
                     """,
                 ),
-                {"pMaNhanVien": pMaNhanVien, "pMaTaiKhoan": pMaTaiKhoan}
+                {"pMaNhanVien": pMaNhanVien, "pMaTaiKhoan": pMaTaiKhoan},
             )
             if os.name == "nt":
                 connection.commit()

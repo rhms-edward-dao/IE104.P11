@@ -7,9 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [userInfo, setUserInfo] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [userInfo, setUserInfo] = useState({});
 
   // Initialize the context state based on sessionStorage when the app is loaded
   useEffect(() => {
