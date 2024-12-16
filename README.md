@@ -6,9 +6,18 @@
     <th>MSSV</th>
   </thead>
   <tbody>
-    <td>Đào Nguyên Nhật Minh - 21522824</td>
-    <td>Nguyễn Anh Kiệt - 21522822</td>
-    <td>Trần Hoàng Nguyên - 21522396</td>
+    <tr>
+      <td>Đào Nguyên Nhật Minh</td>
+      <td>21522824</td>
+    </tr>
+    <tr>
+      <td>Nguyễn Anh Kiệt</td>
+      <td>21522822</td>
+    </tr>
+    <tr>
+      <td>Trần Hoàng Nguyên</td>
+      <td>21522396</td>
+    </tr>    
   </tbody>
 </table>
 
