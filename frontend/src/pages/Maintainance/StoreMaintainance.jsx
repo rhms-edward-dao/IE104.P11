@@ -13,6 +13,8 @@ import { vi, enUS, de, zhCN, fr, ja } from "date-fns/locale";
 // Import css for styling the calendar
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+// Import Contexts Here
+import { useAuth } from "../../contexts/AuthContext";
 // Import Components Here
 import Header from "../../components/Header";
 import { getStoreById } from "../../assets/Stores/StoreData";
@@ -23,6 +25,7 @@ import {
 
 function StoreMaintainance() {
   // Variables here
+  const { isAdmin } = useAuth();
   const { storeId } = useParams();
   const [storeData, setStoreData] = useState({});
   const [price, setPrice] = useState(0);
@@ -127,7 +130,7 @@ function StoreMaintainance() {
         <div>
           <Header
             headerTitle={Information.Title}
-            path="/store-management"
+            path={isAdmin ? "/stores" : "/store-management"}
           ></Header>
           <div className="my-3 flex flex-wrap justify-between">
             <div className="m-5 w-full bg-white shadow-lg transition-colors duration-300 dark:bg-[#363636] dark:text-white lg:w-7/12">
