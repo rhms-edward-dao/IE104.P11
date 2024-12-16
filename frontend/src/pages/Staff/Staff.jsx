@@ -10,6 +10,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { useStoreTab } from "../../contexts/StoreTabState";
 import { useModal } from "../../contexts/ModalState";
 import { useDetailPopup } from "../../contexts/DetailPopup";
+import { useAuth } from "../../contexts/AuthContext";
 
 // Import Assets Here
 import {
@@ -34,6 +35,7 @@ import { div } from "framer-motion/client";
 
 function Staff() {
   // Variables here
+  const { userInfo } = useAuth();
   // // For Theme Mode
   const { theme } = useTheme();
   // // For Multi-Language
@@ -225,41 +227,45 @@ function Staff() {
   };
   // // For deleting one staff
   const deleteAStaff = async (id) => {
-    const staffResponse = await deleteStaff(id);
-
-    if (staffResponse.message === "Xóa nhân viên thất bại") {
-      alert(staffResponse.message);
+    if (id === userInfo.userID) {
+      alert("Không thể tự xóa chính mình");
     } else {
-      alert(staffResponse.message);
-      setStaffData(staffData.filter((item) => item.Nhanvien.manhanvien !== id));
-      // Statistics here
-      // Staff count
-      let distinctStaff = new Set();
-      let totalIncome = 0.0;
-      // Get distinct staffs
-      staffData
-        .filter((item) => item.Nhanvien.manhanvien !== id)
-        .forEach((item) => {
-          if (item.Nhanvien.manhanvien) {
-            distinctStaff.add(item.Nhanvien.manhanvien);
-          }
-        });
-      // For total salary
-      distinctStaff.forEach((item) => {
+      const staffResponse = await deleteStaff(id);
+    
+      if (staffResponse.message === "Xóa nhân viên thất bại") {
+        alert(staffResponse.message);
+      } else {
+        alert(staffResponse.message);
+        setStaffData(staffData.filter((item) => item.Nhanvien.manhanvien !== id));
+        // Statistics here
+        // Staff count
+        let distinctStaff = new Set();
+        let totalIncome = 0.0;
+        // Get distinct staffs
         staffData
           .filter((item) => item.Nhanvien.manhanvien !== id)
-          .filter((sitem) => {
-            if (sitem.Nhanvien.manhanvien === item) {
-              totalIncome += sitem.luong;
+          .forEach((item) => {
+            if (item.Nhanvien.manhanvien) {
+              distinctStaff.add(item.Nhanvien.manhanvien);
             }
           });
-      });
-      setStatistics({
-        totalStaff: distinctStaff.size,
-        totalPosition: statistics.totalPosition,
-        totalSalary: totalIncome,
-      });
-    }
+        // For total salary
+        distinctStaff.forEach((item) => {
+          staffData
+            .filter((item) => item.Nhanvien.manhanvien !== id)
+            .filter((sitem) => {
+              if (sitem.Nhanvien.manhanvien === item) {
+                totalIncome += sitem.luong;
+              }
+            });
+        });
+        setStatistics({
+          totalStaff: distinctStaff.size,
+          totalPosition: statistics.totalPosition,
+          totalSalary: totalIncome,
+        });
+      }
+    };        
   };
   // // For deleting one position
   const deleteAPosition = async (id) => {
