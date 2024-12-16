@@ -84,7 +84,7 @@ create table TAIKHOAN (
 	MatKhau character varying(200) not null,
 	isActivated bool default FALSE,
 	OTP character varying(4),
-	otp_expiration datetime default current_timestamp,
+	otp_expiration timestamp default current_timestamp,
 	constraint pk_taikhoan primary key(MaTaiKhoan)
 );
 

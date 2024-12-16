@@ -97,7 +97,7 @@ BEGIN
 
     -- Check condition
     IF tempTongTienNo > tempSoTienNoToiDa THEN
-        RETURN EXCEPTION 'Failed';
+        RAISE EXCEPTION 'Failed';
     END IF;
 
     RETURN NEW;

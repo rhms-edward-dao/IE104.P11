@@ -7,22 +7,22 @@ INSERT INTO TAIKHOAN(TenTaiKhoan, MatKhau, isActivated) VALUES
 ('NVD', '027735', True),
 ('NVE', '027735', True);
 SELECT * FROM TAIKHOAN;
-TRUNCATE TAIKHOAN CASCADE;
-ALTER SEQUENCE TAIKHOAN_mataikhoan_seq RESTART WITH 1;
+-- TRUNCATE TAIKHOAN CASCADE;
+-- ALTER SEQUENCE TAIKHOAN_mataikhoan_seq RESTART WITH 1;
 
 ----------------------------------------------------------------- Insert Into QUYTAC ----------------------------------------------------------------
 INSERT INTO QUITAC(SoDaiLyToiDaMoiQuan, TiLeDonGiaBan, SoThietBiToiDaTaiKhoan) VALUES
 (3, 0.8, 3);
 SELECT * FROM QUITAC;
-TRUNCATE QUITAC CASCADE;
+-- TRUNCATE QUITAC CASCADE;
 
 ----------------------------------------------------------------- Insert Into CHUCVU ----------------------------------------------------------------
 INSERT INTO CHUCVU (TenChucVu, Capdo, Luong) VALUES
 ('Quản lý đại lý', 2, 20000000),
 ('Thu ngân', 1, 10000000);
 SELECT * FROM CHUCVU;
-TRUNCATE CHUCVU CASCADE;
-ALTER SEQUENCE CHUCVU_machucvu_seq RESTART WITH 1;
+-- TRUNCATE CHUCVU CASCADE;
+-- ALTER SEQUENCE CHUCVU_machucvu_seq RESTART WITH 1;
 
 ------------------------------------------------------------------ Insert Into QUAN -----------------------------------------------------------------
 INSERT INTO QUAN (TenQuan, TenThanhPho) VALUES
@@ -31,17 +31,17 @@ INSERT INTO QUAN (TenQuan, TenThanhPho) VALUES
 ('Bình Thạnh', 'Hồ Chí Minh'),
 ('Tân Phú Đông', 'Sa Đéc');
 SELECT * FROM QUAN;
-TRUNCATE QUAN CASCADE;
-ALTER SEQUENCE QUAN_maquan_seq RESTART WITH 1;
+-- TRUNCATE QUAN CASCADE;
+-- ALTER SEQUENCE QUAN_maquan_seq RESTART WITH 1;
 
 ---------------------------------------------------------------- Insert Into LOAIDAILY --------------------------------------------------------------
 INSERT INTO LOAIDAILY(TenLoaiDaiLy, SoTienNoToiDa) VALUES
-('Đại lý cấp 1', 50000000),
-('Đại lý cấp 2', 65000000),
-('Đại lý cấp 3', 80000000);
+('Đại lý cấp 1', 99999999),
+('Đại lý cấp 2', 99999999),
+('Đại lý cấp 3', 99999999);
 SELECT * FROM LOAIDAILY;
-TRUNCATE LOAIDAILY CASCADE;
-ALTER SEQUENCE LOAIDAILY_maloaidaily_seq RESTART WITH 1;
+-- TRUNCATE LOAIDAILY CASCADE;
+-- ALTER SEQUENCE LOAIDAILY_maloaidaily_seq RESTART WITH 1;
 
 --------------------------------------------------------------- Insert Into LOAIMATHANG -------------------------------------------------------------
 INSERT INTO LOAIMATHANG(TenLoaiMatHang) VALUES
@@ -53,25 +53,25 @@ INSERT INTO LOAIMATHANG(TenLoaiMatHang) VALUES
 ('Dragon'),
 ('Nemo');
 SELECT * FROM LOAIMATHANG;
-TRUNCATE LOAIMATHANG CASCADE;
-ALTER SEQUENCE LOAIMATHANG_maloaimathang_seq RESTART WITH 1;
+-- TRUNCATE LOAIMATHANG CASCADE;
+-- ALTER SEQUENCE LOAIMATHANG_maloaimathang_seq RESTART WITH 1;
 
 ------------------------------------------------------------------ Insert Into DAILY ----------------------------------------------------------------
 INSERT INTO DAILY (MaLoaiDaiLy, TenDaiLy, SoDienThoai, SoTienNo, HinhAnh) VALUES
-('1', 'Đại lý Bình Tân 1', '0857434243', 37216000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-1.jpeg'),
-('1', 'Đại lý Bình Tân 2', '0857434242', 14368000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-2.jpeg'),
-('2', 'Đại lý Tân Phú 1', '0857434241', 59224000 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-3.jpeg');
+('1', 'Đại lý Bình Tân 1', '0857434243', 37216000, 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-1.jpeg'),
+('1', 'Đại lý Bình Tân 2', '0857434242', 14368000, 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-2.jpeg'),
+('2', 'Đại lý Tân Phú 1', '0857434241', 59224000, 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\stores\store-3.jpeg');
 SELECT * FROM DAILY;
-TRUNCATE DAILY CASCADE;
-ALTER SEQUENCE DAILY_madaily_seq RESTART WITH 1;
+-- TRUNCATE DAILY CASCADE;
+-- ALTER SEQUENCE DAILY_madaily_seq RESTART WITH 1;
 
 ------------------------------------------------------------- Insert Into DAILY_DIACHI -----------------------------------------------------------
 INSERT INTO DAILY_DIACHI(MaDaiLy, MaQuan, DiaChi, KinhDo, ViDo) VALUES
-('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.62095714790', '10.783482810216'),
-('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.60016282535', '10.766853008727'),
-('3', '3', '32 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh', '106.62140136767', '10.784799436739');
-SELECT * FROM DAILY_DIACHI
-TRUNCATE NHANVIEN_DIACHI CASCADE
+('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.6209571479', '10.78348281021'),
+('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.6001628253', '10.76685300872'),
+('3', '3', '32 Văn Cao, Phú Thạnh, Tân Bình, Hồ Chí Minh', '106.6214013676', '10.78479943673');
+SELECT * FROM DAILY_DIACHI;
+-- TRUNCATE NHANVIEN_DIACHI CASCADE
 
 --------------------------------------------------------------- Insert Into BAOTRIDAILY -------------------------------------------------------------
 INSERT INTO BAOTRIDAILY (MaDaiLy, ThoiDiemBatDau, ThoiDiemKetThuc, ChiPhiDuKien, ChiPhiBaoTri) VALUES
@@ -79,8 +79,8 @@ INSERT INTO BAOTRIDAILY (MaDaiLy, ThoiDiemBatDau, ThoiDiemKetThuc, ChiPhiDuKien,
 ('2', '17/10/2024', '22/10/2024', 1654000, 1444000),
 ('3', '22/10/2024', '01/11/2024', 223000, 233000);
 SELECT * FROM BAOTRIDAILY;
-TRUNCATE BAOTRIDAILY CASCADE;
-ALTER SEQUENCE BAOTRIDAILY_mabaotri_seq RESTART WITH 1;
+-- TRUNCATE BAOTRIDAILY CASCADE;
+-- ALTER SEQUENCE BAOTRIDAILY_mabaotri_seq RESTART WITH 1;
 
 ----------------------------------------------------------------- Insert Into MATHANG ---------------------------------------------------------------
 INSERT INTO MATHANG(TenMatHang, SoLuongTon, DonGia, TenDVT, MaDaiLy, MaLoaiMatHang, HinhAnh) VALUES
@@ -121,37 +121,37 @@ INSERT INTO MATHANG(TenMatHang, SoLuongTon, DonGia, TenDVT, MaDaiLy, MaLoaiMatHa
 ('Cá betta 1206 – Koi nemo candy galaxy Tilphousia', 85, 140000, 'con', '3', '3', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1206.jpg'),
 ('Cá betta 1844 – Koi nemo galaxy butterfly champion of freedom zeus', 28, 180000, 'con', '2', '3', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\products\betta-1844.jpg');
 SELECT * FROM MATHANG;
-TRUNCATE MATHANG CASCADE;
-ALTER SEQUENCE MATHANG_mamathang_seq RESTART WITH 1;
+-- TRUNCATE MATHANG CASCADE;
+-- ALTER SEQUENCE MATHANG_mamathang_seq RESTART WITH 1;
 
 ---------------------------------------------------------------- Insert Into NHANVIEN ---------------------------------------------------------------
 INSERT INTO NHANVIEN(MaDaiLy, HoTen, NgaySinh, SoDienThoai, Email, HinhAnh) VALUES
 ('1', 'Nguyễn Văn A', '1999/1/20', '01263341260', '21522822@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-1.jpeg'),
 ('1', 'Nguyễn Văn B', '2000/5/22', '01263341266', '21522824@gmail.com', 'D:\Studying\UIT Online Class\IE104.P11 - Internet Va Cong Nghe Web\Bao Cao\IE104.P11\backend\images\staffs\staff-2.jpeg');
-SELECT * FROM NHANVIEN
-TRUNCATE NHANVIEN CASCADE;
-ALTER SEQUENCE NHANVIEN_manhanvien_seq RESTART WITH 1;
+SELECT * FROM NHANVIEN;
+-- TRUNCATE NHANVIEN CASCADE;
+-- ALTER SEQUENCE NHANVIEN_manhanvien_seq RESTART WITH 1;
 
 ------------------------------------------------------------ Insert Into TAIKHOAN_NHANVIEN ----------------------------------------------------------
 INSERT INTO TAIKHOAN_NHAVIEN(MaNhanVien, MaTaiKhoan) VALUES
 ('1', '1'),
 ('2', '2');
-SELECT * FROM TAIKHOAN_NHAVIEN
-TRUNCATE TAIKHOAN_NHAVIEN CASCADE
+SELECT * FROM TAIKHOAN_NHAVIEN;
+-- TRUNCATE TAIKHOAN_NHAVIEN CASCADE
 
 ------------------------------------------------------------ Insert Into NHANVIEN_CHUCVU ----------------------------------------------------------
 INSERT INTO NHANVIEN_CHUCVU(MaNhanVien, MaChucVu, NgayBatDau) VALUES
 ('1', '1', '10/03/2003'),
 ('2', '2', '04/03/2001');
-SELECT * FROM NHANVIEN_CHUCVU
-TRUNCATE NHANVIEN_CHUCVU CASCADE
+SELECT * FROM NHANVIEN_CHUCVU;
+-- TRUNCATE NHANVIEN_CHUCVU CASCADE
 
 ------------------------------------------------------------- Insert Into NHANVIEN_DIACHI -----------------------------------------------------------
 INSERT INTO NHANVIEN_DIACHI(MaNhanVien, MaQuan, DiaChi, KinhDo, ViDo) VALUES
-('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.62095714790', '10.783482810216'),
-('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.60016282535', '10.766853008727');
-SELECT * FROM NHANVIEN_DIACHI
-TRUNCATE NHANVIEN_DIACHI CASCADE
+('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.6209571479', '10.78348281021'),
+('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.6001628253', '10.76685300872');
+SELECT * FROM NHANVIEN_DIACHI;
+-- TRUNCATE NHANVIEN_DIACHI CASCADE
 
 ---------------------------------------------------------------- Insert Into KHACHHANG --------------------------------------------------------------
 INSERT INTO KHACHHANG(TenKhachHang, SoDienThoai) VALUES
@@ -176,33 +176,33 @@ INSERT INTO KHACHHANG(TenKhachHang, SoDienThoai) VALUES
 ('Nguyễn Văn U', '0918676505'),
 ('Nguyễn Văn V', '0918676506');
 SELECT * FROM KHACHHANG;
-TRUNCATE KHACHHANG CASCADE;
-ALTER SEQUENCE KHACHHANG_makhachhang_seq RESTART WITH 1;
+-- TRUNCATE KHACHHANG CASCADE;
+-- ALTER SEQUENCE KHACHHANG_makhachhang_seq RESTART WITH 1;
 
 ------------------------------------------------------------- Insert Into KHACHHANG_DIACHI ----------------------------------------------------------
 INSERT INTO KHACHHANG_DIACHI(MaKhachHang, MaQuan, DiaChi, KinhDo, ViDo) VALUES
-('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.62095714790', '10.783482810216'),
-('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.60016282535', '10.766853008727'),
-('3', '3', '12 C18, Phường 12, Tân Bình, Hồ Chí Minh', '106.65072041839932', '10.800018008993169'),
-('4', '4', '101/2 Nguyễn Trọng Tuyển, Phường 15, Phú Nhuận, Hồ Chí Minh', '106.68092412615425', '10.796797612675485'),
-('5', '1', '87/6 số 3, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh', '106.61524242210419', '10.78289726738737'),
-('6', '2', '293 Linh Đông, Linh Đông, Thủ Đức, Hồ Chí Minh', '106.74969516966705', '10.856155908079364'),
-('7', '3', '35H Hồ Hảo Hớn, Phường Cô Giang, Quận 1, Hồ Chí Minh', '106.69258490095353', '10.760963713689431'),
-('8', '4', '23 31A, Quận 2, Hồ Chí Minh', '106.74306440418113', '10.792228046128676'),
-('9', '1', '1 Đỗ Thị Lời, Phường 11, Quận 3, Hồ Chí Minh', '106.67446127276905', '10.783794172968351'),
-('10', '2', '132/165 Đoàn Văn Bơ, Phường 14, Quận 4, Hồ Chí Minh', '106.70778858749343', '10.75725823940814'),
-('11', '3', '156 Phùng Hưng, Phường 14, Quận 5, Hồ Chí Minh', '106.6575151962693', '10.751619607620388'),
-('12', '4', '419A Hậu Giang, Phường 11, Quận 6, Hồ Chí Minh', '106.63812766295632', '10.748521800638573'),
-('13', '1', 'Tân Mỹ/Hẻm 75 Tổ 6, Khu Phố 4, Quận 7, Hồ Chí Minh', '106.71963934512958', '10.751354529891584'),
-('14', '2', 'Đường Hoàng Ngân/91A 80, Khu Phố 4, Quận 8, Hồ Chí Minh', '106.62682789249801', '10.725030137868915'),
-('15', '3', '15-44 Hẻm 55, Trường Thạnh, Quận 9, Hồ Chí Minh', '106.81017171261931', '10.82731435597328'),
-('16', '4', '199/1 3 tháng 2 Tổ 52 Khu phố 6, Phường 11, Quận 10, Hồ Chí Minh', '106.67445324790499', '10.771774757840035'),
-('17', '1', '144/12 Bình Thới, Phường 14, Quận 11, Hồ Chí Minh', '106.64875719607555', '10.767353794832887'),
-('18', '2', '51/4 Tổ 51 Kp4, Tân Chánh Hiệp, Quận 12, Hồ Chí Minh', '106.62707836156424', '10.87037122819741'),
-('19', '4', '142B Số 2, Phường 16, Gò Vấp, Hồ Chí Minh', '106.66200265187607', '10.849433445853384'),
-('20', '3', '1/1 Ấp 3, Xuân Thới Thượng, Hóc Môn, Hồ Chí Minh', '106.58981578187519', '10.856337732503121');
-SELECT * FROM KHACHHANG_DIACHI
-TRUNCATE KHACHHANG_DIACHI CASCADE
+('1', '2', '23 Văn Cao, Phú Thạnh, Tân Phú, Hồ Chí Minh', '106.6209571479', '10.78348281021'),
+('2', '1', '820 Hương Lộ 2, Bình Trị Đông A, Bình Tân, Hồ Chí Minh', '106.6001628253', '10.76685300872'),
+('3', '3', '12 C18, Phường 12, Tân Bình, Hồ Chí Minh', '106.65072041839', '10.800018008993'),
+('4', '4', '101/2 Nguyễn Trọng Tuyển, Phường 15, Phú Nhuận, Hồ Chí Minh', '106.68092412615', '10.796797612675'),
+('5', '1', '87/6 số 3, Bình Hưng Hoà A, Bình Tân, Hồ Chí Minh', '106.61524242210', '10.78289726738'),
+('6', '2', '293 Linh Đông, Linh Đông, Thủ Đức, Hồ Chí Minh', '106.74969516966', '10.856155908079'),
+('7', '3', '35H Hồ Hảo Hớn, Phường Cô Giang, Quận 1, Hồ Chí Minh', '106.69258490095', '10.760963713689'),
+('8', '4', '23 31A, Quận 2, Hồ Chí Minh', '106.74306440418', '10.792228046128'),
+('9', '1', '1 Đỗ Thị Lời, Phường 11, Quận 3, Hồ Chí Minh', '106.67446127276', '10.783794172968'),
+('10', '2', '132/165 Đoàn Văn Bơ, Phường 14, Quận 4, Hồ Chí Minh', '106.70778858749', '10.75725823940'),
+('11', '3', '156 Phùng Hưng, Phường 14, Quận 5, Hồ Chí Minh', '106.65751519626', '10.751619607620'),
+('12', '4', '419A Hậu Giang, Phường 11, Quận 6, Hồ Chí Minh', '106.63812766295', '10.748521800638'),
+('13', '1', 'Tân Mỹ/Hẻm 75 Tổ 6, Khu Phố 4, Quận 7, Hồ Chí Minh', '106.71963934512', '10.751354529891'),
+('14', '2', 'Đường Hoàng Ngân/91A 80, Khu Phố 4, Quận 8, Hồ Chí Minh', '106.62682789249', '10.725030137868'),
+('15', '3', '15-44 Hẻm 55, Trường Thạnh, Quận 9, Hồ Chí Minh', '106.81017171261', '10.82731435597'),
+('16', '4', '199/1 3 tháng 2 Tổ 52 Khu phố 6, Phường 11, Quận 10, Hồ Chí Minh', '106.67445324790', '10.771774757840'),
+('17', '1', '144/12 Bình Thới, Phường 14, Quận 11, Hồ Chí Minh', '106.64875719607', '10.767353794832'),
+('18', '2', '51/4 Tổ 51 Kp4, Tân Chánh Hiệp, Quận 12, Hồ Chí Minh', '106.62707836156', '10.87037122819'),
+('19', '4', '142B Số 2, Phường 16, Gò Vấp, Hồ Chí Minh', '106.66200265187', '10.849433445853'),
+('20', '3', '1/1 Ấp 3, Xuân Thới Thượng, Hóc Môn, Hồ Chí Minh', '106.58981578187', '10.856337732503');
+SELECT * FROM KHACHHANG_DIACHI;
+-- TRUNCATE KHACHHANG_DIACHI CASCADE
 
 -------------------------------------------------------------- Insert Into PHIEUNHAPHANG ------------------------------------------------------------
 INSERT INTO PHIEUNHAPHANG(MaDaiLy, TongTien) VALUES
@@ -217,8 +217,8 @@ INSERT INTO PHIEUNHAPHANG(MaDaiLy, TongTien) VALUES
 ('2', 5280000),
 ('3', 16576000);
 SELECT * FROM PHIEUNHAPHANG;
-TRUNCATE PHIEUNHAPHANG CASCADE;
-ALTER SEQUENCE PHIEUNHAPHANG_maphieunhap_seq RESTART WITH 1;
+-- TRUNCATE PHIEUNHAPHANG CASCADE;
+-- ALTER SEQUENCE PHIEUNHAPHANG_maphieunhap_seq RESTART WITH 1;
 
 --------------------------------------------------------------- Insert Into CHITIET_PNH -------------------------------------------------------------
 INSERT INTO CHITIET_PNH(MaPhieuNhap, MaMatHang, SoLuongNhap, DonGiaNhap) VALUES
@@ -259,16 +259,16 @@ INSERT INTO CHITIET_PNH(MaPhieuNhap, MaMatHang, SoLuongNhap, DonGiaNhap) VALUES
 ('8', '33', 85, 112000),
 ('10', '34', 28, 144000);
 SELECT * FROM CHITIET_PNH;
-TRUNCATE CHITIET_PNH CASCADE;
-ALTER SEQUENCE CHITIET_PNH_mact_pnh_seq RESTART WITH 1;
+-- TRUNCATE CHITIET_PNH CASCADE;
+-- ALTER SEQUENCE CHITIET_PNH_mact_pnh_seq RESTART WITH 1;
 
 -------------------------------------------------------------- Insert Into PHIEUXUATHANG ------------------------------------------------------------
 INSERT INTO PHIEUXUATHANG(MaDaiLy, MaKhachHang, TongTien) VALUES
 ('1', '1', 3640000),
 ('3', '1', 6900000);
 SELECT * FROM PHIEUXUATHANG;
-TRUNCATE PHIEUXUATHANG CASCADE;
-ALTER SEQUENCE PHIEUXUATHANG_maphieuxuat_seq RESTART WITH 1;
+-- TRUNCATE PHIEUXUATHANG CASCADE;
+-- ALTER SEQUENCE PHIEUXUATHANG_maphieuxuat_seq RESTART WITH 1;
 
 --------------------------------------------------------------- Insert Into CHITIET_PXH -------------------------------------------------------------
 INSERT INTO CHITIET_PXH(MaPhieuXuat, MaMatHang, SoLuongXuat) VALUES
@@ -279,17 +279,16 @@ INSERT INTO CHITIET_PXH(MaPhieuXuat, MaMatHang, SoLuongXuat) VALUES
 ('2', '8', 24),
 ('1', '31', 3);
 SELECT * FROM CHITIET_PXH;
-TRUNCATE CHITIET_PXH CASCADE;
-ALTER SEQUENCE CHITIET_PXH_mact_pxh_seq RESTART WITH 1;
+-- TRUNCATE CHITIET_PXH CASCADE;
+-- ALTER SEQUENCE CHITIET_PXH_mact_pxh_seq RESTART WITH 1;
 
-select * from nhanvien
 -------------------------------------------------------------- Insert Into BAOCAODOANHSO ------------------------------------------------------------
 INSERT INTO BAOCAODOANHSO(Thang, MaDaiLy) VALUES
 ('10', '1'),
 ('10', '2'),
 ('10', '3');
 SELECT * FROM BAOCAODOANHSO;
-TRUNCATE BAOCAODOANHSO CASCADE;
+-- TRUNCATE BAOCAODOANHSO CASCADE;
 
 -------------------------------------------------------------- Insert Into BAOCAOCONGNO -------------------------------------------------------------
 INSERT INTO BAOCAOCONGNO(Thang, MaDaiLy, NoDau, PhatSinh) VALUES
@@ -297,10 +296,4 @@ INSERT INTO BAOCAOCONGNO(Thang, MaDaiLy, NoDau, PhatSinh) VALUES
 ('11', '2', 11246000, 119400),
 ('12', '3', 77541000, 149000);
 SELECT * FROM BAOCAOCONGNO;
-TRUNCATE BAOCAOCONGNO CASCADE;
-
-
-INSERT INTO TAIKHOAN_KHACHHANG values
-('1', '1');
-SELECT * FROM TAIKHOAN_KHACHHANG
-TRUNCATE TAIKHOAN_KHACHHANG CASCADE
+-- TRUNCATE BAOCAOCONGNO CASCADE;
