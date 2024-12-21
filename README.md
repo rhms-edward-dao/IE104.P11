@@ -62,10 +62,12 @@
   </thead>
   <tbody>
     <tr>
+      <td>Admin</td>
       <td>NVA</td>
       <td>027735</td>
     </tr>
     <tr>
+      <td>Staff</td>
       <td>NVB</td>
       <td>027735</td>
     </tr>  
