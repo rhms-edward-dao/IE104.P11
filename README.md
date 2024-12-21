@@ -56,7 +56,7 @@
   # Accounts used for signing to system:
 <table>
   <thead>
-    <th>Role</th>th>
+    <th>Role</th>
     <th>Username</th>
     <th>Password</th>
   </thead>
