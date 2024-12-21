@@ -52,3 +52,22 @@
   <br/>
   <br/>
   Finally, run this command: <i>uvicorn main:app --reload</i> to start backend
+
+  # Accounts used for signing to system:
+<table>
+  <thead>
+    <th>Role</th>th>
+    <th>Username</th>
+    <th>Password</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>NVA</td>
+      <td>027735</td>
+    </tr>
+    <tr>
+      <td>NVB</td>
+      <td>027735</td>
+    </tr>  
+  </tbody>
+</table>
