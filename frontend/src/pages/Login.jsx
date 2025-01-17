@@ -1,6 +1,11 @@
+// Import Alert
+import Swal from "sweetalert2";
+
+// Import ReactJS Hook
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+// Import context
 import { useAuth } from "../contexts/AuthContext";
 import { ActiveButton } from "../contexts/ActiveButton";
 
@@ -36,7 +41,12 @@ function Login() {
         const data = await response.json();
 
         if (data.success) {
-          alert("Đăng nhập thành công");
+          Swal.fire({
+            title: "Login Status!",
+            icon: "success",
+            text: "Login successfully!"
+          });
+          // Set data for context
           login({
             userName: data.staffName,
             userID: data.staffID,
@@ -65,16 +75,28 @@ function Login() {
           }
         } else {
           if (data.message === "Tài khoản này là tài khoản khách hàng") {
-            alert(data.message);
+            Swal.fire({
+              title: "Login Status!",
+              icon: "error",
+              text: data.message
+            })            
           } else if (data.message === "Sai tên đăng nhập/ mật khẩu") {
-            alert(data.message);
+            Swal.fire({
+              title: "Login Status!",
+              icon: "error",
+              text: data.message
+            })
           } else {
-            alert(data.message);
+            Swal.fire({
+              title: "Login Status!",
+              icon: "error",
+              text: data.message
+            })
           }
         }
       }
     } catch (error) {
-      console.log("Đăng nhập thất bại", error);
+      console.error("Đăng nhập thất bại", error);
     }
   };
 

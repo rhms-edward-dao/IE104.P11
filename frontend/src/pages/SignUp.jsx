@@ -1,6 +1,17 @@
+// Import Alert
+import Swal from "sweetalert2";
+// Import ReactJs Hook
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+// Function for showing alert
+const showAlert = (status, text) => {
+  Swal.fire({
+    title: status ? "Thành công!" : "Thất bại!",
+    icon: status ? "success" :  "error",
+    text: text
+  })
+};
+// Function SignUp
 function SignUp() {
   // Declare variables for Sign Up here
   const navigate = useNavigate();
@@ -21,41 +32,42 @@ function SignUp() {
     let check_password = true;
     let check_confirmPassword = true;
     let check_email = true;
-
     // Check username's length
     if (username.length < 3) {
-      alert("Tên tài khoản quá ngắn");
+      showAlert(false, "Tên tài khoản quá ngắn");
+      return;
     } else if (username.length > 50) {
-      alert("Tên tài khoản tối đa 50 kí tự");
+      showAlert(false, "Tên tài khoản tối đa 50 kí tự");
+      return;
     } else {
       check_username = false;
-    }
-
+    };
     // Check password's length
     if (password.length < 5) {
-      alert("Mật khẩu tối thiểu 5 kí tự");
+      showAlert(false, "Mật khẩu tối thiểu 5 kí tự");
+      return;
     } else if (password.length > 50) {
-      alert("Mật khẩu tối đa 50 kí tự");
+      showAlert(false, "Mật khẩu tối đa 50 kí tự");
+      return;
     } else {
       check_password = false;
-    }
-
+    };
     // Check password again
     if (confirmPassword !== password) {
-      alert("Mật khẩu xác nhận không đúng");
+      showAlert(false, "Mật khẩu xác nhận không đúng");
+      return;
     } else {
       check_confirmPassword = false;
-    }
-
+    };
     // Check email
     const isEmailFormat = (input) =>
       /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(input);
     if (!isEmailFormat(email)) {
-      alert("Sai định dạng của email");      
+      showAlert(false, "Sai định dạng của email");
+      return;
     } else {
       check_email = false;
-    }
-
+    };
     // Check all condition here - send formData
     if (!check_username && !check_password && !check_confirmPassword && !check_email) {
       try {
@@ -72,10 +84,10 @@ function SignUp() {
         });
         const data = await response.json();        
         if (data.message === `Tài khoản đã tạo nhưng chưa xác nhận. OTP xác nhận đã được gửi đến email ${email}`) {
-          alert(`${data.message}.\n Trong 2 phút nếu không nhập OTP thì phải tạo lại tài khoản`);
+          showAlert(true, `${data.message}.\n Trong 2 phút nếu không nhập OTP thì phải tạo lại tài khoản`);
           setIsOpenModal(true);
         } else {
-          alert(data.message);
+          showAlert(false, data.message);
         }
       } catch (error) {
         console.error("POST method failed");
@@ -101,21 +113,20 @@ function SignUp() {
       } else {
           const data = await response.json();
           if (data.message === "Tài khoản đã được kích hoạt") {
-              alert("OTP đúng. Tài khoản đã được kích hoạt.\n Chuyển đến trang đăng nhập.");
+              showAlert(true, "OTP đúng. Tài khoản đã được kích hoạt.\n Chuyển đến trang đăng nhập.");
               setIsOpenModal(false);
               navigate('/login');
           } else if (data.message === "OTP đã hết hạn (quá 2 phút).\n Tài khoản đã bị xóa.\n Hãy tạo lại") {
-            alert(data.message);
+            showAlert(false, data.message);
             setIsOpenModal(false);
           } else {
-              alert(data.message);
+              showAlert(false, data.message);
           }
       }
     } catch (error) {
       console.error("Error verifying OTP: ", error);
     }
   };
-
   // Handle otp verification Again
   const handleVerifyOtpManual = async() => {
     try {
@@ -135,14 +146,14 @@ function SignUp() {
       } else {
           const data = await response.json();
           if (data.message === "Tài khoản đã được kích hoạt") {
-              alert("OTP đúng. Tài khoản đã được kích hoạt.\n Chuyển đến trang đăng nhập.");
+              showAlert(true, "OTP đúng. Tài khoản đã được kích hoạt.\n Chuyển đến trang đăng nhập.");
               setIsOpenVerificationModal(false);
               navigate('/login');
           } else if (data.message === "OTP đã hết hạn (quá 2 phút).\n Tài khoản đã bị xóa.\n Hãy tạo lại") {
-            alert(data.message);
+            showAlert(false, data.message);
             setIsOpenVerificationModal(false);
           } else {
-              alert(data.message);
+              showAlert(false, data.message);
           }
       }
     } catch (error) {
@@ -231,7 +242,7 @@ function SignUp() {
             />
           </div>
         </div>
-        <div className="flex justify-around my-6 mx-3">
+        <div className="flex flex-wrap gap-4 justify-around my-6 mx-3">
           <button 
             onClick={() => {handleSubmit();}}
             className="bg-red-500 px-5 py-2 text-white text-lg rounded-lg"
