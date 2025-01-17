@@ -171,7 +171,7 @@ function Sidebar() {
       {/* If in login page, show only 'BettaShop' */}
       <motion.a
         href={isLoggedIn ? (userInfo.isAdmin ? "/stores" : "/products") : "/"}
-        className="flex flex-wrap items-center justify-center space-x-5 py-5 hover:cursor-pointer"
+        className="flex flex-wrap items-center justify-center space-x-2 py-5 hover:cursor-pointer"
         variants={itemVariants}
         custom={0.1}
         whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
@@ -179,12 +179,12 @@ function Sidebar() {
         <motion.img
           src={LogoIcon}
           alt="Logo"
-          className="h-[100px] w-[100px] rounded-full"
+          className="h-[75px] w-[75px] lg:h-[100px] lg:w-[100px] rounded-full"
           variants={itemVariants}
           custom={0.15}
         />
         <motion.p
-          className="bg-gradient-to-t from-red-700 via-[#f29f9f] to-white bg-clip-text text-2xl font-bold italic text-transparent transition-colors hover:bg-gradient-to-t hover:from-white hover:via-[#f29f9f] hover:to-red-500 lg:text-3xl"
+          className="bg-gradient-to-t from-red-700 via-[#f29f9f] to-white bg-clip-text text-xl lg:text-2xl font-bold italic text-transparent transition-colors hover:bg-gradient-to-t hover:from-white hover:via-[#f29f9f] hover:to-red-500 lg:text-3xl"
           initial="hidden"
           animate="visible"
           variants={itemVariants}

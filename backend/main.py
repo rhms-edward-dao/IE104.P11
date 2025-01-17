@@ -15,15 +15,12 @@ from pprint import pprint
 import re, os, base64
 
 from pathlib import Path
-
-# IMAGEDIR = r"D:/Studying/UIT Online Class/IE104.P11 - Internet Va Cong Nghe Web/Bao Cao/GitHub/backend/images/"
-# IMAGEDIR = r"/home/kui/Documents/UIT/HK_I_24_25/IE104/Final Project/onGithub/IE104.P11/backend/images/"
-BASEDIR = str(Path(__file__).resolve().parent.parent.parent) + "/"
-IMAGEDIR = str(Path(__file__).resolve().parent) + "/images/"
-
-# from security import validate_token
+# Declare FastAPI app
 app = FastAPI()
-
+# For Images Path
+BASEDIR = str(Path(__file__).resolve().parent.parent) + "/"
+IMAGEDIR = str(Path(__file__).resolve().parent) + "/images/"
+target_dir = "backend"
 # add cors - middleware
 origins = ["*"]
 
@@ -545,8 +542,7 @@ def get_mathang_all(db: Session = Depends(get_db)):
     if get_db:
         for item in get_db:
             if item.Mathang.hinhanh:
-                # Get images in different computers
-                target_dir = "IE104.P11"
+                # Get images in different computers                
                 spath = str(item.Mathang.hinhanh)
                 if os.name == "posix":
                     spath = spath.replace("\\", "/")
@@ -581,7 +577,6 @@ def get_mathang_by_mamathang(mamathang: int, db: Session = Depends(get_db)):
         if get_db.Mathang.hinhanh:
             try:
                 # Get images in different computers
-                target_dir = "IE104.P11"
                 spath = str(get_db.Mathang.hinhanh)
                 if os.name == "posix":
                     spath = spath.replace("\\", "/")
@@ -619,7 +614,6 @@ def get_mathang_by_madaily(madaily: int, db: Session = Depends(get_db)):
             if item.Mathang.hinhanh:
                 try:
                     # Get images in different computers
-                    target_dir = "IE104.P11"
                     spath = str(item.Mathang.hinhanh)
                     if os.name == "posix":
                         spath = spath.replace("\\", "/")
@@ -1074,7 +1068,6 @@ def get_daily_all(db: Session = Depends(get_db)):
         for item in get_all_daily:
             if item.Daily.hinhanh:
                 # Get images in different computers
-                target_dir = "IE104.P11"
                 spath = str(item.Daily.hinhanh)
                 if os.name == "posix":
                     spath = spath.replace("\\", "/")
@@ -1119,7 +1112,6 @@ def get_daily_by_madaily(madaily, db: Session = Depends(get_db)):
         for item in get_db:
             if item[7]:
                 # Get images in different computers
-                target_dir = "IE104.P11"
                 spath = str(item[7])
                 if os.name == "posix":
                     spath = spath.replace("\\", "/")
@@ -1409,7 +1401,6 @@ def get_nhanvien_all(db: Session = Depends(get_db)):
         for item in get_db:
             if item.Nhanvien.hinhanh:
                 # Get images in different computers
-                target_dir = "IE104.P11"
                 spath = str(item.Nhanvien.hinhanh)
                 if os.name == "posix":
                     spath = spath.replace("\\", "/")
@@ -1447,7 +1438,6 @@ def get_nhanvien_by_manhanvien(manhanvien: int, db: Session = Depends(get_db)):
     if get_db:
         if get_db[0].hinhanh:
             # Get images in different computers
-            target_dir = "IE104.P11"
             spath = str(get_db[0].hinhanh)
             if os.name == "posix":
                 spath = spath.replace("\\", "/")
@@ -1483,7 +1473,6 @@ def get_nhanvien_detail_by_id(manhanvien: int, db: Session = Depends(get_db)):
     if get_db:
         if get_db[0]:
             # Get images in different computers
-            target_dir = "IE104.P11"
             spath = str(get_db[0])
             if os.name == "posix":
                 spath = spath.replace("\\", "/")

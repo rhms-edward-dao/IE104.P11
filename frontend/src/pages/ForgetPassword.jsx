@@ -1,5 +1,10 @@
+// Import Icons
+import { SlEnvolope, SlLockOpen } from "react-icons/sl";
+import { TbPassword } from "react-icons/tb";
+
+// Import ReactJS Hook
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function ForgetPassword() {
     // Declare variables use for setting new password here
@@ -98,7 +103,7 @@ export default function ForgetPassword() {
     return (
         <div className="flex justify-center items-center h-screen">
         <div className="flex flex-col bg-black w-1/2 sm:w-5/6 md:w-1/2 xl:w-2/5 gap-2">
-            <p className="mt-2 p-2 text-4xl text-center text-white font-bold italic">
+            <p className="mt-2 p-2 text-4xl text-center text-white font-bold">
             ĐỔI MẬT KHẨU
             </p>
             <div className="mt-2 px-8 flex flex-col gap-5">
@@ -109,16 +114,18 @@ export default function ForgetPassword() {
                 >
                 Email
                 </label>
-
-                <input
-                id="email"
-                name="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email ..."
-                className="mt-2 w-full rounded-lg p-2"
-                />
+                <div className="relative">
+                    <SlEnvolope className="absolute top-1/4 left-2 text-[30px]"/>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email ..."
+                        className="mt-2 w-full rounded py-2 pl-12"
+                    />
+                </div>                
             </div>
             </div>
             <div className="mt-2 px-8 flex flex-col gap-5">
@@ -129,16 +136,18 @@ export default function ForgetPassword() {
                 >
                 Mật khẩu mới
                 </label>
-
-                <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Mật khẩu mới..."
-                className="mt-2 w-full rounded-lg p-2"
-                />
+                <div className="relative">
+                    <SlLockOpen className="absolute top-1/4 left-2 text-[30px]"/>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Mật khẩu mới..."
+                        className="mt-2 w-full rounded py-2 pl-12"
+                    />
+                </div>                
             </div>
             <div className="mt-3">
                 <label
@@ -147,25 +156,34 @@ export default function ForgetPassword() {
                 >
                 Nhập lại mật khẩu mới
                 </label>
-
-                <input
-                id="confirm-password"
-                name="confirm-password"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Nhập lại mật khẩu..."
-                className="mt-2 w-full rounded-lg p-2"
-                />
+                <div className="relative">
+                    <SlLockOpen className="absolute top-1/4 left-2 text-[30px]"/>
+                    <input
+                        id="confirm-password"
+                        name="confirm-password"
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Nhập lại mật khẩu..."
+                        className="mt-2 w-full rounded py-2 pl-12"
+                    />
+                </div>                
             </div>
             </div>
             <div className="flex justify-around my-6 mx-3">
-            <button 
-                onClick={() => {handleSubmit();}}
-                className="bg-red-500 px-5 py-2 text-white text-lg rounded-lg"
-            >
-                Xác nhận
-            </button>
+                <button
+                    onClick={() => {handleSubmit();}}
+                    className="bg-green-600 px-5 py-2 text-white text-lg font-semibold transform transition-all duration-200 hover:scale-110"
+                >
+                    Cập nhật
+                </button>
+
+                <NavLink
+                    to="/login"
+                    className="bg-red-600 px-5 py-2 text-white text-lg font-semibold transform transition-all duration-200 hover:scale-110"
+                >
+                    Hủy
+                </NavLink>
             </div>
         </div>
 
@@ -174,25 +192,30 @@ export default function ForgetPassword() {
                 <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
                     <div className="bg-white p-5 rounded-lg">
                         <h2 className="text-2xl font-semibold">Nhập OTP</h2>
-                        <input
-                            type="text"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            placeholder="Nhập OTP..."
-                            className="mt-2 w-full rounded-lg p-2"
-                        />
-                        <button
-                            onClick={handleVerifyOtp}
-                            className="bg-green-500 mr-4 mt-4 px-5 py-2 text-white text-lg rounded-lg"
-                        >
-                            Xác nhận OTP
-                        </button>
-                        <button
-                            onClick={() => setOtpPopupOpen(false)}
-                            className="bg-gray-500 mt-4 px-5 py-2 text-white text-lg rounded-lg"
-                        >
-                            Đóng
-                        </button>
+                        <div>
+                            <TbPassword className="absolute top-1/4 left-2 text-[30px]"/>
+                            <input
+                                type="text"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                placeholder="Nhập OTP..."
+                                className="mt-2 w-full rounded-lg p-2"
+                            />
+                        </div>
+                        <div>
+                            <button
+                                onClick={handleVerifyOtp}
+                                className="bg-green-500 mr-4 mt-4 px-5 py-2 text-white text-lg rounded-lg"
+                            >
+                                Xác nhận OTP
+                            </button>
+                            <button
+                                onClick={() => setOtpPopupOpen(false)}
+                                className="bg-gray-500 mt-4 px-5 py-2 text-white text-lg rounded-lg"
+                            >
+                                Đóng
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

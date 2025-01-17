@@ -60,7 +60,7 @@ function AdminReport() {
     boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)', 
     textAlign: 'left',
     padding: '20px',
-    cursor: 'pointer',
+    cursor: 'pointer',      
   });
 
   const titleStyle = {
