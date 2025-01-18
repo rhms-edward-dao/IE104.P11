@@ -7,11 +7,11 @@ import { TbPassword } from "react-icons/tb";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // Function for showing alert
-const showAlert = (status, text) => {
+const showAlert = (status, message) => {
   Swal.fire({
     title: status ? "Thành công!" : "Thất bại!",
     icon: status ? "success" :  "error",
-    text: text
+    text: message
   })
 };
 // Function SignUp
@@ -169,7 +169,7 @@ function SignUp() {
 
   // Return render here
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-red-950 to-slate-800">
       <div className="flex flex-col bg-black w-1/2 sm:w-5/6 md:w-1/2 xl:w-2/5 gap-2">
         <p className="mt-2 p-2 text-4xl text-center text-white font-bold">
           ĐĂNG KÝ

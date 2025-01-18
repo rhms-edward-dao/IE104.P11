@@ -1,3 +1,6 @@
+// Import Alert
+import Swal from "sweetalert2";
+
 // Import Icons
 import { SlEnvolope, SlLockOpen } from "react-icons/sl";
 import { TbPassword } from "react-icons/tb";
@@ -6,6 +9,14 @@ import { TbPassword } from "react-icons/tb";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
+// Function for showing alert
+const showAlert = (status, message) => {
+    Swal.fire({
+        title: status ? "Thành công" : "Thất bại",
+        icon: status ? "success" : "error",
+        text: message
+    })
+}
 export default function ForgetPassword() {
     // Declare variables use for setting new password here
     const [email, setEmail] = useState('');
@@ -14,7 +25,6 @@ export default function ForgetPassword() {
     // // For OTP
     const [otp, setOtp] = useState('');
     const [otpPopupOpen, setOtpPopupOpen] = useState(false);
-    const [otpSent, setOtpSent] = useState(false);
 
     const navigate = useNavigate();
     // Declare function here
@@ -26,18 +36,25 @@ export default function ForgetPassword() {
         const isEmailFormat = (input) =>
             /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(input);
         if (!isEmailFormat(email)) {
-        alert("Sai định dạng của email");
-        check_email = false;
+            showAlert(false, "Sai định dạng của email");
+            check_email = false;
+            return;
         }
-        if (password.length < 5) {
-            alert("Mật khẩu quá ngắn");
-            check_password = false
+        if (password.length == 0) {
+            showAlert(false, "Mật khẩu mới không được rỗng");
+            return;
+        }
+        else if (password.length < 5) {
+            showAlert(false, "Mật khẩu quá ngắn");
+            check_password = false;
+            return;
         }
         if (confirmPassword !== password) {
-            alert("Mật khẩu xác nhận sai");
+            showAlert(false, "Mật khẩu xác nhận sai");
             check_confirm = false;
+            return;
         }
-
+        // If all condition is checked then go to this block to work with server
         if (check_email && check_password && check_confirm) {
             try {
                 const response = await fetch(`http://127.0.0.1:8000/quenmatkhau/`, {
@@ -55,18 +72,16 @@ export default function ForgetPassword() {
                     const data = await response.json();
                     if (data.message == `Đã gửi OTP đến email ${email}`) {         
                         setOtpPopupOpen(true); // Open Modal for enter OTP
-                        alert(data.message);
+                        showAlert(true, data.message);
                     } else {
-                        alert(data.message);
-                    }
-
-                }
+                        showAlert(false, data.message);
+                    };
+                };
             } catch (error) {
                 console.error("Error sending data: ", error);
-            }
-        }        
+            };
+        };   
     };
-
     // // Handle OTP
     const handleVerifyOtp = async() => {
         // Gửi OTP tới server để xác nhận
@@ -88,20 +103,20 @@ export default function ForgetPassword() {
             } else {
                 const data = await response.json();
                 if (data.message === "Đổi mật khẩu thành công") {
-                    alert("OTP đúng. Đã đổi mật khẩu.\n Chuyển đến trang đăng nhập.");
+                    showAlert(true, "OTP đúng. Đã đổi mật khẩu.\n Chuyển đến trang đăng nhập.");
                     setOtpPopupOpen(false);
                     navigate('/login');
                 } else {
-                    alert(data.message);
-                }
-            }
+                    showAlert(false, data.message);
+                };
+            };
         } catch (error) {
             console.error("Error verifying OTP: ", error);
-        }
+        };
     };
     // Return here
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-screen bg-gradient-to-r from-red-950 to-slate-800">
         <div className="flex flex-col bg-black w-1/2 sm:w-5/6 md:w-1/2 xl:w-2/5 gap-2">
             <p className="mt-2 p-2 text-4xl text-center text-white font-bold">
             ĐỔI MẬT KHẨU

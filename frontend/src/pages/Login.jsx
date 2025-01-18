@@ -11,7 +11,15 @@ import { Link, useNavigate } from "react-router-dom";
 // Import context
 import { useAuth } from "../contexts/AuthContext";
 import { ActiveButton } from "../contexts/ActiveButton";
-
+// Function for showing alert
+const showAlert = (status, message) => {
+  Swal.fire({
+    title: status ? "Thành công!" : "Thất bại",
+    icon: status ? "success" : "error",
+    text: message
+  });
+};
+// Login function
 function Login() {
   // Variables here
   // Variables for login
@@ -27,7 +35,15 @@ function Login() {
   // Function here
   // Function for showing all button in sidebar after logining
 
-  const loginHandle = async () => {
+  const loginHandle = async (username, password) => {
+    // If username or password is empty send Alert and stop this function immediately
+    if (username === "") {
+      showAlert(false, "Tên tài khoản nhập vào rỗng!");
+      return;
+    } else if (password === "") {
+      showAlert(false, "Mật khẩu nhập vào rỗng!");
+      return;
+    };
     // Send login information to backend via Fetch
     try {
       const response = await fetch("http://127.0.0.1:8000/login", {
@@ -44,11 +60,7 @@ function Login() {
         const data = await response.json();
 
         if (data.success) {
-          Swal.fire({
-            title: "Login Status!",
-            icon: "success",
-            text: "Login successfully!"
-          });
+          showAlert(true, "Login Successfully!");
           // Set data for context
           login({
             userName: data.staffName,
@@ -78,23 +90,11 @@ function Login() {
           }
         } else {
           if (data.message === "Tài khoản này là tài khoản khách hàng") {
-            Swal.fire({
-              title: "Login Status!",
-              icon: "error",
-              text: data.message
-            })            
+            showAlert(false, data.message);
           } else if (data.message === "Sai tên đăng nhập/ mật khẩu") {
-            Swal.fire({
-              title: "Login Status!",
-              icon: "error",
-              text: data.message
-            })
+            showAlert(false, data.message);
           } else {
-            Swal.fire({
-              title: "Login Status!",
-              icon: "error",
-              text: data.message
-            })
+            showAlert(false, data.message);
           }
         }
       }
@@ -105,7 +105,7 @@ function Login() {
 
   // Render return here
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-red-950 to-slate-800">
       <div className="flex flex-col bg-black w-1/2 sm:w-5/6 md:w-1/2 xl:w-2/5 gap-2 py-3 shadow-2xl">
         <p className="mt-2 p-2 text-4xl text-center text-white font-bold">
           ĐĂNG NHẬP
@@ -155,7 +155,7 @@ function Login() {
         <div className="flex flex-wrap gap-4 justify-around my-6 mx-3">
           <button
             className="bg-green-600 px-5 py-2 text-white text-lg font-semibold transform transition-all duration-200 hover:scale-110"
-            onClick={loginHandle}
+            onClick={() => {loginHandle(username, password);}}
           >
             Đăng nhập
           </button>                  

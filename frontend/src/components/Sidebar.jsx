@@ -184,7 +184,7 @@ function Sidebar() {
           custom={0.15}
         />
         <motion.p
-          className="bg-gradient-to-t from-red-700 via-[#f29f9f] to-white bg-clip-text text-xl lg:text-2xl font-bold italic text-transparent transition-colors hover:bg-gradient-to-t hover:from-white hover:via-[#f29f9f] hover:to-red-500 lg:text-3xl"
+          className="bg-gradient-to-t from-red-700 via-[#f29f9f] to-white bg-clip-text text-xl lg:text-2xl font-bold text-transparent transition-colors hover:bg-gradient-to-t hover:from-white hover:via-[#f29f9f] hover:to-red-500 lg:text-3xl"
           initial="hidden"
           animate="visible"
           variants={itemVariants}
